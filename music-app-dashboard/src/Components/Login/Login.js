@@ -23,15 +23,14 @@ export const Login = () => {
         e.preventDefault();
         setIsLoading(true);
 
-        // Simulate an API call or validation here
-        setTimeout(() => {
-            setIsLoading(false);
-            if (email === "admin@example.com" && password === "password") {
-                Swal.fire("Success", "You are logged in!", "success");
-            } else {
-                Swal.fire("Error", "Invalid email or password", "error");
-            }
-        }, 1000);
+
+        setIsLoading(false);
+        if (email === "admin@example.com" && password === "password") {
+            Swal.fire("Success", "You are logged in!", "success");
+        } else {
+            Swal.fire("Error", "Invalid email or password", "error");
+        }
+
     };
 
     return (
