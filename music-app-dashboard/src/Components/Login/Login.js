@@ -1,38 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { DataContext } from '../../Context/Context';
-import Swal from "sweetalert2";
-import "../../Styles/plugins/iCheck/all.css";
-import "../../Styles/plugins/daterangepicker/daterangepicker-bs3.css";
-import "../../Styles/plugins/colorpicker/bootstrap-colorpicker.min.css";
-import "../../Styles/plugins/timepicker/bootstrap-timepicker.min.css";
-import "../../Styles/dist/css/AdminLTE.min.css";
-import "../../Styles/dist/css/skins/_all-skins.min.css";
-import '../../Styles/dist/css/AdminLTE.css';
-import "../../Styles/build/less/login_and_register.less"
+import LoginController from '../../Controllers/Login-controller/LoginController';
+// import Swal from "sweetalert2"; 
 
 export const Login = () => {
     const navigate = useNavigate();
-
-    const { setUserData, isLogin, setIsLogin } = useContext(DataContext)
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-
-        setIsLoading(false);
-        if (email === "admin@example.com" && password === "password") {
-            Swal.fire("Success", "You are logged in!", "success");
-        } else {
-            Swal.fire("Error", "Invalid email or password", "error");
-        }
-
-    };
-
+    const { handleSubmit,  email,  setEmail,  password, setPassword, isLoading } = LoginController();
     return (
         <div className="login-page">
             <div className="login-box">
