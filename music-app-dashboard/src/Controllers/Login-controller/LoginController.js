@@ -20,5 +20,14 @@ const LoginController = (props) => {
     navigate("/Dashboard")
   };
 
+  return {
+    handleSubmit,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    isLoading
+  }
+
 }
 export default LoginController;
