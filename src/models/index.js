@@ -1,0 +1,1 @@
+module.exports.adminLoginModel = require('./adminLogin.model');
