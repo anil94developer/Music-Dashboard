@@ -6,7 +6,7 @@ module.exports = (schema, params = "body") => async (req, res, next) => {
             return res.status(200).json({
                 status: false,
                 subCode: 500,
-                message: check.error.details[0].message,
+                message: check.error.message,
             })
         } else {
             next();
