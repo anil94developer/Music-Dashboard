@@ -25,7 +25,14 @@ release.addOneRelease = async (req, res, next) => {
                 "productionYear": "",
                 "UPCEAN": "",
                 "producerCatalogueNumber": ""
-            }
+            },
+            step2:[
+                {
+                    "fileName":"", 
+                    "fileType":"",
+                    "fileData":"",
+                }
+            ]
         }
         console.error(newReq)
         const result = await releaseModel.addOneRelease(newReq) 
@@ -38,11 +45,39 @@ release.addOneStepRelease = async (req, res, next) => {
     const  body  = req.body 
     try {  
         const result = await releaseModel.addOneStepRelease(body) 
+        return R(res, true, "Update   Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+release.addTwoStepRelease = async (req, res, next) => {
+    const  body  = req.body 
+    try {  
+        const result = await releaseModel.addTwoStepRelease(body) 
         return R(res, true, "Update Successfully!!", result, 200)
     } catch (err) { 
         next(err)
     }
 };
+release.addThreeStepRelease = async (req, res, next) => {
+    const  body  = req.body 
+    try {  
+        const result = await releaseModel.addThreeStepRelease(body) 
+        return R(res, true, "Update Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+release.addFourStepRelease = async (req, res, next) => {
+    const  body  = req.body 
+    try {  
+        const result = await releaseModel.addFourStepRelease(body) 
+        return R(res, true, "Update Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+
 
 
 module.exports = release;
