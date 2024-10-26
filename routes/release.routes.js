@@ -8,6 +8,9 @@ router.post('/step-one-release',verifyToken, releaseService.addOneStepRelease)
 router.post('/step-two-release',verifyToken, releaseService.addTwoStepRelease)
 router.post('/step-three-release',verifyToken, releaseService.addThreeStepRelease)
 router.post('/step-four-release',verifyToken, releaseService.addFourStepRelease)
+router.post('/step-five-release',verifyToken, releaseService.addFiveStepRelease)
+
+
 
 
 

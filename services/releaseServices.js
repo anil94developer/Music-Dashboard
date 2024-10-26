@@ -77,7 +77,15 @@ release.addFourStepRelease = async (req, res, next) => {
         next(err)
     }
 };
-
+release.addFiveStepRelease = async (req, res, next) => {
+    const  body  = req.body 
+    try {  
+        const result = await releaseModel.addFiveStepRelease(body) 
+        return R(res, true, "Update Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
 
 
 module.exports = release;

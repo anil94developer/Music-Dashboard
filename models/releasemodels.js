@@ -106,7 +106,27 @@ const releaseSchema = mongoose.Schema({
             checked: { type: Number, default: 1 }
 
           }
-    ]
+    ],
+    step5:{
+        MainReleaseDate: { type: String, required: true },
+        PreOrder: [
+          {
+            id: { type: String, default: "" },
+            Platform: { type: String, required: true },
+            Date: { type: String, required: true }
+          }
+        ],
+        Preview: {
+          Allow90Sec: { type: Boolean, default: false }
+        },
+        ExclusiveReleaseDates: [
+          {
+            id: { type: String, default: "" },
+            Platform: { type: String, required: true },
+            Date: { type: String, required: true }
+          }
+        ]
+      },
 },
     { timestamps: true }
 );
@@ -204,6 +224,21 @@ releaseModel.addFourStepRelease = async (body) => {
         return false;
     }
 };
-
+releaseModel.addFiveStepRelease = async (body) => {
+    console.log("one release body", body)
+    let releaseResult = await db.connectDb("release", releaseSchema);
+    
+    let result = await releaseResult.updateOne({ _id: body._id },
+        {
+            $set: { 
+                step5:body.step5
+            }
+        })
+    if (result.modifiedCount > 0 || result.upsertedCount > 0) {
+        return true;
+    } else {
+        return false;
+    }
+};
 
 module.exports = releaseModel
