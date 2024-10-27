@@ -1,17 +1,10 @@
-import React from "react";
-import { Nav } from "../Common/Nav";
-import OneReleaseController from "../../Controllers/One-release-controller/OneReleaseController";
+
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
+import { Nav } from '../Common/Nav'
 
 export const OneRelease = () => {
-  const {
-    isLoading,
-    setIsLoading,
-    title,
-    setTitle,
-    type,
-    setType,
-    handleSubmit,
-  } = OneReleaseController();
+  const navigate = useNavigate();
   return (
     <div>
       <Nav />
@@ -79,15 +72,8 @@ export const OneRelease = () => {
                   </div>
 
                   <div class="box-footer">
-                    <button
-                      type="submit"
-                      id="btnsubmit"
-                      class="btn btn-primary"
-                      onClick={(e)=> handleSubmit(e)}
-                    >
-                      Submit
-                    </button>
-                  </div>
+                    <button type="submit" id="btnsubmit" class="btn btn-primary" onClick={()=>{navigate("/main-step")}}>Submit</button>
+                   </div>
                 </form>
               </div>
             </div>

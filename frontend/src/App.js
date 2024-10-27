@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Login } from "./Components/Login/Login";
 import { Dashboard } from "./Components/Dashboard/Dashboard";
 import { OneRelease } from "./Components/One-release/OneRelease";
+import { MainStep } from "./Components/One-release/MainStep";
 
 function App() {
   return (
@@ -9,6 +10,8 @@ function App() {
       <Route path="/" element={<Login />}></Route>
       <Route path="/dashboard" element={<Dashboard />}></Route>
       <Route path="/one-release" element={<OneRelease />}></Route> 
+      <Route path="/main-step" element={<MainStep />}></Route>
+
       <Route path="/multiple-release" element={<Dashboard />}></Route>
 
     </Routes>

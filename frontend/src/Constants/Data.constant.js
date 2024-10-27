@@ -4,8 +4,9 @@ const mainUrl = domainUrl
 const imageServerUrl = domainUrl + 'application_api/';
 const USER_TYPE = "User"
 const base = {
-  login: mainUrl + 'auth/login/',
-  signUp: mainUrl + 'auth/signup/',
-  addOneRelease: mainUrl + 'release/add-one-release',
+  login: mainUrl + 'login.php',
+  signUp: mainUrl + 'signup.php',
+  releaseStep1: mainUrl + 'release/step-one-release',
+
 }; 
 export { base, domainUrl, imageServerUrl, USER_TYPE };

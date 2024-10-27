@@ -1,12 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
+
 import React from 'react'
 
 export default function STEP5() {
-  return (
-    <View>
-      <Text>STEP5</Text>
-    </View>
+  return (<div>step5</div>
   )
 }
 
-const styles = StyleSheet.create({})
