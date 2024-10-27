@@ -1,12 +1,21 @@
-
-import React from 'react'
-import { Nav } from '../Common/Nav'
+import React from "react";
+import { Nav } from "../Common/Nav";
+import OneReleaseController from "../../Controllers/One-release-controller/OneReleaseController";
 
 export const OneRelease = () => {
+  const {
+    isLoading,
+    setIsLoading,
+    title,
+    setTitle,
+    type,
+    setType,
+    handleSubmit,
+  } = OneReleaseController();
   return (
     <div>
       <Nav />
-      <div class="content-wrapper" >
+      <div class="content-wrapper">
         <section class="container-fluid content">
           <div class="row">
             <div class="col-md-6">
@@ -21,36 +30,66 @@ export const OneRelease = () => {
                     <div class="form-group">
                       <div class="radio">
                         <label>
-                          <input type="radio" name="type" id="type" value="Audio" checked=""/>
-                            Audio
+                          <input
+                            type="radio"
+                            name="type"
+                            id="type"
+                            value="Audio"
+                            checked=""
+                            onChange={(e) => setType(e.target.value)}
+                          />
+                          Audio
                         </label>
                       </div>
                       <div class="radio">
                         <label>
-                          <input type="radio" name="type" id="type" value="Video"/>
-                            Video
+                          <input
+                            type="radio"
+                            name="type"
+                            id="type"
+                            value="Video"
+                            onChange={(e) => setType(e.target.value)}
+                          />
+                          Video
                         </label>
                       </div>
                       <div class="radio">
                         <label>
-                          <input type="radio" name="type" id="type" value="Ringtone" />
-                            Ringtone
+                          <input
+                            type="radio"
+                            name="type"
+                            id="type"
+                            value="Ringtone"
+                            onChange={(e) => setType(e.target.value)}
+                          />
+                          Ringtone
                         </label>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail1">Release Title *</label>
-                        <input type="text" class="form-control" id="releaseTitle" placeholder="Enter Release Title"/>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="releaseTitle"
+                          placeholder="Enter Release Title"
+                          onChange={(e) => setTitle(e.target.value)}
+                        />
                       </div>
                     </div>
                   </div>
 
                   <div class="box-footer">
-                    <button type="submit" id="btnsubmit" class="btn btn-primary">Submit</button>
-                   </div>
+                    <button
+                      type="submit"
+                      id="btnsubmit"
+                      class="btn btn-primary"
+                      onClick={(e)=> handleSubmit(e)}
+                    >
+                      Submit
+                    </button>
+                  </div>
                 </form>
               </div>
-
-
             </div>
             <div class="col-md-6">
               <div class="box">
@@ -61,23 +100,32 @@ export const OneRelease = () => {
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th >#</th>
+                        <th>#</th>
                         <th>Title</th>
                         <th>Progress</th>
                         <th>Label</th>
                       </tr>
                     </thead>
-                    <tbody id="taskTableBody">
-                    </tbody>
+                    <tbody id="taskTableBody"></tbody>
                   </table>
                 </div>
                 <div class="box-footer clearfix">
                   <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">«</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">»</a></li>
+                    <li>
+                      <a href="#">«</a>
+                    </li>
+                    <li>
+                      <a href="#">1</a>
+                    </li>
+                    <li>
+                      <a href="#">2</a>
+                    </li>
+                    <li>
+                      <a href="#">3</a>
+                    </li>
+                    <li>
+                      <a href="#">»</a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -86,6 +134,5 @@ export const OneRelease = () => {
         </section>
       </div>
     </div>
-  )
-
-} 
+  );
+};
