@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import useLocalStorage from 'use-local-storage';
 import { base } from '../../Constants/Data.constant';
-import { postDataContent } from '../../Services/Ops';
+import { postData, postDataContent } from '../../Services/Ops';
 const Step1Controller = (props) => {
+    
+    const [releaseData,setReleaseData]= useState({})
     const [releaseTitle, setReleaseTitle] = useState('');
     const [versionSubtitle, setVersionSubtitle] = useState('');
     const [primaryArtist, setPrimaryArtist] = useState('');
@@ -29,10 +31,9 @@ const Step1Controller = (props) => {
         let body= {
             "title": "step test",
             "type": "Audio",
-             "_id": "671cba8496f4bab04f252628",
-            "step1": {
-                releaseTitle: releaseTitle,
-                versionSubtitle: versionSubtitle,
+             "_id": releaseData._id,
+            "step1": {  
+                subTitle: versionSubtitle,
                 primaryArtist: primaryArtist,
                 featuring: featuring,
                 isVariousArtists: isVariousArtists,
@@ -40,19 +41,24 @@ const Step1Controller = (props) => {
                 subgenre: subgenre,
                 labelName: labelName,
                 format: format,
-                releaseDate: releaseDate,
-                pLine: pLine,
+                originalReleaseDate: releaseDate,
+                line: pLine,
                 cLine: cLine,
                 productionYear: productionYear,
-                upcEan: upcEan,
+                UPCEAN: upcEan,
                 producerCatalogueNumber: producerCatalogueNumber
             }
            
         }
-          await useLocalStorage<String>("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzFlMDZmYTFhMjA3MWFmZTQyNjlmNzQiLCJlbWFpbCI6ImFuaWxkQGdtYWlsLmNvbSIsImlhdCI6MTczMDAyMTQzMX0.vIwB7F7Rdchg5XAEKJuyjdRQRauopMn19Y5mdrsl4xo")
-        let result =await postDataContent(base.releaseStep1,body);
+        console.log("body===========>",body)
+         
+        let result =await postData(base.releaseStep1,body);
         console.log(result)
-        navigate("/Dashboard")
+        if (result.data.status === true) {  
+            Swal.fire("Success", result.message, result.message); 
+          } else {
+            Swal.fire("Error", result.message, result.message); 
+          }  
       };
 
     return {
@@ -71,7 +77,8 @@ const Step1Controller = (props) => {
         productionYear, setProductionYear,
         upcEan, setUpcEan,
         producerCatalogueNumber, setProducerCatalogueNumber,
-        handleSubmit
+        handleSubmit,
+        setReleaseData
     }
 
 }

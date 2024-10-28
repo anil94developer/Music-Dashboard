@@ -1,13 +1,16 @@
 import useLocalStorage from "use-local-storage";
 import  axios from "axios"; 
-import useLocalStorage from "use-local-storage";
 
 
 const postData = async (url = "", data) => {
     try {
         console.log("url", url)
-         
-        var header = { headers: {  Accept: 'application/json','Cache-Control': 'no-cache', } };
+        let token = localStorage.getItem("token")
+        if (token) {
+            token = token;
+        }
+        // alert(token)
+        var header = { headers: { Authorization: token, Accept: 'application/json','Cache-Control': 'no-cache', } };
         let response = await axios.post(url, data, header)
         return response;
        
@@ -19,7 +22,7 @@ const postData = async (url = "", data) => {
 const postDataContent = async (url = "", data) => {
     try {
         
-        let token = await useLocalStorage<String>("token")
+        let token = localStorage.getItem("token")
         let response = await axios.post(url, data, {
             headers: {Authorization: token,  "content-type": 'multipart/form-data;','Cache-Control': 'no-cache', },
         });
@@ -42,8 +45,10 @@ const putData = async (url = "", data,token) => {
         return e.response.data
     }
 };
-const getData = async (url = "", token = false) => {
+const getData = async (url = "") => {
     try {
+        let token = localStorage.getItem("token")
+
         if (token) {
             token = "Bearer " + token;
         }

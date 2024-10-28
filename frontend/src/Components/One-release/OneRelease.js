@@ -1,10 +1,12 @@
 
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import OneReleaseController from '../../Controllers/One-release-controller/OneReleaseController';
 import { Nav } from '../Common/Nav'
 
 export const OneRelease = () => {
   const navigate = useNavigate();
+  const {setType,setTitle,handleSubmit}= OneReleaseController();
   return (
     <div>
       <Nav />
@@ -17,7 +19,7 @@ export const OneRelease = () => {
                   <h3 class="box-title">New Release</h3>
                 </div>
 
-                <form role="form" id="dataform" method="post">
+                
                   <div class="box-body">
                     <label>What is the type of your new release?</label>
                     <div class="form-group">
@@ -28,7 +30,7 @@ export const OneRelease = () => {
                             name="type"
                             id="type"
                             value="Audio"
-                            checked=""
+                            checked="true"
                             onChange={(e) => setType(e.target.value)}
                           />
                           Audio
@@ -72,9 +74,9 @@ export const OneRelease = () => {
                   </div>
 
                   <div class="box-footer">
-                    <button type="submit" id="btnsubmit" class="btn btn-primary" onClick={()=>{navigate("/main-step")}}>Submit</button>
+                    <button type="submit" id="btnsubmit" class="btn btn-primary" onClick={()=>{handleSubmit()}}>Submit</button>
                    </div>
-                </form>
+                
               </div>
             </div>
             <div class="col-md-6">

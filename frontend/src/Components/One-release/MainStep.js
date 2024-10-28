@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom';
 import MainStepController from '../../Controllers/One-release-controller/MainStepController'
 import { Nav } from '../Common/Nav';
 import STEP1 from './STEP1';
@@ -8,7 +9,10 @@ import STEP4 from './STEP4';
 import STEP5 from './STEP5';
 
 export const MainStep = () => {
+    const location = useLocation();
+  const releaseData = location.state?.releaseData;
     const { step, setStep } = MainStepController();
+    
     return (
         <div>
             <Nav />
@@ -41,15 +45,15 @@ export const MainStep = () => {
                     <section class="content">
                     {
                         step == "step1" ?
-                            <STEP1 setStep={setStep}/>
+                            <STEP1 setStep={setStep} releaseData={releaseData}/>
                             : step == "step2" ?
-                                <STEP2 />
+                                <STEP2 setStep={setStep} releaseData={releaseData}/>
                                 : step == "step3" ?
-                                    <STEP3 />
+                                    <STEP3 setStep={setStep} releaseData={releaseData}/>
                                     : step == "step4" ?
-                                        <STEP4 />
+                                        <STEP4 setStep={setStep} releaseData={releaseData}/>
                                         : step == "step5" ?
-                                            <STEP5 />
+                                            <STEP5 setStep={setStep} releaseData={releaseData}/>
                                             :
                                             <STEP5 />
                     }

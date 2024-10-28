@@ -16,14 +16,7 @@ const LoginController = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setIsLoading(false);
-
-   
-    // if (email === "admin@example.com" && password === "password") {
-    //   Swal.fire("Success", "You are logged in!", "success");
-    // } else {
-    //   Swal.fire("Error", "Invalid email or password", "error");
-    // }
+    setIsLoading(false); 
     let body = {
       email: email,
       password: password,
@@ -32,17 +25,14 @@ const LoginController = (props) => {
     let result = await postData(base.login, body);
     console.log(result);
     if (result.data.status === true) {
-      //  await useLocalStorage<String>("token", result.data.token);
-      //  await useLocalStorage("userdata", result.data)
+      localStorage.setItem("token",result.data.data.token)
+      localStorage.setItem("userData",result.data.data) 
 
 
       navigate("/Dashboard");
     } else {
-      Swal.fire("Error", result.data.message, "error");
-
-     // navigate("/Dashboard");
-    }
-    // navigate("/Dashboard")
+      Swal.fire("Error", result.message, result.message); 
+    } 
   };
 
   return {
