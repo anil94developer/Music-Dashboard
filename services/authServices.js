@@ -153,6 +153,8 @@ auth.login = async (req, res, next) => {
             } else {
                 return R(res, false, "Password not matched", {}, 403)
             }
+        }else{
+            return R(res, false, "Email not Register", {}, 403)
         }
 
     } catch (error) {

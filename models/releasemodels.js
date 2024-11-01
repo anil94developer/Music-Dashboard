@@ -12,6 +12,7 @@ const releaseSchema = mongoose.Schema({
         subTitle: { type: String, default: null },
         primaryArtist: { type: String, default: null },
         featuring: { type: String, default: null },
+        isVariousArtists: { type: String, default: null },
         genre: { type: String, default: null },
         subGenre: { type: String, default: null },
         labelName: { type: String, default: "" },
@@ -108,12 +109,12 @@ const releaseSchema = mongoose.Schema({
           }
     ],
     step5:{
-        MainReleaseDate: { type: String, required: true },
+        MainReleaseDate: { type: String},
         PreOrder: [
           {
             id: { type: String, default: "" },
-            Platform: { type: String, required: true },
-            Date: { type: String, required: true }
+            Platform: { type: String},
+            Date: { type: String}
           }
         ],
         Preview: {
@@ -122,8 +123,8 @@ const releaseSchema = mongoose.Schema({
         ExclusiveReleaseDates: [
           {
             id: { type: String, default: "" },
-            Platform: { type: String, required: true },
-            Date: { type: String, required: true }
+            Platform: { type: String},
+            Date: { type: String}
           }
         ]
       },
