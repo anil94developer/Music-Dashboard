@@ -1,6 +1,8 @@
 
 import React, { useEffect } from 'react'
 import Step1Controller from '../../Controllers/One-release-controller/Step1Controller'
+import SearchInput from '../Common/SearchBox';
+import ARTISTLIST from '../../Enums/artist.list.json';
 
 export default function STEP1(props) {
     const { setStep, releaseData } = props;
@@ -79,27 +81,13 @@ export default function STEP1(props) {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="primaryArtist">Primary artist *</label>
-                    <input
-                        value={primaryArtist}
-                        type="text"
-                        className="form-control"
-                        id="primaryArtist"
-                        placeholder="Enter primary artist"
-                        onChange={(e) => setPrimaryArtist(e.target.value)}
-                    />
+                    <label htmlFor="primaryArtist">Primary artist *</label> 
+                    <SearchInput artistData={ARTISTLIST} setSelectData={setPrimaryArtist}/>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="featuring">Featuring</label>
-                    <input
-                        value={featuring}
-                        type="text"
-                        className="form-control"
-                        id="featuring"
-                        placeholder="Enter featuring artists"
-                        onChange={(e) => setFeaturing(e.target.value)}
-                    />
+                    <SearchInput artistData={ARTISTLIST} setSelectData={setFeaturing}/>
                 </div>
 
                 <div className="form-check">

@@ -44,7 +44,7 @@
   .dragging {
     background-color: #f0f0f0;
     opacity: 0.8;
-},
+}
 /* Step4.css */
 
 /* Container styling */
@@ -119,7 +119,7 @@
       width: 16px;
       height: 12px;
     }
-  },
+  }
   .release-form {
     display: flex;
     flex-wrap: wrap;
@@ -175,4 +175,44 @@
     }
   }
   
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    
+    max-height: 150px;
+    overflow-y: auto;
+  }
   
+  li {
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .artist-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+  }
+  
+  .artist-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .platform-icons span {
+    margin: 0 5px;
+  }
+  
+  button {
+    margin-left: auto;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
