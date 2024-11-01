@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react'
 import Step3Controller from '../../Controllers/One-release-controller/Step3Controller'
+import ARTISTLIST from '../../Enums/artist.list.json';
+import SearchInput from '../Common/SearchBox';
 
 export default function STEP3() {
   const {
@@ -221,43 +223,44 @@ export default function STEP3() {
                     {/* Primary Artist */}
                     <div className="col-md-6">
                       <label>Primary Artist *</label>
-                      <input type="text" className="form-control" value={primaryArtist} onChange={(e) => setPrimaryArtist(e.target.value)} />
+                      <SearchInput artistData={ARTISTLIST} setSelectData={setPrimaryArtist}/>
                     </div>
-
+                     
                     {/* Featuring */}
                     <div className="col-md-6">
                       <label>Featuring</label>
-                      <input type="text" className="form-control" value={featuring} onChange={(e) => setFeaturing(e.target.value)} />
+                      <SearchInput artistData={ARTISTLIST} setSelectData={setFeaturing}/>
+
                     </div>
 
                     {/* Remixer */}
                     <div className="col-md-6">
                       <label>Remixer</label>
-                      <input type="text" className="form-control" value={remixer} onChange={(e) => setRemixer(e.target.value)} />
+                      <SearchInput artistData={ARTISTLIST} setSelectData={setRemixer}/> 
                     </div>
 
                     {/* Author */}
                     <div className="col-md-6">
                       <label>Author *</label>
-                      <input type="text" className="form-control" value={author} onChange={(e) => setAuthor(e.target.value)} />
+                      <SearchInput artistData={ARTISTLIST} setSelectData={setAuthor}/> 
                     </div>
 
                     {/* Composer */}
                     <div className="col-md-6">
                       <label>Composer *</label>
-                      <input type="text" className="form-control" value={composer} onChange={(e) => setComposer(e.target.value)} />
+                      <SearchInput artistData={ARTISTLIST} setSelectData={setComposer}/>
                     </div>
 
                     {/* Arranger */}
                     <div className="col-md-6">
                       <label>Arranger</label>
-                      <input type="text" className="form-control" value={arranger} onChange={(e) => setArranger(e.target.value)} />
+                      <SearchInput artistData={ARTISTLIST} setSelectData={setArranger}/> 
                     </div>
 
                     {/* Producer */}
                     <div className="col-md-6">
                       <label>Producer</label>
-                      <input type="text" className="form-control" value={producer} onChange={(e) => setProducer(e.target.value)} />
+                      <SearchInput artistData={ARTISTLIST} setSelectData={setProducer}/>
                     </div>
 
                     {/* P Line */}
