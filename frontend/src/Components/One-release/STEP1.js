@@ -19,12 +19,12 @@ export default function STEP1(props) {
         cLine, setCLine,
         productionYear, setProductionYear,
         upcEan, setUpcEan,
-        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, setReleaseData } = Step1Controller();
+        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, setReleaseData, imagePreview, setImagePreview, handleImageChange } = Step1Controller();
     useEffect(() => {
         const getData = () => {
             if (releaseData) {
                 const jsonData = JSON.parse(releaseData);
-                setReleaseTitle(jsonData.title) 
+                setReleaseTitle(jsonData.title)
                 setVersionSubtitle(jsonData.subtitle);
                 setPrimaryArtist(jsonData.primaryArtist);
                 setFeaturing(jsonData.featuring);
@@ -46,7 +46,11 @@ export default function STEP1(props) {
         }
         getData()
     }, [])
-    return (<div> 
+
+    return (<div>
+        <div class="box-header">
+            <h1>Release Information</h1>
+        </div>
         <div className="row">
             {/* Left Column */}
             <div className="col-md-6">
@@ -179,6 +183,19 @@ export default function STEP1(props) {
 
             {/* Right Column */}
             <div className="col-md-6">
+                <div className="form-group">
+                    <div className="img-cover">
+                        <img className="img-thumbnail" src={imagePreview} alt="Cover Preview" />
+                        <input
+                            type="file"
+                            name="image"
+                            accept="image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/webp, image/tiff"
+                            onChange={handleImageChange} // Trigger this function on file selection
+                        />
+                        <p>Upload cover</p>
+                    </div>
+
+                </div>
                 <div className="form-group">
                     <label htmlFor="pLine">℗ line *</label>
                     <input

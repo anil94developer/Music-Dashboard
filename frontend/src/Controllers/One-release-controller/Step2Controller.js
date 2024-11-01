@@ -13,24 +13,16 @@ const Step2Controller = (props) => {
     const [mediaFiles, setMediaFiles] = useState([]);
     const [releaseData,setReleaseData]= useState({})
     
-    const navigate = useNavigate();
- 
-        // State to store the uploaded files
-    
-        // Handle file selection and update state
+    const navigate = useNavigate(); 
         const handleFileChange =async (e) => {
             const selectedFiles = Array.from(e.target.files);
-
-            // Process each selected file
+ 
             const updatedFiles = await Promise.all(
-                selectedFiles.map(async (file) => {
-                    // Convert images to Blob
+                selectedFiles.map(async (file) => { 
                     let blobFile = file;
                     if (file.type.startsWith("audio") || file.type.startsWith("video")) {
                         blobFile = await convertToBlob(file);
-                    }
-     
-                    
+                    } 
                     return { 
                         fileName: blobFile.name, // Blob URL for preview
                         fileData: blobFile,

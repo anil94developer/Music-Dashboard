@@ -26,6 +26,18 @@ const Step1Controller = (props) => {
     const [producerCatalogueNumber, setProducerCatalogueNumber] = useState('');
     const navigate = useNavigate();
 
+    const [imagePreview, setImagePreview] = useState("/img/noCover.png");
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result); // Set the image preview to the selected image
+      };
+      reader.readAsDataURL(file); // Read the image file as a data URL
+    }
+  };
 
     const handleSubmit =async (e) => { 
         let body= {
@@ -78,7 +90,8 @@ const Step1Controller = (props) => {
         upcEan, setUpcEan,
         producerCatalogueNumber, setProducerCatalogueNumber,
         handleSubmit,
-        setReleaseData
+        setReleaseData,
+        imagePreview, setImagePreview,handleImageChange
     }
 
 }

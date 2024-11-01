@@ -7,9 +7,10 @@ import STEP2 from './STEP2';
 import STEP3 from './STEP3';
 import STEP4 from './STEP4';
 import STEP5 from './STEP5';
+import STEP6 from './Step6';
 
 export const MainStep = () => {
-    const location = useLocation();
+  const location = useLocation();
   const releaseData = location.state?.releaseData;
     const { step, setStep } = MainStepController();
     
@@ -39,8 +40,8 @@ export const MainStep = () => {
                         <button className={`btn  btn-primary btn-sm ${step === 'step3' ? 'active' : ''}`} onClick={() => setStep('step3')}>Tracks</button>
                         <button className={`btn  btn-primary btn-sm ${step === 'step4' ? 'active' : ''}`} onClick={() => setStep('step4')}>Territories</button>
                         <button className={`btn  btn-primary btn-sm ${step === 'step5' ? 'active' : ''}`} onClick={() => setStep('step5')}>Release date</button>
-                        <button className={`btn  btn-primary btn-sm ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Promotion</button>
-                        <button className={`btn  btn-primary btn-sm ${step === 'step7' ? 'active' : ''}`} onClick={() => setStep('step7')}>Submission</button>
+                        {/* <button className={`btn  btn-primary btn-sm ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Promotion</button> */}
+                        <button className={`btn  btn-primary btn-sm ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Submission</button>
                     </div>
                     <section class="content">
                     {
@@ -55,7 +56,7 @@ export const MainStep = () => {
                                         : step == "step5" ?
                                             <STEP5 setStep={setStep} releaseData={releaseData}/>
                                             :
-                                            <STEP5 />
+                                            <STEP6 />
                     }
                     </section>
 

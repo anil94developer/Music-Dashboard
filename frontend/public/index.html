@@ -137,5 +137,49 @@
   document.getElementById("defaultOpen").click();
 
 </script>
+<script>
+  const table = document.getElementById('example2');
+  let draggedRow = null;
+
+  // Event listeners for dragging rows
+  table.querySelectorAll('tbody tr').forEach(row => {
+      row.addEventListener('dragstart', (e) => {
+          draggedRow = row;
+          row.classList.add('dragging');
+      });
+
+      row.addEventListener('dragend', (e) => {
+          row.classList.remove('dragging');
+          draggedRow = null;
+      });
+  });
+
+  // Event listener to handle dropping at the correct position
+  table.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      const afterElement = getDragAfterElement(table, e.clientY);
+      const tbody = table.querySelector('tbody');
+      if (afterElement == null) {
+          tbody.appendChild(draggedRow);
+      } else {
+          tbody.insertBefore(draggedRow, afterElement);
+      }
+  });
+
+  // Function to find the closest row below the dragged position
+  function getDragAfterElement(container, y) {
+      const rows = [...container.querySelectorAll('tbody tr:not(.dragging)')];
+
+      return rows.reduce((closest, row) => {
+          const box = row.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+          if (offset < 0 && offset > closest.offset) {
+              return { offset: offset, element: row };
+          } else {
+              return closest;
+          }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+</script>
 </body>
 </html>
