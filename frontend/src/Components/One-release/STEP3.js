@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Step3Controller from '../../Controllers/One-release-controller/Step3Controller'
 import ARTISTLIST from '../../Enums/artist.list.json';
+import DynamicInputList from '../Common/DynamicInputList';
 import SearchInput from '../Common/SearchBox';
 
 export default function STEP3() {
@@ -178,7 +179,7 @@ export default function STEP3() {
               </div>
               <div className="modal-body">
                 <div className="row">
-                  <div >
+                  <div className="col-md-12">
 
                     <div className="col-md-6">
                       <label>Content Type *</label><br />
@@ -236,31 +237,35 @@ export default function STEP3() {
                     {/* Remixer */}
                     <div className="col-md-6">
                       <label>Remixer</label>
-                      <SearchInput artistData={ARTISTLIST} setSelectData={setRemixer}/> 
+                      <DynamicInputList inputs={remixer} setInputs={setRemixer}/>
+                      {/* <SearchInput />  */}
                     </div>
 
                     {/* Author */}
                     <div className="col-md-6">
                       <label>Author *</label>
-                      <SearchInput artistData={ARTISTLIST} setSelectData={setAuthor}/> 
+                      <DynamicInputList inputs={author} setInputs={setAuthor}/>
+
                     </div>
 
                     {/* Composer */}
                     <div className="col-md-6">
                       <label>Composer *</label>
-                      <SearchInput artistData={ARTISTLIST} setSelectData={setComposer}/>
+                      <DynamicInputList inputs={composer} setInputs={setComposer}/>
+
                     </div>
 
                     {/* Arranger */}
                     <div className="col-md-6">
                       <label>Arranger</label>
-                      <SearchInput artistData={ARTISTLIST} setSelectData={setArranger}/> 
+                      <DynamicInputList inputs={arranger} setInputs={setArranger}/> 
                     </div>
 
                     {/* Producer */}
                     <div className="col-md-6">
                       <label>Producer</label>
-                      <SearchInput artistData={ARTISTLIST} setSelectData={setProducer}/>
+                      <DynamicInputList inputs={producer} setInputs={setProducer}/>
+
                     </div>
 
                     {/* P Line */}

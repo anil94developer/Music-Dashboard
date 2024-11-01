@@ -52,7 +52,7 @@ export default function SearchInput(props) {
 
       <div>
         {selectedArtists.map((artist) => (
-          <div key={artist.id} className="artist-item form-control">
+          <div key={artist.id} className="artist-item form-control d-flex row">
             <img
               src="/img/placeholder.png" // Replace with artist image if available
               alt={artist.name}
@@ -67,7 +67,7 @@ export default function SearchInput(props) {
                 <span className="icon-spotify">🎶</span>
               )}
             </div>
-            <button onClick={() => removeArtist(artist.id)}>x</button>
+            <button onClick={() => removeArtist(artist.id)} style={{background:'red',borderRadius:20,color:'#fff'}}>x</button>
           </div>
         ))}
       </div>

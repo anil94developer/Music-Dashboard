@@ -20,11 +20,11 @@ const Step3Controller = (props) => {
     const [versionSubtitle, setVersionSubtitle] = useState("");
     const [primaryArtist, setPrimaryArtist] = useState("");
     const [featuring, setFeaturing] = useState("");
-    const [remixer, setRemixer] = useState("");
-    const [author, setAuthor] = useState("");
-    const [composer, setComposer] = useState("");
-    const [arranger, setArranger] = useState("");
-    const [producer, setProducer] = useState("");
+    const [remixer, setRemixer] = useState([{ value: '' }]);
+    const [author, setAuthor] = useState([{ value: '' }]);
+    const [composer, setComposer] = useState([{ value: '' }]);
+    const [arranger, setArranger] = useState([{ value: '' }]);
+    const [producer, setProducer] = useState([{ value: '' }]);
     const [pLine, setPLine] = useState("");
     const [productionYear, setProductionYear] = useState("");
     const [publisher, setPublisher] = useState("");
