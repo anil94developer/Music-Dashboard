@@ -4,9 +4,13 @@ import React, { useState } from 'react';
 
 
 export default function SearchInput(props) {
-    const {artistData,setSelectData}=props
+  const { artistData, setSelectData } = props
   const [query, setQuery] = useState("");
+  const [linkStatus, setLinkStatus] = useState(false);
+  const [link, setLink] = useState("");
+
   const [selectedArtists, setSelectedArtists] = useState([]);
+
 
   const handleSearchChange = (e) => {
     setQuery(e.target.value);
@@ -32,20 +36,53 @@ export default function SearchInput(props) {
   return (
     <div>
       <div>
-        <input
-         className="form-control"
-          type="text"
-          value={query}
-          onChange={handleSearchChange}
-          placeholder="Search for an artist..."
-        />
+        <div class="input-group input-group-sm">
+          <input
+            className="form-control"
+            type="text"
+            value={query}
+            onChange={handleSearchChange}
+            placeholder="Search for an artist..."
+          />
+          {/* <span class="input-group-btn"> */}
+          {/* {query ?
+            <button class="btn btn-success btn-flat" type="button" onClick={() => { setLinkStatus(true) }}>Add Artist</button>
+            :
+            <button type="button" class="btn btn-info btn-flat" >Search</button>
+
+          } */}
+          {/* </span> */}
+        </div>
+
+
         {query && (
-          <ul >
-            {filteredArtists.map((artist) => (
-              <li key={artist.id} onClick={() => addArtist(artist)}>
-                {artist.name}
-              </li>
-            ))}
+          <ul>
+            {
+              filteredArtists.length > 0 ?
+                filteredArtists.map((artist) => (
+                  <li key={artist.id} onClick={() => addArtist(artist)} className="form-control">
+                    {artist.name}
+                  </li>
+                ))
+                :
+                <div class="box">
+                  <div class="box-body">
+                  <div className="form-group">
+                    <label htmlFor="primaryArtist">Add Link Id</label>
+                    <div class="input-group input-group-sm ">
+                      <input
+                        className="form-control"
+                        type="text"
+                        value={link}
+                        onChange={(e) => { setLink(e.target.value) }}
+                        placeholder="Add Link Id..."
+                      /> 
+                    </div>
+                  </div>
+                  <button class="btn btn-success btn-flat" type="button" onClick={() => {  }}>Add Artist</button>
+                </div>
+                </div>
+            }
           </ul>
         )}
       </div>
@@ -59,15 +96,15 @@ export default function SearchInput(props) {
               className="artist-image"
             />
             <span>{artist.name}</span>
-            <div className="platform-icons">
+            {/* <div className="platform-icons">
               {artist.platforms.includes("apple") && (
                 <span className="icon-apple">🍎</span>
               )}
               {artist.platforms.includes("spotify") && (
                 <span className="icon-spotify">🎶</span>
               )}
-            </div>
-            <button onClick={() => removeArtist(artist.id)} style={{background:'red',borderRadius:20,color:'#fff'}}>x</button>
+            </div> */}
+            <button onClick={() => removeArtist(artist.id)} style={{ background: 'red', borderRadius: 20, color: '#fff' }}>x</button>
           </div>
         ))}
       </div>
