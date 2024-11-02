@@ -1,4 +1,5 @@
 import React from "react";
+import { images } from "../../assets/images";
 
 export const Nav = () => {
   return (
@@ -25,7 +26,7 @@ export const Nav = () => {
                 <li class="dropdown user user-menu">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img
-                      src="./dist/img/user2-160x160.jpg"
+                      src={images.user}
                       class="user-image"
                       alt="User Image"
                     />
@@ -34,7 +35,7 @@ export const Nav = () => {
                   <ul class="dropdown-menu">
                     <li class="user-header">
                       <img
-                        src="./dist/img/user2-160x160.jpg"
+                        src={images.user}
                         class="img-circle"
                         alt="User Image"
                       />
@@ -69,7 +70,7 @@ export const Nav = () => {
             <div class="user-panel">
               <div class="pull-left image">
                 <img
-                  src="../../../public/css/dist/img/user2-160x160.jpg"
+                  src={images.user}
                   class="img-circle"
                   alt="User Image"
                 />

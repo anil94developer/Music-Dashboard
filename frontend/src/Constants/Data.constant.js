@@ -9,6 +9,9 @@ const base = {
   addOneRelease: mainUrl + "release/add-one-release",
   releaseStep1: mainUrl + 'release/step-one-release',
   releaseStep2:mainUrl+'release/step-two-release',
+  addArtist:mainUrl+'artist/add-artist',
+  fetchArtistList:mainUrl+'artist/artist-list',
+  
 
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };

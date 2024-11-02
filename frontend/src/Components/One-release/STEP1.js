@@ -4,6 +4,7 @@ import Step1Controller from '../../Controllers/One-release-controller/Step1Contr
 import SearchInput from '../Common/SearchBox';
 import ARTISTLIST from '../../Enums/artist.list.json';
 import GENRES from '../../Enums/genres.json';
+import { images } from '../../assets/images';
 
 
 export default function STEP1(props) {
@@ -184,7 +185,7 @@ export default function STEP1(props) {
             <div className="col-md-6">
                 <div className="form-group">
                     <div className="img-cover">
-                        <img className="img-thumbnail" src={imagePreview} alt="Cover Preview" />
+                        <img className="img-thumbnail"src={images.user} alt="Cover Preview" />
                         <input
                             type="file"
                             name="image"

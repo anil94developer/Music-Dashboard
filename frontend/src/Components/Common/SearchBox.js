@@ -1,37 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2'; 
+import { images } from '../../assets/images';
+import { base } from '../../Constants/Data.constant';
+import { postData } from '../../Services/Ops';
 
 // Sample data (replace with your JSON array)
 
 
 export default function SearchInput(props) {
-  const { artistData, setSelectData } = props
+  const { artistData, setSelectData, } = props
   const [query, setQuery] = useState("");
-  const [linkStatus, setLinkStatus] = useState(false);
+  const [artistList, setArtistList] = useState([]);
   const [link, setLink] = useState("");
 
   const [selectedArtists, setSelectedArtists] = useState([]);
 
 
-  const handleSearchChange = (e) => {
-    setQuery(e.target.value);
-  };
 
+  useEffect(() => {
+    fetchArtistList()
+  }, [])
   const addArtist = (artist) => {
-    if (!selectedArtists.some(item => item.id === artist.id)) {
+    if (!selectedArtists.some(item => item._id === artist._id)) {
       setSelectedArtists([...selectedArtists, artist]);
       setSelectData([...selectedArtists, artist]);
-
     }
     setQuery("");
+    setLink("");
+
   };
 
   const removeArtist = (artistId) => {
-    setSelectedArtists(selectedArtists.filter(artist => artist.id !== artistId));
+    setSelectedArtists(selectedArtists.filter(artist => artist._id !== artistId));
   };
 
-  const filteredArtists = artistData.filter(artist =>
+  const filteredArtists = artistList.filter(artist =>
     artist.name.toLowerCase().includes(query.toLowerCase())
   );
+
+  const addHandleSubmit = async () => {
+    let body = {
+      "name": query,
+      "userId": "671e08391a2071afe4269f80",
+      "linkId": link
+    }
+    console.log(body)
+
+    let result = await postData(base.addArtist, body);
+    console.log(result)
+    if (result.data.status === true) {
+      Swal.fire("Success", result.message, result.message);
+      fetchArtistList()
+      setQuery("");
+      setLink("");
+    } else {
+      Swal.fire("Error", result.message, result.message);
+    }
+  }
+  const fetchArtistList = async () => {
+    let body = {
+      "userId": "671e08391a2071afe4269f80"
+    }
+    console.log(body)
+    let result = await postData(base.fetchArtistList, body);
+    console.log(base.fetchArtistList+"===========>",result)
+    if (result.data.status === true) { 
+      setArtistList(result.data.data)
+    } else {
+      // Swal.fire("Error", result.message, result.message);
+    }
+  }
 
   return (
     <div>
@@ -41,7 +79,8 @@ export default function SearchInput(props) {
             className="form-control"
             type="text"
             value={query}
-            onChange={handleSearchChange}
+            onChange={(e) => setQuery(e.target.value)}
+
             placeholder="Search for an artist..."
           />
         </div>
@@ -52,23 +91,23 @@ export default function SearchInput(props) {
             {
               filteredArtists.length > 0 ?
                 filteredArtists.map((artist) => (
-                  <li key={artist.id} onClick={() => addArtist(artist)} className="form-control">
+                  <li key={artist._id} onClick={() => addArtist(artist)} className="form-control">
                     {artist.name}
                   </li>
                 ))
                 :
                 <div class="box">
                   <div class="box-body">
-                    <div className="row"> 
+                    <div className="row">
                       <div className="col-md-6">
-                        <div className="form-group"> 
+                        <div className="form-group">
                           <label htmlFor="primaryArtist">Artist Name</label>
                           <div class="input-group input-group-sm">
                             <input
                               className="form-control"
                               type="text"
                               value={query}
-                              onChange={handleSearchChange}
+                              onChange={(e) => setQuery(e.target.value)}
                               placeholder="Search for an artist..."
                             />
                           </div>
@@ -89,7 +128,7 @@ export default function SearchInput(props) {
                         </div>
                       </div>
                     </div>
-                    <button class="btn btn-success btn-flat " type="button" onClick={() => { }}>Add Artist</button>
+                    <button class="btn btn-success btn-flat " type="button" onClick={() => { addHandleSubmit() }}>Add Artist</button>
                   </div>
                 </div>
             }
@@ -99,9 +138,9 @@ export default function SearchInput(props) {
 
       <div>
         {selectedArtists.map((artist) => (
-          <div key={artist.id} className="artist-item form-control d-flex row">
+          <div key={artist._id} className="artist-item form-control d-flex row">
             <img
-              src="/img/placeholder.png" // Replace with artist image if available
+              src={images.user} // Replace with artist image if available
               alt={artist.name}
               className="artist-image"
             />
@@ -114,7 +153,7 @@ export default function SearchInput(props) {
                 <span className="icon-spotify">🎶</span>
               )}
             </div> */}
-            <button onClick={() => removeArtist(artist.id)} style={{ background: 'red', borderRadius: 20, color: '#fff' }}>x</button>
+            <button onClick={() => removeArtist(artist._id)} style={{ background: 'red', borderRadius: 20, color: '#fff' }}>x</button>
           </div>
         ))}
       </div>
