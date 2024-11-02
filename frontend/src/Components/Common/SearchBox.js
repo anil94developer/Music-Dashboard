@@ -44,14 +44,6 @@ export default function SearchInput(props) {
             onChange={handleSearchChange}
             placeholder="Search for an artist..."
           />
-          {/* <span class="input-group-btn"> */}
-          {/* {query ?
-            <button class="btn btn-success btn-flat" type="button" onClick={() => { setLinkStatus(true) }}>Add Artist</button>
-            :
-            <button type="button" class="btn btn-info btn-flat" >Search</button>
-
-          } */}
-          {/* </span> */}
         </div>
 
 
@@ -67,20 +59,38 @@ export default function SearchInput(props) {
                 :
                 <div class="box">
                   <div class="box-body">
-                  <div className="form-group">
-                    <label htmlFor="primaryArtist">Add Link Id</label>
-                    <div class="input-group input-group-sm ">
-                      <input
-                        className="form-control"
-                        type="text"
-                        value={link}
-                        onChange={(e) => { setLink(e.target.value) }}
-                        placeholder="Add Link Id..."
-                      /> 
+                    <div className="row"> 
+                      <div className="col-md-6">
+                        <div className="form-group"> 
+                          <label htmlFor="primaryArtist">Artist Name</label>
+                          <div class="input-group input-group-sm">
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={query}
+                              onChange={handleSearchChange}
+                              placeholder="Search for an artist..."
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-group">
+                          <label htmlFor="primaryArtist">Add Link Id</label>
+                          <div class="input-group input-group-sm ">
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={link}
+                              onChange={(e) => { setLink(e.target.value) }}
+                              placeholder="Add Link Id..."
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                    <button class="btn btn-success btn-flat " type="button" onClick={() => { }}>Add Artist</button>
                   </div>
-                  <button class="btn btn-success btn-flat" type="button" onClick={() => {  }}>Add Artist</button>
-                </div>
                 </div>
             }
           </ul>

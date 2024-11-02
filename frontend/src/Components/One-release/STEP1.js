@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import Step1Controller from '../../Controllers/One-release-controller/Step1Controller'
 import SearchInput from '../Common/SearchBox';
 import ARTISTLIST from '../../Enums/artist.list.json';
+import GENRES from '../../Enums/genres.json';
+
 
 export default function STEP1(props) {
     const { setStep, releaseData } = props;
@@ -45,9 +47,13 @@ export default function STEP1(props) {
             } else {
                 console.error("Data is undefined or null");
             }
+            
         }
         getData()
     }, [])
+     // Get the subgenres for the selected genre
+     const selectedGenre = GENRES.find((g) => g.name === genre);
+     const subgenres = selectedGenre ? selectedGenre.subgenres : [];
 
     return (<div>
         <div class="box-header">
@@ -81,13 +87,13 @@ export default function STEP1(props) {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="primaryArtist">Primary artist *</label> 
-                    <SearchInput artistData={ARTISTLIST} setSelectData={setPrimaryArtist}/>
+                    <label htmlFor="primaryArtist">Primary artist *</label>
+                    <SearchInput artistData={ARTISTLIST} setSelectData={setPrimaryArtist} />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="featuring">Featuring</label>
-                    <SearchInput artistData={ARTISTLIST} setSelectData={setFeaturing}/>
+                    <SearchInput artistData={ARTISTLIST} setSelectData={setFeaturing} />
                 </div>
 
                 <div className="form-check">
@@ -110,24 +116,29 @@ export default function STEP1(props) {
                         onChange={(e) => setGenre(e.target.value)}
                     >
                         <option value="">Select a genre</option>
-                        <option value="429">African</option>
+                        {GENRES.map((item) =>
+                            (<option value={item.name}>{item.name}</option>)
+                        )}
+
                         {/* Add more options as needed */}
                     </select>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="subgenre">Subgenre *</label>
-                    <select
-                        value={subgenre}
-                        className="form-control"
-                        id="subgenre"
-                        onChange={(e) => setSubgenre(e.target.value)}
-                    >
-                        <option value="">Select a sub-genre</option>
-                        <option value="430">Asian</option>
-                        {/* Add more options as needed */}
-                    </select>
-                </div>
+                <label htmlFor="subgenre">Subgenre *</label>
+                <select
+                    value={subgenre}
+                    className="form-control"
+                    id="subgenre"
+                    onChange={(e) => setSubgenre(e.target.value)}
+                    disabled={!subgenres.length} // Disable if no subgenres available
+                >
+                    <option value="">Select a sub-genre</option>
+                    {subgenres.map((sub) => (
+                        <option key={sub.id} value={sub.name}>{sub.name}</option>
+                    ))}
+                </select>
+            </div>
 
                 <div className="form-group">
                     <label htmlFor="labelName">Label name *</label>
