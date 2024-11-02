@@ -26,12 +26,15 @@ const LoginController = (props) => {
     console.log(result);
     if (result.data.status === true) {
       localStorage.setItem("token",result.data.data.token)
-      localStorage.setItem("userData",result.data.data) 
-
-
+      localStorage.setItem("userData",result.data.data)  
       navigate("/Dashboard");
     } else {
-      Swal.fire("Error", result.message, result.message); 
+      Swal.fire({
+        icon: 'error',              // Use "error" icon for unauthorized message
+        title: 'Unauthorized !!',    // Set your custom title here
+        text: result.message, // Custom message (optional)
+    });
+      // Swal.fire("Error", result.message, result.message); 
     } 
   };
 

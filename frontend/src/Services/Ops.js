@@ -45,20 +45,25 @@ const putData = async (url = "", data,token) => {
         return e.response.data
     }
 };
-const getData = async (url = "") => {
+const getData = async (url = "", params = {}) => {
     try {
-        let token = localStorage.getItem("token")
-
+        let token = localStorage.getItem("token");
         if (token) {
-            token = "Bearer " + token;
-        }
-        var header = { headers: { Authorization: token,'Cache-Control': 'no-cache' } };
-        let response = await axios.get(url, header);
+            token =   token;
+        } 
+        const headers = {
+            Authorization: token,
+            'Cache-Control': 'no-cache'
+        };
+
+        // Pass params as query parameters using the params option
+        const response = await axios.get(url, { headers, params });
         return response.data;
-    } catch (e) { 
-        return e.response.data
+    } catch (e) {
+        return e.response ? e.response.data : { error: 'Unknown error' };
     }
 };
+
 
 const deleteData = async (url = "", token = false) => {
     try {

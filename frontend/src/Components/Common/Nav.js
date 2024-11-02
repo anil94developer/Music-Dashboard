@@ -1,13 +1,15 @@
 import React from "react";
 import { images } from "../../assets/images";
+import AuthController from "../../Controllers/Auth-controller/AuthController";
 
 export const Nav = () => {
+  const {userData}= AuthController()
   return (
     <nav>
       <div class="wrapper">
         <header class="main-header">
           <a href=" index2.html" class="logo">
-            <b>Admin Music</b>{" "}
+            <b>Music Dashboard</b>{" "}
           </a>
           <nav class="navbar navbar-static-top" role="navigation">
             <a
@@ -30,7 +32,7 @@ export const Nav = () => {
                       class="user-image"
                       alt="User Image"
                     />
-                    <span class="hidden-xs">omkmmomoim</span>
+                    <span class="hidden-xs">{userData.name}</span>
                   </a>
                   <ul class="dropdown-menu">
                     <li class="user-header">
@@ -76,7 +78,7 @@ export const Nav = () => {
                 />
               </div>
               <div class="pull-left info">
-                <p>rahul</p>
+                <p>{userData.name}</p>
 
                 <a href="#">
                   <i class="fa fa-circle text-success"></i> Online

@@ -40,8 +40,7 @@ export default function SearchInput(props) {
 
   const addHandleSubmit = async () => {
     let body = {
-      "name": query,
-      "userId": "671e08391a2071afe4269f80",
+      "name": query, 
       "linkId": link
     }
     console.log(body)
