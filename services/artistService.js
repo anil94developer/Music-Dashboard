@@ -4,7 +4,11 @@ const artistModel =require('./../models/artistmodels')
 const artist = {};
 
 artist.addArtist = async (req, res, next) => {
-    const  body  = req.body 
+     
+    const body = {
+        ...req.body,           // Spread the existing keys from req.body
+        userId: req.doc.userId // Add a new key `userId` from req.doc
+    };
     try { 
         const result = await artistModel.addArtist(body) 
         return R(res, true, "Add Successfully!!", result, 200)
@@ -13,9 +17,9 @@ artist.addArtist = async (req, res, next) => {
     }
 };
 artist.artistList = async (req, res, next) => {
-    const  {userId}  = req.body 
+    
     try { 
-        const result = await artistModel.artistList(userId) 
+        const result = await artistModel.artistList(req.doc.userId) 
         return R(res, true, "Fetch Successfully!!", result, 200)
     } catch (err) { 
         next(err)

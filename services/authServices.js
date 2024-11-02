@@ -1,14 +1,18 @@
- 
+
 
 const bcrypt = require("../utils/bcrypt")
-const jwt = require("jsonwebtoken");  
-const R = require("../utils/responseHelper"); 
+const jwt = require("jsonwebtoken");
+const R = require("../utils/responseHelper");
 const validateInput = require("../helper/emailmobileVal")
 const sendOtpEmail = require("../utils/Sendgrid")
 const IP = require('ip');
-const authModel = require("../models/authmodels"); 
+const authModel = require("../models/authmodels");
 
 const auth = {};
+ 
+
+ 
+ 
 
 // auth.addUsers = async (req, res, next) => {
 //     try {
@@ -19,14 +23,7 @@ const auth = {};
 //     }
 
 // }
-// auth.getUsers = async (req, res, next) => {
-//     try {
-//         const get = await authModal.getUser()
-//         return R(res, true, "Data submitted successfully!!", get, 200)
-//     } catch (error) {
-//         next(error)
-//     }
-// }
+
 // auth.changeActiveStatus = async (req, res, next) => {
 //     try {
 //         let add = await authModal.changeStatus(req.body)
@@ -153,7 +150,7 @@ auth.login = async (req, res, next) => {
             } else {
                 return R(res, false, "Password not matched", {}, 403)
             }
-        }else{
+        } else {
             return R(res, false, "Email not Register", {}, 403)
         }
 
@@ -164,7 +161,7 @@ auth.login = async (req, res, next) => {
 };
 
 auth.signUp = async (req, res, next) => {
-    const { email, phone, name, password, role,dob } = req.body
+    const { email, phone, name, password, role, dob } = req.body
     const now = new Date();
     const futureDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
     const futureTimeInMillis = futureDate.getTime()
@@ -182,9 +179,9 @@ auth.signUp = async (req, res, next) => {
             dob: dob,
             role: role,
             is_deleted: 0,
-            ip_address:ipAddress,
-            create_at:futureTimeInMillis,
-            is_active:1
+            ip_address: ipAddress,
+            create_at: futureTimeInMillis,
+            is_active: 1
         }
         const register = await authModel.signUp(newUser)
         const userData = {
@@ -196,7 +193,7 @@ auth.signUp = async (req, res, next) => {
 
         const secret = process.env.JWT_SECRET;
         userData.token = jwt.sign(userData, secret);
-       
+
         return R(res, true, "Account Registered Successfully!!", userData, 200)
 
 
@@ -205,7 +202,15 @@ auth.signUp = async (req, res, next) => {
         next(err)
     }
 };
-
+auth.getUsers = async (req, res, next) => { 
+ 
+    try {
+        const get = await authModel.getUser(req.doc.userId)
+        return R(res, true, "Data successfully!!", get, 200)
+    } catch (error) {
+        next(error)
+    }
+}
 // auth.addsubadmin = async (req, res, next) => {
 //     try {
 //         req.body.password = await bcrypt.passwordEncryption(req.body.password);

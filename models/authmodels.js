@@ -19,6 +19,7 @@ const usersSchema = mongoose.Schema({
 { timestamps: true }
 );
 
+
 authModel.cronForOneHour = async() => {
     const nowInMillis = Date.now();
 
@@ -44,89 +45,6 @@ authModel.cronForOneDay = async() => {
       );
 }
 
-authModel.findAdminByRole = async(email, password) => {
-    let findadmin = await db.connectDb("usersSchemas",usersSchema)
-    let val = await findadmin.findOne(
-        { role: "admin" },
-        { __v: 0 }
-    );
-    console.log("findfindfind======>>>",val)
-    if(Object.keys(val).length>0){
-        return val
-    }
-    else{
-        return false
-    }
-}
-
-authModel.findAdmin = async(email, password) => {
-    let findadmin = await db.connectDb("usersSchemas",usersSchema)
-    let val = await findadmin.findOne(
-        { email: email },
-        { __v: 0 }
-    );
-    console.log("findfindfind======>>>",val)
-    if(Object.keys(val).length>0){
-        return val
-    }
-    else{
-        return false
-    }
-}
-authModel.getUser = async()=> {
-    const add = await db.connectDb("users",usersSchema)
-    const getUser = await add.find({})
-    return getUser
-}
-
-
-authModel.getUserByMobileOrEmail = async()=> {
-    const add = await db.connectDb("users",usersSchema)
-    const getUser = await add.find({})
-    return getUser
-}
-
-authModel.changeStatus = async(data) => {
-    try{
-        let userstatus = await db.connectDb("users",usersSchema)
-        let statusCategory = await userstatus.updateOne({_id:data.id},{$set:{is_active:data.isActive}})
-        if (statusCategory) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    catch(err){
-        return err
-    }
-}
-
-authModel.changeDeleteStatus = async(data) => {
-    try{
-        let userstatus = await db.connectDb("users",usersSchema)
-        let statusCategory = await userstatus.updateOne({_id:data.id},{$set:{is_deleted:data.isDelete}})
-        if (statusCategory) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    catch(err){
-        return err
-    }
-}
-
-authModel.findPermission = async(userId) => {
-    let connect = await db.connectDb("usersSchemas",usersSchema)
-    let find = await connect.findOne({_id:userId})
-    if(Object.keys(find).length>0){
-        return find
-    }
-    else{
-        return false
-    }
-}
-
 authModel.login = async (key, email) => {
     
     let check = {};
@@ -138,38 +56,6 @@ authModel.login = async (key, email) => {
     } 
     return val;
 };
-authModel.checkAvailablityWithUserId = async(user_id)=>{
-    const checkUser = await db.connectDb("users", usersSchema);
-    let val = await checkUser.findOne({_id:user_id})
-      return val
-}
-
-authModel.checkAvailablity = async(email)=>{
-    const checkUser = await db.connectDb("users", usersSchema);
-    let val = await checkUser.find({
-        $or: [
-          { email: email }
-        ]
-      })
-      return val
-}
-authModel.checkAvailablityForAdmin = async(email)=>{
-    const checkUser = await db.connectDb("usersSchemas",usersSchema)
-    let val = await checkUser.find({ email: email })
-      return val
-}
-
-authModel.checkAvailablityWithoutASpecificUser = async(userId,email,mobile)=>{
-    const checkUser = await db.connectDb("users", usersSchema);
-    let val = await checkUser.find({
-        $and: [
-            { _id: { $ne: userId } },
-            { $or: [{ email: email }, { mobileNumber: mobile }] }
-         
-        ]
-      })
-      return val
-}
 
 authModel.signUp = async (data) => {
     const Login = await db.connectDb("users", usersSchema);
@@ -182,168 +68,290 @@ authModel.signUp = async (data) => {
     }
 };
 
-authModel.profileupdate = async (id,data) => {
-    const Login = await db.connectDb("users", usersSchema);
-    let insData = await Login.updateOne({_id:id},{$set:data});
-    if (insData.modifiedCount > 0 || insData.upsertedCount > 0) {
-        return true;
-    } else {
-        return false
-        // return apiResponse.err("Registration Failed", 403);
-    }
-};
-authModel.showprofile = async (id) => {
-    try{
-    const user = await db.connectDb("users", usersSchema);
-    let insData = await user.findOne({_id:id});
-        return insData
-    }catch(error){
-        // return R(res, false, "Error occurs", {},403)
-        console.log(error)
-    }
-};
-authModel.updateemailandmobile = async (id,data) => {
-    console.log('changestatus=======>>>>>>>>',id,data);
-    const Login = await db.connectDb("users", usersSchema);
-    let insData = await Login.updateOne({_id:id},{$set:{email:data.email,mobileNumber:data.mobileNumber}});
-    if (insData.modifiedCount > 0 || insData.upsertedCount > 0) {
-        return true;
-    } else {
-        return false
-        // return apiResponse.err("Registration Failed", 403);
-    }
-};
 
-authModel.usersSchema = async (data) => {
-    const sub = await db.connectDb("usersSchemas", usersSchema);
-    let insData = await sub.create(data);
-    console.log(insData)
-    if (insData || insData.length > 0) {
-        return insData;
-    } else {
-        return apiResponse.err("Registration Failed", 403);
-    }
-};
-authModel.findusersSchema = async (email) => {
-    const sub = await db.connectDb("usersSchema", usersSchema);
-    let val = await sub.findOne(
-        { email: email },
-        { __v: 0 }
-    );
-    // console.log(val);
-    if (val) {
-        console.log("resolve");
-        return val;
-    }
-}
-authModel.findusersSchemalist = async (type) => {
-    const sub = await db.connectDb("usersSchemas", usersSchema);
-    let val = await sub.find({
-        $and: [
-            { email: { $ne: "admin@gmail.com" } }, // Condition 1: email not equal to 'admin@gmail.com'
-            { role: type } // Condition 2: role equals a certain value stored in the variable 'type'
-        ]
-    });
+authModel.getUser = async(userId)=> {
+    const add = await db.connectDb("users",usersSchema)
+    const getUser = await add.find({_id:userId})
+    return getUser[0]
+} 
+
+
+
+// authModel.findAdminByRole = async(email, password) => {
+//     let findadmin = await db.connectDb("usersSchemas",usersSchema)
+//     let val = await findadmin.findOne(
+//         { role: "admin" },
+//         { __v: 0 }
+//     );
+//     console.log("findfindfind======>>>",val)
+//     if(Object.keys(val).length>0){
+//         return val
+//     }
+//     else{
+//         return false
+//     }
+// }
+
+// authModel.findAdmin = async(email, password) => {
+//     let findadmin = await db.connectDb("usersSchemas",usersSchema)
+//     let val = await findadmin.findOne(
+//         { email: email },
+//         { __v: 0 }
+//     );
+//     console.log("findfindfind======>>>",val)
+//     if(Object.keys(val).length>0){
+//         return val
+//     }
+//     else{
+//         return false
+//     }
+// }
+
+
+// authModel.getUserByMobileOrEmail = async()=> {
+//     const add = await db.connectDb("users",usersSchema)
+//     const getUser = await add.find({})
+//     return getUser
+// }
+
+// authModel.changeStatus = async(data) => {
+//     try{
+//         let userstatus = await db.connectDb("users",usersSchema)
+//         let statusCategory = await userstatus.updateOne({_id:data.id},{$set:{is_active:data.isActive}})
+//         if (statusCategory) {
+//             return true;
+//         } else {
+//             return false;
+//         }
+//     }
+//     catch(err){
+//         return err
+//     }
+// }
+
+// authModel.changeDeleteStatus = async(data) => {
+//     try{
+//         let userstatus = await db.connectDb("users",usersSchema)
+//         let statusCategory = await userstatus.updateOne({_id:data.id},{$set:{is_deleted:data.isDelete}})
+//         if (statusCategory) {
+//             return true;
+//         } else {
+//             return false;
+//         }
+//     }
+//     catch(err){
+//         return err
+//     }
+// }
+
+// authModel.findPermission = async(userId) => {
+//     let connect = await db.connectDb("usersSchemas",usersSchema)
+//     let find = await connect.findOne({_id:userId})
+//     if(Object.keys(find).length>0){
+//         return find
+//     }
+//     else{
+//         return false
+//     }
+// }
+
+
+// authModel.checkAvailablityWithUserId = async(user_id)=>{
+//     const checkUser = await db.connectDb("users", usersSchema);
+//     let val = await checkUser.findOne({_id:user_id})
+//       return val
+// }
+
+// authModel.checkAvailablity = async(email)=>{
+//     const checkUser = await db.connectDb("users", usersSchema);
+//     let val = await checkUser.find({
+//         $or: [
+//           { email: email }
+//         ]
+//       })
+//       return val
+// }
+// authModel.checkAvailablityForAdmin = async(email)=>{
+//     const checkUser = await db.connectDb("usersSchemas",usersSchema)
+//     let val = await checkUser.find({ email: email })
+//       return val
+// }
+
+// authModel.checkAvailablityWithoutASpecificUser = async(userId,email,mobile)=>{
+//     const checkUser = await db.connectDb("users", usersSchema);
+//     let val = await checkUser.find({
+//         $and: [
+//             { _id: { $ne: userId } },
+//             { $or: [{ email: email }, { mobileNumber: mobile }] }
+         
+//         ]
+//       })
+//       return val
+// }
+
+
+// authModel.profileupdate = async (id,data) => {
+//     const Login = await db.connectDb("users", usersSchema);
+//     let insData = await Login.updateOne({_id:id},{$set:data});
+//     if (insData.modifiedCount > 0 || insData.upsertedCount > 0) {
+//         return true;
+//     } else {
+//         return false
+//         // return apiResponse.err("Registration Failed", 403);
+//     }
+// };
+// authModel.showprofile = async (id) => {
+//     try{
+//     const user = await db.connectDb("users", usersSchema);
+//     let insData = await user.findOne({_id:id});
+//         return insData
+//     }catch(error){
+//         // return R(res, false, "Error occurs", {},403)
+//         console.log(error)
+//     }
+// };
+// authModel.updateemailandmobile = async (id,data) => {
+//     console.log('changestatus=======>>>>>>>>',id,data);
+//     const Login = await db.connectDb("users", usersSchema);
+//     let insData = await Login.updateOne({_id:id},{$set:{email:data.email,mobileNumber:data.mobileNumber}});
+//     if (insData.modifiedCount > 0 || insData.upsertedCount > 0) {
+//         return true;
+//     } else {
+//         return false
+//         // return apiResponse.err("Registration Failed", 403);
+//     }
+// };
+
+// authModel.usersSchema = async (data) => {
+//     const sub = await db.connectDb("usersSchemas", usersSchema);
+//     let insData = await sub.create(data);
+//     console.log(insData)
+//     if (insData || insData.length > 0) {
+//         return insData;
+//     } else {
+//         return apiResponse.err("Registration Failed", 403);
+//     }
+// };
+// authModel.findusersSchema = async (email) => {
+//     const sub = await db.connectDb("usersSchema", usersSchema);
+//     let val = await sub.findOne(
+//         { email: email },
+//         { __v: 0 }
+//     );
+//     // console.log(val);
+//     if (val) {
+//         console.log("resolve");
+//         return val;
+//     }
+// }
+// authModel.findusersSchemalist = async (type) => {
+//     const sub = await db.connectDb("usersSchemas", usersSchema);
+//     let val = await sub.find({
+//         $and: [
+//             { email: { $ne: "admin@gmail.com" } }, // Condition 1: email not equal to 'admin@gmail.com'
+//             { role: type } // Condition 2: role equals a certain value stored in the variable 'type'
+//         ]
+//     });
     
-    if (val.length>0) {
-        return val;
-    }
-    else{
-        return false
-    }
-}
-authModel.setusersSchema = async (data) => {
-    const login = await db.connectDb("usersSchema", usersSchema);
-    const insdata = await login.updateOne(
-        { _id: ObjectId(data._id) },
-        {
-            $set:data
-        },
-        { upsert: true, runValidators: true }
-    );
+//     if (val.length>0) {
+//         return val;
+//     }
+//     else{
+//         return false
+//     }
+// }
+// authModel.setusersSchema = async (data) => {
+//     const login = await db.connectDb("usersSchema", usersSchema);
+//     const insdata = await login.updateOne(
+//         { _id: ObjectId(data._id) },
+//         {
+//             $set:data
+//         },
+//         { upsert: true, runValidators: true }
+//     );
 
-    if (insdata.modifiedCount > 0 || insdata.upsertedCount > 0) {
-        return true;
-    } else {
-        return false;
-    }
-};
-authModel.userstatus = async (_id, status) => {
-    const login = await db.connectDb("usersSchema", usersSchema);
-    const insdata = await login.updateOne(
-        { _id: ObjectId(_id) },
-        { $set: { active: status }},
-        { upsert: true, runValidators: true }
-    );
+//     if (insdata.modifiedCount > 0 || insdata.upsertedCount > 0) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// };
+// authModel.userstatus = async (_id, status) => {
+//     const login = await db.connectDb("usersSchema", usersSchema);
+//     const insdata = await login.updateOne(
+//         { _id: ObjectId(_id) },
+//         { $set: { active: status }},
+//         { upsert: true, runValidators: true }
+//     );
 
-    if (insdata.modifiedCount > 0 || insdata.upsertedCount > 0) {
-        return true;
-    } else {
-        return false;
-    }
-};
+//     if (insdata.modifiedCount > 0 || insdata.upsertedCount > 0) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// };
 
-authModel.userdelete = async (_id) => {
-    const Login = await db.connectDb("usersSchema", usersSchema);
-    const getId = await Login.findByIdAndDelete(_id);
-    // console.log('mob', getId, val, pro)
-    if (getId) {
-        return getId;
-    } else {
-        return apiResponse.err("User not Found!!", 403);
-    }
-};
+// authModel.userdelete = async (_id) => {
+//     const Login = await db.connectDb("usersSchema", usersSchema);
+//     const getId = await Login.findByIdAndDelete(_id);
+//     // console.log('mob', getId, val, pro)
+//     if (getId) {
+//         return getId;
+//     } else {
+//         return apiResponse.err("User not Found!!", 403);
+//     }
+// };
 
-authModel.changePassword = async (userId, pass) => {
-    const Login = await db.connectDb("users", usersSchema);
-    const passData = await Login.updateOne(
-        { _id: userId },
-        { $set: { password: pass } },
-        { runValidators: true }
-    );
-    if (passData.modifiedCount > 0) {
-        return true;
-    } else {
-        return false;
-    }
-};
+// authModel.changePassword = async (userId, pass) => {
+//     const Login = await db.connectDb("users", usersSchema);
+//     const passData = await Login.updateOne(
+//         { _id: userId },
+//         { $set: { password: pass } },
+//         { runValidators: true }
+//     );
+//     if (passData.modifiedCount > 0) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// };
 
-authModel.forgotPassword = async (email, pass) => {
-    const Login = await db.connectDb("users", usersSchema);
-    const passData = await Login.updateOne(
-        { email: email },
-        { $set: { password: pass } },
-        { runValidators: true }
-    );
-    if (passData.modifiedCount > 0) {
-        return true;
-    } else {
-        return false;
-    }
-};
+// authModel.forgotPassword = async (email, pass) => {
+//     const Login = await db.connectDb("users", usersSchema);
+//     const passData = await Login.updateOne(
+//         { email: email },
+//         { $set: { password: pass } },
+//         { runValidators: true }
+//     );
+//     if (passData.modifiedCount > 0) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// };
 
-authModel.forgotPasswordForAdmin = async (email, pass) => {
-    const dbConnect = await db.connectDb("usersSchemas",usersSchema)
-    const passData = await dbConnect.updateOne(
-        { email: email },
-        { $set: { password: pass } },
-        { runValidators: true }
-    );
-    if (passData.modifiedCount > 0) {
-        return true;
-    } else {
-        return false;
-    }
-};
+// authModel.forgotPasswordForAdmin = async (email, pass) => {
+//     const dbConnect = await db.connectDb("usersSchemas",usersSchema)
+//     const passData = await dbConnect.updateOne(
+//         { email: email },
+//         { $set: { password: pass } },
+//         { runValidators: true }
+//     );
+//     if (passData.modifiedCount > 0) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// };
 
-authModel.getUserbyId = async (userId) => {
-    const Login = await db.connectDb("users", usersSchema);
-    let val = await Login.findOne({ _id: ObjectId(userId) }, { __v: 0 });
-    if (val) {
-        console.log("resolve");
-        console.log('val: ', val);
-        return val;
-    }
-};
+// authModel.getUserbyId = async (userId) => {
+//     const Login = await db.connectDb("users", usersSchema);
+//     let val = await Login.findOne({ _id: ObjectId(userId) }, { __v: 0 });
+//     if (val) {
+//         console.log("resolve");
+//         console.log('val: ', val);
+//         return val;
+//     }
+// };
 
 module.exports = authModel
