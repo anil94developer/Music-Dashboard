@@ -12,29 +12,6 @@ release.addOneRelease = async (req, res, next) => {
             userId:req.doc.userId,
             title: title,
             type: type
-            // step1:{
-            //     "subTitle": "",
-            //     "primaryArtist": "",
-            //     "featuring": "",
-            //     "isVariousArtists":"",
-            //     "genre": "",
-            //     "subGenre": "", 
-            //     "labelName": "",
-            //     "format": "",
-            //     "originalReleaseDate": "",
-            //     "line": "",
-            //     "cline": "",
-            //     "productionYear": "",
-            //     "UPCEAN": "",
-            //     "producerCatalogueNumber": ""
-            // },
-            // step2:[
-            //     {
-            //         "fileName":"", 
-            //         "fileType":"",
-            //         "fileData":"",
-            //     }
-            // ]
         }
         console.error(newReq)
         const result = await releaseModel.addOneRelease(newReq) 

@@ -10,7 +10,8 @@ const adminRoutes = require("./routes/admin.routes")
 
 //sub admin
 const authRoutes = require("./routes/auth.routes")
-const releaseRoutes = require("./routes/release.routes")
+const releaseRoutes = require("./routes/release.routes");
+const artistRoutes = require("./routes/artist.routes");
 
 
 
@@ -42,6 +43,8 @@ app.use(cors());
 // app.use("/auth/createSecure", adminRoutes)
 app.use("/auth", authRoutes)
 app.use("/release", releaseRoutes)
+app.use("/artist", artistRoutes)
+
 
 
 const server = new http.createServer({}, app);
