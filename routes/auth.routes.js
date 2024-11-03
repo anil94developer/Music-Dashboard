@@ -10,6 +10,7 @@ router.post('/login',authService.login)
 router.get('/user-profile',verifyToken, authService.getUsers)
 
 
+
 // router.post('/get-otp',otpSendValidation, authService.getOtpForMobileAndEmail)
 // router.post("/verifyOtp",otpVerifyValidation, authService.verifyOtp)
 

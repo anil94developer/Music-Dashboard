@@ -4,7 +4,7 @@ const artistService = require("../services/artistService");
 const verifyToken = require("../utils/verifyToken");
 
 router.post('/add-artist',verifyToken, artistService.addArtist)
-router.post('/artist-list',verifyToken, artistService.artistList)
+router.get('/artist-list',verifyToken, artistService.artistList)
 
 
 

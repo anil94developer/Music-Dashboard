@@ -66,6 +66,46 @@ release.addFiveStepRelease = async (req, res, next) => {
     }
 };
 
+release.releaseList= async (req, res, next) => { 
+    try {  
+        const result = await releaseModel.releaseList(req.doc.userId) 
+        return R(res, true, "Fetch Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+release.releaseDetails= async (req, res, next) => { 
+    let {releaseId} =req.body;
+    try {  
+        const result = await releaseModel.releaseDetails(releaseId) 
+        return R(res, true, "Fetch Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+
+release.addLabel= async (req, res, next) => { 
+    const body = {
+        ...req.body,           // Spread the existing keys from req.body
+        userId: req.doc.userId // Add a new key `userId` from req.doc
+    };
+    try {  
+        const result = await releaseModel.addLabel(body) 
+        return R(res, true, "Add Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+release.labelList= async (req, res, next) => { 
+    try {  
+        const result = await releaseModel.labelList(req.doc.userId) 
+        return R(res, true, "Fetch Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+
+ 
 
 module.exports = release;
 
