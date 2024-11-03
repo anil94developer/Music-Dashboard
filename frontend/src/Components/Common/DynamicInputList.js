@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 
 export default function DynamicInputList(props) {
-  const {inputs, setInputs}= props
-  // const [inputs, setInputs] = useState([{ value: '' }]);
+  const {inputs, setInputs}= props 
 
   const handleInputChange = (index, event) => {
     const newInputs = [...inputs];
-    newInputs[index].value = event.target.value;
+    newInputs[index].id = index;
+    newInputs[index].name = event.target.value;
     setInputs(newInputs);
   };
 
   const handleAddInput = () => {
-    setInputs([...inputs, { value: '' }]);
-     
+    setInputs([...inputs, { id: '',name:'' }]); 
   };
 
   const handleRemoveInput = (index) => {
@@ -22,11 +21,12 @@ export default function DynamicInputList(props) {
 
   return (
     <div className="dynamic-input-container d-flex row">
+      
       {inputs.map((input, index) => (
         <div class="input-group input-group-sm">
           <input
             type="text"
-            value={input.value}
+            value={input.name}
             onChange={(event) => handleInputChange(index, event)}
             placeholder={`Input ${index + 1}`}
             className="form-control"

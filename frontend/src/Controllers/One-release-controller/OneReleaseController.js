@@ -18,11 +18,15 @@ const OneReleaseController = (props) => {
         fetchReleaseList()
       }, [])
       const fetchReleaseList = async () => { 
+        setIsLoading(true)
         let result = await getData(base.releaseList);
         console.log(base.releaseList+"===========>",result)
         if (result.status === true) { 
             setMyRelease(result.data)
+            setIsLoading(false)
         } else {
+          setIsLoading(false)
+
           // Swal.fire("Error", result.message, result.message);
         }
       }
@@ -36,15 +40,14 @@ const OneReleaseController = (props) => {
         let result = await postData(base.addOneRelease, body);
         console.log(result);
         if (result.data.status === true) { 
-            navigate("/main-step",{ state: { releaseData: JSON.stringify(result.data.data) } });
+            navigate("/main-step",{ state: { releaseId: result.data.data._id } });
           } else {
             Swal.fire("Error", result.message, result.message); 
           } 
     }
 
-    const moreAction=(e)=>{
-        
-        navigate("/main-step",{ state: { releaseData: JSON.stringify(e) } });
+    const moreAction=(e)=>{ 
+        navigate("/main-step",{ state:  { releaseId: e._id } } );
     }
     return {
         isLoading,

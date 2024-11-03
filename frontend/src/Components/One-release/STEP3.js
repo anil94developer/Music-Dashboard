@@ -1,12 +1,12 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Step3Controller from '../../Controllers/One-release-controller/Step3Controller'
 import ARTISTLIST from '../../Enums/artist.list.json';
 import DynamicInputList from '../Common/DynamicInputList';
 import SearchInput from '../Common/SearchBox';
 
 export default function STEP3(props) {
-  const { releaseData } = props
+  const { releaseData, fetchReleaseDetails } = props
   const {
     contentType,
     setContentType,
@@ -66,19 +66,72 @@ export default function STEP3(props) {
     setLyricsLanguage,
     lyrics,
     setLyrics,
-    handleSubmit
+    step3, setStep3,
+    handleSubmit,
+    setReleaseData,
+    btnName, setBtnName, setRowId
   } = Step3Controller()
 
   // State to manage the modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Function to open the modal
-  const openModal = () => setIsModalOpen(true);
+  const openModal = () => {
+    setBtnName("Add");
+    setIsModalOpen(true)
+  };
 
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
 
+  useEffect(() => {
+    const getData = async () => { 
+      setStep3(releaseData.step3);
+      setReleaseData(releaseData)
+      console.log("idddddddddddddd----------",releaseData._id)
+    }
+    getData()
+  }, [releaseData.step3])
 
+  useEffect(() => {
+    fetchReleaseDetails(releaseData._id)
+  }, [isModalOpen])
+
+  const editTracks = (item) => {
+    setBtnName("Edit")
+    setRowId(item._id)
+    setIsModalOpen(true)
+    console.log(item)
+    setContentType(item.ContentType || "audio");
+    setPrimaryTrackType(item.PrimaryTrackType || "music");
+    setSecondaryTrackType(item.SecondaryTrackType || "original");
+    setInstrumental(item.Instrumental || false);
+    setTitle(item.Title || "");
+    setVersionSubtitle(item.VersionSubtitle || "");
+    setPrimaryArtist(item.PrimaryArtist || "");
+    setFeaturing(item.Featuring || "");
+    setRemixer(item.Remixer || [{ value: '' }]);
+    setAuthor(item.Author || [{ value: '' }]);
+    setComposer(item.Composer || [{ value: '' }]);
+    setArranger(item.Arranger || [{ value: '' }]);
+    setProducer(item.Producer || [{ value: '' }]);
+    setPLine(item.Pline || "");
+    setProductionYear(item.ProductionYear || "");
+    setPublisher(item.Publisher || "");
+    setIsrc(item.ISRC || "");
+    setGenerateISRC(item.GenerateISRC || false);
+    setGenre(item.Genre || "");
+    setSubgenre(item.Subgenre || "");
+    setSecondaryGenre(item.SecondaryGenre || "");
+    setSubSecondaryGenre(item.SubSecondaryGenre || "");
+    setPrice(item.Price || "");
+    setProducerCatalogueNumber(item.ProducerCatalogueNumber || "");
+    setParentalAdvisory(item.ParentalAdvisory || "");
+    setPreviewStart(item.PreviewStart || "");
+    setTrackTitleLanguage(item.TrackTitleLanguage || "");
+    setLyricsLanguage(item.LyricsLanguage || "");
+    setLyrics(item.Lyrics || "");
+  }
   return (
     <div>
       <div className='row'>
@@ -93,8 +146,9 @@ export default function STEP3(props) {
       <div class="box box-primary">
         <div class="box">
           <div class="box-body">
-            <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="row"><div class="col-xs-6"></div><div class="col-xs-6"></div></div>
-              <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+            <div class="dataTables_wrapper form-inline" role="grid">
+
+              <table class="table" aria-describedby="example2_info">
                 <thead>
                   <tr draggable="true">
                     <th rowspan="1" colspan="1">Content Type</th>
@@ -104,40 +158,32 @@ export default function STEP3(props) {
                     <th rowspan="1" colspan="1">ACTION</th>
                   </tr>                </thead>
 
-                <tfoot>
-                  <tr draggable="true">
-                    <th rowspan="1" colspan="1">Content Type</th>
-                    <th rowspan="1" colspan="1">PrimaryTrackType</th>
-                    <th rowspan="1" colspan="1">SecondaryTrackType</th>
-                    <th rowspan="1" colspan="1">Title</th>
-                    <th rowspan="1" colspan="1">ACTION</th>
-                  </tr>
-                </tfoot>
                 <tbody role="alert" aria-live="polite" aria-relevant="all">
-                  {releaseData.step3.map((item) => (
+                  {step3 && step3.map((item) => (
                     <tr draggable="true" class="odd">
                       <td class="  sorting_1">{item.ContentType}</td>
                       <td class=" ">{item.PrimaryTrackType}</td>
                       <td class=" ">{item.SecondaryTrackType}</td>
                       <td class=" ">{item.Title}</td>
-                      <td class=" "> 
-                      <a class="btn btn-app" onClick={()=>{setIsModalOpen(true)}}>
-                        <i class="fa fa-edit"></i> Edit
-                      </a></td>
+                      <td class=" ">
+                        <a class="btn btn-app" onClick={() => { editTracks(item) }}>
+                          <i class="fa fa-edit"></i> Edit
+                        </a></td>
                     </tr>
                   ))}
-                </tbody></table><div class="row"><div class="col-xs-6"><div class="dataTables_info" id="example2_info">Showing 1 to 10 of 57 entries</div></div><div class="col-xs-6"><div class="dataTables_paginate paging_bootstrap"><ul class="pagination"><li class="prev disabled"><a href="#">← Previous</a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">5</a></li><li class="next"><a href="#">Next → </a></li></ul></div></div></div></div>
+                </tbody></table>
+            </div>
           </div>
         </div>
       </div>
 
       {isModalOpen &&
-        <div className="modal" style={{ display: 'block' }}>
+        <div className="modal" style={{ display: 'block' }} >
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <button type="button" className="close" onClick={closeModal} aria-label="Close">
-                  <span aria-hidden="true">×</span>
+                <button type="btn btn-danger" className="close" onClick={closeModal} aria-label="Close">
+                  <span  >×</span>
                 </button>
                 <h4 className="modal-title">Add Track</h4>
               </div>
@@ -146,9 +192,9 @@ export default function STEP3(props) {
                   <div className="col-md-12">
 
                     <div className="col-md-6">
-                      <label>Content Type *</label><br />
-                      <input type="radio" value="audio" checked={contentType === "audio"} onChange={() => setContentType("audio")} /> Audio
-                      <input type="radio" value="video" checked={contentType === "video"} onChange={() => setContentType("video")} style={{ marginLeft: "10px" }} /> Video
+                      <label>Content Type *{contentType}</label><br />
+                      <input type="radio" value="Audio" checked={contentType == "Audio"} onChange={() => setContentType("Audio")} /> Audio
+                      <input type="radio" value="Video" checked={contentType == "Video"} onChange={() => setContentType("Video")} style={{ marginLeft: "10px" }} /> Video
                     </div>
 
                     {/* Primary Track Type */}
@@ -290,7 +336,13 @@ export default function STEP3(props) {
                     {/* Submit Button */}
                     <div className="col-md-6 mt-3">
 
-                      <button type="submit" className="btn btn-primary">Submit</button>
+                      <button type="submit" className="btn btn-primary"
+                        onClick={async () => {
+                          await handleSubmit();  // Ensure handleSubmit completes first
+                          closeModal();
+                          // Then close the modal
+                        }}
+                      >{btnName}</button>
                     </div>
                   </div>
                 </div>

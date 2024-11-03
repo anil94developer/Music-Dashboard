@@ -2,17 +2,17 @@
 
 
 
-import React, { useContext, useState,useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import useLocalStorage from 'use-local-storage';
 import { base } from '../../Constants/Data.constant';
 import { postData, postDataContent } from '../../Services/Ops';
 const Step3Controller = (props) => {
-     
-   
-    const [releaseData,setReleaseData]= useState({})
-    const [contentType, setContentType] = useState("audio");
+
+
+    const [releaseData, setReleaseData] = useState({})
+    const [contentType, setContentType] = useState("Audio");
     const [primaryTrackType, setPrimaryTrackType] = useState("music");
     const [secondaryTrackType, setSecondaryTrackType] = useState("original");
     const [instrumental, setInstrumental] = useState(false);
@@ -20,11 +20,11 @@ const Step3Controller = (props) => {
     const [versionSubtitle, setVersionSubtitle] = useState("");
     const [primaryArtist, setPrimaryArtist] = useState("");
     const [featuring, setFeaturing] = useState("");
-    const [remixer, setRemixer] = useState([{ value: '' }]);
-    const [author, setAuthor] = useState([{ value: '' }]);
-    const [composer, setComposer] = useState([{ value: '' }]);
-    const [arranger, setArranger] = useState([{ value: '' }]);
-    const [producer, setProducer] = useState([{ value: '' }]);
+    const [remixer, setRemixer] = useState([{ id: '',name:'' }]);
+    const [author, setAuthor] = useState([{ id: '',name:'' }]);
+    const [composer, setComposer] = useState([{ id: '',name:'' }]);
+    const [arranger, setArranger] = useState([{ id: '',name:'' }]);
+    const [producer, setProducer] = useState([{ id: '',name:'' }]);
     const [pLine, setPLine] = useState("");
     const [productionYear, setProductionYear] = useState("");
     const [publisher, setPublisher] = useState("");
@@ -41,49 +41,101 @@ const Step3Controller = (props) => {
     const [trackTitleLanguage, setTrackTitleLanguage] = useState("");
     const [lyricsLanguage, setLyricsLanguage] = useState("");
     const [lyrics, setLyrics] = useState("");
-    const handleSubmit =async (e) => { 
-        let body={
-            "_id": releaseData._id,
-            "step3": [
-                ...releaseData.step3,
-                {
-                    "ContentType": contentType,
-                    "PrimaryTrackType": primaryTrackType,
-                    "SecondaryTrackType": secondaryTrackType,
-                    "Instrumental": instrumental,
-                    "Title": title,
-                    "VersionSubtitle": versionSubtitle,
-                    "PrimaryArtist": primaryArtist,
-                    "Featuring": featuring,
-                    "Remixer": remixer,
-                    "Author": author,
-                    "Composer": composer,
-                    "Arranger": arranger,
-                    "Producer": producer,
-                    "Pline": pLine,
-                    "ProductionYear": productionYear,
-                    "Publisher": publisher,
-                    "ISRC": isrc,
-                    "GenerateISRC": generateISRC,
-                    "Genre": genre,
-                    "Subgenre": subgenre,
-                    "SecondaryGenre": secondaryGenre,
-                    "SubSecondaryGenre": subSecondaryGenre,
-                    "Price": price,
-                    "ProducerCatalogueNumber": producerCatalogueNumber,
-                    "ParentalAdvisory": parentalAdvisory,
-                    "PreviewStart": previewStart,
-                    "TrackTitleLanguage": trackTitleLanguage,
-                    "LyricsLanguage": lyricsLanguage,
-                    "Lyrics": lyrics,
-                    "MoreInfo":""
-                }
-            ]
+    const [step3, setStep3] = useState([]);
+    const [btnName, setBtnName] = useState("Add");
+    const [rowId,setRowId]=useState("")
+
+    const handleSubmit = async (e) => {
+        let body = {}
+        if (btnName == "Add") {
+            body = {
+                "_id": releaseData._id,
+                "step3": [
+                    ...step3 ||[],
+                    {
+                        "ContentType": contentType,
+                        "PrimaryTrackType": primaryTrackType,
+                        "SecondaryTrackType": secondaryTrackType,
+                        "Instrumental": instrumental,
+                        "Title": title,
+                        "VersionSubtitle": versionSubtitle,
+                        "PrimaryArtist": primaryArtist,
+                        "Featuring": featuring,
+                        "Remixer": remixer,
+                        "Author": author,
+                        "Composer": composer,
+                        "Arranger": arranger,
+                        "Producer": producer,
+                        "Pline": pLine,
+                        "ProductionYear": productionYear,
+                        "Publisher": publisher,
+                        "ISRC": isrc,
+                        "GenerateISRC": generateISRC,
+                        "Genre": genre,
+                        "Subgenre": subgenre,
+                        "SecondaryGenre": secondaryGenre,
+                        "SubSecondaryGenre": subSecondaryGenre,
+                        "Price": price,
+                        "ProducerCatalogueNumber": producerCatalogueNumber,
+                        "ParentalAdvisory": parentalAdvisory,
+                        "PreviewStart": previewStart,
+                        "TrackTitleLanguage": trackTitleLanguage,
+                        "LyricsLanguage": lyricsLanguage,
+                        "Lyrics": lyrics,
+                        "MoreInfo": ""
+                    }
+                ]
+            }
+        } else {
+            body = {
+                "_id": releaseData._id,
+                "step3": [
+                    {
+                        "ContentType": contentType,
+                        "PrimaryTrackType": primaryTrackType,
+                        "SecondaryTrackType": secondaryTrackType,
+                        "Instrumental": instrumental,
+                        "Title": title,
+                        "VersionSubtitle": versionSubtitle,
+                        "PrimaryArtist": primaryArtist,
+                        "Featuring": featuring,
+                        "Remixer": remixer,
+                        "Author": author,
+                        "Composer": composer,
+                        "Arranger": arranger,
+                        "Producer": producer,
+                        "Pline": pLine,
+                        "ProductionYear": productionYear,
+                        "Publisher": publisher,
+                        "ISRC": isrc,
+                        "GenerateISRC": generateISRC,
+                        "Genre": genre,
+                        "Subgenre": subgenre,
+                        "SecondaryGenre": secondaryGenre,
+                        "SubSecondaryGenre": subSecondaryGenre,
+                        "Price": price,
+                        "ProducerCatalogueNumber": producerCatalogueNumber,
+                        "ParentalAdvisory": parentalAdvisory,
+                        "PreviewStart": previewStart,
+                        "TrackTitleLanguage": trackTitleLanguage,
+                        "LyricsLanguage": lyricsLanguage,
+                        "Lyrics": lyrics,
+                        "MoreInfo": "",
+                        "_id":rowId
+                    }
+                ]
+            }
+        }
+       let result = await postData(btnName == "Add" ? base.releaseStep3 : base.trackUpdate, body)
+        console.log("tracks====",body)
+        if (result.data.status === true) {
+            Swal.fire("Success", result.message, result.message);
+        } else {
+            Swal.fire("Error", result.message, result.message);
         }
 
-        
     }
-     
+
     return {
         contentType,
         setContentType,
@@ -143,7 +195,10 @@ const Step3Controller = (props) => {
         setLyricsLanguage,
         lyrics,
         setLyrics,
-        handleSubmit
+        step3, setStep3,
+        setReleaseData,
+        handleSubmit,
+        btnName, setBtnName,setRowId
     };
 
 }

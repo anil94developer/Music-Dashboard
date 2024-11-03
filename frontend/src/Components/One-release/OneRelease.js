@@ -6,7 +6,7 @@ import { Nav } from '../Common/Nav'
 
 export const OneRelease = () => {
   const navigate = useNavigate();
-  const { setType, setTitle, handleSubmit, myRelease,moreAction } = OneReleaseController();
+  const { setType, setTitle, handleSubmit, myRelease,moreAction,isLoading } = OneReleaseController();
   return (
     <div>
       <Nav />
@@ -83,6 +83,7 @@ export const OneRelease = () => {
                   <h3 class="box-title">Old Release</h3>
                 </div>
                 <div class="box-body">
+                  
                   <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                     <thead>
                       <tr role="row">
@@ -104,7 +105,7 @@ export const OneRelease = () => {
                     </tbody>
                   </table>
                 </div>
-
+                { isLoading && "Loading..."}
               </div>
             </div>
           </div>

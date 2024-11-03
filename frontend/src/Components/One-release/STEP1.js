@@ -26,14 +26,12 @@ export default function STEP1(props) {
         upcEan, setUpcEan,
         newLabelName, setNewLabelName,
         labelNameStatus, setLabelNameStatus,
-        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, setReleaseData, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList } = Step1Controller();
+        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList } = Step1Controller();
     useEffect(() => {
         const getData = () => {
-            if (releaseData) {
-                const releaseJson = JSON.parse(releaseData);
-                // console.log("jsonData=====>>>",jsonData.step1)
-                const jsonData = releaseJson.step1
-                setReleaseTitle(releaseJson.title)
+            if (releaseData.step1) { 
+                let jsonData = releaseData.step1;
+                setReleaseTitle(releaseData.title) 
                 setVersionSubtitle(jsonData.subTitle);
                 setPrimaryArtist(jsonData.primaryArtist);
                 setFeaturing(jsonData.featuring);
@@ -48,14 +46,14 @@ export default function STEP1(props) {
                 setProductionYear(jsonData.productionYear);
                 setUpcEan(jsonData.UPCEAN);
                 setProducerCatalogueNumber(jsonData.producerCatalogueNumber);
-                setReleaseData(releaseJson)
+                // setReleaseData(releaseJson)
             } else {
                 console.error("Data is undefined or null");
             }
 
         }
         getData()
-    }, [])
+    }, [releaseData])
     // Get the subgenres for the selected genre
     const selectedGenre = GENRES.find((g) => g.name === genre);
     const subgenres = selectedGenre ? selectedGenre.subgenres : [];
@@ -98,7 +96,7 @@ export default function STEP1(props) {
 
                 <div className="form-group">
                     <label htmlFor="featuring">Featuring</label>
-                    <SearchInput artistData={ARTISTLIST} setSelectData={setFeaturing} />
+                    <SearchInput artistData={featuring} setSelectData={setFeaturing} />
                 </div>
 
                 <div className="form-check">
@@ -128,7 +126,7 @@ export default function STEP1(props) {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="subgenre">SubGenre *{subGenre}</label>
+                    <label htmlFor="subgenre">SubGenre * </label>
                     <select
                         value={subGenre}
                         className="form-control"
@@ -144,7 +142,7 @@ export default function STEP1(props) {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="labelName">Label name *{labelName}</label>
+                    <label htmlFor="labelName">Label name * </label>
                     <div className="dynamic-input-container d-flex row">
                         <div class="input-group input-group-sm">
                             <select

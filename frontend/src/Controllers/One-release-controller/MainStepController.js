@@ -7,22 +7,27 @@ const MainStepController = (props) => {
   // const { setUserData, isLogin, setIsLogin } = useContex(DataContext)
   const navigate = useNavigate();
   const [step, setStep] = useState("step1"); 
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const [myRelease, setMyRelease] = useState({});
 
- 
-  useEffect(() => {
-      fetchReleaseDetails()
-    }, [])
-    const fetchReleaseDetails = async () => { 
+  
+    const fetchReleaseDetails = async (releaseId) => { 
+      setIsLoading(true)
       let body={
-        releaseId:"671e641db2e85067827474e2"
+        releaseId:releaseId
       }
       let result = await postData(base.releaseDetails,body);
      
       if (result.data.status === true) { 
+        // alert(true)
+      setIsLoading(false)
+
           setMyRelease(result.data.data)
       } else {
+      setIsLoading(false)
+
         // Swal.fire("Error", result.message, result.message);
       }
     }
@@ -30,7 +35,10 @@ const MainStepController = (props) => {
   return {
     setStep,
     step,
-    myRelease
+    myRelease,
+    setMyRelease,
+    fetchReleaseDetails,
+    isLoading,
   }
 
 }
