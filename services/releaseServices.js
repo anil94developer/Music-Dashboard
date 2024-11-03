@@ -105,6 +105,16 @@ release.labelList= async (req, res, next) => {
     }
 };
 
+release.trackUpdate= async (req, res, next) => { 
+    const body = req.body
+    try {   
+        const result = await releaseModel.trackUpdate(body) 
+        return R(res, true, "Update Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+
  
 
 module.exports = release;

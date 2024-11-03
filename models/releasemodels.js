@@ -280,6 +280,18 @@ releaseModel.releaseDetails = async (releaseId) => {
   }
 };
 
+releaseModel.trackUpdate = async (body) => {
+  const result = await db.connectDb("release", releaseSchema);
+  let fetData = await result.updateOne(
+    { _id: body._id, "step3._id": body.step3[0]._id },
+    { $set: { "step3.$": body.step3[0] } }
+  );
+  if (fetData.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
 releaseModel.addLabel = async (data) => {
   const result = await db.connectDb("label", labelSchema);
   let insData = await result.insertMany(data);
@@ -291,7 +303,7 @@ releaseModel.addLabel = async (data) => {
   }
 };
 
-releaseModel.labelList= async (uId) => {
+releaseModel.labelList = async (uId) => {
   const result = await db.connectDb("label", labelSchema);
   let fetData = await result.find({ userId: uId });
   if (fetData.length > 0) {
@@ -300,7 +312,10 @@ releaseModel.labelList= async (uId) => {
     return [];
   }
 };
- 
+
+
+
+
 
 
 module.exports = releaseModel
