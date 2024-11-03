@@ -7,7 +7,8 @@ import STEP3 from './STEP3';
 import STEP4 from './STEP4';
 import STEP5 from './STEP5';
 
-export default function STEP6() {
+export default function STEP6(props) {
+    const {myRelease} =props
     const { handleSubmit } = Step6Controller();
     const [releaseDate, setReleaseDate] = useState('');
 
@@ -15,27 +16,27 @@ export default function STEP6() {
         <div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP1 />
+                    <STEP1 releaseData={myRelease}/>
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP2 />
+                    <STEP2 releaseData={myRelease}/>
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP3 />
+                    <STEP3 releaseData={myRelease}/>
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP4 />
+                    <STEP4 releaseData={myRelease}/>
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP5 />
+                    <STEP5 releaseData={myRelease} />
                 </div>
             </div>
              

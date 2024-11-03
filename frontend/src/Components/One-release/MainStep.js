@@ -11,9 +11,10 @@ import STEP6 from './Step6';
 
 export const MainStep = () => {
   const location = useLocation();
-  const releaseData = location.state?.releaseData;
-    const { step, setStep } = MainStepController();
+    const releaseData = location.state?.releaseData;
+    const { step, setStep,myRelease } = MainStepController();
     
+
     return (
         <div>
             <Nav />
@@ -50,13 +51,13 @@ export const MainStep = () => {
                             : step == "step2" ?
                                 <STEP2 setStep={setStep} releaseData={releaseData}/>
                                 : step == "step3" ?
-                                    <STEP3 setStep={setStep} releaseData={releaseData}/>
+                                    <STEP3 setStep={setStep} releaseData={myRelease}/>
                                     : step == "step4" ?
                                         <STEP4 setStep={setStep} releaseData={releaseData}/>
                                         : step == "step5" ?
                                             <STEP5 setStep={setStep} releaseData={releaseData}/>
                                             :
-                                            <STEP6 />
+                                            <STEP6 releaseData={myRelease}/>
                     }
                     </section>
 

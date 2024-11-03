@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 import { images } from '../../assets/images';
 import { base } from '../../Constants/Data.constant';
-import { postData } from '../../Services/Ops';
+import { getData, postData } from '../../Services/Ops';
 
 // Sample data (replace with your JSON array)
 
 
 export default function SearchInput(props) {
-  const { artistData, setSelectData, } = props
+  const { artistData=[], setSelectData, } = props
   const [query, setQuery] = useState("");
   const [artistList, setArtistList] = useState([]);
   const [link, setLink] = useState("");
 
   const [selectedArtists, setSelectedArtists] = useState([]);
-
-
-
+ 
   useEffect(() => {
     fetchArtistList()
-  }, [])
-  const addArtist = (artist) => {
+    setSelectedArtists(artistData)
+    setSelectData(artistData)
+  }, [artistData])
+
+  const addArtist = (artist) => { 
     if (!selectedArtists.some(item => item._id === artist._id)) {
       setSelectedArtists([...selectedArtists, artist]);
       setSelectData([...selectedArtists, artist]);
     }
     setQuery("");
     setLink("");
-
   };
 
   const removeArtist = (artistId) => {
@@ -40,7 +40,7 @@ export default function SearchInput(props) {
 
   const addHandleSubmit = async () => {
     let body = {
-      "name": query, 
+      "name": query,
       "linkId": link
     }
     console.log(body)
@@ -56,14 +56,10 @@ export default function SearchInput(props) {
       Swal.fire("Error", result.message, result.message);
     }
   }
-  const fetchArtistList = async () => {
-    let body = {
-      "userId": "671e08391a2071afe4269f80"
-    }
-    console.log(body)
-    let result = await postData(base.fetchArtistList, body);
-    console.log(base.fetchArtistList+"===========>",result)
-    if (result.data.status === true) { 
+  const fetchArtistList = async () => {  
+    let result = await getData(base.fetchArtistList);
+    console.log(base.fetchArtistList + "===========>", result)
+    if (result.data.status === true) {
       setArtistList(result.data.data)
     } else {
       // Swal.fire("Error", result.message, result.message);
@@ -135,8 +131,8 @@ export default function SearchInput(props) {
         )}
       </div>
 
-      <div>
-        {selectedArtists.map((artist) => (
+      <div key={selectedArtists}>
+        {selectedArtists && selectedArtists.map((artist) => (
           <div key={artist._id} className="artist-item form-control d-flex row">
             <img
               src={images.user} // Replace with artist image if available
@@ -144,14 +140,6 @@ export default function SearchInput(props) {
               className="artist-image"
             />
             <span>{artist.name}</span>
-            {/* <div className="platform-icons">
-              {artist.platforms.includes("apple") && (
-                <span className="icon-apple">🍎</span>
-              )}
-              {artist.platforms.includes("spotify") && (
-                <span className="icon-spotify">🎶</span>
-              )}
-            </div> */}
             <button onClick={() => removeArtist(artist._id)} style={{ background: 'red', borderRadius: 20, color: '#fff' }}>x</button>
           </div>
         ))}

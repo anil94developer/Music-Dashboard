@@ -12,6 +12,7 @@ const postData = async (url = "", data) => {
         // alert(token)
         var header = { headers: { Authorization: token, Accept: 'application/json','Cache-Control': 'no-cache', } };
         let response = await axios.post(url, data, header)
+        console.log(url+"===========>",response)
         return response;
        
     } catch (e) { 

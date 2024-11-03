@@ -42,6 +42,46 @@ const Step3Controller = (props) => {
     const [lyricsLanguage, setLyricsLanguage] = useState("");
     const [lyrics, setLyrics] = useState("");
     const handleSubmit =async (e) => { 
+        let body={
+            "_id": releaseData._id,
+            "step3": [
+                ...releaseData.step3,
+                {
+                    "ContentType": contentType,
+                    "PrimaryTrackType": primaryTrackType,
+                    "SecondaryTrackType": secondaryTrackType,
+                    "Instrumental": instrumental,
+                    "Title": title,
+                    "VersionSubtitle": versionSubtitle,
+                    "PrimaryArtist": primaryArtist,
+                    "Featuring": featuring,
+                    "Remixer": remixer,
+                    "Author": author,
+                    "Composer": composer,
+                    "Arranger": arranger,
+                    "Producer": producer,
+                    "Pline": pLine,
+                    "ProductionYear": productionYear,
+                    "Publisher": publisher,
+                    "ISRC": isrc,
+                    "GenerateISRC": generateISRC,
+                    "Genre": genre,
+                    "Subgenre": subgenre,
+                    "SecondaryGenre": secondaryGenre,
+                    "SubSecondaryGenre": subSecondaryGenre,
+                    "Price": price,
+                    "ProducerCatalogueNumber": producerCatalogueNumber,
+                    "ParentalAdvisory": parentalAdvisory,
+                    "PreviewStart": previewStart,
+                    "TrackTitleLanguage": trackTitleLanguage,
+                    "LyricsLanguage": lyricsLanguage,
+                    "Lyrics": lyrics,
+                    "MoreInfo":""
+                }
+            ]
+        }
+
+        
     }
      
     return {
@@ -103,6 +143,7 @@ const Step3Controller = (props) => {
         setLyricsLanguage,
         lyrics,
         setLyrics,
+        handleSubmit
     };
 
 }

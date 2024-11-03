@@ -16,7 +16,7 @@ export default function STEP1(props) {
         featuring, setFeaturing,
         isVariousArtists, setIsVariousArtists,
         genre, setGenre,
-        subgenre, setSubgenre,
+        subGenre, setSubGenre,
         labelName, setLabelName,
         format, setFormat,
         releaseDate, setReleaseDate,
@@ -24,37 +24,41 @@ export default function STEP1(props) {
         cLine, setCLine,
         productionYear, setProductionYear,
         upcEan, setUpcEan,
-        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, setReleaseData, imagePreview, setImagePreview, handleImageChange } = Step1Controller();
+        newLabelName, setNewLabelName,
+        labelNameStatus, setLabelNameStatus,
+        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, setReleaseData, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList } = Step1Controller();
     useEffect(() => {
         const getData = () => {
             if (releaseData) {
-                const jsonData = JSON.parse(releaseData);
-                setReleaseTitle(jsonData.title)
-                setVersionSubtitle(jsonData.subtitle);
+                const releaseJson = JSON.parse(releaseData);
+                // console.log("jsonData=====>>>",jsonData.step1)
+                const jsonData = releaseJson.step1
+                setReleaseTitle(releaseJson.title)
+                setVersionSubtitle(jsonData.subTitle);
                 setPrimaryArtist(jsonData.primaryArtist);
                 setFeaturing(jsonData.featuring);
                 setIsVariousArtists(jsonData.isVariousArtists);
                 setGenre(jsonData.genre);
-                setSubgenre(jsonData.subgenre);
+                setSubGenre(jsonData.subGenre);
                 setLabelName(jsonData.labelName);
                 setFormat(jsonData.format);
                 setReleaseDate(jsonData.originalReleaseDate);
-                setPLine(jsonData.pLine);
-                setCLine(jsonData.cLine);
+                setPLine(jsonData.line);
+                setCLine(jsonData.cline);
                 setProductionYear(jsonData.productionYear);
                 setUpcEan(jsonData.UPCEAN);
                 setProducerCatalogueNumber(jsonData.producerCatalogueNumber);
-                setReleaseData(jsonData)
+                setReleaseData(releaseJson)
             } else {
                 console.error("Data is undefined or null");
             }
-            
+
         }
         getData()
     }, [])
-     // Get the subgenres for the selected genre
-     const selectedGenre = GENRES.find((g) => g.name === genre);
-     const subgenres = selectedGenre ? selectedGenre.subgenres : [];
+    // Get the subgenres for the selected genre
+    const selectedGenre = GENRES.find((g) => g.name === genre);
+    const subgenres = selectedGenre ? selectedGenre.subgenres : [];
 
     return (<div>
         <div class="box-header">
@@ -89,7 +93,7 @@ export default function STEP1(props) {
 
                 <div className="form-group">
                     <label htmlFor="primaryArtist">Primary artist *</label>
-                    <SearchInput artistData={ARTISTLIST} setSelectData={setPrimaryArtist} />
+                    <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
                 </div>
 
                 <div className="form-group">
@@ -116,42 +120,69 @@ export default function STEP1(props) {
                         id="genre"
                         onChange={(e) => setGenre(e.target.value)}
                     >
-                        <option value="">Select a genre</option>
+                        <option value={genre}>{genre ? genre : 'Select a genre'}</option>
                         {GENRES.map((item) =>
                             (<option value={item.name}>{item.name}</option>)
                         )}
-
-                        {/* Add more options as needed */}
                     </select>
                 </div>
 
                 <div className="form-group">
-                <label htmlFor="subgenre">Subgenre *</label>
-                <select
-                    value={subgenre}
-                    className="form-control"
-                    id="subgenre"
-                    onChange={(e) => setSubgenre(e.target.value)}
-                    disabled={!subgenres.length} // Disable if no subgenres available
-                >
-                    <option value="">Select a sub-genre</option>
-                    {subgenres.map((sub) => (
-                        <option key={sub.id} value={sub.name}>{sub.name}</option>
-                    ))}
-                </select>
-            </div>
+                    <label htmlFor="subgenre">SubGenre *{subGenre}</label>
+                    <select
+                        value={subGenre}
+                        className="form-control"
+                        id="subgenre"
+                        onChange={(e) => setSubGenre(e.target.value)}
+                        disabled={!subgenres.length} // Disable if no subgenres available
+                    >
+                        <option value={subGenre}>{subGenre ? subGenre : 'Select a Subgenre'}</option>
+                        {subgenres.map((sub) => (
+                            <option key={sub.id} value={sub.name}>{sub.name}</option>
+                        ))}
+                    </select>
+                </div>
 
                 <div className="form-group">
-                    <label htmlFor="labelName">Label name *</label>
-                    <select
-                        value={labelName}
-                        className="form-control"
-                        id="labelName"
-                        onChange={(e) => setLabelName(e.target.value)}
-                    >
-                        <option value="">Select a label</option>
-                        <option value="label">Label 1</option>
-                    </select>
+                    <label htmlFor="labelName">Label name *{labelName}</label>
+                    <div className="dynamic-input-container d-flex row">
+                        <div class="input-group input-group-sm">
+                            <select
+                                value={labelName}
+                                className="form-control"
+                                id="labelName"
+                                onChange={(e) => setLabelName(e.target.value)}
+                            >
+                                <option value={labelName}>{labelName ? labelName : 'Select a label'}</option>
+                                {labelNameList && labelNameList.map((item) => (
+                                    <option value={item.title}>{item.title}</option>
+                                ))}
+
+                            </select>
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-flat" type="button" onClick={() => { setLabelNameStatus((!labelNameStatus)) }} >+</button>
+                            </span>
+                        </div>
+                    </div>
+                    {labelNameStatus &&
+                        <div class="box">
+                            <div class="box-body">
+                                <div className="form-group">
+                                    <label htmlFor="primaryArtist">Label Name</label>
+                                    <div class="input-group input-group-sm">
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            value={newLabelName}
+                                            onChange={(e) => setNewLabelName(e.target.value)}
+                                            placeholder="Enter New Label"
+                                        />
+                                    </div>
+                                </div>
+                                <button class="btn btn-success btn-flat " type="button" onClick={addNewLabel}>Add Label</button>
+                            </div>
+                        </div>
+                    }
                 </div>
 
                 <div className="form-group">
@@ -162,7 +193,8 @@ export default function STEP1(props) {
                         id="format"
                         onChange={(e) => setFormat(e.target.value)}
                     >
-                        <option value="">Select a format</option>
+                                <option value={format}>{format ? format : 'Select a format'}</option>
+ 
                         <option value="SINGLE">SINGLE</option>
                         <option value="EP">EP</option>
                         <option value="ALBUM">ALBUM</option>
@@ -185,7 +217,7 @@ export default function STEP1(props) {
             <div className="col-md-6">
                 <div className="form-group">
                     <div className="img-cover">
-                        <img className="img-thumbnail"src={images.user} alt="Cover Preview" />
+                        <img className="img-thumbnail" src={images.user} alt="Cover Preview" />
                         <input
                             type="file"
                             name="image"
@@ -259,7 +291,7 @@ export default function STEP1(props) {
                 </div>
 
                 <button
-                    onClick={() => [handleSubmit(), setStep('step2')]}
+                    onClick={() => [handleSubmit()]}
                     className="btn btn-primary btn-block btn-flat"
                     type="submit"
                 >

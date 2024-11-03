@@ -6,7 +6,7 @@ import { Nav } from '../Common/Nav'
 
 export const OneRelease = () => {
   const navigate = useNavigate();
-  const {setType,setTitle,handleSubmit}= OneReleaseController();
+  const { setType, setTitle, handleSubmit, myRelease,moreAction } = OneReleaseController();
   return (
     <div>
       <Nav />
@@ -18,65 +18,63 @@ export const OneRelease = () => {
                 <div class="box-header">
                   <h3 class="box-title">New Release</h3>
                 </div>
-
-                
-                  <div class="box-body">
-                    <label>What is the type of your new release?</label>
-                    <div class="form-group">
-                      <div class="radio">
-                        <label>
-                          <input
-                            type="radio"
-                            name="type"
-                            id="type"
-                            value="Audio"
-                            checked="true"
-                            onChange={(e) => setType(e.target.value)}
-                          />
-                          Audio
-                        </label>
-                      </div>
-                      <div class="radio">
-                        <label>
-                          <input
-                            type="radio"
-                            name="type"
-                            id="type"
-                            value="Video"
-                            onChange={(e) => setType(e.target.value)}
-                          />
-                          Video
-                        </label>
-                      </div>
-                      <div class="radio">
-                        <label>
-                          <input
-                            type="radio"
-                            name="type"
-                            id="type"
-                            value="Ringtone"
-                            onChange={(e) => setType(e.target.value)}
-                          />
-                          Ringtone
-                        </label>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Release Title *</label>
+ 
+                <div class="box-body">
+                  <label>What is the type of your new release?</label>
+                  <div class="form-group">
+                    <div class="radio">
+                      <label>
                         <input
-                          type="text"
-                          class="form-control"
-                          id="releaseTitle"
-                          placeholder="Enter Release Title"
-                          onChange={(e) => setTitle(e.target.value)}
+                          type="radio"
+                          name="type"
+                          id="type"
+                          value="Audio"
+                          checked="true"
+                          onChange={(e) => setType(e.target.value)}
                         />
-                      </div>
+                        Audio
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          name="type"
+                          id="type"
+                          value="Video"
+                          onChange={(e) => setType(e.target.value)}
+                        />
+                        Video
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input
+                          type="radio"
+                          name="type"
+                          id="type"
+                          value="Ringtone"
+                          onChange={(e) => setType(e.target.value)}
+                        />
+                        Ringtone
+                      </label>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Release Title *</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="releaseTitle"
+                        placeholder="Enter Release Title"
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
                     </div>
                   </div>
+                </div>
 
-                  <div class="box-footer">
-                    <button type="submit" id="btnsubmit" class="btn btn-primary" onClick={()=>{handleSubmit()}}>Submit</button>
-                   </div>
-                
+                <div class="box-footer">
+                  <button type="submit" id="btnsubmit" class="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
@@ -85,40 +83,32 @@ export const OneRelease = () => {
                   <h3 class="box-title">Old Release</h3>
                 </div>
                 <div class="box-body">
-                  <table class="table table-bordered">
+                  <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                     <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Progress</th>
-                        <th>Label</th>
+                      <tr role="row">
+                        {/* <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">#</th> */}
+                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">TITILE</th>
+                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">TYPE</th>
+                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">ACTION</th>
                       </tr>
                     </thead>
-                    <tbody id="taskTableBody"></tbody>
+
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                      {myRelease.map((item) => (
+                        <tr class="odd">
+                          <td class="  sorting_1">{item.title}</td>
+                          <td class="  ">{item.type}</td>
+                          <td class=" "><a onClick={()=>{moreAction(item)}}>MORE</a></td>
+                        </tr>
+                      ))}
+                    </tbody>
                   </table>
                 </div>
-                <div class="box-footer clearfix">
-                  <ul class="pagination pagination-sm no-margin pull-right">
-                    <li>
-                      <a href="#">«</a>
-                    </li>
-                    <li>
-                      <a href="#">1</a>
-                    </li>
-                    <li>
-                      <a href="#">2</a>
-                    </li>
-                    <li>
-                      <a href="#">3</a>
-                    </li>
-                    <li>
-                      <a href="#">»</a>
-                    </li>
-                  </ul>
-                </div>
+
               </div>
             </div>
           </div>
+
         </section>
       </div>
     </div>

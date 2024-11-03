@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
-import { postData, postDataContent } from '../../Services/Ops';
+import { getData, postData, postDataContent } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
 
 const OneReleaseController = (props) => {
@@ -11,8 +11,22 @@ const OneReleaseController = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [title, setTitle] = useState("");
     const [type, setType] = useState("Audio");
+    const [myRelease, setMyRelease] = useState([]);
 
-
+ 
+    useEffect(() => {
+        fetchReleaseList()
+      }, [])
+      const fetchReleaseList = async () => { 
+        let result = await getData(base.releaseList);
+        console.log(base.releaseList+"===========>",result)
+        if (result.status === true) { 
+            setMyRelease(result.data)
+        } else {
+          // Swal.fire("Error", result.message, result.message);
+        }
+      }
+    
     const handleSubmit = async (e) => {
         let body = {
             title: title,
@@ -28,6 +42,10 @@ const OneReleaseController = (props) => {
           } 
     }
 
+    const moreAction=(e)=>{
+        
+        navigate("/main-step",{ state: { releaseData: JSON.stringify(e) } });
+    }
     return {
         isLoading,
         setIsLoading,
@@ -35,7 +53,9 @@ const OneReleaseController = (props) => {
         setTitle,
         type,
         setType,
-        handleSubmit
+        myRelease,
+        handleSubmit,
+        moreAction
     }
 
 }
