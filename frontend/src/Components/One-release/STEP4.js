@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import { base } from '../../Constants/Data.constant';
 import initialCountryList from '../../Enums/country.list.json';
+import { postData } from '../../Services/Ops';
 
-export default function STEP4() {
-  const [countryList, setCountryList] = useState(initialCountryList);
+export default function STEP4(props) {
+  const {releaseData}= props
+  const [countryList, setCountryList] = useState(releaseData.step4.length > 0 ? releaseData.step4 : initialCountryList);
 
   const handleCheckboxChange = (item) => {
     setCountryList((prevList) =>
@@ -13,6 +17,20 @@ export default function STEP4() {
       )
     );
   };
+  const handleSubmit = async () => {
+    let body = {
+      _id:releaseData._id,
+      step4:countryList
+    }
+    console.log(body)
+    let result = await postData(base.addStore, body);
+    if (result.data.status === true) {
+      Swal.fire("Success", result.message, result.message);
+    } else {
+      Swal.fire("Error", result.message, result.message);
+    }
+
+  }
   return (
     <div className="listColumns">
       <div className="listColumn">
@@ -37,11 +55,11 @@ export default function STEP4() {
               </div>
             </div>
           ))}
-          <div className="mt-3"> 
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <div className="mt-3">
+            <button type="submit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
+          </div>
         </div>
-        </div>
-        
+
       </div>
     </div>
   );

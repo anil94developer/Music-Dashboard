@@ -44,7 +44,7 @@ export const MainStep = () => {
                         <button className={`btn  btn-primary btn-sm ${step === 'step1' ? 'active' : ''}`} onClick={() => setStep('step1')}>Release information</button>
                         <button className={`btn  btn-primary btn-sm ${step === 'step2' ? 'active' : ''}`} onClick={() => setStep('step2')}>Upload</button>
                         <button className={`btn  btn-primary btn-sm ${step === 'step3' ? 'active' : ''}`} onClick={() => setStep('step3')}>Tracks</button>
-                        <button className={`btn  btn-primary btn-sm ${step === 'step4' ? 'active' : ''}`} onClick={() => setStep('step4')}>Territories</button>
+                        <button className={`btn  btn-primary btn-sm ${step === 'step4' ? 'active' : ''}`} onClick={() => setStep('step4')}>Store</button>
                         <button className={`btn  btn-primary btn-sm ${step === 'step5' ? 'active' : ''}`} onClick={() => setStep('step5')}>Release date</button>
                         {/* <button className={`btn  btn-primary btn-sm ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Promotion</button> */}
                         <button className={`btn  btn-primary btn-sm ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Submission</button>
@@ -63,7 +63,7 @@ export const MainStep = () => {
                                             : step == "step5" ?
                                                 <STEP5 setStep={setStep} releaseData={myRelease} />
                                                 :
-                                                <STEP6 releaseData={myRelease} />
+                                                <STEP6 releaseData={myRelease} fetchReleaseDetails={fetchReleaseDetails} />
                         }  
                     </section>
 

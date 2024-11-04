@@ -8,7 +8,7 @@ import STEP4 from './STEP4';
 import STEP5 from './STEP5';
 
 export default function STEP6(props) {
-    const {myRelease} =props
+    const {releaseData,fetchReleaseDetails} =props
     const { handleSubmit } = Step6Controller();
     const [releaseDate, setReleaseDate] = useState('');
 
@@ -16,27 +16,27 @@ export default function STEP6(props) {
         <div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP1 releaseData={myRelease}/>
+                    <STEP1 releaseData={releaseData}/>
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP2 releaseData={myRelease}/>
+                    {/* <STEP2 releaseData={releaseData}/> */}
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP3 releaseData={myRelease}/>
+                    <STEP3 releaseData={releaseData} fetchReleaseDetails={fetchReleaseDetails} />
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP4 releaseData={myRelease}/>
+                    <STEP4 releaseData={releaseData}/>
                 </div>
             </div>
             <div class="box box-primary">
                 <div class="box-body">
-                    <STEP5 releaseData={myRelease} />
+                    <STEP5 releaseData={releaseData} />
                 </div>
             </div>
              

@@ -18,6 +18,8 @@ const base = {
   addLabel: mainUrl + 'release/add-label',
   labelList: mainUrl + 'release/label-list',
   trackUpdate: mainUrl + 'release/tracks-update',
+  addStore: mainUrl + 'release/step-four-release',
+  listStore:mainUrl + 'release/list-store',
 
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };
