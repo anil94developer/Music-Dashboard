@@ -15,6 +15,10 @@ router.post('/tracks-update', verifyToken, releaseService.trackUpdate)
 
 router.post('/add-label',verifyToken, releaseService.addLabel)
 router.get('/label-list',verifyToken, releaseService.labelList)
+// router.post('/add-store',verifyToken, releaseService.addStore)
+// router.get('/list-store',verifyToken, releaseService.storeList)
+
+
 
 
 

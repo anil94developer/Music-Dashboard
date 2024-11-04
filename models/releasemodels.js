@@ -115,8 +115,9 @@ const releaseSchema = mongoose.Schema({
   step4: [
     {
       id: { type: String, default: "" },
-      countryName: { type: String, default: "" },
-      checked: { type: Number, default: 1 }
+      name: { type: String, default: "" },
+      logo: { type: String, default: "" },
+      status: { type: String, default: 1 }
 
     }
   ],
@@ -149,6 +150,14 @@ const labelSchema = mongoose.Schema({
   userId: { type: String },
   title: { type: String, required: true },
 })
+// const storeSchema = mongoose.Schema({
+//   userId: { type: String },
+//   store: [{
+//     id: { type: String, default: "" },
+//     name: { type: String, default: "" },
+//     status: { type: String, default: "active" }
+//   }],
+// })
 
 releaseModel.addOneRelease = async (data) => {
   const result = await db.connectDb("release", releaseSchema);
@@ -313,6 +322,26 @@ releaseModel.labelList = async (uId) => {
   }
 };
 
+releaseModel.addStore = async (data) => {
+  const result = await db.connectDb("store", storeSchema);
+  let insData = await result.insertMany(data);
+  console.log(insData);
+  if (insData.length > 0) {
+    return insData[0];
+  } else {
+    return false
+  }
+};
+
+releaseModel.storeList = async (uId) => {
+  const result = await db.connectDb("store", storeSchema);
+  let fetData = await result.find({ userId: uId });
+  if (fetData.length > 0) {
+    return fetData;
+  } else {
+    return [];
+  }
+};
 
 
 
