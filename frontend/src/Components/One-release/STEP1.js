@@ -26,9 +26,10 @@ export default function STEP1(props) {
         upcEan, setUpcEan,
         newLabelName, setNewLabelName,
         labelNameStatus, setLabelNameStatus,
-        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList } = Step1Controller();
+        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList,setReleaseData } = Step1Controller();
     useEffect(() => {
         const getData = () => {
+            setReleaseData(releaseData)
             if (releaseData.step1) { 
                 let jsonData = releaseData.step1;
                 setReleaseTitle(releaseData.title) 
@@ -46,7 +47,7 @@ export default function STEP1(props) {
                 setProductionYear(jsonData.productionYear);
                 setUpcEan(jsonData.UPCEAN);
                 setProducerCatalogueNumber(jsonData.producerCatalogueNumber);
-                // setReleaseData(releaseJson)
+               
             } else {
                 console.error("Data is undefined or null");
             }
@@ -62,6 +63,7 @@ export default function STEP1(props) {
         <div class="box-header">
             <h1>Release Information</h1>
         </div>
+        {releaseData._id}
         <div className="row">
             {/* Left Column */}
             <div className="col-md-6">

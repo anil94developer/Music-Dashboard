@@ -10,6 +10,7 @@ const base = {
   releaseStep1: mainUrl + 'release/step-one-release',
   releaseStep2: mainUrl + 'release/step-two-release',
   releaseStep3: mainUrl + 'release/step-three-release',
+  releaseStep5: mainUrl + 'release/step-five-release',
   releaseList: mainUrl + 'release/release-list',
   releaseDetails:mainUrl+'release/release-details',
   addArtist: mainUrl + 'artist/add-artist',

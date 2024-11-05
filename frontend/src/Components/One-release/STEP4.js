@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { base } from '../../Constants/Data.constant';
-import initialCountryList from '../../Enums/country.list.json';
+import initialCountryList from '../../Enums/store.list.json';
 import { postData } from '../../Services/Ops';
 
 export default function STEP4(props) {
