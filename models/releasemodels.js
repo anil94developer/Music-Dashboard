@@ -126,8 +126,9 @@ const releaseSchema = mongoose.Schema({
     PreOrder: [
       {
         id: { type: String, default: "" },
-        Platform: { type: String },
-        Date: { type: String }
+        name: { type: String },
+        date: { type: String },
+        logo: { type: String }
       }
     ],
     Preview: {
@@ -135,9 +136,9 @@ const releaseSchema = mongoose.Schema({
     },
     ExclusiveReleaseDates: [
       {
-        id: { type: String, default: "" },
-        Platform: { type: String },
-        Date: { type: String }
+        name: { type: String },
+        date: { type: String },
+        logo: { type: String }
       }
     ]
   },
