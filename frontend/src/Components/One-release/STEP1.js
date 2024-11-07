@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react'
 import Step1Controller from '../../Controllers/One-release-controller/Step1Controller'
 import SearchInput from '../Common/SearchBox';
@@ -26,13 +25,13 @@ export default function STEP1(props) {
         upcEan, setUpcEan,
         newLabelName, setNewLabelName,
         labelNameStatus, setLabelNameStatus,
-        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList,setReleaseData } = Step1Controller();
+        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData} = Step1Controller();
     useEffect(() => {
         const getData = () => {
             setReleaseData(releaseData)
             if (releaseData.step1) { 
-                let jsonData = releaseData.step1;
-                setReleaseTitle(releaseData.title) 
+                const jsonData = releaseData.step1;
+                setReleaseTitle(releaseData.title);
                 setVersionSubtitle(jsonData.subTitle);
                 setPrimaryArtist(jsonData.primaryArtist);
                 setFeaturing(jsonData.featuring);
@@ -47,7 +46,6 @@ export default function STEP1(props) {
                 setProductionYear(jsonData.productionYear);
                 setUpcEan(jsonData.UPCEAN);
                 setProducerCatalogueNumber(jsonData.producerCatalogueNumber);
-               
             } else {
                 console.error("Data is undefined or null");
             }
@@ -216,8 +214,8 @@ export default function STEP1(props) {
             {/* Right Column */}
             <div className="col-md-6">
                 <div className="form-group">
-                    <div className="img-cover">
-                        <img className="img-thumbnail" src={images.user} alt="Cover Preview" />
+                <div className="img-cover">
+                        <img className="img-thumbnail" src={imagePreview || images.user} alt="Cover Preview" />
                         <input
                             type="file"
                             name="image"

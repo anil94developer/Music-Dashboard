@@ -29,49 +29,77 @@ const Step1Controller = (props) => {
 
   const navigate = useNavigate();
 
-  const [imagePreview, setImagePreview] = useState("/img/noCover.png");
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
 
-useEffect(()=>{
-  fetchLabel()
-},[props,labelName])
+  useEffect(()=>{
+    fetchLabel()
+  },[props,labelName])
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImagePreview(reader.result); // Set the image preview to the selected image
-      };
-      reader.readAsDataURL(file); // Read the image file as a data URL
+      setImagePreview(URL.createObjectURL(file)); // Set the image preview URL
+      setImageFile(file);
+        // const reader = new FileReader();
+        // reader.onloadend = () => {
+        //     setImagePreview(reader.result); // Set the image preview URL
+        // };
+        // reader.readAsDataURL(file);
     }
   };
 
   const handleSubmit = async (e) => {
-    let body = {
-      "title": releaseData.title,
-      "type": releaseData.type,
-      "_id": releaseData._id,
-      "step1": {
-        subTitle: versionSubtitle,
-        primaryArtist: primaryArtist,
-        featuring: featuring,
-        isVariousArtists: isVariousArtists,
-        genre: genre,
-        subGenre: subGenre,
-        labelName: labelName,
-        format: format,
-        originalReleaseDate: releaseDate,
-        line: pLine,
-        cline: cLine,
-        productionYear: productionYear,
-        UPCEAN: upcEan,
-        producerCatalogueNumber: producerCatalogueNumber
-      }
+    const formData = new FormData();
+  
+  // Add all necessary fields
+  formData.append("title", "sdasdasd"); //releaseData.title
+  formData.append("type", "wertwetw"); //releaseData.type
+  formData.append("_id", "671e08391a2071afe4269f80"); //releaseData._id
+  formData.append("step1[subTitle]", versionSubtitle);
+  formData.append("step1[primaryArtist]", primaryArtist);
+  formData.append("step1[featuring]", featuring);
+  formData.append("step1[isVariousArtists]", isVariousArtists);
+  formData.append("step1[genre]", genre);
+  formData.append("step1[subGenre]", subGenre);
+  formData.append("step1[labelName]", labelName);
+  formData.append("step1[format]", format);
+  formData.append("step1[originalReleaseDate]", releaseDate);
+  formData.append("step1[line]", pLine);
+  formData.append("step1[cline]", cLine);
+  formData.append("step1[productionYear]", productionYear);
+  formData.append("step1[UPCEAN]", upcEan);
+  formData.append("step1[producerCatalogueNumber]", producerCatalogueNumber);
 
-    }
-    console.log("body===========>", body)
+  if (imageFile) {
+    formData.append("coverImage", imageFile);
+  }
 
-    let result = await postData(base.releaseStep1, body);
+    // let body = {
+    //   "title": releaseData.title,
+    //   "type": releaseData.type,
+    //   "_id": releaseData._id,
+    //   "step1": {
+    //     subTitle: versionSubtitle,
+    //     primaryArtist: primaryArtist,
+    //     featuring: featuring,
+    //     isVariousArtists: isVariousArtists,
+    //     genre: genre,
+    //     subGenre: subGenre,
+    //     labelName: labelName,
+    //     format: format,
+    //     originalReleaseDate: releaseDate,
+    //     line: pLine,
+    //     cline: cLine,
+    //     productionYear: productionYear,
+    //     UPCEAN: upcEan,
+    //     producerCatalogueNumber: producerCatalogueNumber
+    //   }
+
+    // }
+    console.log("body===========>", formData )
+
+    let result = await postData(base.releaseStep1, formData);
     console.log(result)
     if (result.data.status === true) {
       Swal.fire("Success", result.message, result.message);
@@ -125,7 +153,6 @@ useEffect(()=>{
     addNewLabel,
     labelNameList,
     imagePreview, setImagePreview, handleImageChange,
-
   }
 
 }

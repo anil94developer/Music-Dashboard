@@ -12,14 +12,30 @@ export default function STEP2(props) {
     useEffect(() => {
         const getData = () => {
             if (releaseData) {
-                const jsonData = JSON.parse(releaseData);
-                setReleaseData(jsonData)
+                try {
+                    const jsonData = JSON.parse(releaseData);
+                    setReleaseData(jsonData);
+                } catch (error) {
+                    console.error("Error parsing releaseData:", error);
+                }
             } else {
-                console.error("Data is undefined or null");
+                console.error("releaseData is undefined or null");
             }
-        }
-        getData()
-    }, [])
+        };
+        getData();
+    }, [releaseData, setReleaseData]);
+
+    // useEffect(() => {
+    //     const getData = () => {
+    //         if (releaseData) {
+    //             const jsonData = JSON.parse(releaseData);
+    //             setReleaseData(jsonData)
+    //         } else {
+    //             console.error("Data is undefined or null");
+    //         }
+    //     }
+    //     getData()
+    // }, [])
 
 
     return (
@@ -40,9 +56,14 @@ export default function STEP2(props) {
                 {mediaFiles.map(({ fileName, fileData, fileType }) => (
                     <div key={fileName} className="media-item mb-3">
                         <p>{fileData.name}</p>
-
+                        <input
+                            type="file"
+                            multiple
+                            accept="audio/*,video/*"
+                            onChange={handleFileChange}
+                        />
                         {/* Render appropriate media player */}
-                        {fileType === "audio" ? (
+                        {/* {fileType === "audio" ? (
                             <audio controls>
                                 <source src={fileName} type={fileData.fileType} />
                                 Your browser does not support the audio element.
@@ -54,7 +75,7 @@ export default function STEP2(props) {
                             </video>
                         ) : (
                             <img src={fileName} alt="Uploaded" width="300" />
-                        )}
+                        )} */}
 
                         {/* Remove button */}
                         <button onClick={() => handleRemove(fileName)} className="btn btn-danger btn-sm mt-2">
