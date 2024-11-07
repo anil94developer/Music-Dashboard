@@ -7,7 +7,7 @@ artistModel = {}
 const artistSchema = mongoose.Schema({
     userId: { type: String },
     name: { type: String, required: true },
-    linkId: { type: String, required: true },
+    linkId: { type: String, required: false },
 },
     { timestamps: true }
 );

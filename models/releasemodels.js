@@ -34,7 +34,8 @@ const releaseSchema = mongoose.Schema({
     cline: { type: String, default: "" },
     productionYear: { type: String, default: "" },
     UPCEAN: { type: String, default: "" },
-    producerCatalogueNumber: { type: String, default: "" }
+    producerCatalogueNumber: { type: String, default: "" },
+    coverImage: { type: String, default: "" }
   },
   step2: [
     {
@@ -161,9 +162,12 @@ releaseModel.addOneRelease = async (data) => {
   }
 };
 
+
+
 releaseModel.addOneStepRelease = async (body) => {
   console.log("one release body", body)
   let releaseResult = await db.connectDb("release", releaseSchema);
+  // 671cb18ba0ff2158d4208ed6
   let result = await releaseResult.updateOne({ _id: body._id },
     {
       $set: {
@@ -182,7 +186,8 @@ releaseModel.addOneStepRelease = async (body) => {
           cline: body.step1.cline,
           productionYear: body.step1.productionYear,
           UPCEAN: body.step1.UPCEAN,
-          producerCatalogueNumber: body.step1.producerCatalogueNumber
+          producerCatalogueNumber: body.step1.producerCatalogueNumber,
+          coverImage:body.coverImage
         }
 
       }
@@ -195,13 +200,13 @@ releaseModel.addOneStepRelease = async (body) => {
 };
 
 releaseModel.addTwoStepRelease = async (body) => {
-  console.log("one release body", body)
+  console.log("one release body======", body)
   let releaseResult = await db.connectDb("release", releaseSchema);
-
-  let result = await releaseResult.updateOne({ _id: body._id },
+// "671cb18ba0ff2158d4208ed6"
+  let result = await releaseResult.updateOne({ _id:  body._id},
     {
       $set: {
-        step2: body.step2
+        step2: body
       }
     })
   if (result.modifiedCount > 0 || result.upsertedCount > 0) {

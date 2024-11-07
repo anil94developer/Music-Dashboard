@@ -1,6 +1,8 @@
 const R = require("../utils/responseHelper"); 
 const releaseModel =require('./../models/releasemodels')
-
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
 const release = {};
 
 release.addOneRelease = async (req, res, next) => {
@@ -23,6 +25,7 @@ release.addOneRelease = async (req, res, next) => {
 release.addOneStepRelease = async (req, res, next) => {
     const  body  = req.body 
     try {  
+        console.log("bodyData====",body);
         const result = await releaseModel.addOneStepRelease(body) 
         return R(res, true, "Update   Successfully!!", result, 200)
     } catch (err) { 
@@ -30,13 +33,32 @@ release.addOneStepRelease = async (req, res, next) => {
     }
 };
 release.addTwoStepRelease = async (req, res, next) => {
-    const  body  = req.body 
-    try {  
-        const result = await releaseModel.addTwoStepRelease(body) 
-        return R(res, true, "Update Successfully!!", result, 200)
-    } catch (err) { 
-        next(err)
+    try {
+        const { _id } = req.body;
+        const files = req.files;
+
+        // Extract paths and file metadata to store in DB
+        const fileData = files.map(file => ({
+            fileName: file.originalname,
+            filePath: file.path,
+            fileType: file.mimetype.includes("audio") ? "audio" : "video"
+        }));
+
+        // Save to DB here, e.g., via your release model or database handler
+        console.log("fileData===",fileData);
+        const result = await releaseModel.addTwoStepRelease(fileData) 
+        res.status(200).json({ status: true, message: 'Files uploaded successfully!' });
+    } catch (error) {
+        res.status(500).json({ status: false, message: 'File upload failed', error });
     }
+
+    // const  body  = req.body 
+    // try {  
+    //     const result = await releaseModel.addTwoStepRelease(body) 
+    //     return R(res, true, "Update Successfully!!", result, 200)
+    // } catch (err) { 
+    //     next(err)
+    // }
 };
 release.addThreeStepRelease = async (req, res, next) => {
     const  body  = req.body 
@@ -108,6 +130,3 @@ release.labelList= async (req, res, next) => {
  
 
 module.exports = release;
-
-
-
