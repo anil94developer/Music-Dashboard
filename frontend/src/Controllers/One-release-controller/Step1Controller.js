@@ -50,6 +50,50 @@ const Step1Controller = (props) => {
   };
 
   const handleSubmit = async (e) => {
+    // validation set
+    if (!releaseData.title) {
+      return swal("Validation Error", "Title is required", "error");
+  }
+  if (!releaseData.type) {
+      return swal("Validation Error", "Type is required", "error");
+  }
+  if (!releaseData._id) {
+      return swal("Validation Error", "ID is required", "error");
+  }
+  if (!versionSubtitle) {
+      return swal("Validation Error", "Subtitle is required", "error");
+  }
+  if (!primaryArtist) {
+      return swal("Validation Error", "Primary artist is required", "error");
+  }
+  if (!genre) {
+      return swal("Validation Error", "Genre is required", "error");
+  }
+  if (!subGenre) {
+      return swal("Validation Error", "Sub-genre is required", "error");
+  }
+  if (!labelName) {
+      return swal("Validation Error", "Label name is required", "error");
+  }
+  if (!format) {
+      return swal("Validation Error", "Format is required", "error");
+  }
+  if (!releaseDate) {
+      return swal("Validation Error", "Release date is required", "error");
+  }
+  if (!pLine) {
+      return swal("Validation Error", "P Line is required", "error");
+  }
+  if (!cLine) {
+      return swal("Validation Error", "C Line is required", "error");
+  }
+  if (!productionYear) {
+      return swal("Validation Error", "Production year is required", "error");
+  }
+  if (!upcEan) {
+      return swal("Validation Error", "UPC/EAN is required", "error");
+  }
+    // validation set end
     const formData = new FormData();
   
   // Add all necessary fields
@@ -70,6 +114,27 @@ const Step1Controller = (props) => {
   formData.append("step1[productionYear]", productionYear);
   formData.append("step1[UPCEAN]", upcEan);
   formData.append("step1[producerCatalogueNumber]", producerCatalogueNumber);
+  
+    // let body = {
+    //   "title": releaseData.title,
+    //   "type": releaseData.type,
+    //   "_id": releaseData._id,
+    //   "step1": {
+    //     subTitle: versionSubtitle,
+    //     primaryArtist: primaryArtist,
+    //     featuring: featuring,
+    //     isVariousArtists: isVariousArtists,
+    //     genre: genre,
+    //     subGenre: subGenre,
+    //     labelName: labelName,
+    //     format: format,
+    //     originalReleaseDate: releaseDate,
+    //     line: pLine,
+    //     cline: cLine,
+    //     productionYear: productionYear,
+    //     UPCEAN: upcEan,
+    //     producerCatalogueNumber: producerCatalogueNumber
+    //   }
 
   if (imageFile) {
     formData.append("coverImage", imageFile);
@@ -108,6 +173,14 @@ const Step1Controller = (props) => {
       Swal.fire("Error", result.message, result.message);
     }
   };
+
+  const swal=(title,message,icon)=>{
+    Swal.fire({
+      title: title,
+      text:  message,  // Adjust to display the actual message you want
+      icon: icon
+    });
+  }
 
   const addNewLabel = async () => {
     let body = {
