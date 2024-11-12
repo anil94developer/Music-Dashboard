@@ -127,6 +127,33 @@ release.labelList= async (req, res, next) => {
     }
 };
 
+release.trackUpdate= async (req, res, next) => { 
+    const body = req.body
+    try {   
+        const result = await releaseModel.trackUpdate(body) 
+        return R(res, true, "Update Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+
+release.addStore= async (req, res, next) => { 
+    const body = req.body
+    try {   
+        const result = await releaseModel.addStore(body) 
+        return R(res, true, "Add Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+release.storeList= async (req, res, next) => { 
+    try {  
+        const result = await releaseModel.storeList(req.doc.userId) 
+        return R(res, true, "Fetch Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
  
 
 module.exports = release;

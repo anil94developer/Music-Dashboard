@@ -116,8 +116,9 @@ const releaseSchema = mongoose.Schema({
   step4: [
     {
       id: { type: String, default: "" },
-      countryName: { type: String, default: "" },
-      checked: { type: Number, default: 1 }
+      name: { type: String, default: "" },
+      logo: { type: String, default: "" },
+      status: { type: String, default: 1 }
 
     }
   ],
@@ -126,8 +127,9 @@ const releaseSchema = mongoose.Schema({
     PreOrder: [
       {
         id: { type: String, default: "" },
-        Platform: { type: String },
-        Date: { type: String }
+        name: { type: String },
+        date: { type: String },
+        logo: { type: String }
       }
     ],
     Preview: {
@@ -135,9 +137,9 @@ const releaseSchema = mongoose.Schema({
     },
     ExclusiveReleaseDates: [
       {
-        id: { type: String, default: "" },
-        Platform: { type: String },
-        Date: { type: String }
+        name: { type: String },
+        date: { type: String },
+        logo: { type: String }
       }
     ]
   },
@@ -150,6 +152,14 @@ const labelSchema = mongoose.Schema({
   userId: { type: String },
   title: { type: String, required: true },
 })
+// const storeSchema = mongoose.Schema({
+//   userId: { type: String },
+//   store: [{
+//     id: { type: String, default: "" },
+//     name: { type: String, default: "" },
+//     status: { type: String, default: "active" }
+//   }],
+// })
 
 releaseModel.addOneRelease = async (data) => {
   const result = await db.connectDb("release", releaseSchema);
@@ -285,6 +295,18 @@ releaseModel.releaseDetails = async (releaseId) => {
   }
 };
 
+releaseModel.trackUpdate = async (body) => {
+  const result = await db.connectDb("release", releaseSchema);
+  let fetData = await result.updateOne(
+    { _id: body._id, "step3._id": body.step3[0]._id },
+    { $set: { "step3.$": body.step3[0] } }
+  );
+  if (fetData.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
 releaseModel.addLabel = async (data) => {
   const result = await db.connectDb("label", labelSchema);
   let insData = await result.insertMany(data);
@@ -296,7 +318,7 @@ releaseModel.addLabel = async (data) => {
   }
 };
 
-releaseModel.labelList= async (uId) => {
+releaseModel.labelList = async (uId) => {
   const result = await db.connectDb("label", labelSchema);
   let fetData = await result.find({ userId: uId });
   if (fetData.length > 0) {
@@ -305,7 +327,30 @@ releaseModel.labelList= async (uId) => {
     return [];
   }
 };
- 
+
+releaseModel.addStore = async (data) => {
+  const result = await db.connectDb("store", storeSchema);
+  let insData = await result.insertMany(data);
+  console.log(insData);
+  if (insData.length > 0) {
+    return insData[0];
+  } else {
+    return false
+  }
+};
+
+releaseModel.storeList = async (uId) => {
+  const result = await db.connectDb("store", storeSchema);
+  let fetData = await result.find({ userId: uId });
+  if (fetData.length > 0) {
+    return fetData;
+  } else {
+    return [];
+  }
+};
+
+
+
 
 
 module.exports = releaseModel
