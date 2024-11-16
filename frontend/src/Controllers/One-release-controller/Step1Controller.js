@@ -39,15 +39,43 @@ const Step1Controller = (props) => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImagePreview(URL.createObjectURL(file)); // Set the image preview URL
-      setImageFile(file);
-        // const reader = new FileReader();
-        // reader.onloadend = () => {
-        //     setImagePreview(reader.result); // Set the image preview URL
-        // };
-        // reader.readAsDataURL(file);
+        const fileType = file.type; // Get file type
+        const validFormats = ["image/jpeg"]; // Allowed formats
+
+        if (!validFormats.includes(fileType)) {
+            Swal.fire("Validation Error", "Only JPEG format is allowed.", "error");
+            return; // Exit if format is invalid
+        }
+
+        // Create an Image object to validate dimensions
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = () => {
+            const width = img.naturalWidth;
+            const height = img.naturalHeight;
+
+            // Check if dimensions match allowed sizes
+            if (!((width === 1440 && height === 1440) || (width === 3000 && height === 3000))) {
+                Swal.fire(
+                    "Validation Error",
+                    "Image size must be 1440x1440 or 3000x3000 pixels.",
+                    "error"
+                );
+                return; // Exit if size is invalid
+            }
+
+            // If all validations pass, set the preview and file
+            setImagePreview(URL.createObjectURL(file));
+            setImageFile(file);
+        };
+
+        // Error handling in case the image fails to load
+        img.onerror = () => {
+            Swal.fire("Validation Error", "Invalid image file.", "error");
+        };
     }
-  };
+};
+
 
   const handleSubmit = async (e) => {
     // validation set
@@ -167,6 +195,28 @@ const Step1Controller = (props) => {
     let result = await postData(base.releaseStep1, formData);
     console.log(result)
     if (result.data.status === true) {
+       // Reset form state
+       setReleaseTitle('');
+       setVersionSubtitle('');
+       setPrimaryArtist('');
+       setFeaturing('');
+       setIsVariousArtists(false);
+       setGenre('');
+       setSubGenre('');
+       setLabelName('');
+       setFormat('');
+       setReleaseDate('');
+       setPLine('');
+       setCLine('');
+       setProductionYear('');
+       setUpcEan('');
+       setProducerCatalogueNumber('');
+       setNewLabelName('');
+       setImagePreview(null);
+       setImageFile(null);
+
+       // Optionally navigate to a different page or reload the form
+      //  navigate('/');
       Swal.fire("Success", result.message, result.message);
 
     } else {

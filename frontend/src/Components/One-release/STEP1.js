@@ -28,13 +28,16 @@ export default function STEP1(props) {
         producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData} = Step1Controller();
     useEffect(() => {
         const getData = () => {
-            setReleaseData(releaseData)
+            setReleaseData(releaseData);            
             if (releaseData.step1) { 
                 const jsonData = releaseData.step1;
+                console.log("jsonData.featuring====", jsonData);
                 setReleaseTitle(releaseData.title);
                 setVersionSubtitle(jsonData.subTitle);
-                setPrimaryArtist(jsonData.primaryArtist);
-                setFeaturing(jsonData.featuring);
+                // setPrimaryArtist(jsonData.primaryArtist);
+                setPrimaryArtist([]);
+                // setFeaturing(jsonData.featuring);
+                setFeaturing([]);
                 setIsVariousArtists(jsonData.isVariousArtists);
                 setGenre(jsonData.genre);
                 setSubGenre(jsonData.subGenre);
@@ -49,7 +52,6 @@ export default function STEP1(props) {
             } else {
                 console.error("Data is undefined or null");
             }
-
         }
         getData()
     }, [releaseData])
@@ -223,6 +225,25 @@ export default function STEP1(props) {
                             onChange={handleImageChange} // Trigger this function on file selection
                         />
                         <p>Upload cover</p>
+                        <div>
+        <p><strong>Your cover must be:</strong><br/>
+        Size: 1440*1440 or 3000*3000 pixels
+          Format: .jpeg
+          Color space: SRGB<br/>
+          <strong>Warning:</strong> your cover must not contain Internet address, e-mail address, barcode, price, any info related to a physical or digital support, any info limited in time, any info that could mislead a client, or contains outrageous or explicit material.
+          </p>
+        {/* <p>If your cover does not upload, please click on to resize your artwork.</p>
+        <p style={{ color: "red", fontWeight: "bold" }}>Warning:</p>
+        <ul style={{ margin: "0", paddingLeft: "20px", color: "#333" }}>
+          <li>Your cover must not contain:<br/>
+          Internet address, e-mail address, or barcode<br/>
+          Price or any info related to a physical/digital support<br/>
+          Any info limited in time<br/>
+          Misleading information<br/>
+          Outrageous or explicit material<br/>
+                </li>   
+        </ul> */}
+      </div>
                     </div>
 
                 </div>
