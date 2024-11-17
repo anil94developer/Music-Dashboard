@@ -102,7 +102,7 @@ export default function STEP5(props) {
         </div>
       </div>
       <div className="mt-3">
-        <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
+        <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
       </div>
     </div>
   );

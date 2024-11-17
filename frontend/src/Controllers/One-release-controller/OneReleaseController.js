@@ -12,10 +12,13 @@ const OneReleaseController = (props) => {
     const [title, setTitle] = useState("");
     const [type, setType] = useState("Audio");
     const [myRelease, setMyRelease] = useState([]);
+    const [myTracks, setMyTracks] = useState([]);
+
 
  
     useEffect(() => {
         fetchReleaseList()
+        fetchTracksList()
       }, [])
       const fetchReleaseList = async () => { 
         setIsLoading(true)
@@ -30,7 +33,20 @@ const OneReleaseController = (props) => {
           // Swal.fire("Error", result.message, result.message);
         }
       }
-    
+        const fetchTracksList = async () => { 
+          setIsLoading(true)
+          let result = await getData(base.tracksList);
+          console.log(base.tracksList+"===========>",result)
+          if (result.status === true) { 
+            setMyTracks(result.data)
+              setIsLoading(false)
+          } else {
+            setIsLoading(false)
+  
+            // Swal.fire("Error", result.message, result.message);
+          }
+      }
+      
     const handleSubmit = async (e) => {
         let body = {
             title: title,
@@ -58,7 +74,8 @@ const OneReleaseController = (props) => {
         setType,
         myRelease,
         handleSubmit,
-        moreAction
+        moreAction,
+        myTracks, setMyTracks
     }
 
 }

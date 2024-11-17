@@ -1,7 +1,9 @@
 import React from 'react'
+import useDashboardController from '../../Controllers/Dashboard-Controller/useDashboardController';
 import {Nav} from '../Common/Nav'
 
 export const Dashboard = () => {
+    const {dashboardData}= useDashboardController();
     return (
         <div>
             <Nav />
@@ -27,33 +29,33 @@ export const Dashboard = () => {
 
                             <div class="small-box bg-aqua">
                                 <div class="inner">
-                                    <h3>150</h3>
-                                    <p>New Orders</p>
+                                    <h3>{dashboardData.myReleaseCount}</h3>
+                                    <p>All Release</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="all-release" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                        <div class="col-lg-3 col-xs-6">
 
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    <h3>53<sup  >%</sup></h3>
-                                    <p>Bounce Rate</p>
+                                    <h3>{dashboardData.myTracksCount}</h3>
+                                    <p>All Tracks</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="all-tracks" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div> 
-                         <div class="col-lg-3 col-xs-6">
+                         {/* <div class="col-lg-3 col-xs-6">
 
                             <div class="small-box bg-yellow">
                                 <div class="inner">
-                                    <h3>44</h3>
+                                    <h3>{dashboard.}</h3>
                                     <p>User Registrations</p>
                                 </div>
                                 <div class="icon">
@@ -61,8 +63,8 @@ export const Dashboard = () => {
                                 </div>
                                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-xs-6">
+                        </div> */}
+                        {/* <div class="col-lg-3 col-xs-6">
 
                             <div class="small-box bg-red">
                                 <div class="inner">
@@ -74,7 +76,7 @@ export const Dashboard = () => {
                                 </div>
                                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                        </div> 
+                        </div>  */}
                     </div>
 
 

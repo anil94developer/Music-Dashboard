@@ -44,6 +44,7 @@ const Step3Controller = (props) => {
     const [step3, setStep3] = useState([]);
     const [btnName, setBtnName] = useState("Add");
     const [rowId,setRowId]=useState("")
+    const [volume,setVolume]= useState("")
 
     const handleSubmit = async (e) => {
         let body = {}
@@ -82,7 +83,8 @@ const Step3Controller = (props) => {
                         "TrackTitleLanguage": trackTitleLanguage,
                         "LyricsLanguage": lyricsLanguage,
                         "Lyrics": lyrics,
-                        "MoreInfo": ""
+                        "MoreInfo": "",
+                        "Volume":volume
                     }
                 ]
             }
@@ -121,6 +123,7 @@ const Step3Controller = (props) => {
                         "LyricsLanguage": lyricsLanguage,
                         "Lyrics": lyrics,
                         "MoreInfo": "",
+                        "Volume":volume,
                         "_id":rowId
                     }
                 ]
@@ -198,7 +201,8 @@ const Step3Controller = (props) => {
         step3, setStep3,
         setReleaseData,
         handleSubmit,
-        btnName, setBtnName,setRowId
+        btnName, setBtnName,setRowId,
+        volume,setVolume
     };
 
 }
