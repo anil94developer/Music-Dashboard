@@ -74,7 +74,19 @@ authModel.getUser = async(userId)=> {
     const getUser = await add.find({_id:userId})
     return getUser[0]
 } 
-
+authModel.changePassword = async (userId, pass) => {
+    const Login = await db.connectDb("users", usersSchema);
+    const passData = await Login.updateOne(
+        { _id: userId },
+        { $set: { password: pass } },
+        { runValidators: true }
+    );
+    if (passData.modifiedCount > 0) {
+        return true;
+    } else {
+        return false;
+    }
+};
 
 
 // authModel.findAdminByRole = async(email, password) => {
@@ -302,19 +314,7 @@ authModel.getUser = async(userId)=> {
 //     }
 // };
 
-// authModel.changePassword = async (userId, pass) => {
-//     const Login = await db.connectDb("users", usersSchema);
-//     const passData = await Login.updateOne(
-//         { _id: userId },
-//         { $set: { password: pass } },
-//         { runValidators: true }
-//     );
-//     if (passData.modifiedCount > 0) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// };
+
 
 // authModel.forgotPassword = async (email, pass) => {
 //     const Login = await db.connectDb("users", usersSchema);

@@ -110,7 +110,8 @@ const releaseSchema = mongoose.Schema({
       TrackTitleLanguage: { type: String, default: "" },
       LyricsLanguage: { type: String, default: "" },
       Lyrics: { type: String, default: "" },
-      MoreInfo: { type: String, default: "" }
+      MoreInfo: { type: String, default: "" },
+      Volume: { type: String, default: "" }
     }
   ],
   step4: [
@@ -338,6 +339,18 @@ releaseModel.addStore = async (data) => {
     return false
   }
 };
+
+releaseModel.tracksList = async (uId) => {
+  const result = await db.connectDb("release", releaseSchema);
+  let fetData = await result.find({ userId: uId }, { step3: 1 });
+  let arr=[];
+  if (fetData.length > 0) {
+    arr = fetData.reduce((acc, item) => acc.concat(item.step3), []); // Flatten each step3 array into a single array
+  }  
+    return arr;
+   
+};
+
 
 releaseModel.storeList = async (uId) => {
   const result = await db.connectDb("store", storeSchema);

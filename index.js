@@ -12,6 +12,8 @@ const adminRoutes = require("./routes/admin.routes")
 const authRoutes = require("./routes/auth.routes")
 const releaseRoutes = require("./routes/release.routes");
 const artistRoutes = require("./routes/artist.routes");
+const supportRoutes = require("./routes/support.routes");
+
 
 
 
@@ -44,6 +46,8 @@ app.use(cors());
 app.use("/auth", authRoutes)
 app.use("/release", releaseRoutes)
 app.use("/artist", artistRoutes)
+app.use("/support", supportRoutes)
+
 
 
 

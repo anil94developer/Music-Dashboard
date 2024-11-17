@@ -51,9 +51,15 @@ router.post('/step-five-release', verifyToken, releaseService.addFiveStepRelease
 router.get('/release-list', verifyToken, releaseService.releaseList)
 router.post('/release-details', verifyToken, releaseService.releaseDetails)
 router.post('/tracks-update', verifyToken, releaseService.trackUpdate)
+router.get('/tracks-list', verifyToken, releaseService.tracksList)
+router.get('/tracks-list', verifyToken, releaseService.tracksList)
+
+ 
+
 
 router.post('/add-label',verifyToken, releaseService.addLabel)
 router.get('/label-list',verifyToken, releaseService.labelList)
+
 // router.post('/add-store',verifyToken, releaseService.addStore)
 // router.get('/list-store',verifyToken, releaseService.storeList)
 

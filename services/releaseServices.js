@@ -136,6 +136,16 @@ release.trackUpdate= async (req, res, next) => {
         next(err)
     }
 };
+release.tracksList= async (req, res, next) => { 
+    const  userId= req.doc.userId
+    try {   
+        const result = await releaseModel.tracksList(userId) 
+        return R(res, true, "Tracks Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+
 
 release.addStore= async (req, res, next) => { 
     const body = req.body

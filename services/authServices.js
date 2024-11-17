@@ -211,6 +211,16 @@ auth.getUsers = async (req, res, next) => {
         next(error)
     }
 }
+
+auth.passwordChange= async (req, res, next) => { 
+      const {newPassword}=req.body
+    try {
+        const result = await authModel.changePassword(req.doc.userId,newPassword)
+        return R(res, true, "Update successfully!!", result, 200)
+    } catch (error) {
+        next(error)
+    }
+}
 // auth.addsubadmin = async (req, res, next) => {
 //     try {
 //         req.body.password = await bcrypt.passwordEncryption(req.body.password);
