@@ -1,5 +1,6 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose"); 
+const bcrypt = require("bcrypt");   
 let ObjectId = require("mongodb").ObjectID;
 
 authModel={} 
@@ -68,25 +69,51 @@ authModel.signUp = async (data) => {
     }
 };
 
-
 authModel.getUser = async(userId)=> {
     const add = await db.connectDb("users",usersSchema)
     const getUser = await add.find({_id:userId})
     return getUser[0]
 } 
-authModel.changePassword = async (userId, pass) => {
-    const Login = await db.connectDb("users", usersSchema);
-    const passData = await Login.updateOne(
-        { _id: userId },
-        { $set: { password: pass } },
-        { runValidators: true }
-    );
-    if (passData.modifiedCount > 0) {
-        return true;
-    } else {
+authModel.changePassword = async (userId, oldpass, pass) => {
+    try {
+        // Connect to the database
+        const Login = await db.connectDb("users", usersSchema);
+        
+        // Fetch the user by their ID
+        const user = await Login.findOne({ _id: userId });
+
+        // If user is not found, return false
+        if (!user) {
+            return false;
+        }
+
+        // Compare the old password with the stored one
+        const isOldPassValid = await bcrypt.compare(oldpass, user.password);
+
+        // If the old password is invalid, return false
+        if (!isOldPassValid) {
+            return false;
+        }
+
+        // Update the password with the new one
+        const passData = await Login.updateOne(
+            { _id: userId },
+            { $set: { password: await bcrypt.hash(pass, 10) } },
+            { runValidators: true }
+        );
+
+        // Return true if password was updated, else false
+        if (passData.modifiedCount > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error("Error changing password:", error);
         return false;
     }
 };
+
 
 
 // authModel.findAdminByRole = async(email, password) => {
