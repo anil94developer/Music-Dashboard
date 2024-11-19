@@ -12,6 +12,9 @@ import BankInformation from "./Components/BankInformation/BankInformation";
 import Support from "./Components/Support/Support";
 import Password from "./Components/Password/Password";
 import UserMangement from "./Components/UserMangement/UserMangement";
+import PaymentOperations from "./Components/PaymentOperations/PaymentOperations";
+import FinancialReport from "./Components/FinancialReports/FinancialReports";
+import UserAccessForm from "./Components/UserMangement/UserAccessForm";
 
 function App() {
   return (
@@ -29,9 +32,12 @@ function App() {
       <Route path="/support" element ={<Support />}></Route>
       <Route path="/password-change" element ={<Password />}></Route>
       <Route path="/user-access" element={<UserMangement />}></Route>  
-      <Route path="/payment-operations" element={<UserMangement />}></Route>  
+      <Route path="/add-user" element={<UserAccessForm />}></Route>  
 
-      <Route path="/financial-reports" element={<UserMangement />}></Route>  
+      
+      <Route path="/payment-operations" element={<PaymentOperations />}></Route>  
+
+      <Route path="/financial-reports" element={<FinancialReport />}></Route>  
 
       <Route path="/multiple-release" element={<Dashboard />}></Route>
 

@@ -6,14 +6,14 @@ import { Nav } from '../Common/Nav'
 import * as XLSX from 'xlsx';
 export const OneRelease = () => {
   const navigate = useNavigate();
-  const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading ,myTracks, setMyTracks} = OneReleaseController();
- 
+  const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading, myTracks, setMyTracks } = OneReleaseController();
+
   function exportTableToExcel(tableId, fileName = 'TableData.xlsx') {
     // Get the table element by ID
     const table = document.getElementById(tableId);
     if (!table) {
-        console.error(`Table with ID ${tableId} not found.`);
-        return;
+      console.error(`Table with ID ${tableId} not found.`);
+      return;
     }
 
     // Convert table to a worksheet
@@ -25,7 +25,7 @@ export const OneRelease = () => {
 
     // Export the workbook to an Excel file
     XLSX.writeFile(workbook, fileName);
-}
+  }
   return (
     <div>
       <Nav />
@@ -96,18 +96,18 @@ export const OneRelease = () => {
                 </div>
               </div>
             </div>
-          <div class="col-md-6">
+            <div class="col-md-6">
               <div class="box">
-                
+
               </div>
-            </div>  
+            </div>
           </div>
 
         </section>
-        
+
 
       </div>
- 
+
     </div>
 
   );
