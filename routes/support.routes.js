@@ -1,13 +1,13 @@
 const express = require("express")
 const router = express.Router(); 
 const verifyToken = require("../utils/verifyToken");
-const multer = require("multer");
-const SupportModal = require("../models/supportmodeals");
+const uploadSingleIcon=require("../helper/FileUploadHelper");
+const support= require("../services/supportService");
  
  
   
-router.post('/add-support', verifyToken, SupportModal.addSupport)
-router.get('/support-list', verifyToken, SupportModal.supportList)
+router.post('/add-support',verifyToken, uploadSingleIcon.single('file'),support.addData)
+router.get('/support-list', verifyToken, support.listdata)
 
 
 

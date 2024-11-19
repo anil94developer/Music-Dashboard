@@ -13,6 +13,7 @@ const authRoutes = require("./routes/auth.routes")
 const releaseRoutes = require("./routes/release.routes");
 const artistRoutes = require("./routes/artist.routes");
 const supportRoutes = require("./routes/support.routes");
+const profileRoutes = require("./routes/profile.routes.js");
 
 
 
@@ -47,6 +48,7 @@ app.use("/auth", authRoutes)
 app.use("/release", releaseRoutes)
 app.use("/artist", artistRoutes)
 app.use("/support", supportRoutes)
+app.use("/",profileRoutes)
 
 
 

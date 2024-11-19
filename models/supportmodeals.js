@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 const db = require("../utils/dbConn");
 
 const supportSchema = new mongoose.Schema({
-  issueType: { type: String, required: true },
-  email: { type: String, required: true },
-  clientNumber: { type: String, required: true },
-  country: { type: String, required: true },
-  description: { type: String, required: true },
-  motionType: { type: String, required: true },
-  motionLink: { type: String, required: true },
+  issueType: { type: String },
+  email: { type: String },
+  clientNumber: { type: String },
+  country: { type: String },
+  description: { type: String },
+  motionType: { type: String },
+  motionLink: { type: String },
   attachments: { type: [String] }, // Store filenames or links for attachments
 });
 
@@ -26,15 +26,22 @@ SupportModal.addSupport = async (data) => {
     }
   };
   
-  SupportModal.supportList = async (uId) => {
+  SupportModal.supportList = async (uId) => { 
     const result = await db.connectDb("Support", supportSchema);
-    let fetData = await result.find({ userId: uId }, { step3: 1 });
-    let arr=[];
-    if (fetData.length > 0) {
-      arr = fetData.reduce((acc, item) => acc.concat(item.step3), []); // Flatten each step3 array into a single array
-    }  
-      return arr;
-     
+    // let fetData = await result.find({ _id: uId }, { step3: 1 });
+    // let arr=[];
+    // if (fetData.length > 0) {
+    //   arr = fetData.reduce((acc, item) => acc.concat(item.step3), []); // Flatten each step3 array into a single array
+    // }  
+    //   return arr;
+      
+    const fetchedData =await result.find({});
+    if (fetchedData.length > 0) {
+    return fetchedData;
+    }
+    return false;
+
+
   };
 
 
