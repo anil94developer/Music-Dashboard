@@ -1,6 +1,7 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose"); 
 const bcrypt = require("bcrypt");   
+const auth = require("../services/authServices");
 let ObjectId = require("mongodb").ObjectID;
 
 authModel={} 
@@ -15,7 +16,20 @@ const usersSchema = mongoose.Schema({
     password: { type: String, required: true },
     is_deleted:{type:Number},
     ip_address:{type:String},
-    is_active:{type:Number}
+    is_active:{type:Number},
+    companyName: { type: String },
+    clientNumber: { type: String },
+    mainEmailAddress: { type: String },
+    royaltiesEmailAddress: { type: String },
+    firstName: { type: String },
+    lastName: { type: String },
+    phoneNumber: { type: String },
+    postalAddress: { type: String },
+    postalCode: { type: String },
+    city: { type: String },
+    country: { type: String },
+    defaultTimeZone: { type: String },
+    defaultLanguage: { type: String }
 },
 { timestamps: true }
 );
@@ -114,6 +128,20 @@ authModel.changePassword = async (userId, oldpass, pass) => {
     }
 };
 
+
+authModel.updateProfile=async (id,data)=>{
+   try{ const result = await db.connectDb("users", usersSchema);
+    let updateData = await result.updateOne(
+        { _id: id },
+        { $set: data },
+        { runValidators: true }
+    );
+  return updateData;}
+  catch(err){ 
+    console.error("Error updating profile:", err);
+    return false;
+}
+}
 
 
 // authModel.findAdminByRole = async(email, password) => {
