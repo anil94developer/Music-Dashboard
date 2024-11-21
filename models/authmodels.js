@@ -59,7 +59,6 @@ authModel.cronForOneDay = async() => {
         { $inc: { days_for_test_series: -1 } }
       );
 }
-
 authModel.login = async (key, email) => {
     
     let check = {};
@@ -71,7 +70,6 @@ authModel.login = async (key, email) => {
     } 
     return val;
 };
-
 authModel.signUp = async (data) => {
     const Login = await db.connectDb("users", usersSchema);
     let insData = await Login.insertMany(data);
@@ -82,7 +80,6 @@ authModel.signUp = async (data) => {
        return false 
     }
 };
-
 authModel.getUser = async(userId)=> {
     const add = await db.connectDb("users",usersSchema)
     const getUser = await add.find({_id:userId})
@@ -92,9 +89,10 @@ authModel.changePassword = async (userId, oldpass, pass) => {
     try {
         // Connect to the database
         const Login = await db.connectDb("users", usersSchema);
-        
+
         // Fetch the user by their ID
         const user = await Login.findOne({ _id: userId });
+        console.log("Fetched User:", user);
 
         // If user is not found, return false
         if (!user) {
@@ -103,6 +101,7 @@ authModel.changePassword = async (userId, oldpass, pass) => {
 
         // Compare the old password with the stored one
         const isOldPassValid = await bcrypt.compare(oldpass, user.password);
+        console.log("Is Old Password Valid:", isOldPassValid);
 
         // If the old password is invalid, return false
         if (!isOldPassValid) {
@@ -110,18 +109,19 @@ authModel.changePassword = async (userId, oldpass, pass) => {
         }
 
         // Update the password with the new one
+        const hashedPassword = await bcrypt.hash(pass, 10);
+        console.log("Hashed New Password:", hashedPassword);
+
         const passData = await Login.updateOne(
             { _id: userId },
-            { $set: { password: await bcrypt.hash(pass, 10) } },
+            { $set: { password: hashedPassword } },
             { runValidators: true }
         );
 
+        console.log("Password Update Result:", passData);
+
         // Return true if password was updated, else false
-        if (passData.modifiedCount > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return passData.modifiedCount > 0;
     } catch (error) {
         console.error("Error changing password:", error);
         return false;
@@ -142,6 +142,7 @@ authModel.updateProfile=async (id,data)=>{
     return false;
 }
 }
+
 
 
 // authModel.findAdminByRole = async(email, password) => {

@@ -213,10 +213,11 @@ auth.getUsers = async (req, res, next) => {
 }
 
 auth.passwordChange= async (req, res, next) => { 
-      const {userId,newPassword,oldPassword}=req.body
+      const {newPassword,oldPassword}=req.body
+      //console.log(req,req.doc.userId)
     try {
-        const result = await authModel.changePassword(userId,oldPassword,newPassword)
-        return R(res, true, "Update successfully!!", result, 200)
+        const result = await authModel.changePassword(req.doc.userId,oldPassword,newPassword)
+        return R(res, true, "Update successfully!!", req.doc.userId, 200)
     } catch (error) {
         next(error)
     }

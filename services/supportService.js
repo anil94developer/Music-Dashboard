@@ -11,7 +11,7 @@ support.addData = async (req, res, next) => {
     }
 
     //Add your data logic here
-    const supportData = await SupportModal.addSupport(data);
+    const supportData = await SupportModal.addSupport(data,req.doc.userId);
     if (supportData == false) {
       return R(res, false, "Data not added successfully", {}, 400);
     }
@@ -24,7 +24,8 @@ support.addData = async (req, res, next) => {
 
 support.listdata=async (req,res,next) => {
     try {
-        const supportData = await SupportModal.supportList();
+        let userId=req.doc.userId
+        const supportData = await SupportModal.supportList(userId);
         if (!supportData) {
             return R(res, false, "Data not found", {}, 404);
         }
