@@ -7,11 +7,6 @@ const validateInput = require("../helper/emailmobileVal")
 const sendOtpEmail = require("../utils/Sendgrid")
 const IP = require('ip');
 const authModel = require("../models/authmodels");
-
-const auth = {};
- 
-
- 
  
 
 // auth.addUsers = async (req, res, next) => {
@@ -116,7 +111,7 @@ const auth = {};
 
 
 // }
-
+const auth={};
 
 auth.login = async (req, res, next) => {
     try {
@@ -159,7 +154,6 @@ auth.login = async (req, res, next) => {
     }
 
 };
-
 auth.signUp = async (req, res, next) => {
     const { email, phone, name, password, role, dob } = req.body
     const now = new Date();
@@ -211,7 +205,6 @@ auth.getUsers = async (req, res, next) => {
         next(error)
     }
 }
-
 auth.passwordChange= async (req, res, next) => { 
       const {newPassword,oldPassword}=req.body
       //console.log(req,req.doc.userId)

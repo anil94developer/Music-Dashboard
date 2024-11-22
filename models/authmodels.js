@@ -1,75 +1,67 @@
 const db = require("../utils/dbConn");
-const mongoose = require("mongoose"); 
-const bcrypt = require("bcrypt");   
-const auth = require("../services/authServices");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+ 
 let ObjectId = require("mongodb").ObjectID;
 
-authModel={} 
+authModel = {}
 
- 
-const usersSchema = mongoose.Schema({
-    name: { type: String }, 
-    email: { type: String, required: true },
-    phone: { type: Number, required: true }, 
-    dob: { type: String },
-    role:{type:String},
-    password: { type: String, required: true },
-    is_deleted:{type:Number},
-    ip_address:{type:String},
-    is_active:{type:Number},
-    companyName: { type: String },
-    clientNumber: { type: String },
-    mainEmailAddress: { type: String },
-    royaltiesEmailAddress: { type: String },
-    firstName: { type: String },
-    lastName: { type: String },
-    phoneNumber: { type: String },
-    postalAddress: { type: String },
-    postalCode: { type: String },
-    city: { type: String },
-    country: { type: String },
-    defaultTimeZone: { type: String },
-    defaultLanguage: { type: String }
-},
-{ timestamps: true }
-);
+const usersSchema = mongoose.Schema(
+    {
+      name: { type: String },
+      email: { type: String, required: true, unique: true },
+      phone: { type: Number, required: true, unique: true },
+      password: { type: String, required: true },
+      role: { type: String, default: 'user' },
+      is_active: { type: Number, default: 1 },
+      is_deleted: { type: Number, default: 0 },
+      is_subscribed_for_current_affairs: { type: Boolean, default: false },
+      subscription_end_for_current_affairs: { type: Number },
+      days_for_current_affairs: { type: Number, default: 0 },
+      is_subscribed_for_test_series: { type: Boolean, default: false },
+      subscription_end_for_test_series: { type: Number },
+      days_for_test_series: { type: Number, default: 0 },
+    },
+    { timestamps: true }
+  );
+  
 
-
-authModel.cronForOneHour = async() => {
+authModel.cronForOneHour = async () => {
     const nowInMillis = Date.now();
 
-    const check = await db.connectDb("users",usersSchema)
+    const check = await db.connectDb("users", usersSchema)
     const resultForCurrentAffairs = await check.updateMany(
-      { is_subscribed_for_current_affairs:true, subscription_end_for_current_affairs: { $lt: nowInMillis } }, // Replace 'subscriptionDate' with your date field
-      { $set: { is_subscribed_for_current_affairs: false,days_for_current_affairs:0 } }
+        { is_subscribed_for_current_affairs: true, subscription_end_for_current_affairs: { $lt: nowInMillis } }, // Replace 'subscriptionDate' with your date field
+        { $set: { is_subscribed_for_current_affairs: false, days_for_current_affairs: 0 } }
     );
     const resultForTestSeries = await check.updateMany(
-        { is_subscribed_for_test_series:true, subscription_end_for_test_series: { $lt: nowInMillis } }, // Replace 'subscriptionDate' with your date field
-        { $set: { is_subscribed_for_test_series: false,days_for_test_series:0 } }
-      );
+        { is_subscribed_for_test_series: true, subscription_end_for_test_series: { $lt: nowInMillis } }, // Replace 'subscriptionDate' with your date field
+        { $set: { is_subscribed_for_test_series: false, days_for_test_series: 0 } }
+    );
 }
-authModel.cronForOneDay = async() => {
-    const check = await db.connectDb("users",usersSchema)
+authModel.cronForOneDay = async () => {
+    const check = await db.connectDb("users", usersSchema)
     const resultForCurrentAffairs = await check.updateMany(
-        { is_subscribed_for_current_affairs: true,days_for_current_affairs: { $gt: 0 } },
+        { is_subscribed_for_current_affairs: true, days_for_current_affairs: { $gt: 0 } },
         { $inc: { days_for_current_affairs: -1 } }
-      );
-      const resultForTestSeries = await check.updateMany(
-        { is_subscribed_for_test_series: true,days_for_test_series: { $gt: 0 } },
+    );
+    const resultForTestSeries = await check.updateMany(
+        { is_subscribed_for_test_series: true, days_for_test_series: { $gt: 0 } },
         { $inc: { days_for_test_series: -1 } }
-      );
+    );
 }
 authModel.login = async (key, email) => {
-    
+
     let check = {};
-    check[key] = email; 
+    check[key] = email;
     const result = await db.connectDb("users", usersSchema);
-    let val = await result.findOne(check, { __v: 0 });  
-    if (!val) {  
-        return false  
-    } 
+    let val = await result.findOne(check, { __v: 0 });
+    if (!val) {
+        return false
+    }
     return val;
 };
+
 authModel.signUp = async (data) => {
     const Login = await db.connectDb("users", usersSchema);
     let insData = await Login.insertMany(data);
@@ -77,14 +69,14 @@ authModel.signUp = async (data) => {
     if (insData.length > 0) {
         return insData[0];
     } else {
-       return false 
+        return false
     }
 };
-authModel.getUser = async(userId)=> {
-    const add = await db.connectDb("users",usersSchema)
-    const getUser = await add.find({_id:userId})
+authModel.getUser = async (userId) => {
+    const add = await db.connectDb("users", usersSchema)
+    const getUser = await add.find({ _id: userId })
     return getUser[0]
-} 
+}
 authModel.changePassword = async (userId, oldpass, pass) => {
     try {
         // Connect to the database
@@ -127,18 +119,20 @@ authModel.changePassword = async (userId, oldpass, pass) => {
         return false;
     }
 };
-authModel.updateProfile=async (id,data)=>{
-   try{ const result = await db.connectDb("users", usersSchema);
-    let updateData = await result.updateOne(
-        { _id: id },
-        { $set: data },
-        { runValidators: true }
-    );
-  return updateData;}
-  catch(err){ 
-    console.error("Error updating profile:", err);
-    return false;
-}
+authModel.updateProfile = async (id, data) => {
+    try {
+        const result = await db.connectDb("users", usersSchema);
+        let updateData = await result.updateOne(
+            { _id: id },
+            { $set: data },
+            { runValidators: true }
+        );
+        return updateData;
+    }
+    catch (err) {
+        console.error("Error updating profile:", err);
+        return false;
+    }
 }
 
 
@@ -249,7 +243,7 @@ authModel.updateProfile=async (id,data)=>{
 //         $and: [
 //             { _id: { $ne: userId } },
 //             { $or: [{ email: email }, { mobileNumber: mobile }] }
-         
+
 //         ]
 //       })
 //       return val
@@ -318,7 +312,7 @@ authModel.updateProfile=async (id,data)=>{
 //             { role: type } // Condition 2: role equals a certain value stored in the variable 'type'
 //         ]
 //     });
-    
+
 //     if (val.length>0) {
 //         return val;
 //     }
