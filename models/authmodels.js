@@ -127,8 +127,6 @@ authModel.changePassword = async (userId, oldpass, pass) => {
         return false;
     }
 };
-
-
 authModel.updateProfile=async (id,data)=>{
    try{ const result = await db.connectDb("users", usersSchema);
     let updateData = await result.updateOne(
