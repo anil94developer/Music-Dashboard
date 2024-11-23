@@ -46,7 +46,7 @@ release.addTwoStepRelease = async (req, res, next) => {
 
         // Save to DB here, e.g., via your release model or database handler
         console.log("fileData===",fileData);
-        const result = await releaseModel.addTwoStepRelease(fileData) 
+        const result = await releaseModel.addTwoStepRelease(_id,fileData) 
         res.status(200).json({ status: true, message: 'Files uploaded successfully!' });
     } catch (error) {
         res.status(500).json({ status: false, message: 'File upload failed', error });

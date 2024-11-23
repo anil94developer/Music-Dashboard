@@ -9,6 +9,7 @@ router.post('/signup', authService.signUp)
 router.post('/login',authService.login)
 router.get('/user-profile',verifyToken, authService.getUsers)
 router.post('/user-change-password',verifyToken,authService.passwordChange)
+router.post('/profile-update',verifyToken,authService.profileUpdate)
 
 
 

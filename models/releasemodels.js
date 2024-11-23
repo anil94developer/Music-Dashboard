@@ -41,12 +41,12 @@ const releaseSchema = mongoose.Schema({
     {
       fileName: { type: String, default: "" },
       fileType: { type: String, default: "" },
-      fileData: { type: String, default: "" },
+      fileData: { type: String, default: "" }
     }
   ],
   step3: [
     {
-      ContentType: { type: String, default: "AudioVideo" },
+      ContentType: { type: String, default: "Audio" },
       PrimaryTrackType: { type: String, default: "Music" },
       SecondaryTrackType: { type: String, default: "Original" },
       Instrumental: { type: Boolean, default: false },
@@ -186,8 +186,8 @@ releaseModel.addOneStepRelease = async (body) => {
         type: body.type,
         step1: {
           subTitle: body.step1.subTitle,
-          primaryArtist: body.step1.primaryArtist,
-          featuring: body.step1.featuring,
+          // primaryArtist: body.step1.primaryArtist,
+          // featuring: body.step1.featuring,
           genre: body.step1.genre,
           subGenre: body.step1.subGenre,
           labelName: body.step1.labelName,
@@ -210,14 +210,14 @@ releaseModel.addOneStepRelease = async (body) => {
   }
 };
 
-releaseModel.addTwoStepRelease = async (body) => {
-  console.log("one release body======", body)
+releaseModel.addTwoStepRelease = async (_id,filesData) => {
+  console.log("one release body======", _id,filesData)
   let releaseResult = await db.connectDb("release", releaseSchema);
-// "671cb18ba0ff2158d4208ed6"
-  let result = await releaseResult.updateOne({ _id:  body._id},
+ 
+  let result = await releaseResult.updateOne({ _id:_id},
     {
       $set: {
-        step2: body
+        step2: filesData
       }
     })
   if (result.modifiedCount > 0 || result.upsertedCount > 0) {

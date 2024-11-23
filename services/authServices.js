@@ -221,7 +221,26 @@ auth.passwordChange= async (req, res, next) => {
         next(error)
     }
 };
-            
+auth.profileUpdate=async(req,res,next) => {
+    try {
+        const id = req.doc.userId;
+        if (!id) {
+          return R(res, false, "ID is required", {}, 400);
+        } 
+
+        let data=req.body;
+        console.log(data);
+        if (!data) {
+          return R(res, false, "Data is required", {}, 400);
+        }
+        
+        const profileData=authModel.updateProfile(id,data);
+        
+        return R(res, true,"Profile updated successfully",profileData,201);
+    } catch (error) {
+        next(error);
+    }
+}   
 
 // auth.addsubadmin = async (req, res, next) => {
 //     try {

@@ -12,10 +12,9 @@ const adminRoutes = require("./routes/admin.routes")
 const authRoutes = require("./routes/auth.routes")
 const releaseRoutes = require("./routes/release.routes");
 const artistRoutes = require("./routes/artist.routes");
-const supportRoutes = require("./routes/support.routes");
-const profileRoutes = require("./routes/profile.routes.js");
-const bankRoutes = require("./routes/bank.routes.js");
-const walletRoutes = require("./routes/wallet.route.js");
+const supportRoutes = require("./routes/support.routes"); 
+const bankRoutes = require("./routes/bank.routes");
+const walletRoutes = require("./routes/wallet.route");
 
 
 
@@ -52,8 +51,7 @@ app.use("/release", releaseRoutes);
 app.use("/artist", artistRoutes);
 app.use("/support", supportRoutes);
 app.use("/bank", bankRoutes);
-app.use("/wallet", walletRoutes);
-app.use("/",profileRoutes);
+app.use("/wallet", walletRoutes); 
 
 
 

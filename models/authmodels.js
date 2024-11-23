@@ -1,31 +1,38 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
- 
+
 let ObjectId = require("mongodb").ObjectID;
 
 authModel = {}
 
 const usersSchema = mongoose.Schema(
     {
-      name: { type: String },
-      email: { type: String, required: true, unique: true },
-      phone: { type: Number, required: true, unique: true },
-      password: { type: String, required: true },
-      role: { type: String, default: 'user' },
-      is_active: { type: Number, default: 1 },
-      is_deleted: { type: Number, default: 0 },
-      is_subscribed_for_current_affairs: { type: Boolean, default: false },
-      subscription_end_for_current_affairs: { type: Number },
-      days_for_current_affairs: { type: Number, default: 0 },
-      is_subscribed_for_test_series: { type: Boolean, default: false },
-      subscription_end_for_test_series: { type: Number },
-      days_for_test_series: { type: Number, default: 0 },
-      wallet:{ type: Number}
+        name: { type: String },
+        email: { type: String, required: true, unique: true },
+        phone: { type: Number, required: true, unique: true },
+        password: { type: String, required: true },
+        role: { type: String, default: 'user' },
+        is_active: { type: Number, default: 1 },
+        is_deleted: { type: Number, default: 0 },
+        companyName: { type: String },
+        clientNumber: { type: String },
+        mainEmailAddress: { type: String },
+        royaltiesEmailAddress: { type: String },
+        firstName: { type: String },
+        lastName: { type: String },
+        phoneNumber: { type: String },
+        postalAddress: { type: String },
+        postalCode: { type: String },
+        city: { type: String },
+        country: { type: String },
+        timeZone: { type: String },
+        language: { type: String },
+        wallet: { type: Number }
     },
     { timestamps: true }
-  );
-  
+);
+
 
 authModel.cronForOneHour = async () => {
     const nowInMillis = Date.now();
@@ -97,7 +104,7 @@ authModel.changePassword = async (userId, oldpass, pass) => {
         console.log("Is Old Password Valid:", isOldPassValid);
 
         // If the old password is invalid, return false
-        if (isOldPassValid===false) {
+        if (isOldPassValid === false) {
             return false;
         }
 
