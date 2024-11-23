@@ -1,5 +1,5 @@
-
-
+const walletModel=require('../models/withdrawalmodel');
+const transcationModel=require('../models/transaction');
 const bcrypt = require("../utils/bcrypt")
 const jwt = require("jsonwebtoken");
 const R = require("../utils/responseHelper");
@@ -7,6 +7,7 @@ const validateInput = require("../helper/emailmobileVal")
 const sendOtpEmail = require("../utils/Sendgrid")
 const IP = require('ip');
 const authModel = require("../models/authmodels");
+
  
 
 // auth.addUsers = async (req, res, next) => {
@@ -111,6 +112,7 @@ const authModel = require("../models/authmodels");
 
 
 // }
+
 const auth={};
 
 auth.login = async (req, res, next) => {
@@ -204,17 +206,23 @@ auth.getUsers = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-}
+};
 auth.passwordChange= async (req, res, next) => { 
       const {newPassword,oldPassword}=req.body
-      //console.log(req,req.doc.userId)
+   
     try {
-        const result = await authModel.changePassword(req.doc.userId,oldPassword,newPassword)
+        const result = await authModel.changePassword(req.doc.userId,oldPassword,newPassword);
+              if(!result){
+            return R(res,false,"old password is not correct","",400)
+        }
+
         return R(res, true, "Update successfully!!", req.doc.userId, 200)
     } catch (error) {
         next(error)
     }
-}
+};
+            
+
 // auth.addsubadmin = async (req, res, next) => {
 //     try {
 //         req.body.password = await bcrypt.passwordEncryption(req.body.password);

@@ -15,6 +15,7 @@ const artistRoutes = require("./routes/artist.routes");
 const supportRoutes = require("./routes/support.routes");
 const profileRoutes = require("./routes/profile.routes.js");
 const bankRoutes = require("./routes/bank.routes.js");
+const walletRoutes = require("./routes/wallet.route.js");
 
 
 
@@ -46,13 +47,13 @@ app.use(cors());
 
 
 // app.use("/auth/createSecure", adminRoutes)
-app.use("/auth", authRoutes)
-app.use("/release", releaseRoutes)
-app.use("/artist", artistRoutes)
-app.use("/support", supportRoutes)
-app.use("/bank", bankRoutes)
-
-app.use("/",profileRoutes)
+app.use("/auth", authRoutes);
+app.use("/release", releaseRoutes);
+app.use("/artist", artistRoutes);
+app.use("/support", supportRoutes);
+app.use("/bank", bankRoutes);
+app.use("/wallet", walletRoutes);
+app.use("/",profileRoutes);
 
 
 

@@ -21,6 +21,7 @@ const usersSchema = mongoose.Schema(
       is_subscribed_for_test_series: { type: Boolean, default: false },
       subscription_end_for_test_series: { type: Number },
       days_for_test_series: { type: Number, default: 0 },
+      wallet:{ type: Number}
     },
     { timestamps: true }
   );
@@ -96,7 +97,7 @@ authModel.changePassword = async (userId, oldpass, pass) => {
         console.log("Is Old Password Valid:", isOldPassValid);
 
         // If the old password is invalid, return false
-        if (!isOldPassValid) {
+        if (isOldPassValid===false) {
             return false;
         }
 
