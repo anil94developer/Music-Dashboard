@@ -53,7 +53,7 @@ app.use("/artist", artistRoutes);
 app.use("/support", supportRoutes);
 app.use("/bank", bankRoutes);
 app.use("/wallet", walletRoutes); 
-app.use("/",permissionsRoutes);
+app.use("/permission",permissionsRoutes);
 
 
 

@@ -54,5 +54,17 @@ return user;
     }
 }
 
+
+
+permission.listPermissions=async (userId)=>{
+    const result = await db.connectDb("UserPermission", userPermissionSchema);
+    try{
+        const user = await permissionModel.find({registeredUserId: userId});
+        return user;
+    }catch(err){
+        console.log("Error connecting to DB", err);
+        return false;
+    }
+}
 module.exports = permission
 

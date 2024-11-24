@@ -29,4 +29,18 @@ catch(err){
     return R(res,false,"Failed to add permission","",500);
 }
 }
+
+permission.list =async (req,res,next)=>{
+    try{
+        const permissions = await permissionmodel.listPermissions(req.doc.userId);
+        if(!permissions){
+            return R(res,false,"Failed to list permissions","",500);
+        }
+        return R(res,true,"Permissions listed successfully",permissions,200);
+    }
+    catch(err){
+        console.log("Error in permission.list",err);
+        return R(res,false,"Failed to list permissions","",500);
+    }
+}
 module.exports=permission;
