@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("../utils/dbConn");
+const {ObjectId}=require("mongodb")
 const submenuSchema = new mongoose.Schema({
     subMenuName: { type: String, required: true },
     status: { type: Boolean, default: false },
@@ -65,6 +66,38 @@ permission.listPermissions=async (userId)=>{
     try{
         const user = await permissionModel.find({userId:userId});
         return user;
+    }catch(err){
+        console.log("Error connecting to DB", err);
+        return false;
+    }
+}
+
+
+
+permission.profilePermissions=async (userId)=>{
+    console.log(userId);
+    const result = await db.connectDb("UserPermission", userPermissionSchema);
+    try{
+        
+        const user = await permissionModel.findOne({registeredUserId:new ObjectId(userId)});
+        console.log(user);
+        if(!user){
+            return false;
+        }
+        const userData=await authModel.getUser(userId);
+        if(!userData){
+            return false;
+        }
+        console.log("User>>>>>", userData);
+        user["userdetails"]=userData;
+
+        const data ={
+            userId:user.userId,
+            menuPermission:user.menuPermission,
+            otherPermission:user.otherPermission,
+            userdetails:userData,
+        }
+        return data;
     }catch(err){
         console.log("Error connecting to DB", err);
         return false;

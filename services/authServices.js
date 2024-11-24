@@ -201,7 +201,7 @@ auth.signUp = async (req, res, next) => {
 auth.getUsers = async (req, res, next) => { 
  
     try {
-        const get = await trans.profile(req.doc.userId)
+        const get = await transcationModel.profile(req.doc.userId)
         if(!get) {
             return R(res, false, "No data found!!", {}, 200)
         }

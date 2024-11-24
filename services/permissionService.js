@@ -37,7 +37,8 @@ permission.add = async (req, res, next) => {
 permission.list =async (req,res,next)=>{
     try {
         const userId = req.doc.userId;
-        const permissions = await permissionmodel.listPermissions(userId);
+        const permissions = await permissionmodel.profilePermissions(userId);
+        console.log("Permissions", permissions);
         if (!permissions) {
             return R(res, false, "Failed to list permissions", "", 500);
         }
