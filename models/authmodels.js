@@ -2,7 +2,7 @@ const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-let ObjectId = require("mongodb").ObjectID;
+let {ObjectId} = require("mongodb");
 
 authModel = {}
 
@@ -149,7 +149,7 @@ authModel.transaction = async (data)=>{
     const userId=new ObjectId(data.userId);
     const amount =data.amount;
     const updateData = await result.updateOne(
-        { _id: userId, wallet: { $gte: amount } }, // Ensure sufficient balance
+        { _id: data.userId, wallet: { $gte: amount } }, // Ensure sufficient balance
         { $inc: { wallet: -amount } } // Deduct directly
     );
     console.log(updateData);
@@ -162,6 +162,32 @@ authModel.transaction = async (data)=>{
     return false;
 }
 }
+authModel.transaction = async (data) => {
+    const result = await db.connectDb("users", usersSchema); // Ensure proper connection
+    try {
+        const userId = new ObjectId(data.userId); // Convert to ObjectId
+        const amount = data.amount;
+
+        // Ensure the user has sufficient balance and perform the deduction
+        const updateData = await result.updateOne(
+            { _id: userId, wallet: { $gte: amount } }, // Ensure sufficient balance
+            { $inc: { wallet: -amount } } // Deduct directly
+        );
+
+        console.log("Transaction result:", updateData);
+
+        // Check if any document was matched and modified
+        if (updateData.matchedCount === 0) {
+            console.error("Insufficient balance or user not found.");
+            return false;
+        }
+
+        return true; // Transaction successful
+    } catch (err) {
+        console.error("Error in transaction:", err.message);
+        return false; // Return false on error
+    }
+};
 
 
 
