@@ -4,7 +4,6 @@ import SearchInput from '../Common/SearchBox';
 import ARTISTLIST from '../../Enums/artist.list.json';
 import GENRES from '../../Enums/genres.json';
 import { images } from '../../assets/images';
-import { base, domainUrl } from '../../Constants/Data.constant';
 
 
 export default function STEP1(props) {
@@ -26,19 +25,19 @@ export default function STEP1(props) {
         upcEan, setUpcEan,
         newLabelName, setNewLabelName,
         labelNameStatus, setLabelNameStatus,
-        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData,setCoverImage,coverImage } = Step1Controller();
+        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData} = Step1Controller();
     useEffect(() => {
         const getData = () => {
-            setReleaseData(releaseData);
-            if (releaseData.step1) {
+            setReleaseData(releaseData);            
+            if (releaseData.step1) { 
                 const jsonData = releaseData.step1;
-                console.log("jsonData.featuring====", releaseData);
+                console.log("jsonData.featuring====", jsonData);
                 setReleaseTitle(releaseData.title);
                 setVersionSubtitle(jsonData.subTitle);
-                setPrimaryArtist(jsonData.primaryArtist);
-                // setPrimaryArtist([]);
-                setFeaturing(jsonData.featuring);
-                // setFeaturing([]);
+                // setPrimaryArtist(jsonData.primaryArtist);
+                setPrimaryArtist([]);
+                // setFeaturing(jsonData.featuring);
+                setFeaturing([]);
                 setIsVariousArtists(jsonData.isVariousArtists);
                 setGenre(jsonData.genre);
                 setSubGenre(jsonData.subGenre);
@@ -50,7 +49,6 @@ export default function STEP1(props) {
                 setProductionYear(jsonData.productionYear);
                 setUpcEan(jsonData.UPCEAN);
                 setProducerCatalogueNumber(jsonData.producerCatalogueNumber);
-                setCoverImage(jsonData.coverImage); 
             } else {
                 console.error("Data is undefined or null");
             }
@@ -195,8 +193,8 @@ export default function STEP1(props) {
                         id="format"
                         onChange={(e) => setFormat(e.target.value)}
                     >
-                        <option value={format}>{format ? format : 'Select a format'}</option>
-
+                                <option value={format}>{format ? format : 'Select a format'}</option>
+ 
                         <option value="SINGLE">SINGLE</option>
                         <option value="EP">EP</option>
                         <option value="ALBUM">ALBUM</option>
@@ -218,15 +216,8 @@ export default function STEP1(props) {
             {/* Right Column */}
             <div className="col-md-6">
                 <div className="form-group">
-                    <div className="img-cover">
-                        
-                        {coverImage != null ?
-                            <img className="img-thumbnail" src={domainUrl + coverImage} alt="Cover Preview" />
-
-                            : <img className="img-thumbnail" src={imagePreview || images.user} alt="Cover Preview" />
-
-                        }
-
+                <div className="img-cover">
+                        <img className="img-thumbnail" src={imagePreview || images.user} alt="Cover Preview" />
                         <input
                             type="file"
                             name="image"
@@ -235,13 +226,24 @@ export default function STEP1(props) {
                         />
                         <p>Upload cover</p>
                         <div>
-                            <p><strong>Your cover must be:</strong><br />
-                                Size: 3000*3000 pixels
-                                Format: .jpeg
-                                Color space: SRGB<br />
-                                <strong>Warning:</strong> your cover must not contain Internet address, e-mail address, barcode, price, any info related to a physical or digital support, any info limited in time, any info that could mislead a client, or contains outrageous or explicit material.
-                            </p>
-                        </div>
+        <p><strong>Your cover must be:</strong><br/>
+        Size: 1440*1440 or 3000*3000 pixels
+          Format: .jpeg
+          Color space: SRGB<br/>
+          <strong>Warning:</strong> your cover must not contain Internet address, e-mail address, barcode, price, any info related to a physical or digital support, any info limited in time, any info that could mislead a client, or contains outrageous or explicit material.
+          </p>
+        {/* <p>If your cover does not upload, please click on to resize your artwork.</p>
+        <p style={{ color: "red", fontWeight: "bold" }}>Warning:</p>
+        <ul style={{ margin: "0", paddingLeft: "20px", color: "#333" }}>
+          <li>Your cover must not contain:<br/>
+          Internet address, e-mail address, or barcode<br/>
+          Price or any info related to a physical/digital support<br/>
+          Any info limited in time<br/>
+          Misleading information<br/>
+          Outrageous or explicit material<br/>
+                </li>   
+        </ul> */}
+      </div>
                     </div>
 
                 </div>

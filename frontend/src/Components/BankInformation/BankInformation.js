@@ -17,16 +17,34 @@ export default function BankInformation() {
         <section className="container-fluid content">
           <section className="content">
             <div className="row">
-              <div className="col-md-8">
+              <div className="col-md-12">
                 <div className="box box-info">
                   <div className="box-body">
 
                     <form onSubmit={handleSubmit}>
+                      {/* PAN Number */}
+                      <div className="form-group">
+                        <label className="form-group-text" id="pan_number-addon">
+                         Pan Number
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Enter Pan Number"
+                          aria-label="Pan Number"
+                          aria-describedby="pan-number-addon"
+                          name="panNumber"
+                          value={bankDetails.panNumber}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+
                       {/* Account Holder */}
-                      <div className="input-group">
-                        <span className="input-group-text" id="account-holder-addon">
+                      <div className="form-group">
+                        <label className="form-group-text" id="account-holder-addon">
                           Account Holder
-                        </span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -41,10 +59,10 @@ export default function BankInformation() {
                       </div>
 
                       {/* Bank Name */}
-                      <div className="input-group mt-3">
-                        <span className="input-group-text" id="bank-name-addon">
+                      <div className="form-group mt-3">
+                        <label className="form-group-text" id="bank-name-addon">
                           Bank Name
-                        </span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -59,10 +77,10 @@ export default function BankInformation() {
                       </div>
 
                       {/* IFSC Code */}
-                      <div className="input-group mt-3">
-                        <span className="input-group-text" id="ifsc-code-addon">
+                      <div className="form-group mt-3">
+                        <label className="form-group-text" id="ifsc-code-addon">
                           IFSC Code
-                        </span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -77,10 +95,10 @@ export default function BankInformation() {
                       </div>
 
                       {/* Account Number */}
-                      <div className="input-group mt-3">
-                        <span className="input-group-text" id="account-number-addon">
+                      <div className="form-group mt-3">
+                        <label className="form-group-text" id="account-number-addon">
                           Account Number
-                        </span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -95,10 +113,10 @@ export default function BankInformation() {
                       </div>
 
                       {/* Account Type */}
-                      <div className="input-group mt-3">
-                        <span className="input-group-text" id="account-type-addon">
+                      <div className="form-group mt-3">
+                        <label className="form-group-text" id="account-type-addon">
                           Account Type
-                        </span>
+                        </label>
                         <select
                           className="form-control"
                           name="accountType"

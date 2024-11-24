@@ -3,7 +3,7 @@ import { images } from "../../assets/images";
 import AuthController from "../../Controllers/Auth-controller/AuthController";
 
 export const Nav = () => {
-  const { userData } = AuthController()
+  const { userData, handleLogout } = AuthController()
   const [financialMenu, setFinancialMenu] = useState(false)
   const [catelogMenu, setCatelogMenu] = useState(false)
   const [profileMenu, setProfileMenu] = useState(false)
@@ -108,13 +108,6 @@ export const Nav = () => {
             </ul>
             <ul className="sidebar-menu">
               <li className="treeview">
-                <a href="over-view">
-                  <i className="fa fa-dashboard"></i> <span>OverView</span>
-                </a>
-              </li>
-            </ul>
-            <ul className="sidebar-menu">
-              <li className="treeview">
                 <a href="#" onClick={() => { setCatelogMenu(!catelogMenu) }}>
                   <i className="fa fa-dashboard"></i> <span>Catalog</span> <i className="fa fa-angle-left pull-right"></i>
                 </a>
@@ -122,17 +115,18 @@ export const Nav = () => {
               </li>
               {catelogMenu &&
                 <div>
-                  <li>
-                    <a href="all-release">
-                      <i className="fa fa-circle-o"></i>All Release</a></li>
+
+                  <li><a href=" all-darft"><i className="fa fa-circle-o"></i> All Draft</a></li>
+                  <li> <a href="all-release">  <i className="fa fa-circle-o"></i>All Release</a></li>
                   <li><a href="all-tracks"><i className="fa fa-circle-o"></i> All Tracks</a></li>
+
                 </div>
               }
             </ul>
             <ul className="sidebar-menu">
               <li className="treeview">
                 <a href="daily-treads">
-                  <i className="fa fa-dashboard"></i> <span>Daily Treads</span>
+                  <i className="fa fa-dashboard"></i> <span>Daily Trends</span>
                 </a>
               </li>
             </ul>
@@ -167,27 +161,27 @@ export const Nav = () => {
               {profileMenu &&
                 <ul className="treeview">
 
-                 
-                    <li className="treeview">
-                      <a href="profile">
-                        <i className="fa fa-dashboard"></i> <span>Profile</span>
-                      </a>
-                    </li>
-                  
-                 
-                    <li className="treeview">
-                      <a href="password-change">
-                        <i className="fa fa-dashboard"></i> <span>Password</span>
-                      </a>
-                    </li>
-                  
-                 
-                    <li className="treeview">
-                      <a href="bank-information">
-                        <i className="fa fa-dashboard"></i> <span>Bank Information</span>
-                      </a>
-                    </li>
-                  
+
+                  <li className="treeview">
+                    <a href="profile">
+                      <i className="fa fa-dashboard"></i> <span>Profile</span>
+                    </a>
+                  </li>
+
+
+                  <li className="treeview">
+                    <a href="password-change">
+                      <i className="fa fa-dashboard"></i> <span>Password</span>
+                    </a>
+                  </li>
+
+
+                  <li className="treeview">
+                    <a href="bank-information">
+                      <i className="fa fa-dashboard"></i> <span>Bank Information</span>
+                    </a>
+                  </li>
+
                 </ul>
               }
             </ul>
@@ -202,10 +196,11 @@ export const Nav = () => {
 
             <ul className="sidebar-menu">
               <li className="treeview">
-                <a href="one-release">
-                  <i className="fa fa-dashboard"></i> <span>Logout</span>
-                </a>
+                <button onClick={handleLogout} style={{ padding: "10px", cursor: "pointer" }}>
+                  Logout
+                </button>
               </li>
+
             </ul>
           </section>
         </aside>

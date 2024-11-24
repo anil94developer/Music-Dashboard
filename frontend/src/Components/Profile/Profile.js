@@ -16,14 +16,17 @@ export default function Profile() {
 
         <section className="container-fluid content">
           <section className="content">
+          <form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="col-md-8">
+              <div className="col-md-12">
                 <div className="box box-info">
                   <div className="box-body">
-                    <form onSubmit={handleSubmit}>
-                      {/* Company Name */}
-                      <div className="input-group">
-                        <span >Company Name</span>
+                    
+                      {/* Company Name */} 
+                      
+                      <div className="form-group">
+                       
+                      <label for="exampleInputEmail1"> Company Name</label>
                         <input
                           type="text"
                           className="form-control"
@@ -36,8 +39,8 @@ export default function Profile() {
                       </div>
 
                       {/* Client Number */}
-                      <div className="input-group mt-3">
-                        <span >Client Number</span>
+                      <div className="form-group mt-3">
+                        <label >Client Number</label>
                         <input
                           type="text"
                           className="form-control"
@@ -50,8 +53,8 @@ export default function Profile() {
                       </div>
 
                       {/* Main Email */}
-                      <div className="input-group mt-3">
-                        <span >Main Email Address</span>
+                      <div className="form-group mt-3">
+                        <label >Main Email Address</label>
                         <input
                           type="email"
                           className="form-control"
@@ -64,8 +67,8 @@ export default function Profile() {
                       </div>
 
                       {/* Royalties Email */}
-                      <div className="input-group mt-3">
-                        <span >Royalties Email Address</span>
+                      <div className="form-group mt-3">
+                        <label >Royalties Email Address</label>
                         <input
                           type="email"
                           className="form-control"
@@ -78,8 +81,8 @@ export default function Profile() {
                       </div>
 
                       {/* First Name */}
-                      <div className="input-group mt-3">
-                        <span >First Name</span>
+                      <div className="form-group mt-3">
+                        <label >First Name</label>
                         <input
                           type="text"
                           className="form-control"
@@ -92,8 +95,8 @@ export default function Profile() {
                       </div>
 
                       {/* Last Name */}
-                      <div className="input-group mt-3">
-                        <span >Last Name</span>
+                      <div className="form-group mt-3">
+                        <label >Last Name</label>
                         <input
                           type="text"
                           className="form-control"
@@ -106,8 +109,8 @@ export default function Profile() {
                       </div>
 
                       {/* Phone Number */}
-                      <div className="input-group mt-3">
-                        <span >Phone Number</span>
+                      <div className="form-group mt-3">
+                        <label >Phone Number</label>
                         <input
                           type="text"
                           className="form-control"
@@ -118,10 +121,11 @@ export default function Profile() {
                           required
                         />
                       </div>
+ 
 
                       {/* Postal Address */}
-                      <div className="input-group mt-3">
-                        <span >Postal Address</span>
+                      <div className="form-group mt-3">
+                        <label >Postal Address</label>
                         <textarea
                           className="form-control"
                           placeholder="Enter postal address"
@@ -133,8 +137,8 @@ export default function Profile() {
                       </div>
 
                       {/* Postal Code */}
-                      <div className="input-group mt-3">
-                        <span >Postal Code</span>
+                      <div className="form-group mt-3">
+                        <label >Postal Code</label>
                         <input
                           type="text"
                           className="form-control"
@@ -147,8 +151,8 @@ export default function Profile() {
                       </div>
 
                       {/* City */}
-                      <div className="input-group mt-3">
-                        <span >City</span>
+                      <div className="form-group mt-3">
+                        <label >City</label>
                         <input
                           type="text"
                           className="form-control"
@@ -161,8 +165,8 @@ export default function Profile() {
                       </div>
 
                       {/* Country */}
-                      <div className="input-group mt-3">
-                        <span >Country</span>
+                      <div className="form-group mt-3">
+                        <label >Country</label>
                         <input
                           type="text"
                           className="form-control"
@@ -175,8 +179,8 @@ export default function Profile() {
                       </div>
 
                       {/* Time Zone */}
-                      <div className="input-group mt-3">
-                        <span >Default Time Zone</span>
+                      <div className="form-group mt-3">
+                        <label >Default Time Zone</label>
                         <input
                           type="text"
                           className="form-control"
@@ -189,8 +193,8 @@ export default function Profile() {
                       </div>
 
                       {/* Language */}
-                      <div className="input-group mt-3">
-                        <span >Default Language</span>
+                      <div className="form-group mt-3">
+                        <label >Default Language</label>
                         <input
                           type="text"
                           className="form-control"
@@ -206,12 +210,13 @@ export default function Profile() {
                       <button type="submit" className="btn btn-primary mt-3">
                         Update Profile
                       </button>
-                    </form>
+                     
 
                   </div>
                 </div>
               </div>
             </div>
+            </form>
           </section>
         </section>
       </div>

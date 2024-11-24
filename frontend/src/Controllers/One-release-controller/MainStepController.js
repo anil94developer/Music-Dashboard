@@ -22,8 +22,7 @@ const MainStepController = (props) => {
      
       if (result.data.status === true) { 
         // alert(true)
-      setIsLoading(false)
-
+      setIsLoading(false) 
           setMyRelease(result.data.data)
       } else {
       setIsLoading(false)

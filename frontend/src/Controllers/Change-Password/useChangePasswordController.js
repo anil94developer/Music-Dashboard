@@ -12,12 +12,12 @@ const useChangePasswordController = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      oldPassword,
-      newPassword,
+      oldPassword:oldPassword,
+      newPassword:newPassword,
     };
 
     try {
-      const result = await postDataContent(base.changePassword, formData);
+      const result = await postData(base.changePassword, formData);
       console.log("Server Response:", result);
 
       if (result.data.status === true) {

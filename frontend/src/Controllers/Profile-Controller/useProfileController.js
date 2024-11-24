@@ -1,25 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { postDataContent } from "../../Services/Ops"; // Adjust the path to your service
+import { getData, postData, postDataContent } from "../../Services/Ops"; // Adjust the path to your service
 import { base } from "../../Constants/Data.constant";
 
 const useProfileController = () => {
   // State for managing form inputs
   const [profile, setProfile] = useState({
-    companyName: "JEET MUSIC ASSAMESE",
-    clientNumber: "1017404",
-    mainEmail: "zumanjeetofficial@gmail.com",
-    royaltiesEmail: "zumanjeetofficial@gmail.com",
-    firstName: "Bhabesh Roy",
-    lastName: "Medhi",
-    phoneNumber: "8474866534",
-    postalAddress: "Near Zoo Guwahati, R. G Baruah Road",
-    postalCode: "781005",
-    city: "Guwahati",
-    country: "India", // Default value
+    companyName: "",
+    clientNumber: "",
+    mainEmail: "",
+    royaltiesEmail: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    postalAddress: "",
+    postalCode: "",
+    city: "",
+    country: "", // Default value
     timeZone: "",
-    language: "English", // Default value
+    language: "", // Default value
   });
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+
+  const getProfile = async () => {
+    try {
+      // const userId = "671e08391a2071afe4269f80";
+      const result = await getData(base.userProfile); // pass as query parameter
+      // console.log(result)
+      if (result && result.status === true) {
+        setProfile({
+          companyName: result.data.companyName,
+          clientNumber: result.data.clientNumber,
+          mainEmail: result.data.mainEmail,
+          royaltiesEmail: result.data.royaltiesEmail,
+          firstName: result.data.firstName,
+          lastName: result.data.lastName,
+          phoneNumber: result.data.phoneNumber,
+          postalAddress: result.data.postalAddress,
+          postalCode: result.data.postalCode,
+          city: result.data.city,
+          country: result.data.country, // Default value
+          timeZone: result.data.timeZone,
+          language: result.data.language, // Default value
+        })
+      } else {
+        Swal.fire({
+          icon: 'error', // Use "error" icon for unauthorized message
+          title: 'Unauthorized !!', // Set your custom title here
+          text: 'You do not have permission to access this resource.' // Custom message (optional)
+        });
+        // Uncomment if you want to redirect:
+        // navigate("/");
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Something went wrong. Please try again later.'
+      });
+    }
+  };
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -32,10 +76,12 @@ const useProfileController = () => {
     e.preventDefault();
 
     try {
-      const result = await postDataContent(base.updateProfile, profile); // Adjust endpoint
+      console.log("--------------", profile)
+      const result = await postData(base.updateProfile, profile); // Adjust endpoint
       console.log("Server Response:", result);
 
       if (result.data.status === true) {
+
         Swal.fire("Success", result.data.message, "success");
       } else {
         Swal.fire("Error", result.data.message, "error");

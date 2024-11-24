@@ -9,6 +9,8 @@ export default function SearchInput(props) {
   const [query, setQuery] = useState("");
   const [artistList, setArtistList] = useState([]);
   const [link, setLink] = useState("");
+  const [itunesLinkId, setItunesLinkId] = useState("");
+
   const [selectedArtists, setSelectedArtists] = useState(Array.isArray(artistData) ? artistData : []);
 
   // Fetch artist list once on component mount
@@ -44,13 +46,15 @@ export default function SearchInput(props) {
   );
 
   const addHandleSubmit = async () => {
-    let body = { name: query, linkId: link };
+    let body = { name: query, linkId: link, itunesLinkId: itunesLinkId };
+    console.log("artiest body======",body)
     let result = await postData(base.addArtist, body);
     if (result.data.status === true) {
       Swal.fire("Success", result.message, "success");
       fetchArtistList();
       setQuery("");
       setLink("");
+      setItunesLinkId("")
     } else {
       Swal.fire("Error", result.message, "error");
     }
@@ -81,8 +85,12 @@ export default function SearchInput(props) {
         <ul>
           {filteredArtists.length > 0 ? (
             filteredArtists.map((artist) => (
-              <li key={artist._id} onClick={() => addArtist(artist)} className="form-control">
-                {artist.name}
+              <li key={artist._id} className="form-control">
+                <span onClick={() => addArtist(artist)} >{artist.name}</span>
+
+                {artist.linkId && <a href={artist.linkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/204.svg' height="20" width="20"></img></a>}
+                {artist.itunesLinkId && <a href={artist.itunesLinkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/408.svg' height="20" width="20"></img></a>}
+
               </li>
             ))
           ) : (
@@ -100,23 +108,37 @@ export default function SearchInput(props) {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label>Add Link Id</label>
+                    <label>Add Spotify Link Id</label>
                     <input
                       className="form-control"
                       type="text"
                       value={link}
                       onChange={(e) => setLink(e.target.value)}
-                      placeholder="Add Link Id..."
+                      placeholder="Add Spotify Link Id..."
                     />
                   </div>
+                  <div className="col-md-6">
+                    <label>Itunes Link Id</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      value={itunesLinkId}
+                      onChange={(e) => setItunesLinkId(e.target.value)}
+                      placeholder="Add Itunes Link Id..."
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label></label>
+                    <button
+                      className="btn btn-success btn-flat form-control "
+                      type="button"
+                      onClick={addHandleSubmit}
+                    >
+                      Add Artist
+                    </button>
+                  </div>
                 </div>
-                <button
-                  className="btn btn-success btn-flat"
-                  type="button"
-                  onClick={addHandleSubmit}
-                >
-                  Add Artist
-                </button>
+
               </div>
             </div>
           )}
@@ -128,10 +150,13 @@ export default function SearchInput(props) {
           <div key={artist._id} className="artist-item form-control d-flex row">
             <img
               src={images.user} // Replace with artist image if available
-              alt={artist.name}
+
               className="artist-image"
             />
             <span>{artist.name}</span>
+            {artist.link && <a href={artist.link} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/204.svg' className="artist-image"></img></a>}
+            {artist.itunesLinkId && <a href={artist.itunesLinkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/408.svg' className="artist-image"></img></a>}
+
             <button
               onClick={() => removeArtist(artist._id)}
               style={{ background: 'red', borderRadius: 20, color: '#fff' }}

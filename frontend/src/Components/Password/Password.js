@@ -21,16 +21,16 @@ export default function Password() {
         <section class="container-fluid content">
           <section class="content">
             <div class='row'>
-              <div class='col-md-8'>
+              <div class='col-md-12'>
                 <div class="box box-info">
                   <div class="box-body">
 
 
                     <form onSubmit={handleSubmit}>
-                      <div className="input-group">
-                        <span className="input-group-text" id="old-password-addon">
+                      <div className="form-group">
+                        <label className="form-group-text" id="old-password-addon">
                           Old Password
-                        </span>
+                        </label>
                         <input
                           type="password"
                           className="form-control"
@@ -43,10 +43,10 @@ export default function Password() {
                         />
                       </div>
 
-                      <div className="input-group mt-3">
-                        <span className="input-group-text" id="new-password-addon">
+                      <div className="form-group mt-3">
+                        <label className="form-group-text" id="new-password-addon">
                           New Password
-                        </span>
+                        </label>
                         <input
                           type="password"
                           className="form-control"

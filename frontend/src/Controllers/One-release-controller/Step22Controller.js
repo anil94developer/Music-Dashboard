@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Swal from "sweetalert2";
-import { postData, postDataContent } from '../../Services/Ops';
+import { postData } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
 
 const Step2Controller = () => {
@@ -9,35 +9,35 @@ const Step2Controller = () => {
 
     const handleFileChange = async (e) => {
         const selectedFiles = Array.from(e.target.files);
-        const allowedTypes = ["audio", "video"];
-        const updatedFiles = selectedFiles
-            .filter((file) => allowedTypes.some((type) => file.type.startsWith(type)))
-            .map((file) => ({
-                fileName: file.name,
-                fileData: file,
-                fileType: file.type.startsWith("audio") ? "audio" : "video"
-            }));
-        
+        const updatedFiles = selectedFiles.map((file) => ({
+            fileName: file.name,
+            fileData: file,
+            fileType: file.type.startsWith("audio") ? "audio" : file.type.startsWith("video") ? "video" : "image"
+        }));
         setMediaFiles((prevFiles) => [...prevFiles, ...updatedFiles]);
-    };
+    }
+    
+    
+    ;
 
     const handleRemove = (fileName) => {
         setMediaFiles((prevFiles) => prevFiles.filter((file) => file.fileName !== fileName));
     };
 
     const handleSubmit = async () => {
-        // setIsUploading(true);
-        try {
-            const formData = new FormData();
-            formData.append("id", releaseData._id);
-            mediaFiles.forEach((file) => formData.append("files", file.fileData));
+        const formData = new FormData();
+        // releaseData._id,
+        formData.append("_id", "671cb18ba0ff2158d4208ed6");
     
-            const result = await postDataContent(base.releaseStep2, formData);
-            Swal.fire("Success", result.message, "success");
+        mediaFiles.forEach((file) => {
+            formData.append('mediaFiles', file.fileData, file.fileName); // use 'mediaFiles' field
+        });
+    
+        try {
+            const result = await postData(base.releaseStep2, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+            Swal.fire("Success", result.message, result.message);
         } catch (error) {
             Swal.fire("Error", "An error occurred while uploading files.", "error");
-        } finally {
-            // setIsUploading(false);
         }
     };
 

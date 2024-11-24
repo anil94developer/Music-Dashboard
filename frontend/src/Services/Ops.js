@@ -11,7 +11,7 @@ const postData = async (url = "", data) => {
         }
         var header = { headers: { Authorization: token, Accept: 'application/json','Cache-Control': 'no-cache' } };
                 let response = await axios.post(url, data, header)
-        console.log(url+"===========>",response)
+        console.log(url+"===========>",data, header)
         return response;
        
     } catch (e) { 

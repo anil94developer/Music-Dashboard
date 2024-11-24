@@ -11,11 +11,19 @@ const AuthController = (props) => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState("");
 
+
+
+
+    useEffect(() => {
+        getProfile();
+    }, []);
+
+
     const getProfile = async () => {
         try {
             // const userId = "671e08391a2071afe4269f80";
             const result = await getData(base.userProfile); // pass as query parameter
-    console.log(result)
+            console.log(result)
             if (result && result.status === true) {
                 setUserData(result.data); // Assuming result.data has user data directly
             } else {
@@ -36,13 +44,34 @@ const AuthController = (props) => {
             });
         }
     };
+
+    const handleLogout = () => {
+        Swal({
+          title: "Are you sure?",
+          text: "You will be logged out of your account!",
+          icon: "warning",
+          buttons: ["Cancel", "Logout"],
+          dangerMode: true,
+        }).then((willLogout) => {
+          if (willLogout) {
+            // Clear session storage or localStorage
+            localStorage.clear();
+            sessionStorage.clear();
     
-    useEffect(() => {
-        getProfile();
-    }, []);
+            // Redirect to login page
+            navigate("/login");
+    
+            // Show a success message
+            Swal("Logged out successfully!", {
+              icon: "success",
+            });
+          }
+        });
+      };
 
     return {
-        userData
+        userData,
+        handleLogout
     };
 };
 export default AuthController;

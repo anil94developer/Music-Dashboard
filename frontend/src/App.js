@@ -15,7 +15,10 @@ import UserMangement from "./Components/UserMangement/UserMangement";
 import PaymentOperations from "./Components/PaymentOperations/PaymentOperations";
 import FinancialReport from "./Components/FinancialReports/FinancialReports";
 import UserAccessForm from "./Components/UserMangement/UserAccessForm";
-
+import { AllDraft } from "./Components/AllDraft/AllDraft";
+import { ReleaseDetails } from "./Components/AllRelease/ReleaseDetails";
+import FinalSubmit from "./Components/One-release/FinalSubmit";
+ 
 function App() {
   return (
     <Routes>
@@ -24,6 +27,8 @@ function App() {
       <Route path="/one-release" element={<OneRelease />}></Route> 
       <Route path="/main-step" element={<MainStep />}></Route>
       <Route path="/all-release" element={<AllRelease />}></Route>
+      <Route path="/final-submit" element={<FinalSubmit />}></Route>  
+      <Route path="/all-darft" element={<AllDraft />}></Route>
       <Route path="/all-tracks" element={<AllTracks />}></Route>
       <Route path="/over-view" element ={<OverView />}></Route>
       <Route path="/daily-treads" element ={<DailyTreads />}></Route>
@@ -33,6 +38,8 @@ function App() {
       <Route path="/password-change" element ={<Password />}></Route>
       <Route path="/user-access" element={<UserMangement />}></Route>  
       <Route path="/add-user" element={<UserAccessForm />}></Route>  
+      <Route path="/release-details" element={<ReleaseDetails />}></Route>  
+
 
       
       <Route path="/payment-operations" element={<PaymentOperations />}></Route>  
@@ -40,6 +47,7 @@ function App() {
       <Route path="/financial-reports" element={<FinancialReport />}></Route>  
 
       <Route path="/multiple-release" element={<Dashboard />}></Route>
+      
 
     </Routes>
   );

@@ -1,7 +1,9 @@
+// const domainUrl = 'https://api.tuneplus.org/';
 const domainUrl = 'http://localhost:8002/';
 
+
 const mainUrl = domainUrl
-const imageServerUrl = domainUrl + 'application_api/';
+const imageServerUrl = domainUrl + '';
 const USER_TYPE = "User"
 const base = {
   login: mainUrl + 'auth/login',
@@ -25,7 +27,10 @@ const base = {
   tracksList: mainUrl + 'release/tracks-list',
   addSupport: mainUrl + 'support/add-support',
   supportList: mainUrl + 'support/support-list',
-  
+  addBank: mainUrl + 'bank/add-bank',
+  bankDetails: mainUrl + 'bank/bank-details',
+  updateProfile: mainUrl+'auth/profile-update'
+
 
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };

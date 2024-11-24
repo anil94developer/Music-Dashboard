@@ -1,120 +1,91 @@
-import React, { useEffect, useState } from "react";
-import Step2Controller from "../../Controllers/One-release-controller/Step2Controller";
-import Swal from "sweetalert2";
+
+import React, { useEffect } from 'react'
+import { domainUrl } from '../../Constants/Data.constant';
+import Step2Controller from '../../Controllers/One-release-controller/Step2Controller';
+
 
 export default function STEP2(props) {
-  const { setStep, releaseData } = props;
+    const { setStep, releaseData } = props;
 
-  const {
-    handleFileChange,
-    handleSubmit,
-    handleRemove,
-    setReleaseData,
-    mediaFiles,
-  } = Step2Controller();
+    const { handleFileChange, handleSubmit, handleRemove, setReleaseData,
+        mediaFiles } = Step2Controller()
 
-  const [validationErrors, setValidationErrors] = useState([]);
+    useEffect(() => {
+        const getData = () => {
+            setReleaseData(releaseData)
+        };
+        getData();
+    }, [releaseData]);
 
-  useEffect(() => {
-    const getData = () => {
-      if (releaseData) {
-        try {
-          const jsonData = JSON.parse(releaseData);
-          setReleaseData(jsonData);
-        } catch (error) {
-          console.error("Error parsing releaseData:", error);
-        }
-      } else {
-        console.error("releaseData is undefined or null");
-      }
-    };
-    getData();
-  }, [releaseData, setReleaseData]);
+    return (
 
-  const handleFileValidation = (event) => {
-    const files = Array.from(event.target.files);
-    const allowedFormats = ["audio/wav", "audio/x-wav", "audio/flac"];
-    const specialChars = /[&/%#@!^*()+=:<>?|{}\[\]`~;]/;
-    const errors = [];
+        <div className="media-uploader">
+            <h3>Upload Media Files</h3>
+            {releaseData._id}
+            {/* File input for multiple files */}
+            <input
+                type="file"
+                multiple
+                accept="audio/*,video/*"
+                onChange={handleFileChange}
+            />
 
-    files.forEach((file) => {
-      const fileName = file.name;
+            {/* Display the uploaded files list */}
+            <div className="media-list mt-3">
+                {mediaFiles.map(({ fileName, fileData, fileType }) => (
+                    <div key={fileName} className="media-item mb-3">
+                        <p>{fileData.name}</p>
+                        <input
+                            type="file"
+                            multiple
+                            accept="audio/*,video/*"
+                            onChange={handleFileChange}
+                        />
+                        <button onClick={() => handleRemove(fileName)} className="btn btn-danger btn-sm mt-2">
+                            Remove
+                        </button>
+                    </div>
+                ))}
+                <br></br>
+                <div className="mt-3">
+                    <button
+                        onClick={() => [handleSubmit()]}
+                        type="submit" className="btn btn-primary">Submit</button>
+                </div>
+            </div>
 
-      // Check file format
-      if (!allowedFormats.includes(file.type)) {
-        errors.push(`Invalid format: ${fileName}. Only WAV and FLAC files are allowed.`);
-      }
+            <div class="col-md-12">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Old Files</h3>
+                </div>
+                <div class="box-body">
 
-      // Check for special characters in file names
-      if (specialChars.test(fileName)) {
-        errors.push(`Invalid name: ${fileName}. Avoid special characters in file names.`);
-      }
-    });
+                  <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                    <thead>
+                      <tr role="row"> 
+                        <th>Name</th>
+                        <th>TYPE</th>
+                        <th>FILE URL</th>
+                      </tr>
+                    </thead>
 
-    if (errors.length > 0) {
-      setValidationErrors(errors);
-    } else {
-      setValidationErrors([]);
-      handleFileChange(event); // Proceed with valid files
-    }
-  };
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                      {releaseData.step2.map((item) => (
+                        <tr class="odd">
+                          <td class="  sorting_1">{item.fileName}</td>
+                          <td class="  ">{item.fileType}</td>
+                          <td class=" "><a href={domainUrl+''+item.fileData} target="_blank">PLAY</a></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {/* {isLoading && "Loading..."} */}
+              </div>
+            </div>
 
-  return (
-    <div className="media-uploader">
-      <h3>Upload Media Files</h3>
 
-      <p>
-        <strong>You can upload the following formats:</strong>
-        <br />
-        WAV (PCM only), FLAC
-      </p>
-      <p>
-        <strong>Important:</strong> Avoid using special characters such as & / % #
-        etc. in file names. Files might not upload correctly otherwise.
-      </p>
-
-      {/* File input for multiple files */}
-      <input
-        type="file"
-        multiple
-        accept=".wav,.flac"
-        onChange={handleFileValidation}
-      />
-
-      {/* Validation errors */}
-      {validationErrors.length > 0 && (
-        <div className="alert alert-danger mt-3">
-          {validationErrors.map((error, index) => (
-            <p key={index}>{error}</p>
-          ))}
         </div>
-      )}
-
-      {/* Display the uploaded files list */}
-      <div className="media-list mt-3">
-        {mediaFiles.map(({ fileName, fileData, fileType }) => (
-          <div key={fileName} className="media-item mb-3">
-            <p>{fileData.name}</p>
-            <button
-              onClick={() => handleRemove(fileName)}
-              className="btn btn-danger btn-sm mt-2"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-
-        <div className="mt-3">
-          <button
-            onClick={() => [handleSubmit(), setStep("step3")]}
-            type="submit"
-            className="btn btn-primary"
-            disabled={validationErrors.length > 0}
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+    )
 }
