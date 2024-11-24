@@ -15,6 +15,7 @@ const artistRoutes = require("./routes/artist.routes");
 const supportRoutes = require("./routes/support.routes"); 
 const bankRoutes = require("./routes/bank.routes");
 const walletRoutes = require("./routes/wallet.route");
+const permissionsRoutes = require("./routes/permission.routes");
 
 
 
@@ -52,6 +53,7 @@ app.use("/artist", artistRoutes);
 app.use("/support", supportRoutes);
 app.use("/bank", bankRoutes);
 app.use("/wallet", walletRoutes); 
+app.use("/",permissionsRoutes);
 
 
 

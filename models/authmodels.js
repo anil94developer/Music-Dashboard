@@ -10,7 +10,7 @@ const usersSchema = mongoose.Schema(
     {
         name: { type: String },
         email: { type: String, required: true, unique: true },
-        phone: { type: Number, required: true, unique: true },
+        phone: { type: Number, unique: true },
         password: { type: String, required: true },
         role: { type: String, default: 'user' },
         is_active: { type: Number, default: 1 },
@@ -143,25 +143,7 @@ authModel.updateProfile = async (id, data) => {
     }
 }
 
-authModel.transaction = async (data)=>{
-    const result = await db.connectDb("users", usersSchema)
-   try {
-    const userId=new ObjectId(data.userId);
-    const amount =data.amount;
-    const updateData = await result.updateOne(
-        { _id: data.userId, wallet: { $gte: amount } }, // Ensure sufficient balance
-        { $inc: { wallet: -amount } } // Deduct directly
-    );
-    console.log(updateData);
-    if (updateData.matchedCount === 0) {
-       return false
-    }
-    return true;
-}catch (err) {
-    console.error("Error in transaction:", err);
-    return false;
-}
-}
+
 authModel.transaction = async (data) => {
     const result = await db.connectDb("users", usersSchema); // Ensure proper connection
     try {
@@ -188,6 +170,30 @@ authModel.transaction = async (data) => {
         return false; // Return false on error
     }
 };
+
+authModel.permission = async (data) =>{
+    const result = await db.connectDb("users", usersSchema);
+try{
+    console.log(data.email);
+    let val = await result.findOne({email:data.email});     
+    if (val) {
+        
+        return false;
+    }
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(data.password,saltRounds);
+    const user = await result.create({
+        email: data.email,
+        password: data.password,
+    });
+ console.log("permission permission permission ======>>>",user)
+
+    return user;
+}catch(err){
+        console.error("Error in permission:", err.message);
+        return false; // Return false on error
+}
+}
 
 
 
