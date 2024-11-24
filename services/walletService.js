@@ -29,7 +29,7 @@ wallet.transactions = async (req, res, next) => {
 
     return R(res, true, "transactions done Successfully", "", 200);
   } catch (err) {
-    console.log(err);
+     
     return R(res, false, err.message, "", 500);
   }
 };
