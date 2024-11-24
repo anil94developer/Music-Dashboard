@@ -1,5 +1,3 @@
-const walletModel=require('../models/withdrawalmodel');
-const transcationModel=require('../models/transaction');
 const bcrypt = require("../utils/bcrypt")
 const jwt = require("jsonwebtoken");
 const R = require("../utils/responseHelper");

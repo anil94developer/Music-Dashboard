@@ -2,7 +2,7 @@ const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
  
-let ObjectId = require("mongodb").ObjectID;
+let {ObjectId} = require("mongodb");
 
 authModel = {}
 
@@ -136,7 +136,25 @@ authModel.updateProfile = async (id, data) => {
     }
 }
 
-
+authModel.transaction = async (data)=>{
+    const result = await db.connectDb("users", usersSchema)
+   try {
+    const userId=new ObjectId(data.userId);
+    const amount =data.amount;
+    const updateData = await result.updateOne(
+        { _id: userId, wallet: { $gte: amount } }, // Ensure sufficient balance
+        { $inc: { wallet: -amount } } // Deduct directly
+    );
+    console.log(updateData);
+    if (updateData.matchedCount === 0) {
+       return false
+    }
+    return true;
+}catch (err) {
+    console.error("Error in transaction:", err);
+    return false;
+}
+}
 
 // authModel.findAdminByRole = async(email, password) => {
 //     let findadmin = await db.connectDb("usersSchemas",usersSchema)
