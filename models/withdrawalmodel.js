@@ -22,4 +22,18 @@ const withdrawalSchema=mongoose.Schema({
 
 const withdrawalModel = mongoose.model("withdrawal", withdrawalSchema);
 
+
+withdrawalModel.add = async (data) =>{
+    const result = await db.connectDb("withdrawal", withdrawalSchema);
+ try{
+    const newWithdrawal = new withdrawalModel(data);
+    await newWithdrawal.save();
+    return newWithdrawal;
+ }catch(e){
+     console.log(e);
+     return false;
+}
+}
+
+
 module.exports = withdrawalModel;
