@@ -8,6 +8,8 @@ const releaseSchema = mongoose.Schema({
   userId: { type: String },
   title: { type: String, required: true },
   type: { type: String, required: true },
+  status:{ type: String,default:'Pending'},
+  youtubechannelLinkId:{ type: String,default:''},
   step1: {
     subTitle: { type: String, default: null },
     primaryArtist: {
@@ -16,7 +18,7 @@ const releaseSchema = mongoose.Schema({
         name: String,
         linkId: String,
       }], default: []
-    },  // Changed to array of strings
+    },   
     featuring: {
       type: [{
         userId: String,
@@ -54,14 +56,18 @@ const releaseSchema = mongoose.Schema({
       VersionSubtitle: { type: String, default: "" },
       PrimaryArtist: [
         {
-          id: { type: String, default: "" },
-          name: { type: String, default: "" }
+          id: { type: String },
+          name: { type: String },
+          linkId: { type: String, required: false },
+          itunesLinkId: { type: String, required: false },
         }
       ],
       Featuring: [
         {
-          id: { type: String, default: "" },
-          name: { type: String, default: "" }
+          id: { type: String },
+          name: { type: String, },
+          linkId: { type: String, required: false },
+          itunesLinkId: { type: String, required: false },
         }
       ],
       Remixer: [
@@ -144,6 +150,7 @@ const releaseSchema = mongoose.Schema({
       }
     ]
   },
+
 },
   { timestamps: true }
 );
@@ -198,7 +205,7 @@ releaseModel.addOneStepRelease = async (body) => {
           productionYear: body.step1.productionYear,
           UPCEAN: body.step1.UPCEAN,
           producerCatalogueNumber: body.step1.producerCatalogueNumber,
-          coverImage:body.coverImage
+          coverImage: body.coverImage
         }
 
       }
@@ -212,24 +219,24 @@ releaseModel.addOneStepRelease = async (body) => {
 releaseModel.addTwoStepRelease = async (id, filesData) => {
   console.log("Updating release with ID:", id);
   try {
-      const releaseResult = await db.connectDb("release", releaseSchema);
+    const releaseResult = await db.connectDb("release", releaseSchema);
 
-      const result = await releaseResult.updateOne(
-          { _id: id },
-          { $set: { step2: filesData } }
-      );
+    const result = await releaseResult.updateOne(
+      { _id: id },
+      { $set: { step2: filesData } }
+    );
 
-      console.log("Database update result:", result);
-      return result.modifiedCount > 0 || result.upsertedCount > 0;
+    console.log("Database update result:", result);
+    return result.modifiedCount > 0 || result.upsertedCount > 0;
   } catch (error) {
-      console.error("Database update error:", error);
-      throw error;
+    console.error("Database update error:", error);
+    throw error;
   }
 };
 // releaseModel.addTwoStepRelease = async (id,filesData) => {
 //   console.log("one release body======", id,filesData)
 //   let releaseResult = await db.connectDb("release", releaseSchema);
- 
+
 //   let result = await releaseResult.updateOne({ _id:id},
 //     {
 //       $set: {
@@ -291,6 +298,31 @@ releaseModel.addFiveStepRelease = async (body) => {
     return false;
   }
 };
+
+releaseModel.submitFinalRelease = async (body) => {
+  let id=body.id;
+  let releaseDate=body.id;
+  let youtubechannelLinkId=body.youtubechannelLinkId;
+
+
+  let releaseResult = await db.connectDb("release", releaseSchema); 
+  
+  let result = await releaseResult.updateOne({ _id:id },
+    {
+      $set: {
+        status: "submit",
+        youtubechannelLinkId:youtubechannelLinkId,
+        "step1.originalReleaseDate":releaseDate,
+        }
+    })
+  if (result.modifiedCount > 0 || result.upsertedCount > 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+
 
 releaseModel.releaseList = async (uId) => {
   const result = await db.connectDb("release", releaseSchema);
@@ -359,12 +391,12 @@ releaseModel.addStore = async (data) => {
 releaseModel.tracksList = async (uId) => {
   const result = await db.connectDb("release", releaseSchema);
   let fetData = await result.find({ userId: uId }, { step3: 1 });
-  let arr=[];
+  let arr = [];
   if (fetData.length > 0) {
     arr = fetData.reduce((acc, item) => acc.concat(item.step3), []); // Flatten each step3 array into a single array
-  }  
-    return arr;
-   
+  }
+  return arr;
+
 };
 
 

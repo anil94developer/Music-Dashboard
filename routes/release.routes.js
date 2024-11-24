@@ -48,15 +48,11 @@ router.post('/step-two-release', verifyToken, upload1, releaseService.addTwoStep
 router.post('/step-three-release', verifyToken, releaseService.addThreeStepRelease)
 router.post('/step-four-release', verifyToken, releaseService.addFourStepRelease)
 router.post('/step-five-release', verifyToken, releaseService.addFiveStepRelease)
+router.post('/submitFinalRelease', verifyToken, releaseService.submitFinalRelease)
 router.get('/release-list', verifyToken, releaseService.releaseList)
 router.post('/release-details', verifyToken, releaseService.releaseDetails)
 router.post('/tracks-update', verifyToken, releaseService.trackUpdate)
 router.get('/tracks-list', verifyToken, releaseService.tracksList)
-router.get('/tracks-list', verifyToken, releaseService.tracksList)
-
- 
-
-
 router.post('/add-label',verifyToken, releaseService.addLabel)
 router.get('/label-list',verifyToken, releaseService.labelList)
 
