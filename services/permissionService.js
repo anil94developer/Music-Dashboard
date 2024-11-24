@@ -8,6 +8,8 @@ permission = {};
 permission.add = async (req, res, next) => {
     try {
         const data = req.body;
+        const userId = req.doc.userId;
+
         if (!data) {
             return R(res, false, "Invalid data", "", 400);
         }
@@ -19,7 +21,7 @@ permission.add = async (req, res, next) => {
         }
 
 
-        const permissions = await permissionmodel.addPermission(user._id, data);
+        const permissions = await permissionmodel.addPermission(userId,user._id, data);
         if (!permissions) {
             return R(res, false, "Failed to add permission", "", 500);
         }
