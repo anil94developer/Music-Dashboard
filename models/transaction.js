@@ -6,7 +6,7 @@ trans={}
 const transcationSchema=mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"user"
+        ref:"users"
     },
     amount:{
         type:Number,
@@ -50,12 +50,51 @@ trans.list = async (userId) => {
     const result = await db.connectDb("transactions", transcationSchema); 
 
     try {
-        const transactions = await transcationModel.find({ userId }); // Retrieve all transactions for the given user
+        const transactions = await transcationModel.find({ userId:userId }); // Retrieve all transactions for the given user
         console.log("Transactions retrieved successfully:", transactions);
         return transactions; // Return the retrieved transactions
     } catch (error) {
         console.error("Error retrieving transactions:", error.message);
         return false; // Return false on error
+    }
+};
+
+trans.profile = async (userId) => {
+    // Connect to the "transactions" collection with the transaction schema
+    const result = await db.connectDb("transactions", transcationSchema);
+
+    try {
+        // Validate the userId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return false;
+        }
+
+        // Retrieve the user's transaction profile with populated user details
+        const userProfile = await transcationModel
+            .findOne({ userId: userId});
+
+        // Check if a user profile was found
+        if (!userProfile) {
+            console.log(`No transaction profile found for userId: ${userId}`);
+            return null;
+        }
+
+        const userData= await authModel.getUser(userId);
+
+        if(!userData) {
+            console.log(`No user found for userId: ${userId}`);
+            return false;
+        }
+
+console.log(`User profile`, userData);
+        userProfile.userId=userData;
+        
+
+        console.log("User profile retrieved successfully:", userProfile);
+        return userProfile; // Return the retrieved user profile with user details
+    } catch (error) {
+        console.error("Error retrieving user profile:", error.message);
+        return false;
     }
 };
 

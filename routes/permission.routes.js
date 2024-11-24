@@ -4,6 +4,6 @@ const verifyToken = require("../utils/verifyToken");
 const permission = require("../services/permissionService")
 
 router.post('/add-permission',verifyToken,permission.add);
-// router.get("/list-permissions",verifyToken,permission.list)
+router.get("/list-permission",verifyToken,permission.list)
 
 module.exports = router 

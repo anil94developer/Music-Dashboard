@@ -39,7 +39,7 @@ const userPermissionSchema = new mongoose.Schema({
 const permissionModel =mongoose.model("UserPermission", userPermissionSchema);
 permission={};
 
-permission.addPermission = async (userId,registeredUserId,data) => {
+permission. addPermission = async (userId,registeredUserId,data) => {
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     try{
         const val={
@@ -63,7 +63,7 @@ return user;
 permission.listPermissions=async (userId)=>{
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     try{
-        const user = await permissionModel.find({registeredUserId: userId});
+        const user = await permissionModel.find({userId:userId});
         return user;
     }catch(err){
         console.log("Error connecting to DB", err);
