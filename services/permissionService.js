@@ -13,8 +13,8 @@ permission.add = async (req, res, next) => {
             return R(res, false, "Invalid data", "", 400);
         }
         const user = await authModel.permission(data);
-        console.log(">>", user);
-
+        console.log(">>djsajhdh", user);
+  
         if (!user) {
             return R(res, false, "User alreaedy registered", "", 404);
         }
