@@ -29,10 +29,14 @@ export default function SearchInput(props) {
     // Prevent duplicate artist entries
     if (!selectedArtists.some(item => item._id === artist._id)) {
       const updatedArtists = [...selectedArtists, artist];
+      console.log("updatedArtists-----",updatedArtists)
       setSelectedArtists(updatedArtists);
       setSelectData(updatedArtists);  // Update parent component
     }
-    setQuery(""); // Clear query after selection
+    
+    setQuery("");
+    setLink("");
+    setItunesLinkId("")
   };
 
   const removeArtist = (artistId) => {
@@ -85,9 +89,8 @@ export default function SearchInput(props) {
         <ul>
           {filteredArtists.length > 0 ? (
             filteredArtists.map((artist) => (
-              <li key={artist._id} className="form-control">
-                <span onClick={() => addArtist(artist)} >{artist.name}</span>
-
+              <li key={artist._id} onClick={() => addArtist(artist)}  className="form-control">
+                <span >{artist.name}</span> 
                 {artist.linkId && <a href={artist.linkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/204.svg' height="20" width="20"></img></a>}
                 {artist.itunesLinkId && <a href={artist.itunesLinkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/408.svg' height="20" width="20"></img></a>}
 
@@ -149,12 +152,11 @@ export default function SearchInput(props) {
         {selectedArtists.map((artist) => (
           <div key={artist._id} className="artist-item form-control d-flex row">
             <img
-              src={images.user} // Replace with artist image if available
-
+              src={images.user}
               className="artist-image"
             />
             <span>{artist.name}</span>
-            {artist.link && <a href={artist.link} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/204.svg' className="artist-image"></img></a>}
+            {artist.linkId && <a href={artist.linkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/204.svg' className="artist-image"></img></a>}
             {artist.itunesLinkId && <a href={artist.itunesLinkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/408.svg' className="artist-image"></img></a>}
 
             <button

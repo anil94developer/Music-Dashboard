@@ -1623,7 +1623,7 @@
 			/* 
 			 * All DataTables are wrapped in a div
 			 */
-			oSettings.nTableWrapper = $('<div id="'+oSettings.sTableId+'_wrapper" class="'+oSettings.oClasses.sWrapper+'" role="grid"></div>')[0];
+			oSettings.nTableWrapper = $('<div id="'+oSettings.sTableId+'_wrapper" className="'+oSettings.oClasses.sWrapper+'" role="grid"></div>')[0];
 			oSettings.nTableReinsertBefore = oSettings.nTable.nextSibling;
 		
 			/* Track where we want to insert the option */
@@ -11569,11 +11569,11 @@
 				};
 	
 				var sAppend = (!oSettings.bJUI) ?
-					'<a class="'+oSettings.oClasses.sPagePrevDisabled+'" tabindex="'+oSettings.iTabIndex+'" role="button">'+oLang.sPrevious+'</a>'+
-					'<a class="'+oSettings.oClasses.sPageNextDisabled+'" tabindex="'+oSettings.iTabIndex+'" role="button">'+oLang.sNext+'</a>'
+					'<a className="'+oSettings.oClasses.sPagePrevDisabled+'" tabindex="'+oSettings.iTabIndex+'" role="button">'+oLang.sPrevious+'</a>'+
+					'<a className="'+oSettings.oClasses.sPageNextDisabled+'" tabindex="'+oSettings.iTabIndex+'" role="button">'+oLang.sNext+'</a>'
 					:
-					'<a class="'+oSettings.oClasses.sPagePrevDisabled+'" tabindex="'+oSettings.iTabIndex+'" role="button"><span class="'+oSettings.oClasses.sPageJUIPrev+'"></span></a>'+
-					'<a class="'+oSettings.oClasses.sPageNextDisabled+'" tabindex="'+oSettings.iTabIndex+'" role="button"><span class="'+oSettings.oClasses.sPageJUINext+'"></span></a>';
+					'<a className="'+oSettings.oClasses.sPagePrevDisabled+'" tabindex="'+oSettings.iTabIndex+'" role="button"><span className="'+oSettings.oClasses.sPageJUIPrev+'"></span></a>'+
+					'<a className="'+oSettings.oClasses.sPageNextDisabled+'" tabindex="'+oSettings.iTabIndex+'" role="button"><span className="'+oSettings.oClasses.sPageJUINext+'"></span></a>';
 				$(nPaging).append( sAppend );
 				
 				var els = $('a', nPaging);
@@ -11666,11 +11666,11 @@
 				};
 	
 				$(nPaging).append(
-					'<a  tabindex="'+oSettings.iTabIndex+'" class="'+oClasses.sPageButton+" "+oClasses.sPageFirst+'">'+oLang.sFirst+'</a>'+
-					'<a  tabindex="'+oSettings.iTabIndex+'" class="'+oClasses.sPageButton+" "+oClasses.sPagePrevious+'">'+oLang.sPrevious+'</a>'+
+					'<a  tabindex="'+oSettings.iTabIndex+'" className="'+oClasses.sPageButton+" "+oClasses.sPageFirst+'">'+oLang.sFirst+'</a>'+
+					'<a  tabindex="'+oSettings.iTabIndex+'" className="'+oClasses.sPageButton+" "+oClasses.sPagePrevious+'">'+oLang.sPrevious+'</a>'+
 					'<span></span>'+
-					'<a tabindex="'+oSettings.iTabIndex+'" class="'+oClasses.sPageButton+" "+oClasses.sPageNext+'">'+oLang.sNext+'</a>'+
-					'<a tabindex="'+oSettings.iTabIndex+'" class="'+oClasses.sPageButton+" "+oClasses.sPageLast+'">'+oLang.sLast+'</a>'
+					'<a tabindex="'+oSettings.iTabIndex+'" className="'+oClasses.sPageButton+" "+oClasses.sPageNext+'">'+oLang.sNext+'</a>'+
+					'<a tabindex="'+oSettings.iTabIndex+'" className="'+oClasses.sPageButton+" "+oClasses.sPageLast+'">'+oLang.sLast+'</a>'
 				);
 				var els = $('a', nPaging);
 				var nFirst = els[0],
@@ -11759,8 +11759,8 @@
 				for ( i=iStartButton ; i<=iEndButton ; i++ )
 				{
 					sList += (iCurrentPage !== i) ?
-						'<a tabindex="'+oSettings.iTabIndex+'" class="'+oClasses.sPageButton+'">'+oSettings.fnFormatNumber(i)+'</a>' :
-						'<a tabindex="'+oSettings.iTabIndex+'" class="'+oClasses.sPageButtonActive+'">'+oSettings.fnFormatNumber(i)+'</a>';
+						'<a tabindex="'+oSettings.iTabIndex+'" className="'+oClasses.sPageButton+'">'+oSettings.fnFormatNumber(i)+'</a>' :
+						'<a tabindex="'+oSettings.iTabIndex+'" className="'+oClasses.sPageButtonActive+'">'+oSettings.fnFormatNumber(i)+'</a>';
 				}
 				
 				/* Loop over each instance of the pager */

@@ -152,7 +152,7 @@
           ariaID = _iCheck + '-' + Math.random().toString(36).replace('0.', ''),
 
           // Parent & helper
-          parent = '<div class="' + className + '" ' + (aria ? 'role="' + node[_type] + '" ' : ''),
+          parent = '<div className="' + className + '" ' + (aria ? 'role="' + node[_type] + '" ' : ''),
           helper;
 
         // Set ARIA "labelledby"
@@ -174,7 +174,7 @@
         parent = self.wrap(parent + '/>')[_callback]('ifCreated').parent().append(settings.insert);
 
         // Layer addition
-        helper = $('<ins class="' + _iCheckHelper + '"/>').css(layer).appendTo(parent);
+        helper = $('<ins className="' + _iCheckHelper + '"/>').css(layer).appendTo(parent);
 
         // Finalize customization
         self.data(_iCheck, {o: settings, s: self.attr('style')}).css(hide);

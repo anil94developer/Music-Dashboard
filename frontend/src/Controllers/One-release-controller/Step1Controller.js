@@ -130,14 +130,20 @@ const Step1Controller = (props) => {
     formData.append("step1[subTitle]", versionSubtitle);
     // Flatten arrays for `primaryArtist`
     primaryArtist.forEach((file, index) => {
+      console.log("select artist list =======",file)
       formData.append(`step1[primaryArtist][${index}][id]`, file._id);
       formData.append(`step1[primaryArtist][${index}][name]`, file.name);
+      formData.append(`step1[primaryArtist][${index}][linkId]`, file.linkId);
+      formData.append(`step1[primaryArtist][${index}][itunesLinkId]`, file.itunesLinkId);
+
     });
 
     // Flatten arrays for `featuring`
     featuring.forEach((file, index) => {
       formData.append(`step1[featuring][${index}][id]`, file._id);
-      formData.append(`step1[featuring][${index}][name]`, file.name);
+      formData.append(`step1[featuring][${index}][name]`, file.name); 
+      formData.append(`step1[primaryArtist][${index}][linkId]`, file.linkId);
+      formData.append(`step1[primaryArtist][${index}][itunesLinkId]`, file.itunesLinkId);
     });
     formData.append("step1[isVariousArtists]", isVariousArtists);
     formData.append("step1[genre]", genre);

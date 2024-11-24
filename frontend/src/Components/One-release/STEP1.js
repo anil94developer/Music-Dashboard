@@ -62,7 +62,7 @@ export default function STEP1(props) {
     const subgenres = selectedGenre ? selectedGenre.subgenres : [];
 
     return (<div>
-        <div class="box-header">
+        <div className="box-header">
             <h1>Release Information</h1>
         </div>
         {releaseData._id}
@@ -148,7 +148,7 @@ export default function STEP1(props) {
                 <div className="form-group">
                     <label htmlFor="labelName">Label name * </label>
                     <div className="dynamic-input-container d-flex row">
-                        <div class="input-group input-group-sm">
+                        <div className="input-group input-group-sm">
                             <select
                                 value={labelName}
                                 className="form-control"
@@ -161,17 +161,17 @@ export default function STEP1(props) {
                                 ))}
 
                             </select>
-                            <span class="input-group-btn">
-                                <button class="btn btn-info btn-flat" type="button" onClick={() => { setLabelNameStatus((!labelNameStatus)) }} >+</button>
+                            <span className="input-group-btn">
+                                <button className="btn btn-info btn-flat" type="button" onClick={() => { setLabelNameStatus((!labelNameStatus)) }} >+</button>
                             </span>
                         </div>
                     </div>
                     {labelNameStatus &&
-                        <div class="box">
-                            <div class="box-body">
+                        <div className="box">
+                            <div className="box-body">
                                 <div className="form-group">
                                     <label htmlFor="primaryArtist">Label Name</label>
-                                    <div class="input-group input-group-sm">
+                                    <div className="input-group input-group-sm">
                                         <input
                                             className="form-control"
                                             type="text"
@@ -181,7 +181,7 @@ export default function STEP1(props) {
                                         />
                                     </div>
                                 </div>
-                                <button class="btn btn-success btn-flat " type="button" onClick={addNewLabel}>Add Label</button>
+                                <button className="btn btn-success btn-flat " type="button" onClick={addNewLabel}>Add Label</button>
                             </div>
                         </div>
                     }

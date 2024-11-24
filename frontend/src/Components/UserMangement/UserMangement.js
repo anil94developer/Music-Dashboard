@@ -44,8 +44,8 @@ const UserManagement = () => {
   return (
     <div>
       <Nav />
-      <div class="content-wrapper">
-        <section class="content">
+      <div className="content-wrapper">
+        <section className="content">
 
           <div className="container">
             <h1>User Management</h1>

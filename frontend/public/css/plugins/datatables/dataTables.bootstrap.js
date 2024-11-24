@@ -108,7 +108,7 @@ if ( $.fn.dataTable.Api ) {
 		};
 
 		attach(
-			$(host).empty().html('<ul class="pagination"/>').children('ul'),
+			$(host).empty().html('<ul className="pagination"/>').children('ul'),
 			buttons
 		);
 	}
@@ -146,9 +146,9 @@ else {
 				};
 
 				$(nPaging).append(
-					'<ul class="pagination">'+
-						'<li class="prev disabled"><a href="#">&larr; '+oLang.sPrevious+'</a></li>'+
-						'<li class="next disabled"><a href="#">'+oLang.sNext+' &rarr; </a></li>'+
+					'<ul className="pagination">'+
+						'<li className="prev disabled"><a href="#">&larr; '+oLang.sPrevious+'</a></li>'+
+						'<li className="next disabled"><a href="#">'+oLang.sNext+' &rarr; </a></li>'+
 					'</ul>'
 				);
 				var els = $('a', nPaging);
@@ -183,7 +183,7 @@ else {
 
 					// Add the new list items and their event handlers
 					for ( j=iStart ; j<=iEnd ; j++ ) {
-						sClass = (j==oPaging.iPage+1) ? 'class="active"' : '';
+						sClass = (j==oPaging.iPage+1) ? 'className="active"' : '';
 						$('<li '+sClass+'><a href="#">'+j+'</a></li>')
 							.insertBefore( $('li:last', an[i])[0] )
 							.bind('click', function (e) {

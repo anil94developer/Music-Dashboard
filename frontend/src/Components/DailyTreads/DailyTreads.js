@@ -7,25 +7,25 @@ export default function DailyTreads() {
   return (
     <div>
       <Nav />
-      <div class="content-wrapper">
+      <div className="content-wrapper">
 
-        <section class="content-header">
+        <section className="content-header">
           <h1>Daily Treads</h1>
         </section>
 
 
-        <section class="content">
+        <section className="content">
           <div class='row'>
             <div class='col-md-8'>
-              <div class="box box-info">
-                <div class="box-body">
+              <div className="box box-info">
+                <div className="box-body">
                   <ChartZoomPan />
                 </div>
               </div>
             </div>
             <div class='col-md-4'>
-              <div class="box box-info">
-                <div class="box-body">
+              <div className="box box-info">
+                <div className="box-body">
                   <CircleGraph />
                 </div>
               </div>

@@ -23,7 +23,7 @@ export default function DynamicInputList(props) {
     <div className="dynamic-input-container d-flex row">
       
       {inputs.map((input, index) => (
-        <div class="input-group input-group-sm">
+        <div className="input-group input-group-sm">
           <input
             type="text"
             value={input.name}
@@ -31,11 +31,11 @@ export default function DynamicInputList(props) {
             placeholder={`Input ${index + 1}`}
             className="form-control"
           />
-          <span class="input-group-btn">
+          <span className="input-group-btn">
             {index == 0  ?
-              <button class="btn btn-info btn-flat" type="button" onClick={handleAddInput} >+</button>
+              <button className="btn btn-info btn-flat" type="button" onClick={handleAddInput} >+</button>
               :
-              <button type="button" onClick={() => handleRemoveInput(index)} class="btn btn-danger btn-flat" >
+              <button type="button" onClick={() => handleRemoveInput(index)} className="btn btn-danger btn-flat" >
                 X
               </button>
               

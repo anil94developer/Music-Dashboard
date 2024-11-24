@@ -28,7 +28,7 @@ export const AllTracks = () => {
 }
   return (
     <div> <Nav />
-      <div class="content-wrapper"> 
+      <div className="content-wrapper"> 
      
         <section className="content">
           <div className="col-md-12">

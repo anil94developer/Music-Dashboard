@@ -54,14 +54,14 @@ export default function STEP2(props) {
                 </div>
             </div>
 
-            <div class="col-md-12">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Old Files</h3>
+            <div className="col-md-12">
+              <div className="box">
+                <div className="box-header">
+                  <h3 className="box-title">Old Files</h3>
                 </div>
-                <div class="box-body">
+                <div className="box-body">
 
-                  <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                  <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                     <thead>
                       <tr role="row"> 
                         <th>Name</th>
@@ -72,10 +72,10 @@ export default function STEP2(props) {
 
                     <tbody role="alert" aria-live="polite" aria-relevant="all">
                       {releaseData.step2.map((item) => (
-                        <tr class="odd">
-                          <td class="  sorting_1">{item.fileName}</td>
-                          <td class="  ">{item.fileType}</td>
-                          <td class=" "><a href={domainUrl+''+item.fileData} target="_blank">PLAY</a></td>
+                        <tr className="odd">
+                          <td className="  sorting_1">{item.fileName}</td>
+                          <td className="  ">{item.fileType}</td>
+                          <td className=" "><a href={domainUrl+''+item.fileData} target="_blank">PLAY</a></td>
                         </tr>
                       ))}
                     </tbody>

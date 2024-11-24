@@ -5,14 +5,14 @@ export default function OverView() {
   return (
     <div>
       <Nav />
-      <div class="content-wrapper">
+      <div className="content-wrapper">
 
-        <section class="content-header">
+        <section className="content-header">
           <h1> OverView</h1>
         </section>
 
 
-        <section class="container-fluid content">
+        <section className="container-fluid content">
         </section>
       </div>
 

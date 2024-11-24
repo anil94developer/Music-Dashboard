@@ -45,7 +45,7 @@
 *  $(selector).sparkline(values, options)
 *
 * If values is undefined or set to 'html' then the data values are read from the specified tag:
-*   <p>Sparkline: <span class="sparkline">1,4,6,6,8,5,3,5</span></p>
+*   <p>Sparkline: <span className="sparkline">1,4,6,6,8,5,3,5</span></p>
 *   $('.sparkline').sparkline();
 * There must be no spaces in the enclosed data set
 *
@@ -55,12 +55,12 @@
 *    $('#sparkline2').sparkline([1,4,6,null,null,5,3,5])
 *
 * Values can also be specified in an HTML comment, or as a values attribute:
-*    <p>Sparkline: <span class="sparkline"><!--1,4,6,6,8,5,3,5 --></span></p>
-*    <p>Sparkline: <span class="sparkline" values="1,4,6,6,8,5,3,5"></span></p>
+*    <p>Sparkline: <span className="sparkline"><!--1,4,6,6,8,5,3,5 --></span></p>
+*    <p>Sparkline: <span className="sparkline" values="1,4,6,6,8,5,3,5"></span></p>
 *    $('.sparkline').sparkline();
 *
 * For line charts, x values can also be specified:
-*   <p>Sparkline: <span class="sparkline">1:1,2.7:4,3.4:6,5:6,6:8,8.7:5,9:3,10:5</span></p>
+*   <p>Sparkline: <span className="sparkline">1:1,2.7:4,3.4:6,5:6,6:8,8.7:5,9:3,10:5</span></p>
 *    $('#sparkline1').sparkline([ [1,1], [2.7,4], [3.4,6], [5,6], [6,8], [8.7,5], [9,3], [10,5] ])
 *
 * By default, options should be passed in as teh second argument to the sparkline function:
@@ -69,7 +69,7 @@
 * Options can also be set by passing them on the tag itself.  This feature is disabled by default though
 * as there's a slight performance overhead:
 *   $('.sparkline').sparkline([1,2,3,4], {enableTagOptions: true})
-*   <p>Sparkline: <span class="sparkline" sparkType="bar" sparkBarColor="red">loading</span></p>
+*   <p>Sparkline: <span className="sparkline" sparkType="bar" sparkBarColor="red">loading</span></p>
 * Prefix all options supplied as tag attribute with "spark" (configurable by setting tagOptionPrefix)
 *
 * Supported options:
@@ -1217,7 +1217,7 @@
                 return formatter(this, options, fields);
             }
             if (options.get('tooltipChartTitle')) {
-                header += '<div class="jqs jqstitle">' + options.get('tooltipChartTitle') + '</div>\n';
+                header += '<div className="jqs jqstitle">' + options.get('tooltipChartTitle') + '</div>\n';
             }
             formats = this.options.get('tooltipFormat');
             if (!formats) {
@@ -1257,7 +1257,7 @@
                             suffix: options.get('tooltipSuffix')
                         });
                         text = format.render(fields[j], options.get('tooltipValueLookups'), options);
-                        entries.push('<div class="' + fclass + '">' + text + '</div>');
+                        entries.push('<div className="' + fclass + '">' + text + '</div>');
                     }
                 }
             }

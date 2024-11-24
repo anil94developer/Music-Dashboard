@@ -61,8 +61,8 @@ function UserAccessForm() {
   return (
     <div>
     <Nav />
-    <div class="content-wrapper">
-      <section class="content">
+    <div className="content-wrapper">
+      <section className="content">
 
     <div className="form-container">
       <h2>User Access Management</h2>

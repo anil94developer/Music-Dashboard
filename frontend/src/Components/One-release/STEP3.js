@@ -172,7 +172,7 @@ export default function STEP3(props) {
   return (
     <div>
       <div className='row'>
-        <div class="box-header">
+        <div className="box-header">
           <h1>Tracks</h1>
           <div className="mt-3">
           <button onClick={openModal} className="btn btn-primary ">+ Add Track</button>
@@ -181,12 +181,12 @@ export default function STEP3(props) {
         
       </div>
       <br></br>
-      <div class="box box-primary">
-        <div class="box">
-          <div class="box-body">
-            <div class="dataTables_wrapper form-inline" role="grid">
+      <div className="box box-primary">
+        <div className="box">
+          <div className="box-body">
+            <div className="dataTables_wrapper form-inline" role="grid">
 
-              <table class="table" aria-describedby="example2_info">
+              <table className="table" aria-describedby="example2_info">
                 <thead>
                   <tr draggable="true">
                     <th rowspan="1" colspan="1">Volume</th>
@@ -199,15 +199,15 @@ export default function STEP3(props) {
 
                 <tbody role="alert" aria-live="polite" aria-relevant="all">
                   {step3 && step3.map((item) => (
-                    <tr draggable="true" class="odd">
-                      <td class="  sorting_1">{item.Volume}</td>
-                      <td class="">{item.ContentType}</td>
-                      <td class=" ">{item.PrimaryTrackType}</td>
-                      <td class=" ">{item.SecondaryTrackType}</td>
-                      <td class=" ">{item.Title}</td>
-                      <td class=" ">
-                        <a class="btn btn-app" onClick={() => { editTracks(item) }}>
-                          <i class="fa fa-edit"></i> Edit
+                    <tr draggable="true" className="odd">
+                      <td className="  sorting_1">{item.Volume}</td>
+                      <td className="">{item.ContentType}</td>
+                      <td className=" ">{item.PrimaryTrackType}</td>
+                      <td className=" ">{item.SecondaryTrackType}</td>
+                      <td className=" ">{item.Title}</td>
+                      <td className=" ">
+                        <a className="btn btn-app" onClick={() => { editTracks(item) }}>
+                          <i className="fa fa-edit"></i> Edit
                         </a></td>
                     </tr>
                   ))}

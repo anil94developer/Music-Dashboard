@@ -7,38 +7,38 @@ export default function PaymentOperations() {
     <div>
 
       <Nav />
-      <div class="content-wrapper">
+      <div className="content-wrapper">
 
-        <section class="content-header">
+        <section className="content-header">
           <h1>Payment Operations</h1>
         </section>
 
-        <div class="row">
+        <div className="row">
            
 
-           <div class="col-md-6">
-             <div class="box">
+           <div className="col-md-6">
+             <div className="box">
 
-               <div class="small-box bg-aqua">
-                 <div class="inner">
+               <div className="small-box bg-aqua">
+                 <div className="inner">
                    <h3>My Wallet</h3>
                    <p>Balance:100</p>
                  </div>
-                 <div class="icon">
-                   <i class="ion ion-bag"></i>
+                 <div className="icon">
+                   <i className="ion ion-bag"></i>
                  </div>
-                 <a href="all-release" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                 <a href="all-release" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
                </div>
              </div>
            </div>
          </div>
 
          
-        <section class="content">
+        <section className="content">
 
-          <div class="row">
-            <div class="col-md-6">
-              <div class="box box-primary">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="box box-primary">
                 <div className="balance-container">
                   <h2>My available balance</h2>
                   <p>
@@ -80,19 +80,19 @@ export default function PaymentOperations() {
 
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="box box-primary">
-                <div class="box-header">
-                  <h3 class="box-title">Send Amount Request</h3>
+            <div className="col-md-6">
+              <div className="box box-primary">
+                <div className="box-header">
+                  <h3 className="box-title">Send Amount Request</h3>
                 </div>
 
-                <div class="box-body">
+                <div className="box-body">
 
-                  <div class="form-group">
+                  <div className="form-group">
                     <label for="exampleInputEmail1">Amount *</label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       id="amount"
                       placeholder="Enter Amount"
                       onChange={(e) => setAmount(e.target.value)}
@@ -101,8 +101,8 @@ export default function PaymentOperations() {
                 </div>
 
 
-                <div class="box-footer">
-                  <button type="submit" id="btnsubmit" class="btn btn-primary" onClick={() => { }}>Submit</button>
+                <div className="box-footer">
+                  <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { }}>Submit</button>
                 </div>
               </div>
             </div>

@@ -11,19 +11,19 @@ export default function Password() {
   return (
     <div>
       <Nav />
-      <div class="content-wrapper">
+      <div className="content-wrapper">
 
-        <section class="content-header">
+        <section className="content-header">
           <h1> Password</h1>
         </section>
 
 
-        <section class="container-fluid content">
-          <section class="content">
+        <section className="container-fluid content">
+          <section className="content">
             <div class='row'>
               <div class='col-md-12'>
-                <div class="box box-info">
-                  <div class="box-body">
+                <div className="box box-info">
+                  <div className="box-body">
 
 
                     <form onSubmit={handleSubmit}>

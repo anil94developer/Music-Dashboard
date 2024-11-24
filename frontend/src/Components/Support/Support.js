@@ -32,9 +32,9 @@ export default function Support() {
   return (
     <div>
       <Nav />
-      <div class="content-wrapper">
+      <div className="content-wrapper">
 
-        <section class="content-header">
+        <section className="content-header">
           <h1>
             Welcome to your help center</h1>
         </section>
@@ -189,40 +189,40 @@ export default function Support() {
           </div>
         </section>
 
-        <section class="content">
+        <section className="content">
           <div class='col-md-12'>
-            <div class="box box-info">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Support List</h3>
+            <div className="box box-info">
+              <div className="box">
+                <div className="box-header">
+                  <h3 className="box-title">Support List</h3>
                 </div>
-                <div class="box-body">
+                <div className="box-body">
 
-                  <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                  <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                     <thead>
                       <tr role="row">
-                        <th class="sorting">Issue Type</th>
-                        <th class="sorting">Email</th>
-                        <th class="sorting">Client Number</th>
-                        <th class="sorting">Country</th>
-                        <th class="sorting">Description</th>
-                        <th class="sorting">MotionType</th>
-                        <th class="sorting">Status</th>
-                        <th class="sorting">ACTION</th>
+                        <th className="sorting">Issue Type</th>
+                        <th className="sorting">Email</th>
+                        <th className="sorting">Client Number</th>
+                        <th className="sorting">Country</th>
+                        <th className="sorting">Description</th>
+                        <th className="sorting">MotionType</th>
+                        <th className="sorting">Status</th>
+                        <th className="sorting">ACTION</th>
                       </tr>
                     </thead>
 
                     <tbody role="alert" aria-live="polite" aria-relevant="all">
                       {supportList.map((item) => (
-                        <tr class="odd">
-                          <td class="  sorting_1">{item.issueType}</td>
-                          <td class="  ">{item.email}</td>
-                          <td class="  ">{item.clientNumber}</td>
-                          <td class="  ">{item.country}</td>
-                          <td class="  ">{item.description}</td>
-                          <td class="  ">{item.motionType}</td>
-                          <td class="  ">{item.status}</td>
-                          <td class=" "><a onClick={() => { }}>MORE</a></td>
+                        <tr className="odd">
+                          <td className="  sorting_1">{item.issueType}</td>
+                          <td className="  ">{item.email}</td>
+                          <td className="  ">{item.clientNumber}</td>
+                          <td className="  ">{item.country}</td>
+                          <td className="  ">{item.description}</td>
+                          <td className="  ">{item.motionType}</td>
+                          <td className="  ">{item.status}</td>
+                          <td className=" "><a onClick={() => { }}>MORE</a></td>
                         </tr>
                       ))}
                     </tbody>

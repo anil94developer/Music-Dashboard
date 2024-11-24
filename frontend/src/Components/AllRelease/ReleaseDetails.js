@@ -17,11 +17,11 @@ export const ReleaseDetails = () => {
     return (
         <div>
             <Nav />
-            <div class="content-wrapper">
-                <section class="container-fluid content">
-                    <div class="row">
+            <div className="content-wrapper">
+                <section className="container-fluid content">
+                    <div className="row">
 
-                        <div class="col-md-12">
+                        <div className="col-md-12">
                             {myRelease.title != null &&
                                 <div style={{ padding: "20px" }}>
                                     <h1>Data Display</h1>

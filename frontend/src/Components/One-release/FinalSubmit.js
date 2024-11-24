@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { base } from '../../Constants/Data.constant';
 import MainStepController from '../../Controllers/One-release-controller/MainStepController'
+import { postData } from '../../Services/Ops';
 import { Nav } from '../Common/Nav';
 const FinalSubmit = () => {
   const location = useLocation();
@@ -8,101 +11,132 @@ const FinalSubmit = () => {
   const { step, setStep, myRelease, fetchReleaseDetails, isLoading, } = MainStepController();
   const [isRefresh, setIsRefresh] = useState(new Date().getTime())
   const [artistConfirmed, setArtistConfirmed] = useState(false);
-  const [releaseDate, setReleaseDate] = useState("2024-11-29");
+  const [releaseDate, setReleaseDate] = useState("");
   const [ignoreDate, setIgnoreDate] = useState(false);
   const [oacUrl, setOacUrl] = useState("");
+  const [releaseFinalStep, setreleaseFinalStep] = useState("1");
+
 
   useEffect(() => {
     fetchReleaseDetails(releaseId)
     console.log("releaseId--------", releaseId)
+    setReleaseDate(myRelease?.step1?.originalReleaseDate)
   }, [releaseId])
 
 
 
-  // Handlers
-  const handleCancel = () => {
-    alert("You have canceled the process.");
-  };
+
 
   const handleSubmit = () => {
-    const message = `Submission Details:
-- Artist Pages Confirmed: ${artistConfirmed ? "Yes" : "No"}
-- Release Date: ${releaseDate} ${ignoreDate ? "(Ignored Recommendation)" : ""}
-- YouTube OAC URL: ${oacUrl ? oacUrl : "Not Provided"}`;
-
-    alert(message);
+    if (releaseFinalStep == "1") {
+      if (artistConfirmed) {
+        setreleaseFinalStep("2")
+      } else {
+        Swal.fire("Error", "Please check I confirm that an Artist Page", "error");
+      }
+    } else if (releaseFinalStep == "2") {
+      if (ignoreDate) {
+        setreleaseFinalStep("3")
+      } else {
+        Swal.fire("Error", "Please check Ignore recommended release date", "error");
+      }
+    }else if (releaseFinalStep == "3") {
+      finalSubmit()
+    }
   };
 
+  const handleCancel = () => {
+    if (releaseFinalStep == "3") {
+      setreleaseFinalStep("2")
+    } else if (releaseFinalStep == "2") {
+      setreleaseFinalStep("1")
+    } 
+  };
+
+  const finalSubmit=async()=>{
+    let body={
+      id:myRelease._id,
+      releaseDate:releaseDate,
+      youtubechannelLinkId:oacUrl
+    }
+    let result= await postData(base.finalReleaseSubmit,body)
+    if (result.data.status === true) {
+      Swal.fire("Success", result.message, result.message);
+    } else {
+      Swal.fire("Error", result.message, result.message);
+    }
+  }
   return (
     <div>
       <Nav />
-      <div class="content-wrapper">
-        <section class="container-fluid content">
+      <div className="content-wrapper">
+        <section className="container-fluid content">
           <div style={styles.container}>
             <h1>Finalize Your Release</h1>
 
             {/* Section 1: Confirm Artist Pages */}
-            <section style={styles.section}>
-              {/* {JSON.stringify(myRelease.step1.primaryArtist)} */}
-              <h2>1. Confirm Your Artist Pages</h2>
-              <table style={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Artist</th>
-                    <th>Apple Artist Page</th>
-                    <th>Spotify Artist Page</th>
-                  </tr>
-                </thead>
-                <tbody>
+            {releaseFinalStep == "1" &&
+              <section style={styles.section}>
+                {/* {JSON.stringify(myRelease.step1.primaryArtist)} */}
+                <h2>1. Confirm Your Artist Pages</h2>
+                <table style={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Artist</th>
+                      <th>Apple Artist Page</th>
+                      <th>Spotify Artist Page</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-                {myRelease.step1?.primaryArtist?.length > 0 &&
-  myRelease.step1.primaryArtist.map((artist, index) => (
-    <tr key={index}>
-      {/* Artist Name */}
-      <td>{artist.name}</td>
+                    {myRelease.step1?.primaryArtist?.length > 0 &&
+                      myRelease.step1.primaryArtist.map((artist, index) => (
+                        <tr key={index}>
+                          {/* Artist Name */}
+                          <td>{artist.name}</td>
 
-      {/* iTunes Link */}
-      <td>
-        {artist.itunesLinkId ? (
-          <a
-            href={artist.itunesLinkId}
-            target="_blank"
-            rel="noopener noreferrer"
-          >{artist.itunesLinkId}
-            <img
-              src="https://static.believedigital.com/images/logos/stores/408.svg"
-              className="artist-image"
-              alt="iTunes Logo"
-            />
-          </a>
-        ) : (
-          `No Artist Page details`
-        )}
-      </td>
+                          {/* iTunes Link */}
+                          <td>
+                            {artist.itunesLinkId ? (
+                              <a
+                                href={artist.itunesLinkId}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <img
+                                  src="https://static.believedigital.com/images/logos/stores/408.svg"
+                                  className="artist-image"
+                                  alt="iTunes Logo"
+                                />
+                              </a>
+                            ) : (
+                              `No Artist Page details`
+                            )}
+                          </td>
 
-      {/* Spotify Link */}
-      <td>
-        {artist.link ? (
-          <a
-            href={artist.link}
-            target="_blank"
-            rel="noopener noreferrer"
-          >{artist.link}
-            <img
-              src="https://static.believedigital.com/images/logos/stores/204.svg"
-              className="artist-image"
-              alt="Spotify Logo"
-            />
-          </a>
-        ) : (
-          `No Artist Page details`
-        )}
-      </td>
-    </tr>
-  ))}
+                          {/* Spotify Link */}
+                          <td>
+                            {artist.linkId ? (
+                              <a
+                                href={artist.linkId}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <img
+                                  src="https://static.believedigital.com/images/logos/stores/204.svg"
+                                  className="artist-image"
+                                  alt="Spotify Logo"
+                                />
+                              </a>
+                            ) : (
+                              `No Artist Page details`
+                            )}
+                          </td>
+                        </tr>
+                      ))}
 
-                  
-                  <tr>
+
+                    {/* <tr>
                     <td>Various Artists</td>
                     <td>
                       <a href="#" target="_blank" rel="noopener noreferrer">
@@ -114,75 +148,107 @@ const FinalSubmit = () => {
                         Spotify Link
                       </a>
                     </td>
-                  </tr>
-                </tbody>
-              </table>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={artistConfirmed}
-                  onChange={(e) => setArtistConfirmed(e.target.checked)}
-                />
-                I confirm that an Artist Page has not been created for the stores above.
-              </label>
-            </section>
+                  </tr> */}
+                  </tbody>
+                </table>
+                <label>
+                  Artist Page details were not entered for the store(s) identified above. If an Artist Page is available, please enter it on the Release page. If not, confirm that Believe can create a new store Artist Page.
 
-            {/* Section 2: Set Release Date */}
-            <section style={styles.section}>
-              <h2>2. Set Your Release Date</h2>
-              <p>
-                You requested a release of your product in less than 48 hours. We
-                recommend setting your release date to at least two weeks ahead.
-              </p>
-              <input
-                type="date"
-                value={releaseDate}
-                onChange={(e) => setReleaseDate(e.target.value)}
-                style={styles.inputField}
-              />
-              <label>
+                </label>
+                <p>
+                  <input
+                    type="checkbox"
+                    checked={artistConfirmed}
+                    onChange={(e) => setArtistConfirmed(e.target.checked)}
+                  />
+
+                  I confirm that an Artist Page has not been created for the stores above, and I understand that Believe will create a new Artist Page to deliver your content to the right page (excluding YouTube).
+                  For more info on how to edit your artist page, please refer to the Believe guideline for Artist ID.
+                </p>
+                {/* Action Buttons */}
+                <div style={styles.btnContainer}>
+                  <button style={{ ...styles.btn, ...styles.btnDanger }} onClick={handleCancel}>
+                    Cancel
+                  </button>
+                  <button style={{ ...styles.btn, ...styles.btnPrimary }} onClick={handleSubmit}>
+                    Save & Continue
+                  </button>
+                </div>
+              </section>
+            }
+            {releaseFinalStep == "2" &&
+              <section style={styles.section}>
+                <h2>2. Set Your Release Date</h2>
+                <p>
+                  You requested a release of your product in less than 48 hours. We
+                  recommend setting your release date to at least two weeks ahead.
+                </p>
                 <input
-                  type="checkbox"
-                  checked={ignoreDate}
-                  onChange={(e) => setIgnoreDate(e.target.checked)}
+                  type="date"
+                  value={releaseDate}
+                  onChange={(e) => setReleaseDate(e.target.value)}
+                  style={styles.inputField}
                 />
-                Ignore recommended release date and proceed with my selected date.
-              </label>
-            </section>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={ignoreDate}
+                    onChange={(e) => setIgnoreDate(e.target.checked)}
+                  />
+                  Ignore recommended release date and proceed with my selected date.
+                </label>
+
+                {/* Action Buttons */}
+                <div style={styles.btnContainer}>
+                  <button style={{ ...styles.btn, ...styles.btnDanger }} onClick={handleCancel}>
+                    Cancel
+                  </button>
+                  <button style={{ ...styles.btn, ...styles.btnPrimary }} onClick={handleSubmit}>
+                    Save & Continue
+                  </button>
+                </div>
+              </section>
+            }
 
             {/* Section 3: YouTube OAC Certification */}
-            <section style={styles.section}>
-              <h2>3. Get Your OAC Certified by YouTube</h2>
-              <p>
-                Enter the URL of your Official Artist Channel (OAC) to certify your
-                YouTube account as your official channel.
-              </p>
-              <input
-                type="text"
-                value={oacUrl}
-                onChange={(e) => setOacUrl(e.target.value)}
-                style={styles.inputField}
-                placeholder="Enter Official Artist Channel URL"
-              />
-              <a
-                href="https://www.youtube.com/oac-certification-guide"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={styles.tooltip}
-              >
-                What is OAC Certification?
-              </a>
-            </section>
+            {releaseFinalStep == "3" &&
 
-            {/* Action Buttons */}
-            <div style={styles.btnContainer}>
-              <button style={{ ...styles.btn, ...styles.btnDanger }} onClick={handleCancel}>
-                Cancel
-              </button>
-              <button style={{ ...styles.btn, ...styles.btnPrimary }} onClick={handleSubmit}>
-                Save & Continue
-              </button>
-            </div>
+              <section style={styles.section}>
+                <h2>3. Get Your OAC Certified by YouTube</h2>
+                <p>
+                  Enter the URL of your Official Artist Channel (OAC) to certify your
+                  YouTube account as your official channel.
+                </p>
+                <input
+                  type="text"
+                  value={oacUrl}
+                  onChange={(e) => setOacUrl(e.target.value)}
+                  style={styles.inputField}
+                  placeholder="Enter Official Artist Channel URL"
+                />
+                <a
+                  href="https://www.youtube.com/oac-certification-guide"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={styles.tooltip}
+                >
+                  What is OAC Certification?
+                </a>
+
+                {/* Action Buttons */}
+                <div style={styles.btnContainer}>
+                  <button style={{ ...styles.btn, ...styles.btnDanger }} onClick={handleCancel}>
+                    Cancel
+                  </button>
+                  <button style={{ ...styles.btn, ...styles.btnPrimary }} onClick={handleSubmit}>
+                    Save & Continue
+                  </button>
+                </div>
+              </section>
+
+
+
+            }
           </div>
         </section>
       </div>

@@ -29,19 +29,19 @@ export const OneRelease = () => {
   return (
     <div>
       <Nav />
-      <div class="content-wrapper">
-        <section class="container-fluid content">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="box box-primary">
-                <div class="box-header">
-                  <h3 class="box-title">New Release</h3>
+      <div className="content-wrapper">
+        <section className="container-fluid content">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="box box-primary">
+                <div className="box-header">
+                  <h3 className="box-title">New Release</h3>
                 </div>
 
-                <div class="box-body">
+                <div className="box-body">
                   <label>What is the type of your new release?</label>
-                  <div class="form-group">
-                    <div class="radio">
+                  <div className="form-group">
+                    <div className="radio">
                       <label>
                         <input
                           type="radio"
@@ -54,7 +54,7 @@ export const OneRelease = () => {
                         Audio
                       </label>
                     </div>
-                    <div class="radio">
+                    <div className="radio">
                       <label>
                         <input
                           type="radio"
@@ -66,7 +66,7 @@ export const OneRelease = () => {
                         Video
                       </label>
                     </div>
-                    <div class="radio">
+                    <div className="radio">
                       <label>
                         <input
                           type="radio"
@@ -78,11 +78,11 @@ export const OneRelease = () => {
                         Ringtone
                       </label>
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="exampleInputEmail1">Release Title *</label>
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="releaseTitle"
                         placeholder="Enter Release Title"
                         onChange={(e) => setTitle(e.target.value)}
@@ -91,13 +91,13 @@ export const OneRelease = () => {
                   </div>
                 </div>
 
-                <div class="box-footer">
-                  <button type="submit" id="btnsubmit" class="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
+                <div className="box-footer">
+                  <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="box">
+            <div className="col-md-6">
+              <div className="box">
 
               </div>
             </div>

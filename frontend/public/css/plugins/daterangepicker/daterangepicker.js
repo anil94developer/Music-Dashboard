@@ -92,21 +92,21 @@
             }
         }
 
-        var DRPTemplate = '<div class="daterangepicker dropdown-menu">' +
-                '<div class="calendar left"></div>' +
-                '<div class="calendar right"></div>' +
-                '<div class="ranges">' +
-                  '<div class="range_inputs">' +
-                    '<div class="daterangepicker_start_input" style="float: left">' +
+        var DRPTemplate = '<div className="daterangepicker dropdown-menu">' +
+                '<div className="calendar left"></div>' +
+                '<div className="calendar right"></div>' +
+                '<div className="ranges">' +
+                  '<div className="range_inputs">' +
+                    '<div className="daterangepicker_start_input" style="float: left">' +
                       '<label for="daterangepicker_start">' + this.locale.fromLabel + '</label>' +
-                      '<input class="input-mini" type="text" name="daterangepicker_start" value="" disabled="disabled" />' +
+                      '<input className="input-mini" type="text" name="daterangepicker_start" value="" disabled="disabled" />' +
                     '</div>' +
-                    '<div class="daterangepicker_end_input" style="float: left; padding-left: 11px">' +
+                    '<div className="daterangepicker_end_input" style="float: left; padding-left: 11px">' +
                       '<label for="daterangepicker_end">' + this.locale.toLabel + '</label>' +
-                      '<input class="input-mini" type="text" name="daterangepicker_end" value="" disabled="disabled" />' +
+                      '<input className="input-mini" type="text" name="daterangepicker_end" value="" disabled="disabled" />' +
                     '</div>' +
-                    '<button class="' + this.applyClass + ' applyBtn" disabled="disabled">' + this.locale.applyLabel + '</button>&nbsp;' +
-                    '<button class="' + this.cancelClass + ' cancelBtn">' + this.locale.cancelLabel + '</button>' +
+                    '<button className="' + this.applyClass + ' applyBtn" disabled="disabled">' + this.locale.applyLabel + '</button>&nbsp;' +
+                    '<button className="' + this.cancelClass + ' cancelBtn">' + this.locale.cancelLabel + '</button>' +
                   '</div>' +
                 '</div>' +
               '</div>';
@@ -699,7 +699,7 @@
 
         renderDropdowns: function (selected, minDate, maxDate) {
             var currentMonth = selected.month();
-            var monthHtml = '<select class="monthselect">';
+            var monthHtml = '<select className="monthselect">';
             var inMinYear = false;
             var inMaxYear = false;
 
@@ -715,7 +715,7 @@
             var currentYear = selected.year();
             var maxYear = (maxDate && maxDate.year()) || (currentYear + 5);
             var minYear = (minDate && minDate.year()) || (currentYear - 50);
-            var yearHtml = '<select class="yearselect">';
+            var yearHtml = '<select className="yearselect">';
 
             for (var y = minYear; y <= maxYear; y++) {
                 yearHtml += '<option value="' + y + '"' +
@@ -730,8 +730,8 @@
 
         renderCalendar: function (calendar, selected, minDate, maxDate) {
 
-            var html = '<div class="calendar-date">';
-            html += '<table class="table-condensed">';
+            var html = '<div className="calendar-date">';
+            html += '<table className="table-condensed">';
             html += '<thead>';
             html += '<tr>';
 
@@ -740,7 +740,7 @@
                 html += '<th></th>';
 
             if (!minDate || minDate.isBefore(calendar[1][1])) {
-                html += '<th class="prev available"><i class="icon-arrow-left glyphicon glyphicon-arrow-left"></i></th>';
+                html += '<th className="prev available"><i className="icon-arrow-left glyphicon glyphicon-arrow-left"></i></th>';
             } else {
                 html += '<th></th>';
             }
@@ -753,7 +753,7 @@
 
             html += '<th colspan="5" style="width: auto">' + dateHtml + '</th>';
             if (!maxDate || maxDate.isAfter(calendar[1][1])) {
-                html += '<th class="next available"><i class="icon-arrow-right glyphicon glyphicon-arrow-right"></i></th>';
+                html += '<th className="next available"><i className="icon-arrow-right glyphicon glyphicon-arrow-right"></i></th>';
             } else {
                 html += '<th></th>';
             }
@@ -763,7 +763,7 @@
 
             // add week number label
             if (this.showWeekNumbers)
-                html += '<th class="week">' + this.locale.weekLabel + '</th>';
+                html += '<th className="week">' + this.locale.weekLabel + '</th>';
 
             $.each(this.locale.daysOfWeek, function (index, dayOfWeek) {
                 html += '<th>' + dayOfWeek + '</th>';
@@ -778,7 +778,7 @@
 
                 // add week number
                 if (this.showWeekNumbers)
-                    html += '<td class="week">' + calendar[row][0].week() + '</td>';
+                    html += '<td className="week">' + calendar[row][0].week() + '</td>';
 
                 for (var col = 0; col < 7; col++) {
                     var cname = 'available ';
@@ -801,7 +801,7 @@
                     }
 
                     var title = 'r' + row + 'c' + col;
-                    html += '<td class="' + cname.replace(/\s+/g, ' ').replace(/^\s?(.*?)\s?$/, '$1') + '" data-title="' + title + '">' + calendar[row][col].date() + '</td>';
+                    html += '<td className="' + cname.replace(/\s+/g, ' ').replace(/^\s?(.*?)\s?$/, '$1') + '" data-title="' + title + '">' + calendar[row][col].date() + '</td>';
                 }
                 html += '</tr>';
             }
@@ -812,8 +812,8 @@
 
             if (this.timePicker) {
 
-                html += '<div class="calendar-time">';
-                html += '<select class="hourselect">';
+                html += '<div className="calendar-time">';
+                html += '<select className="hourselect">';
                 var start = 0;
                 var end = 23;
                 var selected_hour = selected.hour();
@@ -836,7 +836,7 @@
 
                 html += '</select> : ';
 
-                html += '<select class="minuteselect">';
+                html += '<select className="minuteselect">';
 
                 for (var i = 0; i < 60; i += this.timePickerIncrement) {
                     var num = i;
@@ -852,7 +852,7 @@
                 html += '</select> ';
 
                 if (this.timePicker12Hour) {
-                    html += '<select class="ampmselect">';
+                    html += '<select className="ampmselect">';
                     if (selected.hour() >= 12) {
                         html += '<option value="AM">AM</option><option value="PM" selected="selected">PM</option>';
                     } else {

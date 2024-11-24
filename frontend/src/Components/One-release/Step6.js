@@ -16,28 +16,28 @@ export default function STEP6(props) {
     
     return (
         <div>
-            <div class="box box-primary">
-                <div class="box-body">
+            <div className="box box-primary">
+                <div className="box-body">
                     <STEP1 releaseData={releaseData} />
                 </div>
             </div>
-            <div class="box box-primary">
-                <div class="box-body">
+            <div className="box box-primary">
+                <div className="box-body">
                     {/* <STEP2 releaseData={releaseData}/> */}
                 </div>
             </div>
-            <div class="box box-primary">
-                <div class="box-body">
+            <div className="box box-primary">
+                <div className="box-body">
                     <STEP3 releaseData={releaseData} fetchReleaseDetails={fetchReleaseDetails} />
                 </div>
             </div>
-            <div class="box box-primary">
-                <div class="box-body">
+            <div className="box box-primary">
+                <div className="box-body">
                     <STEP4 releaseData={releaseData} />
                 </div>
             </div>
-            <div class="box box-primary">
-                <div class="box-body">
+            <div className="box box-primary">
+                <div className="box-body">
                     <STEP5 releaseData={releaseData} />
                 </div>
             </div>

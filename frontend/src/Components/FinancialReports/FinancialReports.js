@@ -16,14 +16,14 @@ export default function FinancialReport() {
   return (
     <div>
       <Nav />
-      <div class="content-wrapper">
+      <div className="content-wrapper">
 
-        <section class="content-header">
+        <section className="content-header">
           <h1>Financial Reports</h1>
         </section>
 
 
-        <section class="container-fluid content">
+        <section className="container-fluid content">
           <div className="reports-container">
             <h2>AVAILABLE REPORTS</h2>
 

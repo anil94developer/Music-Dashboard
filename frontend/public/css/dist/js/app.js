@@ -384,7 +384,7 @@ $.AdminLTE.boxWidget = {
     }, options);
 
     //The overlay
-    var overlay = $('<div class="overlay"></div><div class="loading-img"></div>');
+    var overlay = $('<div className="overlay"></div><div className="loading-img"></div>');
 
     return this.each(function () {
       //if a source is specified

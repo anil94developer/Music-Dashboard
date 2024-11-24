@@ -1600,7 +1600,7 @@ var Popover = Class.extend({
 		var _this = this;
 		var options = this.options;
 
-		this.el = $('<div class="fc-popover"/>')
+		this.el = $('<div className="fc-popover"/>')
 			.addClass(options.className || '')
 			.css({
 				// position initially to the top left to avoid creating scrollbars
@@ -3076,7 +3076,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 		var styles = stylesMethod ? stylesMethod.call(this, seg) : ''; // a semi-colon separated CSS property string
 
 		return '<' + this.fillSegTag +
-			(classes.length ? ' class="' + classes.join(' ') + '"' : '') +
+			(classes.length ? ' className="' + classes.join(' ') + '"' : '') +
 			(styles ? ' style="' + styles + '"' : '') +
 			' />';
 	},
@@ -3090,7 +3090,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 	// TODO: move to another class. not applicable to all Grids
 	headHtml: function() {
 		return '' +
-			'<div class="fc-row ' + this.view.widgetHeaderClass + '">' +
+			'<div className="fc-row ' + this.view.widgetHeaderClass + '">' +
 				'<table>' +
 					'<thead>' +
 						this.rowHtml('head') + // leverages RowRenderer
@@ -3107,7 +3107,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 		var date = cell.start;
 
 		return '' +
-			'<th class="fc-day-header ' + view.widgetHeaderClass + ' fc-' + dayIDs[date.day()] + '">' +
+			'<th className="fc-day-header ' + view.widgetHeaderClass + ' fc-' + dayIDs[date.day()] + '">' +
 				htmlEscape(date.format(this.colHeadFormat)) +
 			'</th>';
 	},
@@ -3121,7 +3121,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 
 		classes.unshift('fc-day', view.widgetContentClass);
 
-		return '<td class="' + classes.join(' ') + '"' +
+		return '<td className="' + classes.join(' ') + '"' +
 			' data-date="' + date.format('YYYY-MM-DD') + '"' + // if date has a time, won't format it
 			'></td>';
 	},
@@ -4120,13 +4120,13 @@ var DayGrid = Grid.extend({
 		}
 
 		return '' +
-			'<div class="' + classes.join(' ') + '">' +
-				'<div class="fc-bg">' +
+			'<div className="' + classes.join(' ') + '">' +
+				'<div className="fc-bg">' +
 					'<table>' +
 						this.rowHtml('day', row) + // leverages RowRenderer. calls dayCellHtml()
 					'</table>' +
 				'</div>' +
-				'<div class="fc-content-skeleton">' +
+				'<div className="fc-content-skeleton">' +
 					'<table>' +
 						(this.numbersVisible ?
 							'<thead>' +
@@ -4429,7 +4429,7 @@ var DayGrid = Grid.extend({
 		// inject each new event skeleton into each associated row
 		this.rowEls.each(function(row, rowNode) {
 			var rowEl = $(rowNode); // the .fc-row
-			var skeletonEl = $('<div class="fc-helper-skeleton"><table/></div>'); // will be absolutely positioned
+			var skeletonEl = $('<div className="fc-helper-skeleton"><table/></div>'); // will be absolutely positioned
 			var skeletonTop;
 
 			// If there is an original segment, match the top position. Otherwise, put it at the row's top level
@@ -4499,7 +4499,7 @@ var DayGrid = Grid.extend({
 		var trEl;
 
 		skeletonEl = $(
-			'<div class="fc-' + type.toLowerCase() + '-skeleton">' +
+			'<div className="fc-' + type.toLowerCase() + '-skeleton">' +
 				'<table><tr/></table>' +
 			'</div>'
 		);
@@ -4628,15 +4628,15 @@ DayGrid.mixin({
 
 		// Only display a timed events time if it is the starting segment
 		if (!event.allDay && seg.isStart) {
-			timeHtml = '<span class="fc-time">' + htmlEscape(this.getEventTimeText(event)) + '</span>';
+			timeHtml = '<span className="fc-time">' + htmlEscape(this.getEventTimeText(event)) + '</span>';
 		}
 
 		titleHtml =
-			'<span class="fc-title">' +
+			'<span className="fc-title">' +
 				(htmlEscape(event.title || '') || '&nbsp;') + // we always want one line of height
 			'</span>';
 		
-		return '<a class="' + classes.join(' ') + '"' +
+		return '<a className="' + classes.join(' ') + '"' +
 				(event.url ?
 					' href="' + htmlEscape(event.url) + '"' :
 					''
@@ -4646,14 +4646,14 @@ DayGrid.mixin({
 					''
 					) +
 			'>' +
-				'<div class="fc-content">' +
+				'<div className="fc-content">' +
 					(this.isRTL ?
 						titleHtml + ' ' + timeHtml : // put a natural space in between
 						timeHtml + ' ' + titleHtml   //
 						) +
 				'</div>' +
 				(isResizable ?
-					'<div class="fc-resizer"/>' :
+					'<div className="fc-resizer"/>' :
 					''
 					) +
 			'</a>';
@@ -4715,7 +4715,7 @@ DayGrid.mixin({
 					emptyCellsUntil(seg.leftCol);
 
 					// create a container that occupies or more columns. append the event element.
-					td = $('<td class="fc-event-container"/>').append(seg.el);
+					td = $('<td className="fc-event-container"/>').append(seg.el);
 					if (seg.leftCol != seg.rightCol) {
 						td.attr('colspan', seg.rightCol - seg.leftCol + 1);
 					}
@@ -4959,7 +4959,7 @@ DayGrid.mixin({
 
 					// make a replacement <td> for each column the segment occupies. will be one for each colspan
 					for (j = 0; j < colSegsBelow.length; j++) {
-						moreTd = $('<td class="fc-more-cell"/>').attr('rowspan', rowspan);
+						moreTd = $('<td className="fc-more-cell"/>').attr('rowspan', rowspan);
 						segsBelow = colSegsBelow[j];
 						cell = this.getCell(row, seg.leftCol + j);
 						moreLink = this.renderMoreLink(cell, [ seg ].concat(segsBelow)); // count seg as hidden too
@@ -5004,7 +5004,7 @@ DayGrid.mixin({
 		var _this = this;
 		var view = this.view;
 
-		return $('<a class="fc-more"/>')
+		return $('<a className="fc-more"/>')
 			.text(
 				this.getMoreLinkText(hiddenSegs.length)
 			)
@@ -5090,17 +5090,17 @@ DayGrid.mixin({
 		var isTheme = view.opt('theme');
 		var title = cell.start.format(view.opt('dayPopoverFormat'));
 		var content = $(
-			'<div class="fc-header ' + view.widgetHeaderClass + '">' +
-				'<span class="fc-close ' +
+			'<div className="fc-header ' + view.widgetHeaderClass + '">' +
+				'<span className="fc-close ' +
 					(isTheme ? 'ui-icon ui-icon-closethick' : 'fc-icon fc-icon-x') +
 				'"></span>' +
-				'<span class="fc-title">' +
+				'<span className="fc-title">' +
 					htmlEscape(title) +
 				'</span>' +
-				'<div class="fc-clear"/>' +
+				'<div className="fc-clear"/>' +
 			'</div>' +
-			'<div class="fc-body ' + view.widgetContentClass + '">' +
-				'<div class="fc-event-container"></div>' +
+			'<div className="fc-body ' + view.widgetContentClass + '">' +
+				'<div className="fc-event-container"></div>' +
 			'</div>'
 		);
 		var segContainer = content.find('.fc-event-container');
@@ -5231,12 +5231,12 @@ var TimeGrid = Grid.extend({
 	// Renders the basic HTML skeleton for the grid
 	renderHtml: function() {
 		return '' +
-			'<div class="fc-bg">' +
+			'<div className="fc-bg">' +
 				'<table>' +
 					this.rowHtml('slotBg') + // leverages RowRenderer, which will call slotBgCellHtml
 				'</table>' +
 			'</div>' +
-			'<div class="fc-slats">' +
+			'<div className="fc-slats">' +
 				'<table>' +
 					this.slatRowHtml() +
 				'</table>' +
@@ -5268,7 +5268,7 @@ var TimeGrid = Grid.extend({
 			minutes = slotDate.minutes();
 
 			axisHtml =
-				'<td class="fc-axis fc-time ' + view.widgetContentClass + '" ' + view.axisStyleAttr() + '>' +
+				'<td className="fc-axis fc-time ' + view.widgetContentClass + '" ' + view.axisStyleAttr() + '>' +
 					((!slotNormal || !minutes) ? // if irregular slot duration, or on the hour, then display the time
 						'<span>' + // for matchCellWidths
 							htmlEscape(slotDate.format(this.axisFormat)) +
@@ -5278,9 +5278,9 @@ var TimeGrid = Grid.extend({
 				'</td>';
 
 			html +=
-				'<tr ' + (!minutes ? '' : 'class="fc-minor"') + '>' +
+				'<tr ' + (!minutes ? '' : 'className="fc-minor"') + '>' +
 					(!isRTL ? axisHtml : '') +
-					'<td class="' + view.widgetContentClass + '"/>' +
+					'<td className="' + view.widgetContentClass + '"/>' +
 					(isRTL ? axisHtml : '') +
 				"</tr>";
 
@@ -5591,7 +5591,7 @@ var TimeGrid = Grid.extend({
 			}
 		}
 
-		this.helperEl = $('<div class="fc-helper-skeleton"/>')
+		this.helperEl = $('<div className="fc-helper-skeleton"/>')
 			.append(tableEl)
 				.appendTo(this.el);
 	},
@@ -5651,7 +5651,7 @@ var TimeGrid = Grid.extend({
 
 			className = className || type.toLowerCase();
 			skeletonEl = $(
-				'<div class="fc-' + className + '-skeleton">' +
+				'<div className="fc-' + className + '-skeleton">' +
 					'<table><tr/></table>' +
 				'</div>'
 			);
@@ -5662,7 +5662,7 @@ var TimeGrid = Grid.extend({
 				tdEl = $('<td/>').appendTo(trEl);
 
 				if (colSegs.length) {
-					containerEl = $('<div class="fc-' + className + '-container"/>').appendTo(tdEl);
+					containerEl = $('<div className="fc-' + className + '-container"/>').appendTo(tdEl);
 					dayDate = this.colData[col].day;
 
 					for (i = 0; i < colSegs.length; i++) {
@@ -5701,7 +5701,7 @@ TimeGrid.mixin({
 		segs = this.renderFgSegEls(segs); // returns a subset of the segs. segs that were actually rendered
 
 		this.el.append(
-			this.eventSkeletonEl = $('<div class="fc-content-skeleton"/>')
+			this.eventSkeletonEl = $('<div className="fc-content-skeleton"/>')
 				.append(this.renderSegTable(segs))
 		);
 
@@ -5736,7 +5736,7 @@ TimeGrid.mixin({
 			colSegs = segCols[col];
 			placeSlotSegs(colSegs); // compute horizontal coordinates, z-index's, and reorder the array
 
-			containerEl = $('<div class="fc-event-container"/>');
+			containerEl = $('<div className="fc-event-container"/>');
 
 			// assign positioning CSS and insert into container
 			for (i = 0; i < colSegs.length; i++) {
@@ -5818,7 +5818,7 @@ TimeGrid.mixin({
 			startTimeText = this.getEventTimeText({ start: event.start });
 		}
 
-		return '<a class="' + classes.join(' ') + '"' +
+		return '<a className="' + classes.join(' ') + '"' +
 			(event.url ?
 				' href="' + htmlEscape(event.url) + '"' :
 				''
@@ -5828,9 +5828,9 @@ TimeGrid.mixin({
 				''
 				) +
 			'>' +
-				'<div class="fc-content">' +
+				'<div className="fc-content">' +
 					(timeText ?
-						'<div class="fc-time"' +
+						'<div className="fc-time"' +
 						' data-start="' + htmlEscape(startTimeText) + '"' +
 						' data-full="' + htmlEscape(fullTimeText) + '"' +
 						'>' +
@@ -5839,15 +5839,15 @@ TimeGrid.mixin({
 						''
 						) +
 					(event.title ?
-						'<div class="fc-title">' +
+						'<div className="fc-title">' +
 							htmlEscape(event.title) +
 						'</div>' :
 						''
 						) +
 				'</div>' +
-				'<div class="fc-bg"/>' +
+				'<div className="fc-bg"/>' +
 				(isResizable ?
-					'<div class="fc-resizer"/>' :
+					'<div className="fc-resizer"/>' :
 					''
 					) +
 			'</a>';
@@ -7658,7 +7658,7 @@ function Header(calendar, options) {
 				.append(renderSection('left'))
 				.append(renderSection('right'))
 				.append(renderSection('center'))
-				.append('<div class="fc-clear"/>');
+				.append('<div className="fc-clear"/>');
 
 			return el;
 		}
@@ -7671,7 +7671,7 @@ function Header(calendar, options) {
 	
 	
 	function renderSection(position) {
-		var sectionEl = $('<div class="fc-' + position + '"/>');
+		var sectionEl = $('<div className="fc-' + position + '"/>');
 		var buttonStr = options.header[position];
 
 		if (buttonStr) {
@@ -7736,7 +7736,7 @@ function Header(calendar, options) {
 							];
 
 							button = $( // type="button" so that it doesn't submit a form
-								'<button type="button" class="' + classes.join(' ') + '">' +
+								'<button type="button" className="' + classes.join(' ') + '">' +
 									innerHtml +
 								'</button>'
 								)
@@ -9021,16 +9021,16 @@ var BasicView = fcViews.basic = View.extend({
 			'<table>' +
 				'<thead>' +
 					'<tr>' +
-						'<td class="' + this.widgetHeaderClass + '">' +
+						'<td className="' + this.widgetHeaderClass + '">' +
 							this.dayGrid.headHtml() + // render the day-of-week headers
 						'</td>' +
 					'</tr>' +
 				'</thead>' +
 				'<tbody>' +
 					'<tr>' +
-						'<td class="' + this.widgetContentClass + '">' +
-							'<div class="fc-day-grid-container">' +
-								'<div class="fc-day-grid"/>' +
+						'<td className="' + this.widgetContentClass + '">' +
+							'<div className="fc-day-grid-container">' +
+								'<div className="fc-day-grid"/>' +
 							'</div>' +
 						'</td>' +
 					'</tr>' +
@@ -9044,7 +9044,7 @@ var BasicView = fcViews.basic = View.extend({
 	headIntroHtml: function() {
 		if (this.weekNumbersVisible) {
 			return '' +
-				'<th class="fc-week-number ' + this.widgetHeaderClass + '" ' + this.weekNumberStyleAttr() + '>' +
+				'<th className="fc-week-number ' + this.widgetHeaderClass + '" ' + this.weekNumberStyleAttr() + '>' +
 					'<span>' + // needed for matchCellWidths
 						htmlEscape(this.opt('weekNumberTitle')) +
 					'</span>' +
@@ -9058,7 +9058,7 @@ var BasicView = fcViews.basic = View.extend({
 	numberIntroHtml: function(row) {
 		if (this.weekNumbersVisible) {
 			return '' +
-				'<td class="fc-week-number" ' + this.weekNumberStyleAttr() + '>' +
+				'<td className="fc-week-number" ' + this.weekNumberStyleAttr() + '>' +
 					'<span>' + // needed for matchCellWidths
 						this.calendar.calculateWeekNumber(this.dayGrid.getCell(row, 0).start) +
 					'</span>' +
@@ -9071,7 +9071,7 @@ var BasicView = fcViews.basic = View.extend({
 	// Queried by the DayGrid subcomponent. Ordering depends on isRTL.
 	dayIntroHtml: function() {
 		if (this.weekNumbersVisible) {
-			return '<td class="fc-week-number ' + this.widgetContentClass + '" ' +
+			return '<td className="fc-week-number ' + this.widgetContentClass + '" ' +
 				this.weekNumberStyleAttr() + '></td>';
 		}
 	},
@@ -9081,7 +9081,7 @@ var BasicView = fcViews.basic = View.extend({
 	// Affects helper-skeleton and highlight-skeleton rows.
 	introHtml: function() {
 		if (this.weekNumbersVisible) {
-			return '<td class="fc-week-number" ' + this.weekNumberStyleAttr() + '></td>';
+			return '<td className="fc-week-number" ' + this.weekNumberStyleAttr() + '></td>';
 		}
 	},
 
@@ -9100,7 +9100,7 @@ var BasicView = fcViews.basic = View.extend({
 		classes.unshift('fc-day-number');
 
 		return '' +
-			'<td class="' + classes.join(' ') + '" data-date="' + date.format() + '">' +
+			'<td className="' + classes.join(' ') + '" data-date="' + date.format() + '">' +
 				date.date() +
 			'</td>';
 	},
@@ -9390,7 +9390,7 @@ fcViews.agenda = View.extend({ // AgendaView
 		this.timeGrid.render();
 
 		// the <hr> that sometimes displays under the time-grid
-		this.bottomRuleEl = $('<hr class="' + this.widgetHeaderClass + '"/>')
+		this.bottomRuleEl = $('<hr className="' + this.widgetHeaderClass + '"/>')
 			.appendTo(this.timeGrid.el); // inject it into the time-grid
 
 		if (this.dayGrid) {
@@ -9422,21 +9422,21 @@ fcViews.agenda = View.extend({ // AgendaView
 			'<table>' +
 				'<thead>' +
 					'<tr>' +
-						'<td class="' + this.widgetHeaderClass + '">' +
+						'<td className="' + this.widgetHeaderClass + '">' +
 							this.timeGrid.headHtml() + // render the day-of-week headers
 						'</td>' +
 					'</tr>' +
 				'</thead>' +
 				'<tbody>' +
 					'<tr>' +
-						'<td class="' + this.widgetContentClass + '">' +
+						'<td className="' + this.widgetContentClass + '">' +
 							(this.dayGrid ?
-								'<div class="fc-day-grid"/>' +
-								'<hr class="' + this.widgetHeaderClass + '"/>' :
+								'<div className="fc-day-grid"/>' +
+								'<hr className="' + this.widgetHeaderClass + '"/>' :
 								''
 								) +
-							'<div class="fc-time-grid-container">' +
-								'<div class="fc-time-grid"/>' +
+							'<div className="fc-time-grid-container">' +
+								'<div className="fc-time-grid"/>' +
 							'</div>' +
 						'</td>' +
 					'</tr>' +
@@ -9466,14 +9466,14 @@ fcViews.agenda = View.extend({ // AgendaView
 			}
 
 			return '' +
-				'<th class="fc-axis fc-week-number ' + this.widgetHeaderClass + '" ' + this.axisStyleAttr() + '>' +
+				'<th className="fc-axis fc-week-number ' + this.widgetHeaderClass + '" ' + this.axisStyleAttr() + '>' +
 					'<span>' + // needed for matchCellWidths
 						htmlEscape(weekText) +
 					'</span>' +
 				'</th>';
 		}
 		else {
-			return '<th class="fc-axis ' + this.widgetHeaderClass + '" ' + this.axisStyleAttr() + '></th>';
+			return '<th className="fc-axis ' + this.widgetHeaderClass + '" ' + this.axisStyleAttr() + '></th>';
 		}
 	},
 
@@ -9482,7 +9482,7 @@ fcViews.agenda = View.extend({ // AgendaView
 	// Queried by the DayGrid subcomponent when generating rows. Ordering depends on isRTL.
 	dayIntroHtml: function() {
 		return '' +
-			'<td class="fc-axis ' + this.widgetContentClass + '" ' + this.axisStyleAttr() + '>' +
+			'<td className="fc-axis ' + this.widgetContentClass + '" ' + this.axisStyleAttr() + '>' +
 				'<span>' + // needed for matchCellWidths
 					(this.opt('allDayHtml') || htmlEscape(this.opt('allDayText'))) +
 				'</span>' +
@@ -9492,7 +9492,7 @@ fcViews.agenda = View.extend({ // AgendaView
 
 	// Generates the HTML that goes before the bg of the TimeGrid slot area. Long vertical column.
 	slotBgIntroHtml: function() {
-		return '<td class="fc-axis ' + this.widgetContentClass + '" ' + this.axisStyleAttr() + '></td>';
+		return '<td className="fc-axis ' + this.widgetContentClass + '" ' + this.axisStyleAttr() + '></td>';
 	},
 
 
@@ -9500,7 +9500,7 @@ fcViews.agenda = View.extend({ // AgendaView
 	// Affects content-skeleton, helper-skeleton, highlight-skeleton for both the time-grid and day-grid.
 	// Queried by the TimeGrid and DayGrid subcomponents when generating rows. Ordering depends on isRTL.
 	introHtml: function() {
-		return '<td class="fc-axis" ' + this.axisStyleAttr() + '></td>';
+		return '<td className="fc-axis" ' + this.axisStyleAttr() + '></td>';
 	},
 
 

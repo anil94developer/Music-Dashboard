@@ -24,21 +24,21 @@ export const MainStep = () => {
         <div>
             <Nav />
 
-            <div class="content-wrapper">
+            <div className="content-wrapper">
 
-                <section class="content-header">
+                <section className="content-header">
                     <h1>
                         Dashboard
 
                     </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                    <ol className="breadcrumb">
+                        <li><a href="#"><i className="fa fa-dashboard"></i> Home</a></li>
+                        <li className="active">Dashboard</li>
                     </ol>
                 </section>
 
 
-                <section class="container-fluid content">
+                <section className="container-fluid content">
 
                     <div className="custom-tab">
                         <button className={`btn  btn-primary btn-sm ${step === 'step1' ? 'active' : ''}`} onClick={() => setStep('step1')}>Release information</button>
@@ -50,7 +50,7 @@ export const MainStep = () => {
                         <button className={`btn  btn-primary btn-sm ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Submission</button>
                     </div>
                     {isLoading && "Loading..."}
-                    <section class="content" key={myRelease}>
+                    <section className="content" key={myRelease}>
                        {
                             step == "step1" ?
                                 <STEP1 setStep={setStep} releaseData={myRelease} />
