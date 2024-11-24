@@ -65,6 +65,9 @@ permission.listPermissions=async (userId)=>{
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     try{
         const user = await permissionModel.find({userId:userId});
+        if(!user){
+            return false;
+        }
         return user;
     }catch(err){
         console.log("Error connecting to DB", err);
@@ -103,5 +106,6 @@ permission.profilePermissions=async (userId)=>{
         return false;
     }
 }
+
 module.exports = permission
 

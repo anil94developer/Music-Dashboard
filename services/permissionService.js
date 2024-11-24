@@ -34,7 +34,7 @@ permission.add = async (req, res, next) => {
     }
 }
 
-permission.list =async (req,res,next)=>{
+permission.listWithUserDetails =async (req,res,next)=>{
     try {
         const userId = req.doc.userId;
         const permissions = await permissionmodel.profilePermissions(userId);
@@ -49,4 +49,21 @@ permission.list =async (req,res,next)=>{
         return R(res, false, "Failed to list permissions", "", 500);
     }
 }
+
+permission.list =async (req,res,next)=>{
+    try {
+        const userId = req.doc.userId;
+        const permissions = await permissionmodel.listPermissions(userId);
+        console.log("Permissions", permissions);
+        if (!permissions) {
+            return R(res, false, "Failed to list permissions", "", 500);
+        }
+        return R(res, true, "Permissions listed successfully", permissions, 200);
+        
+    } catch (err) {
+        console.log("Error in permission.listtttttttt", err);
+        return R(res, false, "Failed to list permissions", "", 500);
+    }
+}
+
 module.exports = permission;
