@@ -186,8 +186,8 @@ releaseModel.addOneStepRelease = async (body) => {
         type: body.type,
         step1: {
           subTitle: body.step1.subTitle,
-          // primaryArtist: body.step1.primaryArtist,
-          // featuring: body.step1.featuring,
+          primaryArtist: body.step1.primaryArtist,
+          featuring: body.step1.featuring,
           genre: body.step1.genre,
           subGenre: body.step1.subGenre,
           labelName: body.step1.labelName,
@@ -209,23 +209,39 @@ releaseModel.addOneStepRelease = async (body) => {
     return false;
   }
 };
+releaseModel.addTwoStepRelease = async (id, filesData) => {
+  console.log("Updating release with ID:", id);
+  try {
+      const releaseResult = await db.connectDb("release", releaseSchema);
 
-releaseModel.addTwoStepRelease = async (_id,filesData) => {
-  console.log("one release body======", _id,filesData)
-  let releaseResult = await db.connectDb("release", releaseSchema);
- 
-  let result = await releaseResult.updateOne({ _id:_id},
-    {
-      $set: {
-        step2: filesData
-      }
-    })
-  if (result.modifiedCount > 0 || result.upsertedCount > 0) {
-    return true;
-  } else {
-    return false;
+      const result = await releaseResult.updateOne(
+          { _id: id },
+          { $set: { step2: filesData } }
+      );
+
+      console.log("Database update result:", result);
+      return result.modifiedCount > 0 || result.upsertedCount > 0;
+  } catch (error) {
+      console.error("Database update error:", error);
+      throw error;
   }
 };
+// releaseModel.addTwoStepRelease = async (id,filesData) => {
+//   console.log("one release body======", id,filesData)
+//   let releaseResult = await db.connectDb("release", releaseSchema);
+ 
+//   let result = await releaseResult.updateOne({ _id:id},
+//     {
+//       $set: {
+//         step2: filesData
+//       }
+//     })
+//   if (result.modifiedCount > 0 || result.upsertedCount > 0) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// };
 
 releaseModel.addThreeStepRelease = async (body) => {
   console.log("one release body", body)

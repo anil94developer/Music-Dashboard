@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
             cb(null, `${Date.now()}-${file.originalname}`);
         }
     })
-  }).array('mediaFiles'); 
+  }).array('files'); 
   
 router.post('/add-one-release', verifyToken, releaseService.addOneRelease)
 // router.post('/step-one-release', verifyToken, releaseService.addOneStepRelease)
