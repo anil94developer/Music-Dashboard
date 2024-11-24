@@ -33,4 +33,18 @@ wallet.transactions = async (req, res, next) => {
     return R(res, false, err.message, "", 500);
   }
 };
+
+wallet.listTransactions=async (req,res,next)=>{
+  try {
+    const userId = req.doc.userId;
+    const transactions = await trans.list(userId);
+    if (!transactions) {
+      return R(res, false, "No transactions found", "", 404);
+    }
+    return R(res, true, "Transactions fetched successfully", transactions, 200);
+  } catch (err) {
+    console.log(err);
+    return R(res, false, err.message, "", 500);
+  }
+}
 module.exports = wallet;
