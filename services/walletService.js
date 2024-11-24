@@ -7,7 +7,7 @@ wallet = {};
 wallet.transactions = async (req, res, next) => {
   try {
     const data = req.body;
-
+    data["userId"]=req.doc.userId;
     if (!data) {
       return R(res, false, "Amount is required", "", 400);
     }
