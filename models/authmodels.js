@@ -184,7 +184,7 @@ try{
     const hashedPassword = await bcrypt.hash(data.password,saltRounds);
     const user = await result.create({
         email: data.email,
-        password: data.password,
+        password:hashedPassword,
     });
  console.log("permission permission permission ======>>>",user)
 
