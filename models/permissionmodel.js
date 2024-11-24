@@ -29,6 +29,9 @@ const userPermissionSchema = new mongoose.Schema({
         ref:"user", 
         required: true 
     },
+    registeredUserId:{type:mongoose.Schema.Types.ObjectId,
+        ref:"user", 
+        required: true },
     menuPermission: [menuPermissionSchema], // Array of menu permissions
     otherPermission: [otherPermissionSchema], // Array of other permissions
 });
@@ -36,11 +39,12 @@ const userPermissionSchema = new mongoose.Schema({
 const permissionModel =mongoose.model("UserPermission", userPermissionSchema);
 permission={};
 
-permission.addPermission = async (userId,data) => {
+permission.addPermission = async (userId,registeredUserId,data) => {
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     try{
         const val={
             userId: userId,
+            registeredUserId:registeredUserId,
             menuPermission: data.menuPermission,
             otherPermission: data.otherPermission,
         };

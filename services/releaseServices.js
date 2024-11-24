@@ -122,6 +122,16 @@ release.addFiveStepRelease = async (req, res, next) => {
         next(err)
     }
 };
+release.submitFinalRelease = async (req, res, next) => {
+    
+    const  body  = req.body ;
+    try {  
+        const result = await releaseModel.submitFinalRelease(body) 
+        return R(res, true, "Final Update Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
 
 release.releaseList= async (req, res, next) => { 
     try {  
