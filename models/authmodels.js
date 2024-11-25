@@ -195,8 +195,20 @@ try{
 }
 }
 
-
-
+authModel.is_deleted =async (userId)=>{
+    const result = await db.connectDb("users", usersSchema);
+    try{
+        let updateData = await result.updateOne(
+        { _id: userId },
+        { $set: { is_deleted: 1 } },
+        { runValidators: true }
+    );
+    return updateData;
+}catch(err){
+    console.error("Error in is_deleted:", err.message);
+    return false; // Return false on error
+}
+}
 // authModel.findAdminByRole = async(email, password) => {
 //     let findadmin = await db.connectDb("usersSchemas",usersSchema)
 //     let val = await findadmin.findOne(

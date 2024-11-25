@@ -245,6 +245,26 @@ auth.profileUpdate=async(req,res,next) => {
     }
 }   
 
+auth.is_deleted=async (req,res,next) => {
+try{
+const {userId}=req.body;
+
+if(!userId){
+    return R(res,false,"User ID is required","",400)
+}
+
+const update = await authModel.is_deleted(userId);
+
+if(!update){
+    return R(res,false,"User not found","",404)
+}
+
+return R(res, true,"User deleted successfully","",200)
+
+}catch (error) {
+    next(error)
+}
+}
 // auth.addsubadmin = async (req, res, next) => {
 //     try {
 //         req.body.password = await bcrypt.passwordEncryption(req.body.password);
