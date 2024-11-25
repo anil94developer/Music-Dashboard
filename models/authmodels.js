@@ -2,7 +2,7 @@ const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-let {ObjectId} = require("mongodb");
+let { ObjectId } = require("mongodb");
 
 authModel = {}
 
@@ -28,7 +28,7 @@ const usersSchema = mongoose.Schema(
         country: { type: String },
         timeZone: { type: String },
         language: { type: String },
-        wallet: { type: Number }
+        wallet: { type: Number , default: 0 }
     },
     { timestamps: true }
 );
@@ -171,28 +171,27 @@ authModel.transaction = async (data) => {
     }
 };
 
-authModel.permission = async (data) =>{
+authModel.permission = async (data) => {
     const result = await db.connectDb("users", usersSchema);
-try{
-    console.log(data.email);
-    let val = await result.findOne({email:data.email});     
-    if (val) {
-        
-        return false;
-    }
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(data.password,saltRounds);
-    const user = await result.create({
-        email: data.email,
-        password: hashedPassword,
-    });
- console.log("permission permission permission ======>>>",user)
+    try {
+        console.log(data.email);
+        let val = await result.findOne({ email: data.email });
+        if (val) {
+            return false;
+        }
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+        const user = await result.create({
+            email: data.email,
+            password: hashedPassword,
+        });
+        console.log("permission permission permission ======>>>", user)
 
-    return user;
-}catch(err){
+        return user;
+    } catch (err) {
         console.error("Error in permission:", err.message);
         return false; // Return false on error
-}
+    }
 }
 
 authModel.is_deleted =async (userId)=>{
