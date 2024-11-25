@@ -34,6 +34,20 @@ permission.add = async (req, res, next) => {
     }
 }
 
+permission.update =async (req, res,next) => {
+    try {
+        const data = req.body;
+        if (!data){
+            return R(res, false, "Invalid data", "", 400);
+        }
+
+        const permissions = await permissionmodel.updatePermission(data._id, data);
+
+}catch (err) {
+    console.log("Error in permission.updateeeee", err);
+    return R(res, false, "Failed to update permission", "", 500);
+}
+}
 permission.listWithUserDetails =async (req,res,next)=>{
     try {
         const userId = req.doc.userId;

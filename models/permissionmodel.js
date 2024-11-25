@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("../utils/dbConn");
+const authModal= require("../models/authmodels");
 const {ObjectId}=require("mongodb")
 const submenuSchema = new mongoose.Schema({
     subMenuName: { type: String, required: true },
@@ -61,10 +62,45 @@ return user;
 
 
 
-permission.listPermissions=async (userId)=>{
+permission.listPermissions = async (userId) => {
+    const result = await db.connectDb("UserPermission", userPermissionSchema); // Connect to the UserPermission schema
+    try {
+        // Find all permissions for the user
+        const users = await result.find({ userId: new mongoose.Types.ObjectId(userId) });
+        if (!users || users.length === 0) {
+            return false; // Return false if no permissions found
+        }
+
+        // Map through permissions and fetch user details
+        const data = await Promise.all(
+            users.map(async (userPermission) => {
+                const registeredUserId = userPermission.registeredUserId;
+                console.log("Registered UserId:", registeredUserId);
+
+                // Fetch user details
+                const userData = await authModel.getUser(registeredUserId);
+
+                // Return formatted permission object
+                return {
+                    menuPermission: userPermission.menuPermission,
+                    otherPermission: userPermission.otherPermission,
+                    userDetails: userData,
+                };
+            })
+        );
+
+        return data; // Return all permissions with user details
+    } catch (err) {
+        console.error("Error connecting to DB:", err.message);
+        return false; // Return false in case of an error
+    }
+};
+
+
+permission.updatePermission=async (userId,data)=>{
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     try{
-        const user = await permissionModel.find({userId:userId});
+        const user = await permissionModel.findOneAndUpdate({registeredUserId:userId}, data, {new: true});
         if(!user){
             return false;
         }
@@ -74,8 +110,6 @@ permission.listPermissions=async (userId)=>{
         return false;
     }
 }
-
-
 
 permission.profilePermissions=async (userId)=>{
     console.log(userId);
