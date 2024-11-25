@@ -41,8 +41,12 @@ permission.update =async (req, res,next) => {
             return R(res, false, "Invalid data", "", 400);
         }
 
-        const permissions = await permissionmodel.updatePermission(data._id, data);
+        const permissions = await permissionmodel.updatePermission(data.registerUserId, data);
 
+        if (!permissions) {
+            return R(res, false, "Failed to update permission", "", 500);
+        }
+        return R(res, true, "Permission updated successfully", data, 200);
 }catch (err) {
     console.log("Error in permission.updateeeee", err);
     return R(res, false, "Failed to update permission", "", 500);
