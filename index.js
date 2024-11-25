@@ -6,8 +6,6 @@ const http = require('http');
 const path = require('path');
 const cron = require('node-cron');
 
-const adminRoutes = require("./routes/admin.routes")
-
 //sub admin
 const authRoutes = require("./routes/auth.routes")
 const releaseRoutes = require("./routes/release.routes");
@@ -16,9 +14,7 @@ const supportRoutes = require("./routes/support.routes");
 const bankRoutes = require("./routes/bank.routes");
 const walletRoutes = require("./routes/wallet.route");
 const permissionsRoutes = require("./routes/permission.routes");
-
-
-
+const importedRoutes = require("./routes/importExcel.routes");
 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -54,7 +50,7 @@ app.use("/support", supportRoutes);
 app.use("/bank", bankRoutes);
 app.use("/wallet", walletRoutes); 
 app.use("/permission",permissionsRoutes);
-
+app.use("/import",importedRoutes);
 
 
 

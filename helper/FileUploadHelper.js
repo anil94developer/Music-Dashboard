@@ -9,17 +9,17 @@ const uploadSingleIcon = multer({
             cb(null, Date.now() + path.extname(file.originalname)); // Use timestamp for unique filenames
         }
     }),
-    fileFilter: function (req, file, cb) {
-        console.log("filefilefile")
-        const filetypes = /jpeg|jpg|png/;
-        const mimetype = filetypes.test(file.mimetype);
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-        if (mimetype && extname) {
-            return cb(null, true);
-        } else {
-            throw new Error('Only images (jpeg, jpg, png) are allowed!')
-        }
-    },
-    limits: { fileSize: 1024 * 1024 } // 1MB file size limit
+    // fileFilter: function (req, file, cb) {
+    //     console.log("filefilefile")
+    //     const filetypes = /jpeg|jpg|png|xlsx|csv/i; // Allowed file extensions/;
+    //     const mimetype = filetypes.test(file.mimetype);
+    //     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    //     if (mimetype && extname) {
+    //         return cb(null, true);
+    //     } else {
+    //         throw new Error('Only images (jpeg, jpg, png) are allowed!')
+    //     }
+    // },
+    // limits: { fileSize: 1024 * 1024 } // 1MB file size limit
 }) 
 module.exports = uploadSingleIcon 
