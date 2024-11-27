@@ -14,7 +14,7 @@ const supportRoutes = require("./routes/support.routes");
 const bankRoutes = require("./routes/bank.routes");
 const walletRoutes = require("./routes/wallet.route");
 const permissionsRoutes = require("./routes/permission.routes");
-const importedRoutes = require("./routes/importExcel.routes");
+const importExcel = require("./routes/importExcel.routes");
 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -39,7 +39,9 @@ app.use((req, res, next) => {
 });
 
 dotenv.config();
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 
 
 // app.use("/auth/createSecure", adminRoutes)
@@ -50,7 +52,7 @@ app.use("/support", supportRoutes);
 app.use("/bank", bankRoutes);
 app.use("/wallet", walletRoutes); 
 app.use("/permission",permissionsRoutes);
-app.use("/import",importedRoutes);
+app.use("/import",importExcel);
 
 
 
