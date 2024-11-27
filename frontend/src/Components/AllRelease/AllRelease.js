@@ -26,9 +26,9 @@ export const AllRelease = () => {
                     <thead>
                       <tr role="row">
 
-                        <th className="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">TITILE</th>
-                        <th className="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">TYPE</th>
-                        <th className="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">ACTION</th>
+                        <th >TITILE</th>
+                        <th >TYPE</th>
+                        <th >ACTION</th>
                       </tr>
                     </thead>
 

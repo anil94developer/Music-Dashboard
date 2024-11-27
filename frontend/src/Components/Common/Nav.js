@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { images } from "../../assets/images";
 import AuthController from "../../Controllers/Auth-controller/AuthController";
 
-export const Nav = () => {
-  const { userData, handleLogout } = AuthController()
+export const Nav = (props) => {
+  // const { setUserData } = props
+  const { userData, handleLogout, userPermission } = AuthController()
   const [financialMenu, setFinancialMenu] = useState(false)
   const [catelogMenu, setCatelogMenu] = useState(false)
   const [profileMenu, setProfileMenu] = useState(false)
 
+  // useEffect(() => {
+  //   if (userData) {
+  //     setUserData(userData);
+  //   }
+  // }, [])
 
   return (
     <nav>
@@ -38,7 +44,9 @@ export const Nav = () => {
                       className="user-image"
                       alt="User Image"
                     />
-                    <span className="hidden-xs">{userData.name}</span>
+                    <span className="hidden-xs">{userData?.name}</span>
+                    <span className="hidden-xs">{userData?.email}</span>
+
                   </a>
                   <ul className="dropdown-menu">
                     <li className="user-header">
@@ -84,22 +92,44 @@ export const Nav = () => {
                 />
               </div>
               <div className="pull-left info">
-                <p>{userData.name}</p>
+                <p>{userData?.name}</p>
+                <p>{userData?.email}</p>
+
 
                 <a href="#">
                   <i className="fa fa-circle text-success"></i> Online
                 </a>
               </div>
             </div>
+            {userPermission && userPermission?.menuPermission?.map((item, index) => {
+             let link = `/${item.mainMenuName}`;
+              return item.status &&  <ul className="sidebar-menu">
+                <li className="treeview">
+                  <a href={link}>
+                    <i className="fa fa-dashboard"></i> <span>{item.mainMenuName}</span>
+                  </a>
 
-            <ul className="sidebar-menu">
+                  {item.submenu.map((item,index)=>{
+                     let subMenuLink = `/${item.subMenuName}`;
+                return  item.status &&  <li><a href={subMenuLink}><i className="fa fa-circle-o"></i>{item.subMenuName}</a></li>
+                   
+                  })}
+                </li>
+              </ul>
+
+            })
+
+            }
+            {/* {userPermission && userPermission?.menuPermission[0]?.mainMenuName == "dashboard" && userPermission?.menuPermission[0]?.status && */}
+            {/* <ul className="sidebar-menu">
               <li className="treeview">
                 <a href="/Dashboard">
                   <i className="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
               </li>
-            </ul>
-            <ul className="sidebar-menu">
+            </ul> */}
+            {/* } */}
+            {/* <ul className="sidebar-menu">
               <li className="treeview">
                 <a href="one-release">
                   <i className="fa fa-dashboard"></i> <span>One Release</span>
@@ -114,8 +144,7 @@ export const Nav = () => {
 
               </li>
               {catelogMenu &&
-                <div>
-
+                <div> 
                   <li><a href=" all-darft"><i className="fa fa-circle-o"></i> All Draft</a></li>
                   <li> <a href="all-release">  <i className="fa fa-circle-o"></i>All Release</a></li>
                   <li><a href="all-tracks"><i className="fa fa-circle-o"></i> All Tracks</a></li>
@@ -192,16 +221,16 @@ export const Nav = () => {
                   <i className="fa fa-dashboard"></i> <span>Support</span>
                 </a>
               </li>
-            </ul>
+            </ul> */}
 
             <ul className="sidebar-menu">
-              <li className="treeview">
-                <button onClick={handleLogout} style={{ padding: "10px", cursor: "pointer" }}>
-                  Logout
-                </button>
+              <li className="treeview" onClick={handleLogout}>
+                <a href="#" >
+                  <i className="fa fa-dashboard"></i> <span>Logout</span>
+                </a>
               </li>
-
             </ul>
+
           </section>
         </aside>
       </div>

@@ -1,9 +1,10 @@
 import React from 'react'
 import useDashboardController from '../../Controllers/Dashboard-Controller/useDashboardController';
-import {Nav} from '../Common/Nav'
+import SimpleGraph from '../Common/Chart/SimpleGraph';
+import { Nav } from '../Common/Nav'
 
 export const Dashboard = () => {
-    const {dashboardData}= useDashboardController();
+    const { dashboardData } = useDashboardController();
     return (
         <div>
             <Nav />
@@ -38,7 +39,7 @@ export const Dashboard = () => {
                                 <a href="all-release" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
-                       <div className="col-lg-3 col-xs-6">
+                        <div className="col-lg-3 col-xs-6">
 
                             <div className="small-box bg-green">
                                 <div className="inner">
@@ -50,8 +51,8 @@ export const Dashboard = () => {
                                 </div>
                                 <a href="all-tracks" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
                             </div>
-                        </div> 
-                         {/* <div className="col-lg-3 col-xs-6">
+                        </div>
+                        {/* <div className="col-lg-3 col-xs-6">
 
                             <div className="small-box bg-yellow">
                                 <div className="inner">
@@ -80,6 +81,15 @@ export const Dashboard = () => {
                     </div>
 
 
+                </section>
+
+                <section className="content">
+
+                    <div className="row">
+                        <div className="col-lg-12 col-xs-12">
+                            <SimpleGraph />
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>

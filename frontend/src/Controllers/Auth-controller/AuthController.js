@@ -7,15 +7,17 @@ import useLocalStorage from "use-local-storage";
 
 
 const AuthController = (props) => {
-    // const { setUserData, isLogin, setIsLogin } = useContex(DataContext)
     const navigate = useNavigate();
     const [userData, setUserData] = useState("");
+    const [userPermission, setUserPermission] = useState([]);
+
 
 
 
 
     useEffect(() => {
         getProfile();
+        getPermissoin();
     }, []);
 
 
@@ -45,33 +47,59 @@ const AuthController = (props) => {
         }
     };
 
-    const handleLogout = () => {
-        Swal({
-          title: "Are you sure?",
-          text: "You will be logged out of your account!",
-          icon: "warning",
-          buttons: ["Cancel", "Logout"],
-          dangerMode: true,
-        }).then((willLogout) => {
-          if (willLogout) {
-            // Clear session storage or localStorage
-            localStorage.clear();
-            sessionStorage.clear();
-    
-            // Redirect to login page
-            navigate("/login");
-    
-            // Show a success message
-            Swal("Logged out successfully!", {
-              icon: "success",
+    const getPermissoin = async () => {
+        try {
+            const result = await getData(base.myPermission); // pass as query parameter
+            console.log(result)
+            if (result && result.status === true) {
+                setUserPermission(result.data); // Assuming result.data has user data directly
+            } else {
+                Swal.fire({
+                    icon: 'error', // Use "error" icon for unauthorized message
+                    title: 'Unauthorized !!', // Set your custom title here
+                    text: 'You do not have permission to access this resource.' // Custom message (optional)
+                });
+
+            }
+        } catch (error) {
+            console.error("Error fetching profile:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Something went wrong. Please try again later.'
             });
-          }
+        }
+    };
+
+
+    const handleLogout = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You will be logged out of your account!",
+            icon: "warning",
+            buttons: ["Cancel", "Logout"],
+            dangerMode: true,
+        }).then((willLogout) => {
+            if (willLogout) {
+                // Clear session storage or localStorage
+                localStorage.clear();
+                sessionStorage.clear();
+
+                // Redirect to login page
+                navigate("/");
+
+                // Show a success message
+                Swal.fire("Logged out successfully!", {
+                    icon: "success",
+                });
+            }
         });
-      };
+    };
 
     return {
         userData,
-        handleLogout
+        handleLogout,
+        userPermission
     };
 };
 export default AuthController;

@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import { base } from '../../Constants/Data.constant';
 import { getData, postData } from '../../Services/Ops';
-const MainStepController = (props) => {
-  // const { setUserData, isLogin, setIsLogin } = useContex(DataContext)
+const MainStepController = (props) => { 
   const navigate = useNavigate();
   const [step, setStep] = useState("step1"); 
   const [isLoading, setIsLoading] = useState(false);

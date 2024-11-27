@@ -6,8 +6,7 @@ import { base } from "../../Constants/Data.constant";
 import useLocalStorage from "use-local-storage";
 
 
-const LoginController = (props) => {
-  // const { setUserData, isLogin, setIsLogin } = useContex(DataContext)
+const LoginController = (props) => { 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

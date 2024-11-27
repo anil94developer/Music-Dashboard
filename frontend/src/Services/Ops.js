@@ -32,11 +32,12 @@ const postDataContent = async (url = "", data) => {
         return e.response.data
     }
 };
-const putData = async (url = "", data,token) => {
+const putData = async (url = "", data) => {
     try { 
-        if (token) {
-            token = "Bearer " + token;
-        }
+        let token = localStorage.getItem("token")
+        // if (token) {
+        //     token = "Bearer " + token;
+        // }
         let response = await axios.put(url, data, {
             headers: { Authorization: token },
         });

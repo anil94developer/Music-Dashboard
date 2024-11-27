@@ -1,8 +1,24 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
+import { base } from '../../Constants/Data.constant';
+import { postData } from '../../Services/Ops';
 import { Nav } from '../Common/Nav'
 import "./styles.css";
 export default function PaymentOperations() {
   const [amount, setAmount] = useState();
+
+  const handleSubmit = async () => {
+    let body = {
+      amount: amount
+    }
+    let result = await postData(base.sendWithdrawal, body);
+    if (result.data.status === true) {
+
+      Swal.fire("Success", result.data.message, "success");
+    } else {
+      Swal.fire("Error", result.message, "error");
+    }
+  }
   return (
     <div>
 
@@ -14,26 +30,26 @@ export default function PaymentOperations() {
         </section>
 
         <div className="row">
-           
 
-           <div className="col-md-6">
-             <div className="box">
 
-               <div className="small-box bg-aqua">
-                 <div className="inner">
-                   <h3>My Wallet</h3>
-                   <p>Balance:100</p>
-                 </div>
-                 <div className="icon">
-                   <i className="ion ion-bag"></i>
-                 </div>
-                 <a href="all-release" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
-               </div>
-             </div>
-           </div>
-         </div>
+          <div className="col-md-6">
+            <div className="box">
 
-         
+              <div className="small-box bg-aqua">
+                <div className="inner">
+                  <h3>My Wallet</h3>
+                  <p>Balance:100</p>
+                </div>
+                <div className="icon">
+                  <i className="ion ion-bag"></i>
+                </div>
+                <a href="all-release" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <section className="content">
 
           <div className="row">
@@ -102,7 +118,7 @@ export default function PaymentOperations() {
 
 
                 <div className="box-footer">
-                  <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { }}>Submit</button>
+                  <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
                 </div>
               </div>
             </div>
@@ -110,7 +126,7 @@ export default function PaymentOperations() {
 
 
 
-         
+
         </section>
       </div>
 
