@@ -3,78 +3,93 @@ import Swal from "sweetalert2";
 import { base } from "../../Constants/Data.constant";
 import { postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
-import "./UserAccessForm.css"; 
+import "./UserAccessForm.css";
 
 function UserAccessForm() {
   const [menuPermission, setMenuPermission] = useState([
     {
-        "mainMenuName": "Dashboard",
-        "status": false,
-        "submenu": []
+      "mainMenuName": "Dashboard",
+      "status": false,
+      "submenu": []
     },
     {
-        "mainMenuName": "One Release",
-        "status": false,
-        "submenu": []
+      "mainMenuName": "One Release",
+      "status": false,
+      "submenu": []
     },
     {
-        "mainMenuName": "Multiple Release",
-        "status": false,
-        "submenu": []
+      "mainMenuName": "Multiple Release",
+      "status": false,
+      "submenu": []
     },
     {
-        "mainMenuName": "Catalog",
-        "status": false,
-        "submenu": [
-            {
-                "subMenuName": "All releases",
-                "status": false,
-                "submenu": []
-            },
-            {
-                "subMenuName": "All drafts",
-                "status": false,
-                "submenu": []
-            },
-            {
-                "subMenuName": "All Tracks",
-                "status": false,
-                "submenu": []
-            }
-        ]
+      "mainMenuName": "Catalog",
+      "status": false,
+      "submenu": [
+        {
+          "subMenuName": "All releases",
+          "status": false,
+          "submenu": []
+        },
+        {
+          "subMenuName": "All drafts",
+          "status": false,
+          "submenu": []
+        },
+        {
+          "subMenuName": "All Tracks",
+          "status": false,
+          "submenu": []
+        }
+      ]
     },
     {
-        "mainMenuName": "Daily Trends",
-        "status": false,
-        "submenu": []
+      "mainMenuName": "Daily Trends",
+      "status": false,
+      "submenu": []
     },
     {
-        "mainMenuName": "Financial",
-        "status": false,
-        "submenu": [
-            {
-                "subMenuName": "Payment Operations",
-                "status": false,
-                "submenu": []
-            },
-            {
-                "subMenuName": "Financial Report",
-                "status": false,
-                "submenu": []
-            }
-        ]
+      "mainMenuName": "Financial",
+      "status": false,
+      "submenu": [
+        {
+          "subMenuName": "Payment Operations",
+          "status": false,
+          "submenu": []
+        },
+        {
+          "subMenuName": "Financial Report",
+          "status": false,
+          "submenu": []
+        }
+      ]
     },
     {
-        "mainMenuName": "User Access",
-        "status": false,
-        "submenu": []
+      "mainMenuName": "User Access",
+      "status": false,
+      "submenu": []
     },
     {
-        "mainMenuName": "Support",
-        "status": false,
-        "submenu": []
+      "mainMenuName": "Support",
+      "status": false,
+      "submenu": []
+    },
+    {
+      "mainMenuName": "User Mangement",
+      "status": true,
+      "submenu": []
+    },
+    {
+      "mainMenuName": "Withdraw Request",
+      "status": true,
+      "submenu": []
+    },
+    {
+      "mainMenuName": "All Transcations",
+      "status": true,
+      "submenu": []
     }
-]);
+  ]);
   const [otherPermission, setOtherPermission] = useState([
     { sectionName: "Airtest", status: false, list: [] },
     { sectionName: "Label", status: false, list: [] },
@@ -120,7 +135,7 @@ function UserAccessForm() {
       if (result?.data?.status === true) {
         Swal.fire("Success", result.data.message, "success");
       } else {
-        
+
         Swal.fire("Error", result.message, "error");
       }
     } catch (error) {
@@ -177,34 +192,34 @@ function UserAccessForm() {
                 </div>
               ))}
             </div>
-              {/* Catalog Scope */}
+            {/* Catalog Scope */}
+            <div className="form-section">
+              <h3>Catalog Scope</h3>
               <div className="form-section">
                 <h3>Catalog Scope</h3>
-                <div className="form-section">
-                  <h3>Catalog Scope</h3>
-                  {otherPermission.map((item, index) => (
-                    <label key={item.sectionName}>
-                      <input
-                        type="checkbox"
-                        checked={item.status}
-                        onChange={(e) => handleCheckboxChange(e, "otherPermission", index)}
-                      />
-                      {item.sectionName}
-                    </label>
-                  ))}
-                </div>
-
-
-
+                {otherPermission.map((item, index) => (
+                  <label key={item.sectionName}>
+                    <input
+                      type="checkbox"
+                      checked={item.status}
+                      onChange={(e) => handleCheckboxChange(e, "otherPermission", index)}
+                    />
+                    {item.sectionName}
+                  </label>
+                ))}
               </div>
-            
+
+
+
+            </div>
+
             <button
-                    onClick={() => [handleSubmit()]}
-                    className="btn btn-primary btn-block btn-flat"
-                    type="submit"
-                >
-                    Submit
-                </button>
+              onClick={() => [handleSubmit()]}
+              className="btn btn-primary btn-block btn-flat"
+              type="submit"
+            >
+              Submit
+            </button>
           </div>
         </section>
       </div>

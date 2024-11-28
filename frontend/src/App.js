@@ -14,11 +14,12 @@ import Password from "./Components/Password/Password";
 import UserMangement from "./Components/UserMangement/UserMangement";
 import PaymentOperations from "./Components/PaymentOperations/PaymentOperations";
 import FinancialReport from "./Components/FinancialReports/FinancialReports";
-import UserAccessForm from "./Components/UserMangement/UserAccessForm";
+import UserAccessForm from "./Components/UserAccess/UserAccessForm";
 import { AllDraft } from "./Components/AllDraft/AllDraft";
 import { ReleaseDetails } from "./Components/AllRelease/ReleaseDetails";
 import FinalSubmit from "./Components/One-release/FinalSubmit";
-import EditUserPermission from "./Components/UserMangement/EditUserPermssion";
+import EditUserPermission from "./Components/UserAccess/EditUserPermssion";
+import UserAccess from "./Components/UserAccess/UserAccess";
  
 function App() {
   return (
@@ -37,7 +38,9 @@ function App() {
       <Route path="/bank information" element ={<BankInformation />}></Route>
       <Route path="/support" element ={<Support />}></Route>
       <Route path="/password change" element ={<Password />}></Route>
-      <Route path="/user access" element={<UserMangement />}></Route>  
+      <Route path="/user access" element={<UserAccess />}></Route>  
+      <Route path="/User Mangement" element={<UserMangement />}></Route>  
+
       <Route path="/add-user" element={<UserAccessForm />}></Route>  
       <Route path="/release-details" element={<ReleaseDetails />}></Route>  
       <Route path="/edit-permission" element={<EditUserPermission />}></Route>  

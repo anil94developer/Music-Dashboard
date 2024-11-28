@@ -1,5 +1,5 @@
 //const domainUrl = 'https://api.tuneplus.org/';
- const domainUrl = 'http://localhost:8002/';
+const domainUrl = 'http://localhost:8002/';
 
 
 const mainUrl = domainUrl
@@ -35,6 +35,7 @@ const base = {
   myPermission: mainUrl + 'permission/my-permission',
   getUserList: mainUrl + 'permission/my-user-list',
   sendWithdrawal: mainUrl + 'wallet/send-withdrawal',
+  getWithdraw: mainUrl + 'wallet/list-transactions',
   updatePermission: mainUrl + 'permission/update-permission'
 
 

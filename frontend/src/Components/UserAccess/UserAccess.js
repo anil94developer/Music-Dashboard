@@ -5,7 +5,7 @@ import { getData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import "./styles.css";
 
-const UserManagement = (props) => {
+const UserAccess = (props) => {
   const [search, setSearch] = useState("");
   const [accountStatus, setAccountStatus] = useState("All");
   const [permissionLevel, setPermissionLevel] = useState("All");
@@ -44,7 +44,7 @@ const UserManagement = (props) => {
                 onChange={(e) => setSearch(e.target.value)}
               />
                
-              {/* <a href="add-user"> <button className="add-user-button">Add a new user</button></a> */}
+              <a href="add-user"> <button className="add-user-button">Add a new user</button></a>
             </div>
 
             {/* User List */}
@@ -66,7 +66,7 @@ const UserManagement = (props) => {
                       <td>{user.userDetails.wallet}</td>
                       <td>{user.userDetails.is_active}</td> 
                       <td>
-                       {/* <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button> */}
+                       <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button>
                         {/* <button
                           className="action-button delete"
                           onClick={() => handleDelete(user.login)}
@@ -74,7 +74,6 @@ const UserManagement = (props) => {
                           Delete
                         </button>
                         <button className="action-button disable">Disable</button> */}
-                          <button className="action-button disable">Disable</button> 
                       </td>
                     </tr>
                   ))}
@@ -87,4 +86,4 @@ const UserManagement = (props) => {
   );
 };
 
-export default UserManagement;
+export default UserAccess;
