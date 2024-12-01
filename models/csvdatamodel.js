@@ -6,8 +6,7 @@ const mongoose = require("mongoose");
 Track ={}
 const TrackSchema = new mongoose.Schema({
     userId: { 
-        type: String, 
-         // Ensure every bank record is linked to a user
+        type: String,  
     },
      Track: {
         type: String, // PAN is usually mandatory  // Ensure PAN is unique in the database

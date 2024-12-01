@@ -4,7 +4,7 @@ const verifyToken = require("../utils/verifyToken");
 
 const router = require("express").Router();
 
-router.post("/sent-track",verifyToken,upload.track);
+router.post("/send-track",verifyToken,upload.track);
 router.get("/get-track",verifyToken,upload.getTrack);
 
 
