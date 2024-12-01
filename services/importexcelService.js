@@ -1,10 +1,14 @@
 const R = require("../utils/responseHelper"); 
-const {Track} =require("../models/csvdatamodel");
+const {Track,Store,Market,salesYoutube} =require("../models/csvdatamodel");
 const upload={}
 
 upload.track =async (req,res,next)=>{
 try{
   const {userId,data} =req.body;
+  
+  if(!userId){
+    return R(res,false,"User ID not found","",400);
+  }
 
   if(!data){
     return R(res,false,"Data not found","",400);
@@ -12,7 +16,7 @@ try{
 
   console.log(data);
  
-  data = data.map(async (val,ind,arr)=>{
+  let result = data.map(async (val,ind,arr)=>{
     val = await Track.create(userId,arr[ind]);
      if(!val){
       return R(res,false,"Excel file not found","",400);
@@ -20,10 +24,10 @@ try{
      return val;
   })
 
-  console.log(data);
+  console.log(result);
 
   // Process your data here and save it to the database or any other storage medium.
-  return R(res,true,"Track upload successful","",data,200); 
+  return R(res,true,"Track upload successful","",200); 
 }
 catch(e){
   next();
@@ -37,14 +41,165 @@ try{
 
   const track = await Track.get(userId);
 
-  if(track.length <= 0){
+  if(track===false){
     return R(res,false,"Track not found","",400);
   }
 console.log(">>>>>>>>>>>>>>>>>>>>>",track);
   return R(res,true,"Track fetched successfully",track,200);
 }catch(err){
+  console.log(err)
   next();
 }
 }
+
+upload.store = async (req,res,next)=>{
+  try{
+    const {userId,data} =req.body;
+  
+    if(!data){
+      return R(res,false,"Data not found","",400);
+    }
+  
+    console.log(data);
+   
+    let result = data.map(async (val,ind,arr)=>{
+      val = await Store.create(userId,arr[ind]);
+       if(!val){
+        return R(res,false,"Excel file not found","",400);
+       }
+       return val;
+    })
+  
+    console.log(data);
+  
+    // Process your data here and save it to the database or any other storage medium.
+    return R(res,true,"Store upload successful","",200); 
+  }
+  catch(e){
+    next();
+  }
+}
+  
+
+upload.getStore = async (req,res,next)=>{
+  try{
+    const userId =req.doc.userId;
+    console.log(userId);
+    if(!userId){
+      return R(res,false,"User ID not found","",400);
+    }
+    
+    const data = await Store.get(userId);
+   
+    if(data === false){
+      return R(res,false,"Store not found","",400);
+    }
+  console.log(">>>>>>>>>>>>>>>>>>>>>",data);
+    return R(res,true,"Store fetched successfully",data,200);
+  }catch(err){
+    console.log(err)
+    next();
+  }
+}
+
+
+upload.marketData = async (req,res,next)=>{
+  try{
+    const {userId,data} =req.body;
+    
+    if(!userId){
+      return R(res,false,"User ID not found","",400);
+    }
+
+    if(!data){
+      return R(res,false,"Data not found","",400);
+    }
+  
+    console.log(data);
+   
+   let result = data.map(async (val,ind,arr)=>{
+      val = await Market.create(userId,arr[ind]);
+       if(!val){
+        return R(res,false,"data not insert","",400);
+       }
+       return val;
+    })
+  
+    console.log(result);
+  
+    // Process your data here and save it to the database or any other storage medium.
+    return R(res,true,"Market Data upload successful","",200); 
+  }
+  catch(e){
+    console
+    next();
+  }
+}
+  
+
+upload.getMarketData = async (req,res,next)=>{
+  try{
+    const userId =req.doc.userId;
+    console.log(userId);
+  
+    const data = await Market.getData(userId);
+  console.log(data);
+    if(data === false){
+      return R(res,false,"Market Data not found","",400);
+    }
+  console.log(">>>>>>>>>>>>>>>>>>>>>",data);
+    return R(res,true,"Market fetched successfully",data,200);
+  }catch(err){
+    console.log(">>>>>>>>>>>>>>>>>>>>>",err);
+    next();
+  }
+}
+
+upload.salesYoutube =async (req,res,next)=>{
+  try{
+    const {userId,data} =req.body;
+    
+    if(!userId){
+      return R(res,false,"User ID not found","",400);
+    }
+
+    if(!data){
+      return R(res,false,"Data not found","",400);
+    }
+  
+    console.log(data);
+   
+   let result = await 
+   data.map(async (val,ind,arr)=>{
+      val = await salesYoutube.create(userId,arr[ind]);
+       if(!val){
+        return R(res,false,"data not insert","",400);
+       }
+       return val;
+    })
+  
+    console.log(">>>>>>>>>>>>>>>>>>>>",result);
+  
+    // Process your data here and save it to the database or any other storage medium.
+    return R(res,true," Data upload successful","",200); 
+  }
+  catch(e){
+    console.log(e)
+    next();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports=upload;

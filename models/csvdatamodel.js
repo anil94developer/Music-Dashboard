@@ -9,8 +9,7 @@ const TrackSchema = new mongoose.Schema({
          // Ensure every bank record is linked to a user
     },
      Track: {
-        type: String, // PAN is usually mandatory
-        unique: true,   // Ensure PAN is unique in the database
+        type: String, // PAN is usually mandatory  // Ensure PAN is unique in the database
         trim: true,     // Remove extra whitespace
     },
     Quantity: {
@@ -42,7 +41,10 @@ Track.get = async(userId)=>{
     console.log(trackData);
     return trackData;
 }
-const Store = new mongoose.Schema({
+
+const Store ={}
+
+const StoreSchema = new mongoose.Schema({
     userId: { 
         type: String, 
          // Ensure every bank record is linked to a user
@@ -57,6 +59,33 @@ const Store = new mongoose.Schema({
         trim: true,
     }
 }, { timestamps: true }); // Adds createdAt and updatedAt fields
+
+
+Store.create = async (userId,data)=>{
+    const result = await db.connectDb("Store", StoreSchema);
+    data["userId"] = userId;
+    let insData = await result.insertMany(data);
+    console.log(insData);
+    if (insData.length > 0) {
+        return insData[0];
+    } else {
+        return false
+    }
+}
+
+Store.get = async(userId)=>{
+    const result = await db.connectDb("Store", StoreSchema);
+    console.log(">>>>>>>",userId);
+    let storeData = await result.find({userId: userId});
+    console.log(">>>>>>>>",storeData);
+    if(storeData.length <= 0){
+        return false;
+    }
+    console.log(storeData);
+    return storeData;
+}
+
+
 
 
 const dateSchema = new mongoose.Schema({
@@ -76,7 +105,11 @@ const dateSchema = new mongoose.Schema({
 }, { timestamps: true }); // Adds createdAt and updatedAt fields
 
 
-const Market = new mongoose.Schema({
+
+
+
+
+const MarketSchema = new mongoose.Schema({
     userId: { 
         type: String, 
          // Ensure every bank record is linked to a user
@@ -92,6 +125,34 @@ const Market = new mongoose.Schema({
     }
 }, { timestamps: true }); // Adds createdAt and updatedAt fields
 
+Market ={}
+
+Market.create = async (userId,data)=>{
+    const result = await db.connectDb("Market", MarketSchema);
+    data["userId"] = userId;
+    let insData = await result.insertMany(data);
+    console.log(insData);
+    if (insData.length > 0) {
+        return insData[0];
+    } else {
+        return false
+    }
+}
+
+Market.getData = async(userId)=>{
+    const result = await db.connectDb("Market", MarketSchema);
+    console.log(">>>>>>>",userId);
+    let Data = await result.find({userId: userId});
+    console.log(">>>>>>>>",Data);
+    if(Data.length <= 0){
+        return false;
+    }
+    console.log(Data);
+    return Data;
+}
+
+
+const salesYoutube ={}
 
 const salesSchemaYoutube = new mongoose.Schema({
     saleStartDate: { type: Date,  },
@@ -120,6 +181,31 @@ const salesSchemaYoutube = new mongoose.Schema({
   });
 
 
+  salesYoutube.create =  async (userId,data) =>{
+    const result =  db.connectDb("SalesYoutube", salesSchemaYoutube);
+    data["userId"] = userId;
+    let insData = await result.insertMany(data);
+    console.log(insData);
+    if (insData.length > 0) {
+        return insData[0];
+    } else {
+        return false
+    }
+    }
+
+    salesYoutube.getData = async(userId)=>{
+        const result = await db.connectDb("SalesYoutube", salesSchemaYoutube);
+        console.log(">>>>>>>",userId);
+        let Data = await result.find({userId: userId});
+        console.log(">>>>>>>>",Data);
+        if(Data.length <= 0){
+            return false;
+        }
+        console.log(Data);
+        return Data;
+    }
+
+const salesAssets ={};
 const salesSchemaAssets = new mongoose.Schema({
     saleStartDate: { type: Date, required: true },
     saleEndDate: { type: Date, required: true },
@@ -158,6 +244,30 @@ const salesSchemaAssets = new mongoose.Schema({
     timestamps: true // Automatically add createdAt and updatedAt fields
   });
 
+  salesAssets.create = async (userId)=>{
+    const result =  db.connectDb("SalesAssets", salesSchemaAssets);
+    data["userId"] = userId;
+    let insData = await result.insertMany(data);
+    console.log(insData);
+    if (insData.length > 0) {
+        return insData[0];
+    } else {
+        return false
+    }
+  }
+  salesAssets.getData = async(userId)=>{
+    const result = await db.connectDb("SalesYoutube", salesSchemaYoutube);
+    console.log(">>>>>>>",userId);
+    let Data = await result.find({userId: userId});
+    console.log(">>>>>>>>",Data);
+    if(Data.length <= 0){
+        return false;
+    }
+    console.log(Data);
+    return Data;
+}
+
+const stream={};
 
   const dataStream = new mongoose.Schema({
     dsp: { 
@@ -180,9 +290,35 @@ const salesSchemaAssets = new mongoose.Schema({
     timestamps: true // Automatically adds createdAt and updatedAt timestamps
   });
 
-
+  stream.create = async (userId) =>{
+    const result =  db.connectDb("SalesAssets", salesSchemaAssets);
+    data["userId"] = userId;
+    let insData = await result.insertMany(data);
+    console.log(insData);
+    if (insData.length > 0) {
+        return insData[0];
+    } else {
+        return false
+    }
+  }
+  
+  stream.getData = async (userId) =>
+  {
+    const result = await db.connectDb("SalesYoutube", salesSchemaYoutube);
+    console.log(">>>>>>>",userId);
+    let Data = await result.find({userId: userId});
+    console.log(">>>>>>>>",Data);
+    if(Data.length <= 0){
+        return false;
+    }
+    console.log(Data);
+    return Data;
+  }
 
 
   module.exports={
-    Track
-  }
+    Track,
+    Store,
+    Market,
+    salesYoutube
+  } 
