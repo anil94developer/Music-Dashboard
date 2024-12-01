@@ -2,6 +2,7 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
 
+
 Track ={}
 const TrackSchema = new mongoose.Schema({
     userId: { 
@@ -50,8 +51,7 @@ const StoreSchema = new mongoose.Schema({
          // Ensure every bank record is linked to a user
     },
      Store: {
-        type: String, // PAN is usually mandatory
-        unique: true,   // Ensure PAN is unique in the database
+        type: String, // PAN is usually mandator   // Ensure PAN is unique in the database
         trim: true,     // Remove extra whitespace
     },
     Quantity: {
@@ -115,8 +115,7 @@ const MarketSchema = new mongoose.Schema({
          // Ensure every bank record is linked to a user
     },
     Market: {
-        type: String, // PAN is usually mandatory
-        unique: true,   // Ensure PAN is unique in the database
+        type: String, // PAN is usually mandatory  // Ensure PAN is unique in the database
         trim: true,     // Remove extra whitespace
     },
     Quantity: {
@@ -155,39 +154,112 @@ Market.getData = async(userId)=>{
 const salesYoutube ={}
 
 const salesSchemaYoutube = new mongoose.Schema({
-    saleStartDate: { type: Date,  },
-    saleEndDate: { type: Date,  },
-    youtubeVideoID: { type: String,  },
-    youtubeVideoTitle: { type: String,  },
-    youtubeAssetID: { type: String,  },
-    youtubeAssetTitle: { type: String,  },
-    youtubeAssetISRC: { type: String,  },
-    youtubeAssetArtists: { type: String,  },
-    youtubeChannelID: { type: String,  },
-    youtubeChannelDisplayName: { type: String,  },
-    fugaAssetID: { type: String,  },
-    quantity: { type: Number,  },
-    territory: { type: String,  },
-    earningsType: { type: String,  },
-    service: { type: String,  },
-    convertedGrossIncome: { type: Number,  },
-    contractDealTerm: { type: String,  },
-    reportedRoyalty: { type: Number,  },
-    currency: { type: String,  },
-    youtubeAssetType: { type: String,  },
-    youtubeClaimType: { type: String,  }
-  }, {
-    timestamps: true // Optionally add createdAt and updatedAt timestamps
-  });
+    userId: {
+        type: String, 
+         // Ensure every bank record is linked to a user
+    },
+    SaleStartdate: {
+        type: Date,
+       
+      },
+      SaleEnddate: {
+        type: Date,
+       
+      },
+      YouTubeVideoID: {
+        type: String,
+       
+      },
+      YouTubeVideoTitle: {
+        type: String,
+       
+      },
+      YouTubeAssetID: {
+        type: String,
+       
+      },
+      YouTubeAssetTitle: {
+        type: String,
+       
+      },
+      YouTubeAssetISRC: {
+        type: String,
+       
+      },
+      YouTubeAssetArtists: {
+        type: String,
+       
+      },
+      YouTubeChannelID: {
+        type: String,
+       
+      },
+      YouTubeChannelDisplayName: {
+        type: String,
+       
+      },
+      FUGAAssetID: {
+        type: String,
+       
+      },
+      Quantity: {
+        type: Number,
+       
+      },
+      Territory: {
+        type: String,
+       
+      },
+      EarningsType: {
+        type: String,
+       
+      },
+      Service: {
+        type: String,
+       
+      },
+      ConvertedGrossIncome: {
+        type: mongoose.Decimal128,  // Use Decimal128 for more precision with decimals
+       
+      },
+      Contractdealterm: {
+        type: String,
+       
+      },
+      ReportedRoyalty: {
+        type: mongoose.Decimal128,  // Use Decimal128 for royalty amounts
+       
+      },
+      Currency: {
+        type: String,
+       
+      },
+      YouTubeAssetType: {
+        type: String,
+       
+      },
+      YouTubeClaimType: {
+        type: String,
+       
+      }
+    }, {
+      timestamps: true,  // Optional: to automatically add createdAt and updatedAt fields
+    });
 
 
-  salesYoutube.create =  async (userId,data) =>{
+  const salesModel = mongoose.model("SalesYoutube",salesSchemaYoutube)
+
+    salesYoutube.create =  async (userId,data) =>{
     const result =  db.connectDb("SalesYoutube", salesSchemaYoutube);
     data["userId"] = userId;
-    let insData = await result.insertMany(data);
-    console.log(insData);
-    if (insData.length > 0) {
-        return insData[0];
+
+    console.log(">>>>>>>>>>>>>>>>>>>>",data);
+
+    let data1 = new salesModel(data);
+    let insData = await data1.save();
+    console.log(data1);
+    if (insData) {
+        return insData;
     } else {
         return false
     }
@@ -207,58 +279,133 @@ const salesSchemaYoutube = new mongoose.Schema({
 
 const salesAssets ={};
 const salesSchemaAssets = new mongoose.Schema({
-    saleStartDate: { type: Date, required: true },
-    saleEndDate: { type: Date, required: true },
-    dsp: { type: String, required: true },
-    saleStoreName: { type: String, required: true },
-    saleType: { type: String, required: true },
-    saleUserType: { type: String, required: true },
-    territory: { type: String, required: true },
-    productUPC: { type: String, required: true },
-    productReference: { type: String, required: true },
-    productCatalogNumber: { type: String, required: true },
-    productLabel: { type: String, required: true },
-    productArtist: { type: String, required: true },
-    productTitle: { type: String, required: true },
-    assetArtist: { type: String, required: true },
-    assetTitle: { type: String, required: true },
-    assetVersion: { type: String, required: true },
-    assetDuration: { type: Number, required: true }, // Duration in seconds or minutes
-    assetISRC: { type: String, required: true },
-    assetReference: { type: String, required: true },
-    assetProduct: { type: String, required: true }, // Asset/Product field
-    productQuantity: { type: Number, required: true },
-    assetQuantity: { type: Number, required: true },
-    originalGrossIncome: { type: Number, required: true },
-    originalCurrency: { type: String, required: true },
-    exchangeRate: { type: Number, required: true },
-    convertedGrossIncome: { type: Number, required: true },
-    contractDealTerm: { type: String, required: true },
-    reportedRoyalty: { type: Number, required: true },
-    currency: { type: String, required: true },
-    reportRunID: { type: String, required: true },
-    reportID: { type: String, required: true },
-    saleID: { type: String, required: true },
-    audioFormat: { type: String, required: true }
+    userId:{
+      type: String, // Ensure every bank record is linked to a user
+    },
+    SaleStartdate: {
+      type: Date,
+    },
+    SaleEnddate: {
+      type: Date,
+    },
+    DSP: {
+      type: String,
+    },
+    SaleStoreName: {
+      type: String,
+    },
+    SaleType: {
+      type: String,
+    },
+    SaleUserType: {
+      type: String,
+    },
+    Territory: {
+      type: String,
+    },
+    ProductUPC: {
+      type: String,
+    },
+    ProductReference: {
+      type: String,
+    },
+    ProductCatalogNumber: {
+      type: String,
+    },
+    ProductLabel: {
+      type: String,
+    },
+    ProductArtist: {
+      type: String,
+    },
+    ProductTitle: {
+      type: String,
+    },
+    AssetArtist: {
+      type: String,
+    },
+    AssetTitle: {
+      type: String,
+    },
+    AssetVersion: {
+      type: String,
+      default: '',
+    },
+    AssetDuration: {
+      type: String,
+    },
+    AssetISRC: {
+      type: String,
+    },
+    AssetReference: {
+      type: String,
+    },
+    AssetProduct: {
+      type: String,
+    },
+    ProductQuantity: {
+      type: String,
+      default: '',  // Assuming empty strings are allowed
+    },
+    AssetQuantity: {
+      type: String,
+    },
+    OriginalGrossIncome: {
+      type: mongoose.Decimal128,  // For precision with financial values
+    },
+    Originalcurrency: {
+      type: String,
+    },
+    ExchangeRate: {
+      type: String,  // This could be a float or string based on how it's used
+    },
+    ConvertedGrossIncome: {
+      type: mongoose.Decimal128,  // For precision with financial values
+    },
+    Contractdealterm: {
+      type: String,
+    },
+    ReportedRoyalty: {
+      type: mongoose.Decimal128,  // For precision with financial values
+    },
+    Currency: {
+      type: String,
+    },
+    ReportRunID: {
+      type: String,
+    },
+    ReportID: {
+      type: String,
+    },
+    SaleID: {
+      type: String,
+    },
+    AudioFormat: {
+      type: String,
+      default: '',  // Assuming empty string is allowed for this field
+    }
   }, {
-    timestamps: true // Automatically add createdAt and updatedAt fields
+    timestamps: true,  // Optional: to automatically add createdAt and updatedAt fields
   });
 
-  salesAssets.create = async (userId)=>{
+const AssetModel = mongoose.model('SalesAssets',salesSchemaAssets)
+
+  salesAssets.create = async (userId,data)=>{
     const result =  db.connectDb("SalesAssets", salesSchemaAssets);
     data["userId"] = userId;
-    let insData = await result.insertMany(data);
+    const data1 = new AssetModel(data);
+   const insData = await data1.save();
     console.log(insData);
     if (insData.length > 0) {
-        return insData[0];
+        return insData[0];  
     } else {
         return false
     }
   }
   salesAssets.getData = async(userId)=>{
-    const result = await db.connectDb("SalesYoutube", salesSchemaYoutube);
+    const result =  db.connectDb("SalesAssets", salesSchemaAssets);
     console.log(">>>>>>>",userId);
-    let Data = await result.find({userId: userId});
+    let Data = await AssetModel.find({userId: userId});
     console.log(">>>>>>>>",Data);
     if(Data.length <= 0){
         return false;
@@ -270,33 +417,36 @@ const salesSchemaAssets = new mongoose.Schema({
 const stream={};
 
   const dataStream = new mongoose.Schema({
+    userId:{
+        type: String   },
     dsp: { 
-      type: String, 
-      required: true, // Distribution Service Provider (e.g., Spotify, Apple Music)
+      type: String,  // Distribution Service Provider (e.g., Spotify, Apple Music)
     },
     amountDue: { 
-      type: Number, 
-      required: true, // Amount due for royalties or sales
+      type: Number,  // Amount due for royalties or sales
     },
     downloads: { 
-      type: Number, 
-      required: true, // Number of downloads
+      type: Number,  // Number of downloads
     },
     streams: { 
-      type: Number, 
-      required: true, // Number of streams
+      type: Number,  // Number of streams
     },
   }, {
     timestamps: true // Automatically adds createdAt and updatedAt timestamps
   });
 
-  stream.create = async (userId) =>{
-    const result =  db.connectDb("SalesAssets", salesSchemaAssets);
+  const dataModel = mongoose.model("stream", dataStream)
+
+  stream.create = async (userId,data) =>{
+    const result =  db.connectDb("stream", dataStream);
     data["userId"] = userId;
-    let insData = await result.insertMany(data);
-    console.log(insData);
-    if (insData.length > 0) {
-        return insData[0];
+    console.log(">>>>>>",data);
+    const data1 =new dataModel(data);
+    await data1.save();
+    
+    console.log(data1);
+    if (data1.length > 0) {
+        return data1[0];
     } else {
         return false
     }
@@ -304,9 +454,9 @@ const stream={};
   
   stream.getData = async (userId) =>
   {
-    const result = await db.connectDb("SalesYoutube", salesSchemaYoutube);
+    const result = await db.connectDb("stream", dataStream);
     console.log(">>>>>>>",userId);
-    let Data = await result.find({userId: userId});
+    let Data = await dataModel.find({userId: userId});
     console.log(">>>>>>>>",Data);
     if(Data.length <= 0){
         return false;
@@ -320,5 +470,7 @@ const stream={};
     Track,
     Store,
     Market,
-    salesYoutube
+    salesYoutube,
+    salesAssets,
+    stream
   } 

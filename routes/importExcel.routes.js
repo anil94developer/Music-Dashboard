@@ -15,15 +15,15 @@ router.post("/sent-market",verifyToken,upload.marketData);
 router.get("/get-market",verifyToken,upload.getMarketData);
 
 
-router.post("/sent-salesyoutube",verifyToken,upload.salesYoutube);
-router.get("/get-salesyoutube",verifyToken,upload.getMarketData);
+router.post("/sent-salesYoutube",verifyToken,upload.salesYoutube);
+router.get("/get-salesYoutube",verifyToken,upload.getSalesYoutube);
 
-router.post("/sent-stream",verifyToken,upload.salesYoutube);
-router.get("/get-stream",verifyToken,upload.getMarketData);
+router.post("/sent-salesAsset",verifyToken,upload.salesAsset);
+router.get("/get-salesAsset",verifyToken,upload.getSalesAssets);
 
 
-router.post("/sent-salesyoutube",verifyToken,upload.salesYoutube);
-router.get("/get-salesyoutube",verifyToken,upload.getMarketData);
+router.post("/sent-stream",verifyToken,upload.salesStream);
+router.get("/get-stream",verifyToken,upload.getStream);
 
 
 
