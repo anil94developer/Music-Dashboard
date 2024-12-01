@@ -14,14 +14,15 @@ permission.add = async (req, res, next) => {
             return R(res, false, "Invalid data", "", 400);
         }
         const user = await authModel.permission(data);
-        console.log(">>", user);
+       
 
         if (!user) {
             return R(res, false, "User alreaedy registered", "", 404);
         }
 
-
-        const permissions = await permissionmodel.addPermission(userId,user._id, data);
+       let newUserRegisterId=user._id;
+       console.log(">>>>>>>>>>>>>",newUserRegisterId.toString());
+        const permissions = await permissionmodel.addPermission(userId,newUserRegisterId.toString(), data);
         if (!permissions) {
             return R(res, false, "Failed to add permission", "", 500);
         }
@@ -33,7 +34,6 @@ permission.add = async (req, res, next) => {
         return R(res, false, "Failed to add permission", "", 500);
     }
 }
-
 permission.update =async (req, res,next) => {
     try {
         const data = req.body;
@@ -41,7 +41,12 @@ permission.update =async (req, res,next) => {
             return R(res, false, "Invalid data", "", 400);
         }
 
-        const permissions = await permissionmodel.updatePermission(data._id, data);
+        const permissions = await permissionmodel.updatePermission(data.registeredUserId, data);
+        if (!permissions) {
+            return R(res, false, "Failed to update", "", 500);
+        }
+        return R(res, true, "Permissions Update successfully", permissions, 200);
+        
 
 }catch (err) {
     console.log("Error in permission.updateeeee", err);
@@ -63,7 +68,6 @@ permission.listWithUserDetails =async (req,res,next)=>{
         return R(res, false, "Failed to list permissions", "", 500);
     }
 }
-
 permission.list =async (req,res,next)=>{
     try {
         const userId = req.doc.userId;

@@ -28,7 +28,8 @@ const usersSchema = mongoose.Schema(
         country: { type: String },
         timeZone: { type: String },
         language: { type: String },
-        wallet: { type: Number , default: 0 }
+        wallet: { type: Number , default: 0 },
+        noOfLabel: { type: Number , default: 0 }
     },
     { timestamps: true }
 );
@@ -184,6 +185,8 @@ authModel.permission = async (data) => {
         const user = await result.create({
             email: data.email,
             password: hashedPassword,
+            name: data.name,
+            noOfLabel: data.noOfLabel,
         });
         console.log("permission permission permission ======>>>", user)
 
@@ -207,6 +210,12 @@ authModel.is_deleted =async (userId)=>{
     console.error("Error in is_deleted:", err.message);
     return false; // Return false on error
 }
+}
+
+authModel.userList = async () => {
+    const users = await db.connectDb("users", usersSchema)
+    const getUser = await users.find()
+    return getUser;
 }
 // authModel.findAdminByRole = async(email, password) => {
 //     let findadmin = await db.connectDb("usersSchemas",usersSchema)

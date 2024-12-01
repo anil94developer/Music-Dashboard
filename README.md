@@ -3,9 +3,13 @@ Music dashboard
 
 
 
-scp backend.zip root@195.35.23.219:/var/www
-scp build.zip root@195.35.23.219:/var/www/html
+sudo ssh root@195.35.23.219
+Dashboard@123!
 
-domain
+<!-- old data remove  -->
+rm -rf backend backend.zip
 
-// get permission ,get profile, lst transation,withdrwal list 
+sudo scp backend.zip root@195.35.23.219:/var/www
+unzip backend.zip -d backend
+ 
+ 

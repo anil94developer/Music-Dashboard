@@ -1,5 +1,5 @@
-const walletModel=require('../models/withdrawalmodel');
-const transcationModel=require('../models/transaction');
+const walletModel = require('../models/withdrawalmodel');
+const transcationModel = require('../models/transaction');
 const bcrypt = require("../utils/bcrypt")
 const jwt = require("jsonwebtoken");
 const R = require("../utils/responseHelper");
@@ -8,7 +8,7 @@ const sendOtpEmail = require("../utils/Sendgrid")
 const IP = require('ip');
 const authModel = require("../models/authmodels");
 
- 
+
 
 // auth.addUsers = async (req, res, next) => {
 //     try {
@@ -113,7 +113,7 @@ const authModel = require("../models/authmodels");
 
 // }
 
-const auth={};
+const auth = {};
 
 auth.login = async (req, res, next) => {
     try {
@@ -198,11 +198,11 @@ auth.signUp = async (req, res, next) => {
         next(err)
     }
 };
-auth.getUsers = async (req, res, next) => { 
- 
+auth.getUsers = async (req, res, next) => {
+
     try {
         const get = await authModel.getUser(req.doc.userId)
-        if(!get) {
+        if (!get) {
             return R(res, false, "No data found!!", {}, 200)
         }
         return R(res, true, "Data successfully!!", get, 200)
@@ -210,13 +210,13 @@ auth.getUsers = async (req, res, next) => {
         next(error)
     }
 };
-auth.passwordChange= async (req, res, next) => { 
-      const {newPassword,oldPassword}=req.body
-   
+auth.passwordChange = async (req, res, next) => {
+    const { newPassword, oldPassword } = req.body
+
     try {
-        const result = await authModel.changePassword(req.doc.userId,oldPassword,newPassword);
-              if(!result){
-            return R(res,false,"old password is not correct","",400)
+        const result = await authModel.changePassword(req.doc.userId, oldPassword, newPassword);
+        if (!result) {
+            return R(res, false, "old password is not correct", "", 400)
         }
 
         return R(res, true, "Update successfully!!", req.doc.userId, 200)
@@ -224,47 +224,60 @@ auth.passwordChange= async (req, res, next) => {
         next(error)
     }
 };
-auth.profileUpdate=async(req,res,next) => {
+auth.profileUpdate = async (req, res, next) => {
     try {
         const id = req.doc.userId;
         if (!id) {
-          return R(res, false, "ID is required", {}, 400);
-        } 
+            return R(res, false, "ID is required", {}, 400);
+        }
 
-        let data=req.body;
+        let data = req.body;
         console.log(data);
         if (!data) {
-          return R(res, false, "Data is required", {}, 400);
+            return R(res, false, "Data is required", {}, 400);
         }
-        
-        const profileData=authModel.updateProfile(id,data);
-        
-        return R(res, true,"Profile updated successfully",profileData,201);
+
+        const profileData = authModel.updateProfile(id, data);
+
+        return R(res, true, "Profile updated successfully", profileData, 201);
     } catch (error) {
         next(error);
     }
-}   
-
-auth.is_deleted=async (req,res,next) => {
-try{
-const {userId}=req.body;
-
-if(!userId){
-    return R(res,false,"User ID is required","",400)
 }
 
-const update = await authModel.is_deleted(userId);
+auth.is_deleted = async (req, res, next) => {
+    try {
+        const { userId } = req.body;
 
-if(!update){
-    return R(res,false,"User not found","",404)
+        if (!userId) {
+            return R(res, false, "User ID is required", "", 400)
+        }
+
+        const update = await authModel.is_deleted(userId);
+
+        if (!update) {
+            return R(res, false, "User not found", "", 404)
+        }
+
+        return R(res, true, "User deleted successfully", "", 200)
+
+    } catch (error) {
+        next(error)
+    }
 }
 
-return R(res, true,"User deleted successfully","",200)
+auth.userList = async (req, res, next) => {
 
-}catch (error) {
-    next(error)
-}
-}
+    try {
+        const get = await authModel.userList()
+        if (!get) {
+            return R(res, false, "No data found!!", [], 200)
+        }
+        return R(res, true, "Data successfully!!", get, 200)
+    } catch (error) {
+        next(error)
+    }
+};
 // auth.addsubadmin = async (req, res, next) => {
 //     try {
 //         req.body.password = await bcrypt.passwordEncryption(req.body.password);
