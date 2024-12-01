@@ -98,5 +98,18 @@ console.log(`User profile`, userData);
     }
 };
 
+trans.getTranscations = async (req, res, next) => {
+    const result = await db.connectDb("transactions", transcationSchema); 
+
+    try {
+        const transactions = await result.find(); // Retrieve all transactions for the given user
+        console.log("Transactions retrieved successfully:", transactions);
+        return transactions; // Return the retrieved transactions
+    } catch (error) {
+        console.error("Error retrieving transactions:", error.message);
+        return false; // Return false on error
+    }
+  }
+
 
 module.exports = trans;

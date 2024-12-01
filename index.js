@@ -52,7 +52,7 @@ app.use("/support", supportRoutes);
 app.use("/bank", bankRoutes);
 app.use("/wallet", walletRoutes); 
 app.use("/permission",permissionsRoutes);
-app.use("/import",importExcel);
+app.use("/upload",importExcel);
 
 
 

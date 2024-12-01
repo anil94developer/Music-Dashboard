@@ -1,74 +1,50 @@
-const excelModel = require("../models/excelmodel");
-var fs = require("fs");
-const path = require("path");
-const csvParser = require("csv-parser");
-const xlsx = require("xlsx");
+const R = require("../utils/responseHelper"); 
+const {Track} =require("../models/csvdatamodel");
+const upload={}
 
-// const csv = require("csvtojson");
+upload.track =async (req,res,next)=>{
+try{
+  const {userId,data} =req.body;
 
-// Parse CSV file
-function parseCSV(filePath) {
-  return new Promise((resolve, reject) => {
-    const results = [];
-    fs.createReadStream(filePath)
-      .pipe(csvParser())
-      .on("data", (data) => results.push(data))
-      .on("end", () => resolve(results))
-      .on("error", (err) => reject(err));
-  });
-}
-
-// Parse Excel file
-function parseExcel(filePath) {
-  const workbook = xlsx.readFile(filePath);
-  const sheetName = workbook.SheetNames[0]; // First sheet
-  const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-  return data;
-}
-
-const uploadFile = async (req, res) => {
-  try {
-    const file = req.file;
-    if (!file) return res.status(400).json({ message: "No file uploaded." });
-
-    const filePath = path.resolve(file.path);
-    let data;
-
-    // Determine file type and parse accordingly
-    if (file.mimetype === "text/csv") {
-      data = await parseCSV(filePath);
-    } else if (
-      file.mimetype ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-      file.mimetype === "application/vnd.ms-excel"
-    ) {
-      data = parseExcel(filePath);
-    } else {
-      return res.status(400).json({ message: "Unsupported file format." });
-    }
-
-    console.log("data>>>>", data);
-    if (!data || data.length === 0) {
-      return res.status(400).json({ message: "No valid data to insert." });
-    }
-
-    // Insert data into MongoDB
-    try {
-      await excelModel.insertMany(data, { ordered: false }); 
-      res.status(200).json({ message: "File data uploaded successfully." });
-    } catch (insertError) {
-      console.error("Insert Error:", insertError);
-      res
-        .status(500)
-        .json({ message: "Error inserting data.", error: insertError.message });
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error processing file.", error: error.message });
+  if(!data){
+    return R(res,false,"Data not found","",400);
   }
-};
 
-module.exports = {
-  uploadFile,
-};
+  console.log(data);
+ 
+  data = data.map(async (val,ind,arr)=>{
+    val = await Track.create(userId,arr[ind]);
+     if(!val){
+      return R(res,false,"Excel file not found","",400);
+     }
+     return val;
+  })
+
+  console.log(data);
+
+  // Process your data here and save it to the database or any other storage medium.
+  return R(res,true,"Track upload successful","",data,200); 
+}
+catch(e){
+  next();
+}
+}
+
+upload.getTrack = async (req,res,next)=>{
+try{
+  const userId =req.doc.userId;
+  console.log(userId);
+
+  const track = await Track.get(userId);
+
+  if(track.length <= 0){
+    return R(res,false,"Track not found","",400);
+  }
+console.log(">>>>>>>>>>>>>>>>>>>>>",track);
+  return R(res,true,"Track fetched successfully",track,200);
+}catch(err){
+  next();
+}
+}
+
+module.exports=upload;

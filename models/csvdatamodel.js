@@ -2,8 +2,8 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
 
-
-const Track = new mongoose.Schema({
+Track ={}
+const TrackSchema = new mongoose.Schema({
     userId: { 
         type: String, 
          // Ensure every bank record is linked to a user
@@ -20,6 +20,28 @@ const Track = new mongoose.Schema({
 }, { timestamps: true }); // Adds createdAt and updatedAt fields
 
 
+Track.create = async (userId,data)=>{
+    const result = await db.connectDb("Track", TrackSchema);
+    data["userId"] = userId;
+    let insData = await result.insertMany(data);
+    console.log(insData);
+    if (insData.length > 0) {
+        return insData[0];
+    } else {
+        return false
+    }
+}
+
+Track.get = async(userId)=>{
+    const result = await db.connectDb("Track", TrackSchema);
+    let trackData = await result.find({userId: userId});
+    console.log(">>>>>>>>",trackData);
+    if(trackData.length <= 0){
+        return false;
+    }
+    console.log(trackData);
+    return trackData;
+}
 const Store = new mongoose.Schema({
     userId: { 
         type: String, 
@@ -37,11 +59,11 @@ const Store = new mongoose.Schema({
 }, { timestamps: true }); // Adds createdAt and updatedAt fields
 
 
-const Date = new mongoose.Schema({
+const dateSchema = new mongoose.Schema({
     userId: { 
         type: String,  // Ensure every bank record is linked to a user
     },
-    Date: {
+    date: {
         type: Date,// PAN is usually mandatory
         unique: true,   // Ensure PAN is unique in the database
         trim: true,     // Remove extra whitespace
@@ -71,7 +93,7 @@ const Market = new mongoose.Schema({
 }, { timestamps: true }); // Adds createdAt and updatedAt fields
 
 
-const salesSchemaYoutube = new Schema({
+const salesSchemaYoutube = new mongoose.Schema({
     saleStartDate: { type: Date,  },
     saleEndDate: { type: Date,  },
     youtubeVideoID: { type: String,  },
@@ -98,7 +120,7 @@ const salesSchemaYoutube = new Schema({
   });
 
 
-const salesSchemaAssets = new Schema({
+const salesSchemaAssets = new mongoose.Schema({
     saleStartDate: { type: Date, required: true },
     saleEndDate: { type: Date, required: true },
     dsp: { type: String, required: true },
@@ -137,7 +159,7 @@ const salesSchemaAssets = new Schema({
   });
 
 
-  const dataStream = new Schema({
+  const dataStream = new mongoose.Schema({
     dsp: { 
       type: String, 
       required: true, // Distribution Service Provider (e.g., Spotify, Apple Music)
@@ -157,3 +179,10 @@ const salesSchemaAssets = new Schema({
   }, {
     timestamps: true // Automatically adds createdAt and updatedAt timestamps
   });
+
+
+
+
+  module.exports={
+    Track
+  }

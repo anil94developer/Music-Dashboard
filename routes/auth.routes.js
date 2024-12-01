@@ -11,6 +11,8 @@ router.get('/user-profile',verifyToken, authService.getUsers)
 router.post('/user-change-password',verifyToken,authService.passwordChange)
 router.post('/profile-update',verifyToken,authService.profileUpdate)
 router.post('/user-delete',verifyToken,authService.is_deleted);
+router.get('/user-list',verifyToken,authService.userList);
+
 
 
 
