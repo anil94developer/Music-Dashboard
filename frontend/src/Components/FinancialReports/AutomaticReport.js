@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./styles.css";
+import StreamGraph from "../Common/Chart/StreamGraph";
+// import "./styles.css";
 
-const AutomaticReports = () => {
-  const [activeTab, setActiveTab] = useState("automatic");
+const AutomaticReports = () => { 
   const reports = [
     { period: "Q3 2024", type: "Full catalog single report", amount: "871.38 €", status: "✔", actions: "Download" },
     { period: "August 2024", type: "Full catalog single report", amount: "165.83 €", status: "✔", actions: "Download" },
@@ -15,7 +15,7 @@ const AutomaticReports = () => {
     <div className="reports-container"> 
 
       <div className="reports-table">
-        <table>
+        <table className="user-table">
           <thead>
             <tr>
               <th>Period</th>
@@ -33,15 +33,15 @@ const AutomaticReports = () => {
                 <td>{report.amount}</td>
                 <td>{report.status}</td>
                 <td>
-                  <div className="action-buttons">
+                <div className="action-buttons">
                     <button title="Download" className="action-button">
-                      <i className="fas fa-download"></i>
+                      <i className="fa fa-download"></i>
                     </button>
                     <button title="View as PDF" className="action-button">
-                      <i className="fas fa-file-pdf"></i>
+                      <i className="fa fa-file-pdf"></i>
                     </button>
                     <button title="Delete" className="action-button delete">
-                      <i className="fas fa-trash"></i>
+                      <i className="fa fa-trash"></i>
                     </button>
                   </div>
                 </td>
@@ -49,16 +49,15 @@ const AutomaticReports = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> 
 
-      <div className="pagination">
-        <button className="page active">1</button>
-        <button className="page">2</button>
-        <button className="page">3</button>
-        <button className="page">4</button>
-        <button className="page">5</button>
-        <button className="page">6</button>
-      </div>
+      <section className="content">
+          <div className="row">
+            <div className="col-lg-12 col-xs-12 border">
+              <StreamGraph  />
+            </div>
+          </div>
+        </section>
     </div>
   );
 };

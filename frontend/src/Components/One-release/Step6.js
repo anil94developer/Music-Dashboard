@@ -41,8 +41,9 @@ export default function STEP6(props) {
                     <STEP5 releaseData={releaseData} />
                 </div>
             </div>
+            <br></br>
             <div className="mt-3">
-                <button type="submit" className="btn btn-primary" onClick={() => { navigate("/final-submit", { state: { releaseId:releaseData._id  } }); }}>Save</button>
+                <button type="submit" className="btn btn-primary" onClick={() => { navigate("/final-submit", { state: { releaseId:releaseData._id  } }); }}>Submit</button>
             </div>
 
 

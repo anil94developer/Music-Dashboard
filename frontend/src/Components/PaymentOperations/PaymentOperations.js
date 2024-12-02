@@ -83,7 +83,7 @@ export default function PaymentOperations() {
                 <div className="icon">
                   <i className="ion ion-bag"></i>
                 </div>
-                <a href="all-release" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
+                <div  className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></div>
               </div>
             </div>
           </div>

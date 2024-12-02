@@ -38,7 +38,7 @@ class ChartZoomPan extends Component {
 		}
 		
 		return (
-		<div>
+		<div style={{background:'red'}}>
 			<CanvasJSChart options = {options} 
 				/* onRef={ref => this.chart = ref} */
 			/>

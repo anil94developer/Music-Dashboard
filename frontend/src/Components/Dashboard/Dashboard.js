@@ -11,7 +11,7 @@ export const Dashboard = () => {
 
             <div className="content-wrapper">
 
-                <section className="content-header">
+                {/* <section className="content-header">
                     <h1>
                         Dashboard
 
@@ -20,7 +20,7 @@ export const Dashboard = () => {
                         <li><a href="#"><i className="fa fa-dashboard"></i> Home</a></li>
                         <li className="active">Dashboard</li>
                     </ol>
-                </section>
+                </section> */}
 
 
                 <section className="content">
@@ -36,7 +36,7 @@ export const Dashboard = () => {
                                 <div className="icon">
                                     <i className="ion ion-bag"></i>
                                 </div>
-                                <a href="all-release" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
+                                {/* <a href="all-release" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a> */}
                             </div>
                         </div>
                         <div className="col-lg-3 col-xs-6">
@@ -49,7 +49,7 @@ export const Dashboard = () => {
                                 <div className="icon">
                                     <i className="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="all-tracks" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
+                                {/* <a href="all-tracks" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a> */}
                             </div>
                         </div>
                         {/* <div className="col-lg-3 col-xs-6">
@@ -86,7 +86,7 @@ export const Dashboard = () => {
                 <section className="content">
 
                     <div className="row">
-                        <div className="col-lg-12 col-xs-12">
+                        <div className="col-lg-12 col-xs-12 border">
                             <SimpleGraph />
                         </div>
                     </div>

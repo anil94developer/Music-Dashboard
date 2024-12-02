@@ -1,5 +1,7 @@
-//const domainUrl = 'https://api.tuneplus.org/';
+// const domainUrl = 'https://api.tuneplus.org/';
 const domainUrl = 'http://localhost:8002/';
+// const domainUrl = 'http://192.168.162.81:8002/';
+
 
 
 const mainUrl = domainUrl
@@ -36,7 +38,22 @@ const base = {
   getUserList: mainUrl + 'permission/my-user-list',
   sendWithdrawal: mainUrl + 'wallet/send-withdrawal',
   getWithdraw: mainUrl + 'wallet/list-transactions',
-  updatePermission: mainUrl + 'permission/update-permission'
+  updatePermission: mainUrl + 'permission/update-permission',
+  userList: mainUrl + 'auth/user-list',
+  deleteUser: mainUrl + 'auth/user-delete',
+  getWithdrawList: mainUrl + 'wallet/get-withdraw-request',
+  withdrawStatus: mainUrl + 'wallet/withdraw-status',
+  uploadTracks: mainUrl + 'excel/send-track',
+  getTracks: mainUrl + 'excel/get-track',
+  uploadStore:mainUrl+'excel/sent-store',
+  getStore:mainUrl+'excel/get-store',
+  uploadMarket:mainUrl+'excel/sent-market',
+  getMarket:mainUrl+'excel/get-market'
+
+
+  
+
+
 
 
 

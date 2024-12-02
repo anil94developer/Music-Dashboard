@@ -30,8 +30,14 @@ export default function DynamicInputList(props) {
             onChange={(event) => handleInputChange(index, event)}
             placeholder={`Input ${index + 1}`}
             className="form-control"
+            style={{
+              width:'90%',
+              display: 'flex', // Ensure the container is a flex container
+              flexDirection: 'row', // Align items in a row 
+              alignItems: 'center', // Align items vertically centered
+          }}
           />
-          <span className="input-group-btn">
+          <span className="input-group-btn" style={{marginTop:5}}>
             {index == 0  ?
               <button className="btn btn-info btn-flat" type="button" onClick={handleAddInput} >+</button>
               :

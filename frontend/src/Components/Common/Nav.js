@@ -6,223 +6,227 @@ export const Nav = (props) => {
   // const { setUserData } = props
   const { userData, handleLogout, userPermission } = AuthController()
   const [financialMenu, setFinancialMenu] = useState(false)
-  const [catelogMenu, setCatelogMenu] = useState(false)
+  const [subMenu, setSubMenu] = useState("")
   const [profileMenu, setProfileMenu] = useState(false)
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
   // useEffect(() => {
   //   if (userData) {
   //     setUserData(userData);
   //   }
   // }, [])
 
-  return (
-    <nav>
+  const renderIcon = (name) => {
+    return name == "Dashboard" ? "fa fa-dashboard"
+      : name == "One Release" ? "fa fa-caret-square-o-left"
+        : name == "Catalog" ? "fa  fa-bullseye"
+          : name == "Daily Trends" ? "fa fa-clock-o"
+            : name == "Financial" ? "fa  fa-money"
+              : name == "User Mangement" ? "fa fa-users"
+                : name == "User Mangement" ? "fa fa-retweet"
+                  : name == "Withdraw Request" ? "fa fa-sort-amount-asc"
+                    : name == "All Transcations" ? "fa fa-random"
+                      : "fa fa-sort-amount-asc"
 
-      <div className="wrapper">
-        <header className="main-header">
-          <a href=" index2.html" className="logo">
+
+  }
+  return (
+    <nav style={{ backgroundColor: '#000' }}>
+      <div style={{ backgroundColor: '#000' }}>
+        <header className="main-header" style={{ backgroundColor: '#000' }}>
+          <a className="logo">
             <b>Music Dashboard</b>{" "}
           </a>
-          <nav className="navbar navbar-static-top" role="navigation">
-            <a
+          <nav className="navbar navbar-static-top" role="navigation" style={{ backgroundColor: '#000' }}>
+            {/* <a
               href="#"
               className="sidebar-toggle"
               data-toggle="offcanvas"
               role="button"
             >
               <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </a>
+              <span className="icon-bar">da</span>
+              <span className="icon-bar">dasd</span>
+              <span className="icon-bar">dsada</span>
+            </a> */}
             <div className="navbar-custom-menu">
               <ul className="nav navbar-nav">
-                <li className="dropdown user user-menu">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+                <li className="dropdown user user-menu" style={{ backgroundColor: '#000' }}>
+                  <a href="#" className="dropdown-toggle" onClick={toggleDropdown}>
                     <img
-                      src={images.user}
+                      src={images?.user}
                       className="user-image"
                       alt="User Image"
                     />
                     <span className="hidden-xs">{userData?.name}</span>
                     <span className="hidden-xs">{userData?.email}</span>
-
                   </a>
-                  <ul className="dropdown-menu">
-                    <li className="user-header">
-                      <img
-                        src={images.user}
-                        className="img-circle"
-                        alt="User Image"
-                      />
-                      <p>
-                        {" "}
-                        hello
-                        <small>Member since Nov. 2024</small>
-                      </p>
-                    </li>
-
-                    <li className="user-footer">
-                      <div className="pull-left">
-                        <a href="profile.php" className="btn btn-default btn-flat">
-                          Profile
-                        </a>
+                  {dropdownVisible &&
+                    <div className="modal" style={{ display: 'block', marginTop: -50, }} onClick={toggleDropdown}>
+                      <div style={{
+                        position: 'absolute',
+                        right: 0,
+                      }}>
+                        <div className="modal-content">
+                          <div className="modal-body" style={{}}>
+                            {userPermission?.menuPermission && userPermission?.menuPermission?.map((item, index) => {
+                              let link = `/${item.mainMenuName}`;
+                              return item.status
+                                && item.mainMenuName == 'User Access' &&
+                                <ul className="sidebar-menu">
+                                  <li className="treeview">
+                                    <a href={link}>
+                                      <i className="fa fa-sitemap"></i> <span>{item.mainMenuName}</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                            })}
+                            <ul className="sidebar-menu">
+                              <li className="treeview">
+                                <a href="password change">
+                                  <i className="fa fa-lock"></i> <span>Change Password</span>
+                                </a>
+                              </li>
+                            </ul>
+                            <ul className="sidebar-menu">
+                              <li className="treeview">
+                                <a href="profile">
+                                  <i className="fa fa-user"></i> <span>Profile</span>
+                                </a>
+                              </li>
+                            </ul>
+                            <ul className="sidebar-menu">
+                              <li className="treeview">
+                                <a href="bank information">
+                                  <i className="fa fa-bank"></i> <span>Bank Information</span>
+                                </a>
+                              </li>
+                            </ul>
+                            <ul className="sidebar-menu">
+                              <li className="treeview">
+                                <a href="Support">
+                                  <i className="fa fa-support"></i> <span>Support</span>
+                                </a>
+                              </li>
+                            </ul>
+                            <ul className="sidebar-menu">
+                              <li className="treeview">
+                                <a href="" onClick={handleLogout}>
+                                  <i className="fa fa-sign-out"></i> <span>Logout</span>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <div className="pull-right">
-                        <a href="logout.php" className="btn btn-default btn-flat">
-                          Sign out
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
+                    </div>
+                  }
                 </li>
               </ul>
             </div>
           </nav>
         </header>
-
-        <aside className="main-sidebar">
-          <section className="sidebar">
-            <div className="user-panel">
-              <div className="pull-left image">
+        <aside className="main-sidebar" style={{ backgroundColor: '#000', height: 'auto' }}>
+          <section className="sidebar" style={{ backgroundColor: '#000' }}>
+            <div className="user-panel" style={{ backgroundColor: '#000' }}>
+              <div className="pull-left image form-row" style={{ borderBottomStyle: 'solid', borderBottomWidth: 0, borderBottomColor: '#fff', marginTop: 10, padding: 5 }}>
                 <img
                   src={images.user}
                   className="img-circle"
                   alt="User Image"
                 />
-              </div>
-              <div className="pull-left info">
-                <p>{userData?.name}</p>
                 <p>{userData?.email}</p>
+              </div>
+            </div>
 
 
-                <a href="#">
-                  <i className="fa fa-circle text-success"></i> Online
+            {/* <div className="pull-left image form-row" style={{ borderBottomStyle: 'solid', borderBottomWidth: 2, borderBottomColor: '#fff', marginTop: 10, padding: 5 }}> */}
+
+            {userPermission && userPermission?.menuPermission?.map((item, index) => {
+              let link = `/${item.mainMenuName}`;
+              return item.status &&
+                item.mainMenuName != 'User Access' &&
+                item.mainMenuName != 'Support' &&
+                item.mainMenuName != 'Multiple Release' &&
+
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    {item.submenu.length > 0 ?
+                      <a onClick={() => { subMenu == index ? setSubMenu(-1) : setSubMenu(index) }}>
+                        <i className={renderIcon(item.mainMenuName)}></i> <span>{item.mainMenuName}</span>
+                      </a>
+                      :
+                      <a href={link}>
+                        <i className={renderIcon(item.mainMenuName)}></i> <span>{item.mainMenuName}</span>
+                      </a>
+                    } </li>
+                  {index == subMenu ?
+                    item.submenu.map((item, index) => {
+                      let subMenuLink = `/${item.subMenuName}`;
+                      return item.status && <li><a href={subMenuLink}><i className="fa fa-circle-o"></i>{item.subMenuName}</a></li>
+
+                    })
+                    :
+                    <></>
+
+                  }
+
+                </ul>
+
+
+
+
+            })
+
+
+            }
+
+            <ul className="sidebar-menu">
+              <li className="treeview">
+                <a href="/Upload" >
+                  <i className="fa fa-dashboard"></i> <span>Upload</span>
                 </a>
+              </li>
+            </ul>
+
+
+            {/* </div> */}
+
+
+            {/* <aside className="main-sidebar">
+          <section className="sidebar">
+            <div className="user-panel">
+              <div className="pull-left image form-row" style={{ borderBottomStyle: 'solid', borderBottomWidth: 2, borderBottomColor: '#fff', marginTop: 10, padding: 5 }}>
+                <img
+                  src={images.user}
+                  className="img-circle"
+                  alt="User Image"
+                />
+                <p>{userData?.email}</p>
               </div>
             </div>
             {userPermission && userPermission?.menuPermission?.map((item, index) => {
-             let link = `/${item.mainMenuName}`;
-              return item.status &&  <ul className="sidebar-menu">
+              let link = `/${item.mainMenuName}`;
+              return item.status && <ul className="sidebar-menu">
                 <li className="treeview">
                   <a href={link}>
                     <i className="fa fa-dashboard"></i> <span>{item.mainMenuName}</span>
                   </a>
 
-                  {item.submenu.map((item,index)=>{
-                     let subMenuLink = `/${item.subMenuName}`;
-                return  item.status &&  <li><a href={subMenuLink}><i className="fa fa-circle-o"></i>{item.subMenuName}</a></li>
-                   
+                  {item.submenu.map((item, index) => {
+                    let subMenuLink = `/${item.subMenuName}`;
+                    return item.status && <li><a href={subMenuLink}><i className="fa fa-circle-o"></i>{item.subMenuName}</a></li>
+
                   })}
                 </li>
               </ul>
 
             })
 
-            }
-            {/* {userPermission && userPermission?.menuPermission[0]?.mainMenuName == "dashboard" && userPermission?.menuPermission[0]?.status && */}
-            {/* <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="/Dashboard">
-                  <i className="fa fa-dashboard"></i> <span>Dashboard</span>
-                </a>
-              </li>
-            </ul> */}
-            {/* } */}
-            {/* <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="one-release">
-                  <i className="fa fa-dashboard"></i> <span>One Release</span>
-                </a>
-              </li>
-            </ul>
-            <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="#" onClick={() => { setCatelogMenu(!catelogMenu) }}>
-                  <i className="fa fa-dashboard"></i> <span>Catalog</span> <i className="fa fa-angle-left pull-right"></i>
-                </a>
-
-              </li>
-              {catelogMenu &&
-                <div> 
-                  <li><a href=" all-darft"><i className="fa fa-circle-o"></i> All Draft</a></li>
-                  <li> <a href="all-release">  <i className="fa fa-circle-o"></i>All Release</a></li>
-                  <li><a href="all-tracks"><i className="fa fa-circle-o"></i> All Tracks</a></li>
-
-                </div>
-              }
-            </ul>
-            <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="daily-treads">
-                  <i className="fa fa-dashboard"></i> <span>Daily Trends</span>
-                </a>
-              </li>
-            </ul>
-
-            <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="#" onClick={() => { setFinancialMenu(!financialMenu) }}>
-                  <i className="fa fa-dashboard"></i> <span>Financial</span> <i className="fa fa-angle-left pull-right"></i>
-                </a>
-
-              </li>
-              {financialMenu &&
-                <ul>
-                  <li><a href="payment-operations"><i className="fa fa-circle-o"></i> Payment & operations</a></li>
-                  <li><a href="financial-reports"><i className="fa fa-circle-o"></i> Financial reports</a></li>
-                </ul>
-              }
-            </ul>
-            <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="user-access">
-                  <i className="fa fa-dashboard"></i> <span>User Access</span>
-                </a>
-              </li>
-            </ul>
-            <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="#" onClick={() => { setProfileMenu(!profileMenu) }}>
-                  <i className="fa fa-dashboard"></i> <span>Account</span> <i className="fa fa-angle-left pull-right"></i>
-                </a>
-              </li>
-              {profileMenu &&
-                <ul className="treeview">
-
-
-                  <li className="treeview">
-                    <a href="profile">
-                      <i className="fa fa-dashboard"></i> <span>Profile</span>
-                    </a>
-                  </li>
-
-
-                  <li className="treeview">
-                    <a href="password-change">
-                      <i className="fa fa-dashboard"></i> <span>Password</span>
-                    </a>
-                  </li>
-
-
-                  <li className="treeview">
-                    <a href="bank-information">
-                      <i className="fa fa-dashboard"></i> <span>Bank Information</span>
-                    </a>
-                  </li>
-
-                </ul>
-              }
-            </ul>
-
-            <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="support">
-                  <i className="fa fa-dashboard"></i> <span>Support</span>
-                </a>
-              </li>
-            </ul> */}
-
+            } 
             <ul className="sidebar-menu">
               <li className="treeview" onClick={handleLogout}>
                 <a href="#" >
@@ -232,6 +236,9 @@ export const Nav = (props) => {
             </ul>
 
           </section>
+        </aside> */}
+          </section>
+
         </aside>
       </div>
     </nav>

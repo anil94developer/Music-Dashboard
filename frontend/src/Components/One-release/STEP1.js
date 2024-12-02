@@ -26,7 +26,7 @@ export default function STEP1(props) {
         upcEan, setUpcEan,
         newLabelName, setNewLabelName,
         labelNameStatus, setLabelNameStatus,
-        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData,setCoverImage,coverImage } = Step1Controller();
+        producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData, setCoverImage, coverImage } = Step1Controller();
     useEffect(() => {
         const getData = () => {
             setReleaseData(releaseData);
@@ -50,7 +50,7 @@ export default function STEP1(props) {
                 setProductionYear(jsonData.productionYear);
                 setUpcEan(jsonData.UPCEAN);
                 setProducerCatalogueNumber(jsonData.producerCatalogueNumber);
-                setCoverImage(jsonData.coverImage); 
+                setCoverImage(jsonData.coverImage);
             } else {
                 console.error("Data is undefined or null");
             }
@@ -81,7 +81,7 @@ export default function STEP1(props) {
                     />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group" >
                     <label htmlFor="versionSubtitle">Version/Subtitle</label>
                     <input
                         value={versionSubtitle}
@@ -103,11 +103,17 @@ export default function STEP1(props) {
                     <SearchInput artistData={featuring} setSelectData={setFeaturing} />
                 </div>
 
-                <div className="form-check">
+                <div
+                    style={{
+                        display: 'flex', // Ensure the container is a flex container
+                        flexDirection: 'row', // Align items in a row 
+                        alignItems: 'center', // Align items vertically centered
+                    }}
+                >
                     <input
                         checked={isVariousArtists}
                         type="checkbox"
-                        className="form-check-input"
+                        // className="form-check-input"
                         id="variousArtists"
                         onChange={(e) => setIsVariousArtists(e.target.checked)}
                     />
@@ -123,7 +129,7 @@ export default function STEP1(props) {
                         onChange={(e) => setGenre(e.target.value)}
                     >
                         <option value={genre}>{genre ? genre : 'Select a genre'}</option>
-                        {GENRES.map((item) =>
+                        {GENRES?.map((item) =>
                             (<option value={item.name}>{item.name}</option>)
                         )}
                     </select>
@@ -146,46 +152,64 @@ export default function STEP1(props) {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="labelName">Label name * </label>
-                    <div className="dynamic-input-container d-flex row">
-                        <div className="input-group input-group-sm">
-                            <select
-                                value={labelName}
-                                className="form-control"
-                                id="labelName"
-                                onChange={(e) => setLabelName(e.target.value)}
-                            >
-                                <option value={labelName}>{labelName ? labelName : 'Select a label'}</option>
-                                {labelNameList && labelNameList.map((item) => (
-                                    <option value={item.title}>{item.title}</option>
+                    <label htmlFor="labelName">Label name *</label>
+                    <div
+                        style={{
+                            display: 'flex', // Ensure the container is a flex container
+                            flexDirection: 'row', // Align items in a row
+                            gap: '10px', // Add space between items
+                            alignItems: 'center', // Align items vertically centered
+                        }}
+                    >
+                        {/* Dropdown */}
+                        <select
+                            value={labelName}
+                            id="labelName"
+                            className="form-control"
+                            style={{ flex: '1' }} // Ensure the dropdown takes most of the space
+                            onChange={(e) => setLabelName(e.target.value)}
+                        >
+                            <option value={labelName}>{labelName || 'Select a label'}</option>
+                            {labelNameList &&
+                                labelNameList.map((item, index) => (
+                                    <option key={index} value={item.title}>
+                                        {item.title}
+                                    </option>
                                 ))}
+                        </select>
 
-                            </select>
-                            <span className="input-group-btn">
-                                <button className="btn btn-info btn-flat" type="button" onClick={() => { setLabelNameStatus((!labelNameStatus)) }} >+</button>
-                            </span>
+                        {/* Button */}
+                        <button
+                            className="btn btn-info btn-flat"
+                            type="button"
+                            onClick={() => setLabelNameStatus(!labelNameStatus)}
+                        >
+                            +
+                        </button>
+                    </div>
+                </div>
+
+
+                {labelNameStatus &&
+                    <div className="box">
+                        <div className="box-body">
+                            <div className="form-group">
+                                <label htmlFor="primaryArtist">Label Name</label>
+                                <div className="input-group input-group-sm">
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        value={newLabelName}
+                                        onChange={(e) => setNewLabelName(e.target.value)}
+                                        placeholder="Enter New Label"
+                                    />
+                                </div>
+                            </div>
+                            <button className="btn btn-success btn-flat " type="button" onClick={addNewLabel}>Add Label</button>
                         </div>
                     </div>
-                    {labelNameStatus &&
-                        <div className="box">
-                            <div className="box-body">
-                                <div className="form-group">
-                                    <label htmlFor="primaryArtist">Label Name</label>
-                                    <div className="input-group input-group-sm">
-                                        <input
-                                            className="form-control"
-                                            type="text"
-                                            value={newLabelName}
-                                            onChange={(e) => setNewLabelName(e.target.value)}
-                                            placeholder="Enter New Label"
-                                        />
-                                    </div>
-                                </div>
-                                <button className="btn btn-success btn-flat " type="button" onClick={addNewLabel}>Add Label</button>
-                            </div>
-                        </div>
-                    }
-                </div>
+                }
+
 
                 <div className="form-group">
                     <label htmlFor="format">Format *</label>
@@ -219,10 +243,9 @@ export default function STEP1(props) {
             <div className="col-md-6">
                 <div className="form-group">
                     <div className="img-cover">
-                        
-                        {coverImage != null ?
-                            <img className="img-thumbnail" src={domainUrl + coverImage} alt="Cover Preview" />
 
+                        {coverImage && coverImage != null ?
+                            <img className="img-thumbnail" src={domainUrl + coverImage} alt="Cover Preview" />
                             : <img className="img-thumbnail" src={imagePreview || images.user} alt="Cover Preview" />
 
                         }
@@ -316,7 +339,7 @@ export default function STEP1(props) {
                 </button>
             </div>
         </div>
-    </div>
+    </div >
     )
 }
 

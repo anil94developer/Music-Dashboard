@@ -15,7 +15,7 @@ export const Login = () => {
                         <b>Music Admin</b>
                     </a>
                 </div>
-                <div className="login-box-body">
+                <div className="login-box-body" style={{borderWidth:2}}>
                     <p className="login-box-msg">Welcome to Sign in</p>
                     <form id="dataform" onSubmit={handleSubmit}>
                         <div className="form-group has-feedback">

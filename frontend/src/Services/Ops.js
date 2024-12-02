@@ -1,5 +1,5 @@
 import useLocalStorage from "use-local-storage";
-import  axios from "axios"; 
+import axios from "axios";
 
 
 const postData = async (url = "", data) => {
@@ -9,31 +9,31 @@ const postData = async (url = "", data) => {
         if (token) {
             token = token;
         }
-        var header = { headers: { Authorization: token, Accept: 'application/json','Cache-Control': 'no-cache' } };
-                let response = await axios.post(url, data, header)
-        console.log(url+"===========>",data, header)
+        var header = { headers: { Authorization: token, Accept: 'application/json', 'Cache-Control': 'no-cache' } };
+        let response = await axios.post(url, data, header)
+        console.log(url + "===========>", data, header)
         return response;
-       
-    } catch (e) { 
+
+    } catch (e) {
         console.log("---post---", JSON.stringify(e.response))
         return e.response.data
     }
 };
 const postDataContent = async (url = "", data) => {
     try {
-        
+
         let token = localStorage.getItem("token")
         let response = await axios.post(url, data, {
-            headers: {Authorization: token,  "content-type": 'multipart/form-data;','Cache-Control': 'no-cache', },
+            headers: { Authorization: token, "content-type": 'multipart/form-data;', 'Cache-Control': 'no-cache', },
         });
         return response.data;
-    } catch (e) { 
+    } catch (e) {
         console.log("---post mut   e---", JSON.stringify(e))
         return e.response.data
     }
 };
 const putData = async (url = "", data) => {
-    try { 
+    try {
         let token = localStorage.getItem("token")
         // if (token) {
         //     token = "Bearer " + token;
@@ -42,7 +42,7 @@ const putData = async (url = "", data) => {
             headers: { Authorization: token },
         });
         return response.data;
-    } catch (e) { 
+    } catch (e) {
         return e.response.data
     }
 };
@@ -50,8 +50,8 @@ const getData = async (url = "", params = {}) => {
     try {
         let token = localStorage.getItem("token");
         if (token) {
-            token =   token;
-        } 
+            token = token;
+        }
         const headers = {
             Authorization: token,
             'Cache-Control': 'no-cache'
@@ -76,12 +76,12 @@ const deleteData = async (url = "", token = false) => {
         });
         return response.data;
     } catch (e) {
-        if(e.response.data.status == 403 || e.response.data.status == 401 ){
-          
+        if (e.response.data.status == 403 || e.response.data.status == 401) {
+
         }
         console.log("------", JSON.stringify(e.response.data))
         return e.response.data
     }
 };
- 
+
 export { postData, getData, deleteData, putData, postDataContent };

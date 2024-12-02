@@ -79,12 +79,8 @@ sudo scp build.zip root@195.35.23.219:/var/www
 unzip build.zip -d ./../html
 
 mv favicon.ico logo512.png logo192.png robots.txt css/ index.html mainfest.json static/ nodesource_setup.sh asset-manifest.json  manifest.json  ./../
-
-
-sudo scp backend.zip root@195.35.23.219:/var/www
-unzip backend.zip -d backend
-
-
+ 
+ 
 rm -rf build/ favicon.ico logo512.png logo192.png robots.txt css/ index.html mainfest.json static/ nodesource_setup.sh asset-manifest.json  manifest.json 
 
 

@@ -13,6 +13,7 @@
 html,
 body {
   min-height: 100%;
+  background-color: #000;
 }
 .layout-boxed html,
 .layout-boxed body {
@@ -25,6 +26,7 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: #000;
 }
 /* Layout */
 .wrapper {
@@ -1242,6 +1244,7 @@ a:focus {
   display: block;
   margin-bottom: 20px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border: #000 2px solid;
 }
 
 .small-box>.inner {
@@ -3155,7 +3158,7 @@ body {
 
 .login-page,
 .register-page {
-  background: #d2d6de;
+  background: hsl(0, 0%, 0%);
   display: flex;
   justify-content: center;
   align-items: center;

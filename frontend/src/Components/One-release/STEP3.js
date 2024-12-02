@@ -72,7 +72,7 @@ export default function STEP3(props) {
     setReleaseData,
     btnName, setBtnName, setRowId,
     volume, setVolume,
-     
+
   } = Step3Controller()
 
   // State to manage the modal visibility
@@ -92,7 +92,7 @@ export default function STEP3(props) {
       setStep3(releaseData.step3);
       setReleaseData(releaseData)
       // alert(releaseData.step1.format)
-      if (releaseData.step1.format == "SINGLE") {
+      if (releaseData?.step1?.format == "SINGLE") {
         setTitle(releaseData.title || "");
         setVersionSubtitle(releaseData.step1.subTitle || "");
         setContentType(releaseData.type);
@@ -175,10 +175,10 @@ export default function STEP3(props) {
         <div className="box-header">
           <h1>Tracks</h1>
           <div className="mt-3">
-          <button onClick={openModal} className="btn btn-primary ">+ Add Track</button>
+            <button onClick={openModal} className="btn btn-primary ">+ Add Track</button>
+          </div>
         </div>
-        </div>
-        
+
       </div>
       <br></br>
       <div className="box box-primary">
@@ -436,15 +436,15 @@ export default function STEP3(props) {
                         value={price}
                         className="form-control"
                         id="price"
-                        onChange={(e) => setPrice(e.target.value)} 
+                        onChange={(e) => setPrice(e.target.value)}
                       >
                         <option value="">Please select...</option>
-                      <option selected="selected" value="156">Back : 15₹ / 0.99$ / 0Sg$</option>
-                      <option value="155">Mid : 20₹ / 1.49$ / 0Sg$</option>
-                      <option value="154">Front : 30₹ / 1.99$ / 0Sg$</option>
+                        <option selected="selected" value="156">Back : 15₹ / 0.99$ / 0Sg$</option>
+                        <option value="155">Mid : 20₹ / 1.49$ / 0Sg$</option>
+                        <option value="154">Front : 30₹ / 1.99$ / 0Sg$</option>
                       </select>
-                      
-                       
+
+
                     </div>
 
                     {/* Parental Advisory */}
@@ -453,26 +453,26 @@ export default function STEP3(props) {
                       <input type="radio" value="yes" checked={parentalAdvisory === "yes"} onChange={() => setParentalAdvisory("yes")} /> Yes
                       <input type="radio" value="no" checked={parentalAdvisory === "no"} onChange={() => setParentalAdvisory("no")} style={{ marginLeft: "10px" }} /> No
                       <input type="radio" value="no" checked={parentalAdvisory === "Cleaned"} onChange={() => setParentalAdvisory("Cleaned")} style={{ marginLeft: "10px" }} /> Cleaned
-                    
+
                     </div>
 
-                    
-                    
+
+
                     <div className="col-md-6">
                       <label>Preview start</label>
-                      <input  type="text" className="form-control" value={previewStart} onChange={(e) => setPreviewStart(e.target.value)} />
+                      <input type="text" className="form-control" value={previewStart} onChange={(e) => setPreviewStart(e.target.value)} />
                     </div>
 
-                    
+
                     <div className="col-md-6">
                       <label>Track title language</label>
-                      <input  type="text" className="form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} />
+                      <input type="text" className="form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} />
                     </div>
                     <div className="col-md-6">
                       <label>Lyrics language</label>
-                      <input  type="text" className="form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} />
+                      <input type="text" className="form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} />
                     </div>
-                    
+
                     {/* Lyrics */}
                     <div className="col-md-6">
                       <label>Lyrics</label>
@@ -482,23 +482,23 @@ export default function STEP3(props) {
                   </div>
 
                 </div>
-                
-              
-                </div>
-              <div className="form-group">
-                    {/* Submit Button */}
-                    {/* <div className="col-ml-12"> */}
 
-                      <button type="submit" className="btn btn-primary"
-                        onClick={async () => {
-                          await handleSubmit();  // Ensure handleSubmit completes first
-                          closeModal();
-                          // Then close the modal
-                        }}
-                      >{btnName}</button>
-                    {/* </div> */}
-                    </div>
-                    
+
+              
+              <div className="form-group">
+                {/* Submit Button */}
+                {/* <div className="col-ml-12"> */}
+
+                <button type="submit" className="btn btn-primary"
+                  onClick={async () => {
+                    await handleSubmit();  // Ensure handleSubmit completes first
+                    closeModal();
+                    // Then close the modal
+                  }}
+                >{btnName}</button>
+                {/* </div> */}
+              </div>
+              </div>
             </div>
           </div>
         </div>

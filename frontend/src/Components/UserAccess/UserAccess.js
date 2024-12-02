@@ -51,20 +51,20 @@ const UserAccess = (props) => {
             <table className="user-table">
               <thead>
                 <tr>
-                  <th>Role</th>
+                  <th>Name</th>
                   <th>Email</th>
                   <th>Wallet</th>
-                  <th>Status</th> 
+                  <th>No Of Label</th> 
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users && users?.map((user) => (
                     <tr key={user.userDetails._id}>
-                      <td>{user.userDetails.role}</td>
+                      <td>{user.userDetails.name}</td>
                       <td>{user.userDetails.email}</td>
                       <td>{user.userDetails.wallet}</td>
-                      <td>{user.userDetails.is_active}</td> 
+                      <td>{user.userDetails.noOfLabel}</td> 
                       <td>
                        <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button>
                         {/* <button

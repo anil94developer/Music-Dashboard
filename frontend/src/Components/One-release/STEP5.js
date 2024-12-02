@@ -22,10 +22,10 @@ export default function STEP5(props) {
   useEffect(() => {
     const getData = async () => {  
       setReleaseData(releaseData) 
-      setMainReleaseDate(releaseData.step5.MainReleaseDate)
-      setAllowPreview(releaseData.step5.Preview.Allow90Sec)
-      setSelectPreOrderDate(releaseData.step5.PreOrder)
-      setSelectexclusiveDate(releaseData.step5.ExclusiveReleaseDates)
+      setMainReleaseDate(releaseData?.step5?.MainReleaseDate)
+      setAllowPreview(releaseData?.step5?.Preview?.Allow90Sec)
+      setSelectPreOrderDate(releaseData?.step5?.PreOrder)
+      setSelectexclusiveDate(releaseData?.step5?.ExclusiveReleaseDates)
 
     }
     getData()
@@ -36,7 +36,7 @@ export default function STEP5(props) {
     <div>
       <div className="row">
         <div className="col-md-6">
-          <div className="form-row form-group">
+          <div className="form-group">
             <label>Choose a main release date <span>*</span></label>
             <input
               className="form-control"
@@ -45,7 +45,7 @@ export default function STEP5(props) {
               onChange={(e) => setMainReleaseDate(e.target.value)}
             />
           </div>
-          <div className="form-row form-group">
+          <div className="form-group">
             <label>Add a pre-order date</label>
             <select className="form-control" onChange={(e) => preOrderSelect(e.target.value)}>
               <option value="">Select Music</option>
@@ -55,7 +55,7 @@ export default function STEP5(props) {
             </select>
           </div>
           {selectPreOrderDate.map((item) => (
-            <div key={item.id} className="form-row form-control">
+            <div key={item.id} className="form-control">
               <label>{item.name}</label>
               <input
                 className="form-control col-md-2"
@@ -66,7 +66,7 @@ export default function STEP5(props) {
               <button type="button" onClick={() => removePreOrder(item.id)}>X</button>
             </div>
           ))}
-          <div className="form-row form-group">
+          <div className="form-group">
             <label>
               <input
                 type="checkbox"
@@ -78,17 +78,17 @@ export default function STEP5(props) {
           </div>
         </div>
         <div className="col-md-6">
-          <div className="form-row form-group">
+          <div className="form-group">
             <label>Add an exclusive release date</label>
             <select className="form-control" onChange={(e) => exclusiveOrderSelect(e.target.value)}>
               <option value="">Please Select</option>
-              {exclusiveDates.map((item) => (
+              {exclusiveDates?.map((item) => (
                 <option key={item.id} value={item.id}>{item.name}</option>
               ))}
             </select>
           </div>
-          {selectexclusiveDate.map((item) => (
-            <div key={item.id} className="form-row form-control">
+          {selectexclusiveDate?.map((item) => (
+            <div key={item.id} className="form-control">
               <label>{item.name}</label>
               <input
                 className="form-control col-md-2"

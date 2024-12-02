@@ -10,11 +10,7 @@ const AuthController = (props) => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState("");
     const [userPermission, setUserPermission] = useState([]);
-
-
-
-
-
+ 
     useEffect(() => {
         getProfile();
         getPermissoin();
@@ -73,24 +69,32 @@ const AuthController = (props) => {
 
 
     const handleLogout = () => {
+         
+    
         Swal.fire({
             title: "Are you sure?",
             text: "You will be logged out of your account!",
             icon: "warning",
-            buttons: ["Cancel", "Logout"],
-            dangerMode: true,
-        }).then((willLogout) => {
-            if (willLogout) {
+            showCancelButton: true,
+            confirmButtonText: "Yes, Logout",
+            cancelButtonText: "No, Stay",
+            reverseButtons: true, // Optional: swaps the position of Yes/No buttons
+        }).then((result) => {
+            if (result.isConfirmed) {
                 // Clear session storage or localStorage
                 localStorage.clear();
                 sessionStorage.clear();
-
+    
                 // Redirect to login page
                 navigate("/");
-
+    
                 // Show a success message
-                Swal.fire("Logged out successfully!", {
+                Swal.fire({
+                    title: "Logged out!",
+                    text: "You have been logged out successfully.",
                     icon: "success",
+                    timer: 2000,
+                    showConfirmButton: false,
                 });
             }
         });

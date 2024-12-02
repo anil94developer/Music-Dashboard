@@ -25,7 +25,7 @@ export default function FinancialReport() {
 
         <section className="container-fluid content">
           <div className="reports-container">
-            <h2>AVAILABLE REPORTS</h2>
+            {/* <h2>AVAILABLE REPORTS</h2> */}
 
             <div className="tabs">
               <button

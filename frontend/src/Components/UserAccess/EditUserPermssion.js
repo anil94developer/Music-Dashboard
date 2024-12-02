@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { base } from "../../Constants/Data.constant";
@@ -8,24 +8,26 @@ import SearchInput from "../Common/SearchBox";
 import "./UserAccessForm.css";
 
 function EditUserPermission() {
-    const navigate =useNavigate();
+    const navigate = useNavigate();
     const location = useLocation();
-    const userData = location.state?.userData; 
-    const [labelNameList,setLabelNameList] = useState([])
+    const userData = location.state?.userData;
+    const [labelNameList, setLabelNameList] = useState([])
     const [menuPermission, setMenuPermission] = useState([]);
     const [otherPermission, setOtherPermission] = useState([]);
     const [userPermission, setUserPermission] = useState({
         email: userData.userDetails.email,
         password: userData.userDetails.password,
+        name: userData.userDetails.naem,
+        noOfLabel: userData.userDetails.noOfLabel,
     });
     const [selectedItems, setSelectedItems] = useState(otherPermission.map(() => []));
 
 
-    useEffect(()=>{
+    useEffect(() => {
         setMenuPermission(userData.menuPermission)
         setOtherPermission(userData.otherPermission)
 
-    },[])
+    }, [])
     const handleCheckboxChange = (e, category, index, subIndex = null) => {
         const { checked } = e.target;
 
@@ -50,10 +52,12 @@ function EditUserPermission() {
 
     const handleSubmit = async () => {
         const payload = {
+            name: userPermission.name,
+            noOfLabel: userPermission.noOfLabel,
             "registeredUserId": userData.userDetails._id,
-            menuPermission:menuPermission,
-            otherPermission:otherPermission,
-        }; 
+            menuPermission: menuPermission,
+            otherPermission: otherPermission,
+        };
         try {
             const result = await putData(base.updatePermission, payload);
             if (result?.status === true) {
@@ -82,12 +86,19 @@ function EditUserPermission() {
     //   }
     return (
         <div>
-            <Nav/>
+            <Nav />
             <div className="content-wrapper">
                 <section className="content">
                     <div className="form-container">
                         <h2>User Access Management</h2>
                         <div className="form-section">
+                            <label>Name:
+                                <input
+                                    type="test"
+                                    value={userPermission.name}
+                                    onChange={(e) => setUserPermission((prev) => ({ ...prev, name: e.target.value }))}
+                                />
+                            </label>
                             <label>Email:
                                 <input
                                     type="email"
@@ -95,11 +106,19 @@ function EditUserPermission() {
                                     onChange={(e) => setUserPermission((prev) => ({ ...prev, email: e.target.value }))}
                                 />
                             </label>
+
                             <label>Password:
                                 <input
                                     type="password"
                                     value={userPermission.password}
                                     onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
+                                />
+                            </label>
+                            <label>No Of Label:
+                                <input
+                                    type="number"
+                                    value={userPermission.noOfLabel}
+                                    onChange={(e) => setUserPermission((prev) => ({ ...prev, noOfLabel: e.target.value }))}
                                 />
                             </label>
                         </div>
@@ -131,29 +150,29 @@ function EditUserPermission() {
                         {/* Catalog Scope */}
                         <div className="form-section">
                             <h3>Catalog Scope</h3>
-                            
-                                {otherPermission.map((item, index) =>  
-                                    (
-                                        <label key={item.sectionName}>
-                                            <input
-                                                type="checkbox"
-                                                checked={item.status}
-                                                onChange={(e) => handleCheckboxChange(e, "otherPermission", index)}
-                                            />
-                                            {item.sectionName}
-                                            {item.status && (
-                                                <div className="form-group">
-                                                    <label htmlFor="featuring">Search {item.sectionName}</label>
-                                                    {/* <SearchInput
+
+                            {otherPermission.map((item, index) =>
+                            (
+                                <label key={item.sectionName}>
+                                    <input
+                                        type="checkbox"
+                                        checked={item.status}
+                                        onChange={(e) => handleCheckboxChange(e, "otherPermission", index)}
+                                    />
+                                    {item.sectionName}
+                                    {item.status && (
+                                        <div className="form-group">
+                                            <label htmlFor="featuring">Search {item.sectionName}</label>
+                                            {/* <SearchInput
                                                         artistData={selectedItems[index]}
                                                         setSelectData={(data) => handleSearchChange(index, data)}
                                                     /> */}
-                                                </div>
-                                            )}
-                                        </label>
+                                        </div>
+                                    )}
+                                </label>
 
-                                    )
-                                )} 
+                            )
+                            )}
 
                         </div>
 

@@ -27,27 +27,28 @@ export const MainStep = () => {
             <div className="content-wrapper">
 
                 <section className="content-header">
-                    <h1>
+                    {/* <h1>
                         Dashboard
 
-                    </h1>
-                    <ol className="breadcrumb">
+                    </h1> */}
+                    {/* <ol className="breadcrumb">
                         <li><a href="#"><i className="fa fa-dashboard"></i> Home</a></li>
                         <li className="active">Dashboard</li>
-                    </ol>
+                    </ol> */}
                 </section>
 
 
                 <section className="container-fluid content">
 
                     <div className="custom-tab">
-                        <button className={`btn  btn-primary btn-sm ${step === 'step1' ? 'active' : ''}`} onClick={() => setStep('step1')}>Release information</button>
-                        <button className={`btn  btn-primary btn-sm ${step === 'step2' ? 'active' : ''}`} onClick={() => setStep('step2')}>Upload</button>
-                        <button className={`btn  btn-primary btn-sm ${step === 'step3' ? 'active' : ''}`} onClick={() => setStep('step3')}>Tracks</button>
-                        <button className={`btn  btn-primary btn-sm ${step === 'step4' ? 'active' : ''}`} onClick={() => setStep('step4')}>Store</button>
-                        <button className={`btn  btn-primary btn-sm ${step === 'step5' ? 'active' : ''}`} onClick={() => setStep('step5')}>Release date</button>
-                        {/* <button className={`btn  btn-primary btn-sm ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Promotion</button> */}
-                        <button className={`btn  btn-primary btn-sm ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Submission</button>
+                        
+                        <button className={`tab ${step === 'step1' ? 'active' : ''}`} onClick={() => setStep('step1')}>Release information</button>
+                        <button className={`tab ${step === 'step2' ? 'active' : ''}`} onClick={() => setStep('step2')}>Upload</button>
+                        <button className={`tab ${step === 'step3' ? 'active' : ''}`} onClick={() => setStep('step3')}>Tracks</button>
+                        <button className={`tab ${step === 'step4' ? 'active' : ''}`} onClick={() => setStep('step4')}>Store</button>
+                        <button className={`tab ${step === 'step5' ? 'active' : ''}`} onClick={() => setStep('step5')}>Release date</button>
+                        {/* <button className={`tab ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Promotion</button> */}
+                        <button className={`tab ${step === 'step6' ? 'active' : ''}`} onClick={() => setStep('step6')}>Submission</button>
                     </div>
                     {isLoading && "Loading..."}
                     <section className="content" key={myRelease}>

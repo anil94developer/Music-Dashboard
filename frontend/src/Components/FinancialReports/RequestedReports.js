@@ -47,8 +47,8 @@ const RequestedReports = () => {
     <div className="reports-container"> 
       {/* Table of reports */}
       <div className="reports-table">
-        <table>
-          <thead>
+        <table className="user-table">
+          <thead >
             <tr>
               <th>Period</th>
               <th>Report Type</th>
@@ -67,15 +67,15 @@ const RequestedReports = () => {
                 <td>{report.generationDate}</td>
                 <td>{report.status}</td>
                 <td>
-                  <div className="action-buttons">
+                <div className="action-buttons">
                     <button title="Download" className="action-button">
-                      <i className="fas fa-download"></i>
+                      <i className="fa fa-download"></i>
                     </button>
                     <button title="View as PDF" className="action-button">
-                      <i className="fas fa-file-pdf"></i>
+                      <i className="fa fa-file-pdf"></i>
                     </button>
                     <button title="Delete" className="action-button delete">
-                      <i className="fas fa-trash"></i>
+                      <i className="fa fa-trash"></i>
                     </button>
                   </div>
                 </td>
@@ -84,17 +84,7 @@ const RequestedReports = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Pagination */}
-      <div className="pagination">
-        <button className="page active">1</button>
-        <button className="page">2</button>
-        <button className="page">3</button>
-        <button className="page">4</button>
-        <button className="page">5</button>
-        <span>»</span>
-        <button className="page">[17]</button>
-      </div>
+ 
     </div>
   );
 };

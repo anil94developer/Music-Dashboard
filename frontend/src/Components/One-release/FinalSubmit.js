@@ -262,7 +262,7 @@ const styles = {
     maxWidth: "800px",
     margin: "20px auto",
     padding: "20px",
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
     borderRadius: "8px",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     fontFamily: "Arial, sans-serif",
@@ -281,6 +281,7 @@ const styles = {
     margin: "10px 0",
     border: "1px solid #ddd",
     borderRadius: "4px",
+    backgroundColor:'#000'
   },
   tooltip: {
     fontSize: "0.9em",

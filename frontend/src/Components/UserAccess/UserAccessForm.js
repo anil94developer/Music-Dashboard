@@ -76,17 +76,17 @@ function UserAccessForm() {
     },
     {
       "mainMenuName": "User Mangement",
-      "status": true,
+      "status": false,
       "submenu": []
     },
     {
       "mainMenuName": "Withdraw Request",
-      "status": true,
+      "status": false,
       "submenu": []
     },
     {
       "mainMenuName": "All Transcations",
-      "status": true,
+      "status": false,
       "submenu": []
     }
   ]);
@@ -99,6 +99,8 @@ function UserAccessForm() {
   const [userPermission, setUserPermission] = useState({
     email: "",
     password: "",
+    name: "",
+    noOfLabel: ""
   });
 
   const handleCheckboxChange = (e, category, index, subIndex = null) => {
@@ -152,21 +154,57 @@ function UserAccessForm() {
           <div className="form-container">
             <h2>User Access Management</h2>
             <div className="form-section">
-              <label>Email:
-                <input
-                  type="email"
-                  value={userPermission.email}
-                  onChange={(e) => setUserPermission((prev) => ({ ...prev, email: e.target.value }))}
-                />
-              </label>
-              <label>Password:
-                <input
-                  type="password"
-                  value={userPermission.password}
-                  onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
-                />
-              </label>
+
+              <div className="row">
+                {/* Left Column */}
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>Name: </label>
+                    <input
+                      type="test"
+                      className="form-control"
+                      value={userPermission.name}
+                      onChange={(e) => setUserPermission((prev) => ({ ...prev, name: e.target.value }))}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>Email: </label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      value={userPermission.email}
+                      onChange={(e) => setUserPermission((prev) => ({ ...prev, email: e.target.value }))}
+                    />
+
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>Password: </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      value={userPermission.password}
+                      onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
+                    />
+                  </div>
+                </div> 
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>No Of Label: </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      value={userPermission.noOfLabel}
+                      onChange={(e) => setUserPermission((prev) => ({ ...prev, noOfLabel: e.target.value }))}
+                    />
+                  </div> 
+                </div>
+              </div>
             </div>
+            <br></br>
             <div className="form-section">
               <h3>Menu Permissions</h3>
               {menuPermission.map((menu, index) => (
@@ -192,9 +230,8 @@ function UserAccessForm() {
                 </div>
               ))}
             </div>
-            {/* Catalog Scope */}
-            <div className="form-section">
-              <h3>Catalog Scope</h3>
+            <br></br>
+            {/* Catalog Scope */} 
               <div className="form-section">
                 <h3>Catalog Scope</h3>
                 {otherPermission.map((item, index) => (
@@ -207,12 +244,12 @@ function UserAccessForm() {
                     {item.sectionName}
                   </label>
                 ))}
-              </div>
+              
 
 
 
             </div>
-
+<br></br>
             <button
               onClick={() => [handleSubmit()]}
               className="btn btn-primary btn-block btn-flat"

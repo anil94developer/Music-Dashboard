@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { base } from "../../Constants/Data.constant";
-import { getData } from "../../Services/Ops";
+import { getData, postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import "./styles.css";
 
@@ -18,21 +19,44 @@ const UserManagement = (props) => {
 
 
   useEffect(() => {
-    const getUserList = async () => {
-      let result = await getData(base.getUserList);
-      console.log("my user list=========>",result.data)
-      setUsers(result.data)
-    }
+  
     getUserList();
   }, [props])
+  const getUserList = async () => {
+    let result = await getData(base.userList);
+    console.log("my user list=========>",result.data)
+    setUsers(result.data)
+  }
+  const user_delete=async(userId)=>{
+   
+    try {
+      let body={
+        "userId":userId
+      }
+      let result = await postData(base.deleteUser,body)
+      if (result.data.status === true) {
+        Swal.fire("Success", result.data.message, "success");
+        getUserList();
+      } else {
+        Swal.fire("Error", result.data.message, "error");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      Swal.fire("Error", "Something went wrong. Please try again later.", "error");
+    }
+  }
 
+  const onDetails=(id)=>{
+    navigate("/UserDetails",{ state: { userId: id } });
+
+  }
   return (
     <div>
       <Nav />
       <div className="content-wrapper">
         <section className="content">
 
-          <div className="container">
+          <div className="content">
             <h1>User Management</h1>
 
             {/* Filters */}
@@ -48,7 +72,7 @@ const UserManagement = (props) => {
             </div>
 
             {/* User List */}
-            <table className="user-table">
+            <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
               <thead>
                 <tr>
                   <th>Role</th>
@@ -59,12 +83,14 @@ const UserManagement = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {users && users?.map((user) => (
-                    <tr key={user.userDetails._id}>
-                      <td>{user.userDetails.role}</td>
-                      <td>{user.userDetails.email}</td>
-                      <td>{user.userDetails.wallet}</td>
-                      <td>{user.userDetails.is_active}</td> 
+                {users && users?.map((user) => {
+                  let bg = user.is_deleted == 1 ? 'red' : 'white';
+                  return(
+                    <tr style={{ backgroundColor: `${bg}` }} key={user._id}>
+                      <td>{user.role}</td>
+                      <td><a onClick={()=>{onDetails(user._id)}}>{user.email}</a></td>
+                      <td>{user.wallet}</td>
+                      <td>{user.is_active}</td> 
                       <td>
                        {/* <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button> */}
                         {/* <button
@@ -74,10 +100,10 @@ const UserManagement = (props) => {
                           Delete
                         </button>
                         <button className="action-button disable">Disable</button> */}
-                          <button className="action-button disable">Disable</button> 
+                        {user.is_deleted == '0' && <button  onClick={() => user_delete(user._id)} className="action-button disable">Disable</button> }
                       </td>
                     </tr>
-                  ))}
+                  )})}
               </tbody>
             </table>
           </div>

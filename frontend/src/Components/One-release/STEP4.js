@@ -6,7 +6,7 @@ import { postData } from '../../Services/Ops';
 
 export default function STEP4(props) {
   const {releaseData}= props
-  const [countryList, setCountryList] = useState(releaseData.step4.length > 0 ? releaseData.step4 : initialCountryList);
+  const [countryList, setCountryList] = useState(releaseData?.step4?.length > 0 ? releaseData?.step4 : initialCountryList);
 
   const handleCheckboxChange = (item) => {
     setCountryList((prevList) =>
@@ -42,7 +42,7 @@ export default function STEP4(props) {
         </div>
 
         <div className="countryList">
-          {countryList.map((item, index) => (
+          {countryList?.map((item, index) => (
             <div key={index} className="colElement">
               <div className="countryItem">
                 <input

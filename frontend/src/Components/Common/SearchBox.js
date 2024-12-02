@@ -99,8 +99,8 @@ export default function SearchInput(props) {
           ) : (
             <div className="box">
               <div className="box-body">
-                <div className="row">
-                  <div className="col-md-6">
+                 
+                  <div className="form-input">
                     <label>Artist Name</label>
                     <input
                       className="form-control"
@@ -110,7 +110,7 @@ export default function SearchInput(props) {
                       placeholder="Enter artist name..."
                     />
                   </div>
-                  <div className="col-md-6">
+                  <div className="form-input">
                     <label>Add Spotify Link Id</label>
                     <input
                       className="form-control"
@@ -120,7 +120,7 @@ export default function SearchInput(props) {
                       placeholder="Add Spotify Link Id..."
                     />
                   </div>
-                  <div className="col-md-6">
+                  <div className="form-input">
                     <label>Itunes Link Id</label>
                     <input
                       className="form-control"
@@ -130,18 +130,19 @@ export default function SearchInput(props) {
                       placeholder="Add Itunes Link Id..."
                     />
                   </div>
-                  <div className="col-md-6">
-                    <label></label>
+                  {/* <div className="form-input"> */}
+                    
                     <button
                       className="btn btn-success btn-flat form-control "
                       type="button"
                       onClick={addHandleSubmit}
+                      style={{marginTop:20}}
                     >
                       Add Artist
                     </button>
-                  </div>
-                </div>
-
+                  {/* </div> */}
+                 
+ 
               </div>
             </div>
           )}
