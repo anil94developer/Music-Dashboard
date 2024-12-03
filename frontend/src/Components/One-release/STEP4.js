@@ -50,7 +50,8 @@ export default function STEP4(props) {
                   checked={item.status === 'active'}
                   onChange={() => handleCheckboxChange(item)}
                 />&nbsp;&nbsp;
-                <img src={`https://www.believebackstage.com/img/flags/${item.code}.gif`} alt={item.name} />&nbsp;&nbsp;
+                {/* {item.name} */}
+                {/* <img src={item.logo} alt={item.name}  />&nbsp;&nbsp; */}
                 <label>{item.name}</label>
               </div>
             </div>

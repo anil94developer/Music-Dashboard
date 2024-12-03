@@ -105,10 +105,7 @@ export default function DailyTreads() {
                     <thead>
                       <tr role="row">
                         <th >#</th>
-                        {/* <th >logo</th> */}
                         <th >Stores</th>
-                        {/* <th >%</th> */}
-                        {/* <th >Audio Streams	</th> */}
                         <th > Quantity</th>
                       </tr>
                     </thead>

@@ -48,7 +48,10 @@ const base = {
   uploadStore:mainUrl+'excel/sent-store',
   getStore:mainUrl+'excel/get-store',
   uploadMarket:mainUrl+'excel/sent-market',
-  getMarket:mainUrl+'excel/get-market'
+  getMarket:mainUrl+'excel/get-market',
+  sendStream:mainUrl + 'excel/sent-stream',
+  getStream:mainUrl + 'excel/get-stream'
+
 
 
   

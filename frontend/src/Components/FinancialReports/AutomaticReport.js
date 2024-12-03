@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { base } from "../../Constants/Data.constant";
+import { getData } from "../../Services/Ops";
 import StreamGraph from "../Common/Chart/StreamGraph";
 // import "./styles.css";
 
@@ -11,6 +13,13 @@ const AutomaticReports = () => {
     { period: "May 2024", type: "Full catalog single report", amount: "560.22 €", status: "✔", actions: "Download" },
   ];
 
+  useEffect(()=>{
+getGraphReport()
+  },[])
+ const getGraphReport=async()=>{
+   let result = await getData(base.getStream);
+   console.log("====================>",result)
+ }
   return (
     <div className="reports-container"> 
 

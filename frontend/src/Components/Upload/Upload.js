@@ -2,6 +2,8 @@ import React from 'react'
 import { Nav } from '../Common/Nav'
 
 export default function Upload() {
+
+  
   return (
     <div>
       <Nav />
