@@ -35,10 +35,8 @@ export default function STEP1(props) {
                 console.log("jsonData.featuring====", releaseData);
                 setReleaseTitle(releaseData.title);
                 setVersionSubtitle(jsonData.subTitle);
-                setPrimaryArtist(jsonData.primaryArtist);
-                // setPrimaryArtist([]);
-                setFeaturing(jsonData.featuring);
-                // setFeaturing([]);
+                setPrimaryArtist(jsonData.primaryArtist); 
+                setFeaturing(jsonData.featuring); 
                 setIsVariousArtists(jsonData.isVariousArtists);
                 setGenre(jsonData.genre);
                 setSubGenre(jsonData.subGenre);
@@ -66,6 +64,8 @@ export default function STEP1(props) {
             <h1>Release Information</h1>
         </div>
         {releaseData._id}
+        {releaseData.status}
+
         <div className="row">
             {/* Left Column */}
             <div className="col-md-6">

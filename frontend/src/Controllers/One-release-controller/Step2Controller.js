@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Swal from "sweetalert2";
 import { postData, postDataContent } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
+import MainStepController from './MainStepController';
 
 const Step2Controller = () => {
+    const { fetchReleaseDetails } = MainStepController();
     const [mediaFiles, setMediaFiles] = useState([]);
     const [releaseData, setReleaseData] = useState({});
 
@@ -17,7 +19,7 @@ const Step2Controller = () => {
                 fileData: file,
                 fileType: file.type.startsWith("audio") ? "audio" : "video"
             }));
-        
+
         setMediaFiles((prevFiles) => [...prevFiles, ...updatedFiles]);
     };
 
@@ -29,11 +31,16 @@ const Step2Controller = () => {
         // setIsUploading(true);
         try {
             const formData = new FormData();
-            formData.append("id", releaseData._id);
+            formData.append("id", releaseData._id); 
+            releaseData.step2.forEach((file) => mediaFiles.push(file));
+
             mediaFiles.forEach((file) => formData.append("files", file.fileData));
-    
+            console.log("mediaFiles=======",mediaFiles)
             const result = await postDataContent(base.releaseStep2, formData);
             Swal.fire("Success", result.message, "success");
+            fetchReleaseDetails(releaseData._id)
+            setMediaFiles([])
+
         } catch (error) {
             Swal.fire("Error", "An error occurred while uploading files.", "error");
         } finally {

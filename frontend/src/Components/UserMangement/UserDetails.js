@@ -93,6 +93,22 @@ export default function UserDetails() {
     setTrackList(result.data) 
   }
 
+
+  const uploadMarketStream = async () => {
+    let body = {
+      userId: userId,
+      data: jsonData
+    }
+    let result = await postData(base.sendStream, body)
+    console.log(result)
+    if (result.data.status === true) {
+      Swal.fire("Success", result.message, result.message);
+    } else {
+      Swal.fire("Error", result.message, result.message);
+    }
+  }
+
+
   return (
     <div>
       <Nav />
@@ -218,6 +234,47 @@ export default function UserDetails() {
             </section>
           </div>
         </div>
+
+        <div className="col-md-12">
+          <div className="">
+            <h3 className="mb-4">Stream Upload Excel</h3>
+            <section className="content-header">
+
+              {/* Upload Input */}
+              <div className="row">
+                {/* Left Column */}
+                <div className="col-md-6">
+                  <div className="form-group">
+                    {/* <label className="form-label">Select Media Files:</label> */}
+                    <input
+                      type="file"
+                      accept=".csv"
+                      onChange={handleFileChange}
+                      className="form-control"
+                    // onChange={handleFileChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <button
+                      onClick={() => uploadMarketStream()}
+                      type="submit"
+                      className="btn btn-primary"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </section>
+          </div>
+        </div>
+
 
         <section className="content">
           <br></br>

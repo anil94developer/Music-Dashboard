@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { base } from '../../Constants/Data.constant';
 import MainStepController from '../../Controllers/One-release-controller/MainStepController'
@@ -7,6 +7,7 @@ import { postData } from '../../Services/Ops';
 import { Nav } from '../Common/Nav';
 const FinalSubmit = () => {
   const location = useLocation();
+  const navigate = useNavigate()
   const releaseId = location.state?.releaseId;
   const { step, setStep, myRelease, fetchReleaseDetails, isLoading, } = MainStepController();
   const [isRefresh, setIsRefresh] = useState(new Date().getTime())
@@ -62,6 +63,8 @@ const FinalSubmit = () => {
     let result= await postData(base.finalReleaseSubmit,body)
     if (result.data.status === true) {
       Swal.fire("Success", result.message, result.message);
+      navigate("/All releases");
+
     } else {
       Swal.fire("Error", result.message, result.message);
     }

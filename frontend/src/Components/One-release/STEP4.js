@@ -5,7 +5,7 @@ import initialCountryList from '../../Enums/store.list.json';
 import { postData } from '../../Services/Ops';
 
 export default function STEP4(props) {
-  const {releaseData}= props
+  const { releaseData } = props
   const [countryList, setCountryList] = useState(releaseData?.step4?.length > 0 ? releaseData?.step4 : initialCountryList);
 
   const handleCheckboxChange = (item) => {
@@ -19,8 +19,8 @@ export default function STEP4(props) {
   };
   const handleSubmit = async () => {
     let body = {
-      _id:releaseData._id,
-      step4:countryList
+      _id: releaseData._id,
+      step4: countryList
     }
     console.log(body)
     let result = await postData(base.addStore, body);
@@ -50,9 +50,12 @@ export default function STEP4(props) {
                   checked={item.status === 'active'}
                   onChange={() => handleCheckboxChange(item)}
                 />&nbsp;&nbsp;
-                {/* {item.name} */}
-                {/* <img src={item.logo} alt={item.name}  />&nbsp;&nbsp; */}
-                <label>{item.name}</label>
+                {item.name}
+                {/* <img
+                  src={require(`${item.logo}`)}
+                  style={{ height: 50, width: 30 }}
+                  alt={item.name}
+                /> */}
               </div>
             </div>
           ))}

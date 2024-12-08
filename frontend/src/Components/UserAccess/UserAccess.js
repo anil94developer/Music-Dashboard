@@ -1,11 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { base } from "../../Constants/Data.constant";
+import { useUserProfile } from "../../Context/UserProfileContext";
 import { getData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import "./styles.css";
 
 const UserAccess = (props) => {
+  const { userProfile } = useUserProfile()
   const [search, setSearch] = useState("");
   const [accountStatus, setAccountStatus] = useState("All");
   const [permissionLevel, setPermissionLevel] = useState("All");
@@ -20,7 +22,7 @@ const UserAccess = (props) => {
   useEffect(() => {
     const getUserList = async () => {
       let result = await getData(base.getUserList);
-      console.log("my user list=========>",result.data)
+      console.log("my user list=========>", result.data)
       setUsers(result.data)
     }
     getUserList();
@@ -43,7 +45,7 @@ const UserAccess = (props) => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-               
+
               <a href="add-user"> <button className="add-user-button">Add a new user</button></a>
             </div>
 
@@ -54,29 +56,29 @@ const UserAccess = (props) => {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Wallet</th>
-                  <th>No Of Label</th> 
+                  {userProfile.role == 'admin' && <th>No Of Label</th>}
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users && users?.map((user) => (
-                    <tr key={user.userDetails._id}>
-                      <td>{user.userDetails.name}</td>
-                      <td>{user.userDetails.email}</td>
-                      <td>{user.userDetails.wallet}</td>
-                      <td>{user.userDetails.noOfLabel}</td> 
-                      <td>
-                       <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button>
-                        {/* <button
+                  <tr key={user.userDetails._id}>
+                    <td>{user.userDetails.name}</td>
+                    <td>{user.userDetails.email}</td>
+                    <td>{user.userDetails.wallet}</td>
+                    {userProfile.role == 'admin' && <td>{user.userDetails.noOfLabel}</td>}
+                    <td>
+                      <button className="action-button edit" onClick={() => { navigate("/edit-permission", { state: { userData: user } }); }}>Edit</button>
+                      {/* <button
                           className="action-button delete"
                           onClick={() => handleDelete(user.login)}
                         >
                           Delete
                         </button>
                         <button className="action-button disable">Disable</button> */}
-                      </td>
-                    </tr>
-                  ))}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

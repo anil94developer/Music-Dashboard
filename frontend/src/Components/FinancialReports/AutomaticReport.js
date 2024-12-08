@@ -1,10 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { base } from "../../Constants/Data.constant";
 import { getData } from "../../Services/Ops";
 import StreamGraph from "../Common/Chart/StreamGraph";
 // import "./styles.css";
 
-const AutomaticReports = () => { 
+const AutomaticReports = () => {
+  const [streamData, setStreamData] = useState([])
   const reports = [
     { period: "Q3 2024", type: "Full catalog single report", amount: "871.38 €", status: "✔", actions: "Download" },
     { period: "August 2024", type: "Full catalog single report", amount: "165.83 €", status: "✔", actions: "Download" },
@@ -13,15 +14,22 @@ const AutomaticReports = () => {
     { period: "May 2024", type: "Full catalog single report", amount: "560.22 €", status: "✔", actions: "Download" },
   ];
 
-  useEffect(()=>{
-getGraphReport()
-  },[])
- const getGraphReport=async()=>{
-   let result = await getData(base.getStream);
-   console.log("====================>",result)
- }
+  useEffect(() => {
+    getGraphReport()
+  }, [])
+  const getGraphReport = async () => {
+    let result = await getData(base.getStream);
+    console.log("====================>", result.data)
+    if (result?.data?.status) {
+      setStreamData(result.data)
+    }
+  }
+  // const getGraphReport = async () => {
+  //   let result = await getData(base.getStream);
+  //   console.log("====================>", result)
+  // }
   return (
-    <div className="reports-container"> 
+    <div className="reports-container">
 
       <div className="reports-table">
         <table className="user-table">
@@ -42,7 +50,7 @@ getGraphReport()
                 <td>{report.amount}</td>
                 <td>{report.status}</td>
                 <td>
-                <div className="action-buttons">
+                  <div className="action-buttons">
                     <button title="Download" className="action-button">
                       <i className="fa fa-download"></i>
                     </button>
@@ -58,15 +66,15 @@ getGraphReport()
             ))}
           </tbody>
         </table>
-      </div> 
+      </div>
 
       <section className="content">
-          <div className="row">
-            <div className="col-lg-12 col-xs-12 border">
-              <StreamGraph  />
-            </div>
+        <div className="row">
+          <div className="col-lg-12 col-xs-12 border">
+            <StreamGraph list={streamData} />
           </div>
-        </section>
+        </div>
+      </section>
     </div>
   );
 };

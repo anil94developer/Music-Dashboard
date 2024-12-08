@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { images } from "../../assets/images";
+import { useUserProfile } from "../../Context/UserProfileContext";
 import AuthController from "../../Controllers/Auth-controller/AuthController";
 
 export const Nav = (props) => {
-  // const { setUserData } = props
-  const { userData, handleLogout, userPermission } = AuthController()
+  const { handleLogout } = AuthController()
+  const { userPermission, userProfile } = useUserProfile()
   const [financialMenu, setFinancialMenu] = useState(false)
   const [subMenu, setSubMenu] = useState("")
   const [profileMenu, setProfileMenu] = useState(false)
@@ -13,11 +14,6 @@ export const Nav = (props) => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-  // useEffect(() => {
-  //   if (userData) {
-  //     setUserData(userData);
-  //   }
-  // }, [])
 
   const renderIcon = (name) => {
     return name == "Dashboard" ? "fa fa-dashboard"
@@ -61,8 +57,7 @@ export const Nav = (props) => {
                       className="user-image"
                       alt="User Image"
                     />
-                    <span className="hidden-xs">{userData?.name}</span>
-                    <span className="hidden-xs">{userData?.email}</span>
+                    <span className="hidden-xs">{userProfile?.name}</span>
                   </a>
                   {dropdownVisible &&
                     <div className="modal" style={{ display: 'block', marginTop: -50, }} onClick={toggleDropdown}>
@@ -98,27 +93,31 @@ export const Nav = (props) => {
                                 </a>
                               </li>
                             </ul>
-                            <ul className="sidebar-menu">
-                              <li className="treeview">
-                                <a href="bank information">
-                                  <i className="fa fa-bank"></i> <span>Bank Information</span>
-                                </a>
-                              </li>
-                            </ul>
-                            <ul className="sidebar-menu">
-                              <li className="treeview">
-                                <a href="Support">
-                                  <i className="fa fa-support"></i> <span>Support</span>
-                                </a>
-                              </li>
-                            </ul>
-                            <ul className="sidebar-menu">
-                              <li className="treeview">
-                                <a href="" onClick={handleLogout}>
-                                  <i className="fa fa-sign-out"></i> <span>Logout</span>
-                                </a>
-                              </li>
-                            </ul>
+                            {userProfile.role == "company" &&
+                              <>
+                                <ul className="sidebar-menu">
+                                  <li className="treeview">
+                                    <a href="bank information">
+                                      <i className="fa fa-bank"></i> <span>Bank Information</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                                <ul className="sidebar-menu">
+                                  <li className="treeview">
+                                    <a href="Support">
+                                      <i className="fa fa-support"></i> <span>Support</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                                <ul className="sidebar-menu">
+                                  <li className="treeview">
+                                    <a href="" onClick={() => handleLogout()}>
+                                      <i className="fa fa-sign-out"></i> <span>Logout</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </>
+                            }
                           </div>
                         </div>
                       </div>
@@ -138,8 +137,11 @@ export const Nav = (props) => {
                   className="img-circle"
                   alt="User Image"
                 />
-                <p>{userData?.email}</p>
+                <p>{userProfile?.email}</p><br></br>
+
+
               </div>
+              <p>{userProfile?.role}</p>
             </div>
 
 
@@ -184,13 +186,13 @@ export const Nav = (props) => {
 
             }
 
-            <ul className="sidebar-menu">
+            {/* <ul className="sidebar-menu">
               <li className="treeview">
                 <a href="/Upload" >
                   <i className="fa fa-dashboard"></i> <span>Upload</span>
                 </a>
               </li>
-            </ul>
+            </ul> */}
 
 
             {/* </div> */}

@@ -4,9 +4,43 @@ import { useNavigate } from 'react-router-dom';
 import OneReleaseController from '../../Controllers/One-release-controller/OneReleaseController';
 import { Nav } from '../Common/Nav'
 import * as XLSX from 'xlsx';
+import DataTable from '../Common/DataTable/DataTable';
+import { Box, Button, Modal, Typography } from '@mui/material';
+
 export const AllRelease = () => {
   const navigate = useNavigate();
   const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading, myTracks, setMyTracks } = OneReleaseController();
+
+
+  const columns = [
+    { field: 'id', headerName: '#', headerClassName: 'black-header' },
+    { field: '_id', headerName: 'Id', headerClassName: 'black-header' },
+    { field: 'type', headerName: 'Type', headerClassName: 'black-header' },
+    { field: 'status', headerName: 'Status', headerClassName: 'black-header' },
+    { field: 'title', headerName: 'Title / Artist', headerClassName: 'black-header' },
+    { field: 'label', headerName: 'Label', headerClassName: 'black-header' },
+    { field: 'releaseDate', headerName: 'Release date / Hour / Time zone', headerClassName: 'black-header' ,width:150},
+    { field: 'noOfTrack', headerName: '# of track', headerClassName: 'black-header' },
+    { field: 'upcCatalogNumber', headerName: 'UPC / Catalog Number', headerClassName: 'black-header',width:150 },
+    { field: 'deliveredTerritories', headerName: 'Delivered Territories & Stores	', headerClassName: 'black-header' },
+        {
+      field: 'action', headerName: 'Action',
+      renderCell: (params) => (
+        <div style={{ gap: '8px' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => {
+              navigate("/release-details", { state: { releaseId: params.row._id } });
+            }}
+          >
+            More
+          </Button>
+        </div>
+      )
+    }
+  ];
 
   return (
     <div>
@@ -21,8 +55,13 @@ export const AllRelease = () => {
                   <h3 className="box-title">Old Release</h3>
                 </div>
                 <div className="box-body">
-
-                  <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                  <DataTable
+                    columns={columns}
+                    rows={myRelease}
+                    height="500"
+                    width="100%"
+                  />
+                  {/* <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                     <thead>
                       <tr role="row">
 
@@ -44,7 +83,7 @@ export const AllRelease = () => {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table> */}
                 </div>
                 {isLoading && "Loading..."}
               </div>

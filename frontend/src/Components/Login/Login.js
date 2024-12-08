@@ -1,12 +1,45 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import { DataContext } from '../../Context/Context';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom"; 
 import LoginController from '../../Controllers/Login-controller/LoginController';
-// import Swal from "sweetalert2"; 
 
 export const Login = () => {
     const navigate = useNavigate();
-    const { handleSubmit,  email,  setEmail,  password, setPassword, isLoading } = LoginController();
+    const { handleSubmit, email, setEmail, password, setPassword, isLoading } = LoginController();
+    const [errors, setErrors] = useState({ email: '', password: '' });
+
+    const validate = () => {
+        let isValid = true;
+        const newErrors = { email: '', password: '' };
+
+        // Email validation
+        if (!email) {
+            newErrors.email = 'Email is required.';
+            isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            newErrors.email = 'Invalid email format.';
+            isValid = false;
+        }
+
+        // Password validation
+        if (!password) {
+            newErrors.password = 'Password is required.';
+            isValid = false;
+        } else if (password.length < 6) {
+            newErrors.password = 'Password must be at least 6 characters long.';
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if (validate()) {
+            handleSubmit(e); // Call your login handler
+        }
+    };
+
     return (
         <div className="login-page">
             <div className="login-box">
@@ -15,9 +48,9 @@ export const Login = () => {
                         <b>Music Admin</b>
                     </a>
                 </div>
-                <div className="login-box-body" style={{borderWidth:2}}>
+                <div className="login-box-body" style={{ borderWidth: 2 }}>
                     <p className="login-box-msg">Welcome to Sign in</p>
-                    <form id="dataform" onSubmit={handleSubmit}>
+                    <form id="dataform" onSubmit={onSubmit}>
                         <div className="form-group has-feedback">
                             <input
                                 type="text"
@@ -28,6 +61,7 @@ export const Login = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            {errors.email && <p className="text-danger">{errors.email}</p>}
                         </div>
                         <div className="form-group has-feedback">
                             <input
@@ -39,6 +73,7 @@ export const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <span className="glyphicon glyphicon-lock form-control-feedback"></span>
+                            {errors.password && <p className="text-danger">{errors.password}</p>}
                         </div>
                         <div className="row">
                             <div className="col-xs-4">

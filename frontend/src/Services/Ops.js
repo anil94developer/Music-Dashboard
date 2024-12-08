@@ -5,11 +5,12 @@ import axios from "axios";
 const postData = async (url = "", data) => {
     try {
         console.log("url", url)
-        let token = localStorage.getItem("token")
+        let token = localStorage.getItem("token") 
+
         if (token) {
             token = token;
         }
-        var header = { headers: { Authorization: token, Accept: 'application/json', 'Cache-Control': 'no-cache' } };
+        var header = { headers: {  Authorization: token, 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' } };
         let response = await axios.post(url, data, header)
         console.log(url + "===========>", data, header)
         return response;
@@ -32,27 +33,13 @@ const postDataContent = async (url = "", data) => {
         return e.response.data
     }
 };
-const putData = async (url = "", data) => {
-    try {
-        let token = localStorage.getItem("token")
-        // if (token) {
-        //     token = "Bearer " + token;
-        // }
-        let response = await axios.put(url, data, {
-            headers: { Authorization: token },
-        });
-        return response.data;
-    } catch (e) {
-        return e.response.data
-    }
-};
 const getData = async (url = "", params = {}) => {
-    try {
-        let token = localStorage.getItem("token");
+    try { 
+        let token = await localStorage.getItem("token");
         if (token) {
             token = token;
         }
-        const headers = {
+        const headers = { 
             Authorization: token,
             'Cache-Control': 'no-cache'
         };
@@ -65,6 +52,25 @@ const getData = async (url = "", params = {}) => {
     }
 };
 
+const putData = async (url = "", data) => {
+    try {
+        let token = localStorage.getItem("token")
+        if (token) {
+            token = token;
+        }
+        // alert(token)
+        const headers = { 
+            Authorization: `Bearer ${token}`,
+            'Cache-Control': 'no-cache'
+        };
+        let response = await axios.put(url, data, {
+            headers: headers,
+        });
+        return response.data;
+    } catch (e) {
+        return e.response.data
+    }
+};
 
 const deleteData = async (url = "", token = false) => {
     try {

@@ -21,23 +21,26 @@ export default function DailyTreads() {
   const getStore = async () => {
     let result = await getData(base.getStore)
     console.log(result)
-    let arr = []
-    result?.data?.map((item, index) => {
-      arr.push({ name: item.Store, y: item.Quantity })
-    })
-    setTopStores(arr)
+    if (result?.data?.status) {
+      let arr = []
+      result?.data?.map((item, index) => {
+        arr.push({ name: item.Store, y: item.Quantity })
+      })
+      setTopStores(arr)
+    }
 
   }
 
   const getMarket = async () => {
     let result = await getData(base.getMarket)
     console.log(result)
-    let arr = []
-    result.data?.map((item, index) => { 
-        arr.push({ x: index, label: item.Market, y: item.Quantity })  
-    })
-    setMarketList(arr);
-
+    if (result?.data?.status) {
+      let arr = []
+      result.data?.map((item, index) => {
+        arr.push({ x: index, label: item.Market, y: item.Quantity })
+      })
+      setMarketList(arr);
+    }
   }
 
   return (
@@ -67,15 +70,14 @@ export default function DailyTreads() {
         </section>
         <section className="content">
           <div class='row'>
-            <div class='col-md-6'>
+            {/* {topStores.length > 0 && <div class='col-md-6'>
               <div className="box box-info">
-                <div className="box-body">
-                  {/* <DrillDown /> */}
-
+                <div className="box-body"> 
                   <PaiChart data={topStores} />
                 </div>
               </div>
             </div>
+            } */}
             <div class='col-md-6'>
               <div className="box box-info">
                 <div className="box-body">
@@ -85,6 +87,8 @@ export default function DailyTreads() {
             </div>
           </div>
         </section>
+
+        {/* {marketList.length > 0 && 
         <section className="content">
           <div className="row">
             <div className="col-lg-12 col-xs-12 border">
@@ -92,6 +96,7 @@ export default function DailyTreads() {
             </div>
           </div>
         </section>
+        } */}
         <section className="content">
           <div class='row'>
             <div className="col-md-12">
@@ -111,13 +116,13 @@ export default function DailyTreads() {
                     </thead>
 
                     <tbody role="alert" aria-live="polite" aria-relevant="all">
-                      {topStores.map((item, index) => (
+                      {/* {topStores.length > 0 && topStores.map((item, index) => (
                         <tr className="odd">
                           <td className="  sorting_1">{index + 1}</td>
                           <td className="  sorting_1">{item.name}</td>
                           <td className="  ">{item.y}</td>
                         </tr>
-                      ))}
+                      ))} */}
                     </tbody>
                   </table>
                 </div>

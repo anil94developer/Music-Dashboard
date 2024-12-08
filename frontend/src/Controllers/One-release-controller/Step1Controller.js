@@ -128,23 +128,22 @@ const Step1Controller = (props) => {
     formData.append("type", releaseData.type);
     formData.append("_id", releaseData._id);
     formData.append("step1[subTitle]", versionSubtitle);
-    // Flatten arrays for `primaryArtist`
+    // Flatten arrays for `primaryArtist` 
     primaryArtist.forEach((file, index) => {
-      console.log("select artist list =======",file)
       formData.append(`step1[primaryArtist][${index}][id]`, file._id);
       formData.append(`step1[primaryArtist][${index}][name]`, file.name);
       formData.append(`step1[primaryArtist][${index}][linkId]`, file.linkId);
       formData.append(`step1[primaryArtist][${index}][itunesLinkId]`, file.itunesLinkId);
-
     });
 
     // Flatten arrays for `featuring`
     featuring.forEach((file, index) => {
       formData.append(`step1[featuring][${index}][id]`, file._id);
-      formData.append(`step1[featuring][${index}][name]`, file.name); 
-      formData.append(`step1[primaryArtist][${index}][linkId]`, file.linkId);
-      formData.append(`step1[primaryArtist][${index}][itunesLinkId]`, file.itunesLinkId);
+      formData.append(`step1[featuring][${index}][name]`, file.name);
+      formData.append(`step1[featuring][${index}][linkId]`, file.linkId);
+      formData.append(`step1[featuring][${index}][itunesLinkId]`, file.itunesLinkId);
     });
+
     formData.append("step1[isVariousArtists]", isVariousArtists);
     formData.append("step1[genre]", genre);
     formData.append("step1[subGenre]", subGenre);
@@ -178,13 +177,6 @@ const Step1Controller = (props) => {
     // console.log("primaryArtist=========>",primaryArtist)
   };
 
-  const swal = (title, message, icon) => {
-    Swal.fire({
-      title: title,
-      text: message,  // Adjust to display the actual message you want
-      icon: icon
-    });
-  }
 
   const addNewLabel = async () => {
     let body = {

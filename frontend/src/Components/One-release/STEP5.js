@@ -5,7 +5,7 @@ import Step5Controller from '../../Controllers/One-release-controller/Step5Contr
 export default function STEP5(props) {
   const { releaseData, fetchReleaseDetails } = props
 
-  const {  handleSubmit,
+  const { handleSubmit,
     removeExclusiveDate,
     removePreOrder,
     exclusiveOrderSelect,
@@ -15,13 +15,13 @@ export default function STEP5(props) {
     preOrderDate, setPreOrderDate,
     selectPreOrderDate, setSelectPreOrderDate,
     exclusiveDates, setExclusiveDates,
-    selectexclusiveDate, setSelectexclusiveDate,allowPreview, setAllowPreview,
-     setReleaseData,mainReleaseDate,setMainReleaseDate
+    selectexclusiveDate, setSelectexclusiveDate, allowPreview, setAllowPreview,
+    setReleaseData, mainReleaseDate, setMainReleaseDate
   } = Step5Controller();
- 
+
   useEffect(() => {
-    const getData = async () => {  
-      setReleaseData(releaseData) 
+    const getData = async () => {
+      setReleaseData(releaseData)
       setMainReleaseDate(releaseData?.step5?.MainReleaseDate)
       setAllowPreview(releaseData?.step5?.Preview?.Allow90Sec)
       setSelectPreOrderDate(releaseData?.step5?.PreOrder)
@@ -30,7 +30,7 @@ export default function STEP5(props) {
     }
     getData()
   }, [releaseData])
-  
+
 
   return (
     <div>
@@ -55,18 +55,36 @@ export default function STEP5(props) {
             </select>
           </div>
           {selectPreOrderDate.map((item) => (
-            <div key={item.id} className="form-control">
-              <label>{item.name}</label>
+            <div
+              className="form-control"
+              style={{
+                display: 'flex', // Ensure the container is a flex container
+                flexDirection: 'row', // Align items in a row
+                gap: '10px', // Add space between items
+                alignItems: 'center', // Align items vertically centered,
+                marginTop: 20
+              }}
+            > 
               <input
-                className="form-control col-md-2"
-                type="date"
-                value={item.date}
-                onChange={(e) => handlePreOrderDateChange(item.id, e.target.value)}
-              />
+                  className="form-control" 
+                  value={item.name}
+                  disbled 
+                />
+                <input
+                  className="form-control"
+                  type="date"
+                  value={item.date}
+                  onChange={(e) => handlePreOrderDateChange(item.id, e.target.value)}
+                />
+
+              
               <button type="button" onClick={() => removePreOrder(item.id)}>X</button>
             </div>
+
           ))}
-          <div className="form-group">
+          <div className="form-group" style={{
+            marginTop: 50
+          }}>
             <label>
               <input
                 type="checkbox"
@@ -88,10 +106,23 @@ export default function STEP5(props) {
             </select>
           </div>
           {selectexclusiveDate?.map((item) => (
-            <div key={item.id} className="form-control">
-              <label>{item.name}</label>
+             <div
+             className="form-control"
+             style={{
+               display: 'flex', // Ensure the container is a flex container
+               flexDirection: 'row', // Align items in a row
+               gap: '10px', // Add space between items
+               alignItems: 'center', // Align items vertically centered,
+               marginTop: 20
+             }}
+           >
+             <input
+                  className="form-control" 
+                  value={item.name}
+                  disbled 
+                />
               <input
-                className="form-control col-md-2"
+                className="form-control"
                 type="date"
                 value={item.date}
                 onChange={(e) => handleExclusiveDateChange(item.id, e.target.value)}

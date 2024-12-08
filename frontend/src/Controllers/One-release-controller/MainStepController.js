@@ -14,6 +14,7 @@ const MainStepController = (props) => {
   
     const fetchReleaseDetails = async (releaseId) => { 
       setIsLoading(true)
+      //alert(releaseId)
       let body={
         releaseId:releaseId
       }

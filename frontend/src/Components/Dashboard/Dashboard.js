@@ -7,8 +7,7 @@ export const Dashboard = () => {
     const { dashboardData } = useDashboardController();
     return (
         <div>
-            <Nav />
-
+            <Nav /> 
             <div className="content-wrapper">
 
                 {/* <section className="content-header">

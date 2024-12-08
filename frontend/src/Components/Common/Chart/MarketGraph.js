@@ -14,8 +14,7 @@ const MarketGraph = (props) => {
       text: "Market",
       fontColor: "#FFFFFF", // Set title text color to white
     },
-    axisX: {
-      
+    axisX: { 
       valueFormatString: "",
       labelFontColor: "#FFFFFF", // Set X-axis label color to white
       lineColor: "#FFFFFF", // Set X-axis line color to white
