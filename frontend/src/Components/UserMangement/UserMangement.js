@@ -1,10 +1,12 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { base } from "../../Constants/Data.constant";
 import { getData, postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import "./styles.css";
+import { Box, Button, Modal, Typography } from '@mui/material';
+import DataTable from "../Common/DataTable/DataTable";
 
 const UserManagement = (props) => {
   const [search, setSearch] = useState("");
@@ -19,21 +21,33 @@ const UserManagement = (props) => {
 
 
   useEffect(() => {
-  
     getUserList();
   }, [props])
   const getUserList = async () => {
     let result = await getData(base.userList);
-    console.log("my user list=========>",result.data)
-    setUsers(result.data)
+    console.log("my user list=========>", result.data)
+    const resultList = Array.isArray(result.data)
+      ? result.data
+        // .filter((item) => item.status === 'Pending') // Filter items with status 'pending'
+        .map((item, index) => ({
+          _id: item._id,
+          id: index + 1,
+          name: item.name,
+          email: item.email,
+          wallet: item.wallet,
+          status: item.is_deleted == 1 ? "DeActive" : "Active", 
+          action: "",
+        }))
+      : [];
+    setUsers(resultList)
   }
-  const user_delete=async(userId)=>{
-   
+  const user_delete = async (userId) => {
+
     try {
-      let body={
-        "userId":userId
+      let body = {
+        "userId": userId
       }
-      let result = await postData(base.deleteUser,body)
+      let result = await postData(base.deleteUser, body)
       if (result.data.status === true) {
         Swal.fire("Success", result.data.message, "success");
         getUserList();
@@ -46,10 +60,47 @@ const UserManagement = (props) => {
     }
   }
 
-  const onDetails=(id)=>{
-    navigate("/UserDetails",{ state: { userId: id } });
-
+  const onDetails = (id) => {
+    navigate("/UserDetails", { state: { userId: id } });
   }
+
+
+  const columns = [
+    { field: 'id', headerName: '#', headerClassName: 'black-header', width: 50 },
+    { field: '_id', headerName: 'Id', headerClassName: 'black-header', width: 250 }, 
+    { field: 'name', headerName: 'Name', headerClassName: 'black-header', width: 100 },
+    { field: 'email', headerName: 'EMAIL', headerClassName: 'black-header', width: 100 },
+    { field: 'wallet', headerName: 'WALLET', headerClassName: 'black-header', width: 150 }, 
+    { field: 'status', headerName: 'STATUS', headerClassName: 'black-header', width: 150 },
+    {
+      field: 'action', headerName: 'ACTION', width: 300,
+      renderCell: (params) => (
+        <div style={{ gap: '8px', display: 'flex',padding:10 }}>
+        <Button
+          variant="contained"
+          color="info"
+          size="small"
+          onClick={() => {
+            user_delete(params.row._id);
+          }}
+        >
+          Disable
+        </Button>
+        {/* <Button
+          variant="contained"
+          color="secondary" // Corrected the color to "secondary"
+          size="small"
+          onClick={() => {
+            handle_change_status("Reject", params.row._id);
+          }}
+        >
+          Reject
+        </Button> */}
+      </div>
+      
+      )
+    }
+  ];
   return (
     <div>
       <Nav />
@@ -61,51 +112,58 @@ const UserManagement = (props) => {
 
             {/* Filters */}
             <div className="filters">
-              <input
+              {/* <input
                 type="text"
                 placeholder="Search by login or email"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-              />
-               
-              {/* <a href="add-user"> <button className="add-user-button">Add a new user</button></a> */}
-            </div>
+              /> */}
 
+              <a href="add-user"> <button className="add-user-button">Add Master Account</button></a>
+            </div>
+ 
+            <DataTable
+              columns={columns}
+              rows={users}
+              height="500"
+              width="100%"
+            />
             {/* User List */}
-            <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+            {/* <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
               <thead>
                 <tr>
                   <th>Role</th>
                   <th>Email</th>
                   <th>Wallet</th>
-                  <th>Status</th> 
+                  <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users && users?.map((user) => {
                   let bg = user.is_deleted == 1 ? 'red' : 'white';
-                  return(
+                  return (
                     <tr style={{ backgroundColor: `${bg}` }} key={user._id}>
                       <td>{user.role}</td>
-                      <td><a onClick={()=>{onDetails(user._id)}}>{user.email}</a></td>
+                      <td><a onClick={() => { onDetails(user._id) }}>{user.email}</a></td>
                       <td>{user.wallet}</td>
-                      <td>{user.is_active}</td> 
+                      <td>{user.is_active}</td>
                       <td>
-                       {/* <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button> */}
+                        {/* <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button> */}
                         {/* <button
                           className="action-button delete"
                           onClick={() => handleDelete(user.login)}
                         >
                           Delete
                         </button>
-                        <button className="action-button disable">Disable</button> */}
-                        {user.is_deleted == '0' && <button  onClick={() => user_delete(user._id)} className="action-button disable">Disable</button> }
+                        <button className="action-button disable">Disable</button>  
+                        {user.is_deleted == '0' && <button onClick={() => user_delete(user._id)} className="action-button disable">Disable</button>}
                       </td>
                     </tr>
-                  )})}
+                  )
+                })}
               </tbody>
-            </table>
+            </table> */}
           </div>
         </section>
       </div>

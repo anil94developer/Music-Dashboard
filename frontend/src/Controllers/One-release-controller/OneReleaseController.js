@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
 import { getData, postData, postDataContent } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
+import { AllDraft } from '../../Components/AllDraft/AllDraft';
+import { useUserProfile } from '../../Context/UserProfileContext';
 
 const OneReleaseController = (props) => {
 
   const navigate = useNavigate();
-
+  const { userProfile } = useUserProfile()
   const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [type, setType] = useState("Audio");
@@ -21,15 +23,17 @@ const OneReleaseController = (props) => {
   useEffect(() => {
     fetchReleaseList()
     fetchTracksList()
-  }, [])
+  }, [props, userProfile])
   const fetchReleaseList = async () => {
-    setIsLoading(true)
-    let result = await getData(base.releaseList);
-    console.log(base.releaseList + "===========>", result)
-    if (result.status === true) {
-      const arrDraft = Array.isArray(result.data)
-        ? result.data
-          .filter((item) => item.status === 'Pending') // Filter items with status 'pending'
+    let arrRelease = [];
+    let arrDraft = [];
+    if (userProfile?.role == "admin") {
+      setIsLoading(true)
+      let result = await getData(base.allReleaseList);
+      if (result.status === true) {
+        arrRelease = Array.isArray(result.data)
+          ? result.data
+          .filter((item) => item.status == 'submit') 
           .map((item, index) => ({
             _id: item._id,
             id: index + 1,
@@ -43,38 +47,93 @@ const OneReleaseController = (props) => {
             deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
             action: "",
           }))
-        : [];
-
-        const arrRelease = Array.isArray(result.data)
-        ? result.data
-          .filter((item) => item.status != 'Pending') // Filter items with status 'pending'
-          .map((item, index) => ({
-            _id: item._id,
-            id: index + 1,
-            type: item.type,
-            status: item.status,
-            title: item?.title || "Untitled",
-            label: item?.step1?.labelName || "Unknown Label",
-            releaseDate: item.step1?.originalReleaseDate || "N/A",
-            noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-            upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-            deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-            action: "",
-          }))
-        : [];
-
- 
-      setMyReleaseDraft(arrDraft)
-
-      setMyRelease(arrRelease);
-
-
-      setIsLoading(false)
-    } else {
-      setIsLoading(false)
-
-      // Swal.fire("Error", result.message, result.message);
+          : [];
+      }
+    } else if (userProfile?.role == "company") {
+      setIsLoading(true)
+      let result = await getData(base.releaseList);
+      if (result.status === true) {
+        arrRelease = Array.isArray(result.data)
+          ? result.data
+            .filter((item) => item.status == 'submit') // Filter items with status 'pending'
+            .map((item, index) => ({
+              _id: item._id,
+              id: index + 1,
+              type: item.type,
+              status: item.status,
+              title: item?.title || "Untitled",
+              label: item?.step1?.labelName || "Unknown Label",
+              releaseDate: item.step1?.originalReleaseDate || "N/A",
+              noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+              upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+              deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+              action: "",
+            }))
+          : [];
+        arrDraft = Array.isArray(result.data)
+          ? result.data
+            .filter((item) => item.status == 'Pending') // Filter items with status 'pending'
+            .map((item, index) => ({
+              _id: item._id,
+              id: index + 1,
+              type: item.type,
+              status: item.status,
+              title: item?.title || "Untitled",
+              label: item?.step1?.labelName || "Unknown Label",
+              releaseDate: item.step1?.originalReleaseDate || "N/A",
+              noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+              upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+              deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+              action: "",
+            }))
+          : [];
+      }
+      else if (userProfile?.role == "employee") {
+        setIsLoading(true)
+        let result = await getData(base.releaseList);
+        if (result.status === true) {
+          arrRelease = Array.isArray(result.data)
+            ? result.data
+              .filter((item) => item.status == 'done') // Filter items with status 'pending'
+              .map((item, index) => ({
+                _id: item._id,
+                id: index + 1,
+                type: item.type,
+                status: item.status,
+                title: item?.title || "Untitled",
+                label: item?.step1?.labelName || "Unknown Label",
+                releaseDate: item.step1?.originalReleaseDate || "N/A",
+                noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+                upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+                deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+                action: "",
+              }))
+            : [];
+          arrDraft = Array.isArray(result.data)
+            ? result.data
+              .filter((item) => item.status == 'Pending') // Filter items with status 'pending'
+              .map((item, index) => ({
+                _id: item._id,
+                id: index + 1,
+                type: item.type,
+                status: item.status,
+                title: item?.title || "Untitled",
+                label: item?.step1?.labelName || "Unknown Label",
+                releaseDate: item.step1?.originalReleaseDate || "N/A",
+                noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+                upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+                deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+                action: "",
+              }))
+            : [];
+      }
     }
+    }
+
+    setMyReleaseDraft(arrDraft)
+    setMyRelease(arrRelease);
+    setIsLoading(false)
+
   }
   const fetchTracksList = async () => {
     setIsLoading(true)
@@ -118,7 +177,7 @@ const OneReleaseController = (props) => {
     myRelease,
     handleSubmit,
     moreAction,
-    myTracks, setMyTracks,myReleaseDraft
+    myTracks, setMyTracks, myReleaseDraft
   }
 
 }

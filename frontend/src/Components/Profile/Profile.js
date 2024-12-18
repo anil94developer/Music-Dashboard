@@ -1,8 +1,10 @@
-import React from 'react'; 
+import React from 'react';
+import { useUserProfile } from '../../Context/UserProfileContext';
 import useProfileController from '../../Controllers/Profile-Controller/useProfileController';
 import { Nav } from '../Common/Nav';
 
 export default function Profile() {
+  const {userProfile}= useUserProfile()
   const { profile, handleChange, handleSubmit } = useProfileController();
 
   return (
@@ -16,70 +18,72 @@ export default function Profile() {
 
         <section className="container-fluid content">
           <section className="content">
-          <form onSubmit={handleSubmit}>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="box box-info">
-                  <div className="box-body">
-                    
-                      {/* Company Name */} 
-                      
-                      <div className="form-group">
-                       
-                      <label for="exampleInputEmail1"> Company Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Enter company name"
-                          name="companyName"
-                          value={profile.companyName}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
+            <form onSubmit={handleSubmit}>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="box box-info">
+                    <div className="box-body">
+                      {userProfile?.role == "company" &&
+                        <>
+                          {/* Company Name */}
 
-                      {/* Client Number */}
-                      <div className="form-group mt-3">
-                        <label >Client Number</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Enter client number"
-                          name="clientNumber"
-                          value={profile.clientNumber}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
+                          <div className="form-group">
 
-                      {/* Main Email */}
-                      <div className="form-group mt-3">
-                        <label >Main Email Address</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          placeholder="Enter main email address"
-                          name="mainEmail"
-                          value={profile.mainEmail}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
+                            <label for="exampleInputEmail1"> Company Name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter company name"
+                              name="companyName"
+                              value={profile.companyName}
+                              onChange={handleChange}
+                              required
+                            />
+                          </div>
 
-                      {/* Royalties Email */}
-                      <div className="form-group mt-3">
-                        <label >Royalties Email Address</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          placeholder="Enter royalties email address"
-                          name="royaltiesEmail"
-                          value={profile.royaltiesEmail}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
+                          {/* Client Number */}
+                          <div className="form-group mt-3">
+                            <label >Client Number</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Enter client number"
+                              name="clientNumber"
+                              value={profile.clientNumber}
+                              onChange={handleChange}
+                              required
+                            />
+                          </div>
 
+                          {/* Main Email */}
+                          <div className="form-group mt-3">
+                            <label >Main Email Address</label>
+                            <input
+                              type="email"
+                              className="form-control"
+                              placeholder="Enter main email address"
+                              name="mainEmail"
+                              value={profile.mainEmail}
+                              onChange={handleChange}
+                              required
+                            />
+                          </div>
+
+                          {/* Royalties Email */}
+                          <div className="form-group mt-3">
+                            <label >Royalties Email Address</label>
+                            <input
+                              type="email"
+                              className="form-control"
+                              placeholder="Enter royalties email address"
+                              name="royaltiesEmail"
+                              value={profile.royaltiesEmail}
+                              onChange={handleChange}
+                              required
+                            />
+                          </div>
+                        </>
+                      }
                       {/* First Name */}
                       <div className="form-group mt-3">
                         <label >First Name</label>
@@ -121,7 +125,7 @@ export default function Profile() {
                           required
                         />
                       </div>
- 
+
 
                       {/* Postal Address */}
                       <div className="form-group mt-3">
@@ -210,12 +214,12 @@ export default function Profile() {
                       <button type="submit" className="btn btn-primary mt-3">
                         Update Profile
                       </button>
-                     
 
+
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             </form>
           </section>
         </section>

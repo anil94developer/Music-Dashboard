@@ -36,7 +36,7 @@ const useProfileController = () => {
           clientNumber: result.data.clientNumber,
           mainEmail: result.data.mainEmail,
           royaltiesEmail: result.data.royaltiesEmail,
-          firstName: result.data.firstName,
+          firstName: result.data.name,
           lastName: result.data.lastName,
           phoneNumber: result.data.phoneNumber,
           postalAddress: result.data.postalAddress,

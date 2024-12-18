@@ -32,6 +32,9 @@ import Task from "./Components/Task/Task";
 import ClientList from "./Components/Task/client/clientList";
 import EmployeeList from "./Components/Task/employee/employeeList";
 import { LoginScreen } from "./Components/Task/LoginScreen";
+import CompanyManagement from "./Components/CompanyMangement/CompanyMangement";
+import AddCompany from "./Components/CompanyMangement/AddCompany";
+import CompanyDetails from "./Components/CompanyMangement/CompanyDetails";
 
 function App() {
   const { userProfile } = useUserProfile()
@@ -39,23 +42,24 @@ function App() {
     return <Routes>
       <Route path="/" element={<Login />}></Route>
       <Route path="/Dashboard" element={<Dashboard />}></Route>
-      {/* <Route path="/One Release" element={<OneRelease />}></Route> */}
-      {/* <Route path="/main-step" element={<MainStep />}></Route> */}
+      <Route path="/CompanyManagement" element={<CompanyManagement />}></Route>
+      <Route path="/CompanyDetails" element={<CompanyDetails />}></Route> 
       <Route path="All releases" element={<AllRelease />}></Route>
+      <Route path="/all tracks" element={<AllTracks />}></Route>
       {/* <Route path="/final-submit" element={<FinalSubmit />}></Route>
       <Route path="/All drafts" element={<AllDraft />}></Route>
-      <Route path="/all tracks" element={<AllTracks />}></Route>
+     
       <Route path="/Daily Trends" element={<DailyTreads />}></Route> */}
       <Route path="/profile" element={<Profile />}></Route>
       {/* <Route path="/bank information" element={<BankInformation />}></Route>
       <Route path="/support" element={<Support />}></Route> */}
       {/* <Route path="/password change" element={<Password />}></Route> */}
-      <Route path="/user access" element={<UserAccess />}></Route>
-      <Route path="/User Mangement" element={<UserMangement />}></Route>
-      {/* <Route path="/UserDetails" element={<UserDetails />}></Route>
-    */}
+      <Route path="/AddCompany" element={<AddCompany />}></Route>
+      {/* <Route path="/User Mangement" element={<UserMangement />}></Route> */}
+      {/* <Route path="/UserDetails" element={<UserDetails />}></Route> */}
+   
       <Route path="/release-details" element={<ReleaseDetails />}></Route>
-      <Route path="/edit-permission" element={<EditUserPermission />}></Route>
+      {/* <Route path="/edit-permission" element={<EditUserPermission />}></Route> */}
       {/* <Route path="/Payment Operations" element={<PaymentOperations />}></Route>
       <Route path="/Financial Report" element={<FinancialReport />}></Route>
       <Route path="/multiple-release" element={<Dashboard />}></Route>*/}
@@ -80,7 +84,7 @@ function App() {
       <Route path="/support" element={<Support />}></Route>
       <Route path="/password change" element={<Password />}></Route>
       <Route path="/user access" element={<UserAccess />}></Route>
-      <Route path="/UserDetails" element={<UserDetails />}></Route>
+      <Route path="/Withdraw Request" element={<WithdrawRequest />}></Route>
       <Route path="/add-user" element={<UserAccessForm />}></Route>
       <Route path="/release-details" element={<ReleaseDetails />}></Route>
       <Route path="/edit-permission" element={<EditUserPermission />}></Route>

@@ -37,17 +37,7 @@ export const Nav = (props) => {
             <b>Music Dashboard</b>{" "}
           </a>
           <nav className="navbar navbar-static-top" role="navigation" style={{ backgroundColor: '#000' }}>
-            {/* <a
-              href="#"
-              className="sidebar-toggle"
-              data-toggle="offcanvas"
-              role="button"
-            >
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar">da</span>
-              <span className="icon-bar">dasd</span>
-              <span className="icon-bar">dsada</span>
-            </a> */}
+           
             <div className="navbar-custom-menu">
               <ul className="nav navbar-nav">
                 <li className="dropdown user user-menu" style={{ backgroundColor: '#000' }}>
@@ -59,6 +49,7 @@ export const Nav = (props) => {
                     />
                     <span className="hidden-xs">{userProfile?.name}</span>
                   </a>
+                 
                   {dropdownVisible &&
                     <div className="modal" style={{ display: 'block', marginTop: -50, }} onClick={toggleDropdown}>
                       <div style={{
@@ -66,19 +57,7 @@ export const Nav = (props) => {
                         right: 0,
                       }}>
                         <div className="modal-content">
-                          <div className="modal-body" style={{}}>
-                            {userPermission?.menuPermission && userPermission?.menuPermission?.map((item, index) => {
-                              let link = `/${item.mainMenuName}`;
-                              return item.status
-                                && item.mainMenuName == 'User Access' &&
-                                <ul className="sidebar-menu">
-                                  <li className="treeview">
-                                    <a href={link}>
-                                      <i className="fa fa-sitemap"></i> <span>{item.mainMenuName}</span>
-                                    </a>
-                                  </li>
-                                </ul>
-                            })}
+                          <div style={{}}> 
                             <ul className="sidebar-menu">
                               <li className="treeview">
                                 <a href="password change">
@@ -93,8 +72,15 @@ export const Nav = (props) => {
                                 </a>
                               </li>
                             </ul>
-                            {userProfile.role == "company" &&
+                            {userProfile?.role == "company" &&
                               <>
+                                <ul className="sidebar-menu">
+                                  <li className="treeview">
+                                    <a href='User Access'>
+                                      <i className="fa fa-sitemap"></i> <span>User Access</span>
+                                    </a>
+                                  </li>
+                                </ul>
                                 <ul className="sidebar-menu">
                                   <li className="treeview">
                                     <a href="bank information">
@@ -109,20 +95,22 @@ export const Nav = (props) => {
                                     </a>
                                   </li>
                                 </ul>
-                                <ul className="sidebar-menu">
-                                  <li className="treeview">
-                                    <a href="" onClick={() => handleLogout()}>
-                                      <i className="fa fa-sign-out"></i> <span>Logout</span>
-                                    </a>
-                                  </li>
-                                </ul>
+
                               </>
                             }
+                            <ul className="sidebar-menu">
+                              <li className="treeview">
+                                <a href="" onClick={() => handleLogout()}>
+                                  <i className="fa fa-sign-out"></i> <span>Logout</span>
+                                </a>
+                              </li>
+                            </ul>
                           </div>
                         </div>
                       </div>
                     </div>
                   }
+                  
                 </li>
               </ul>
             </div>
@@ -131,29 +119,124 @@ export const Nav = (props) => {
         <aside className="main-sidebar" style={{ backgroundColor: '#000', height: 'auto' }}>
           <section className="sidebar" style={{ backgroundColor: '#000' }}>
             <div className="user-panel" style={{ backgroundColor: '#000' }}>
-              <div className="pull-left image form-row" style={{ borderBottomStyle: 'solid', borderBottomWidth: 0, borderBottomColor: '#fff', marginTop: 10, padding: 5 }}>
+              <div className=" image form-row" style={{ borderBottomStyle: 'solid', borderBottomWidth: 0, borderBottomColor: '#fff', marginTop: 10, padding: 5 }}>
                 <img
                   src={images.user}
                   className="img-circle"
                   alt="User Image"
                 />
-                <p>{userProfile?.email}</p><br></br>
-
-
+                <div>
+                <span>{userProfile?.name}</span> <br></br>
+                <span>{userProfile?.email}</span>  
+                </div>
+               
+                
               </div>
-              <p>{userProfile?.role}</p>
+              <p >{userProfile?._id}</p>
             </div>
 
+            {userProfile.role == "admin"
+              && <>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/Dashboard" >
+                      <i className="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/CompanyManagement" >
+                      <i className="fa fa-company"></i> <span>Master Account</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/All releases" >
+                      <i className="fa fa-company"></i> <span>All Release</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/All Tracks" >
+                      <i className="fa fa-company"></i> <span>All Tracks</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/Withdraw Request" >
+                      <i className="fa fa-company"></i> <span>Withdraw Request</span>
+                    </a>
+                  </li>
+                </ul>
+              </>
+            }
+            {userProfile.role == "company"
+              && <>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/Dashboard" >
+                      <i className="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/One Release" >
+                      <i className="fa fa-caret-square-o-left"></i> <span>One Release</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/All releases" >
+                      <i className="fa  fa-bullseye"></i> <span>All Release</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/All drafts" >
+                      <i className="fa fa-clock-o"></i> <span>All Draft</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                  <a href="/Daily Trends" >
+                      <i className="fa fa-retweet"></i> <span>DailyTreads</span>
+                    </a>
+                  </li>
+                </ul>
+                 
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/Payment Operations" >
+                      <i className="fa  fa-money"></i> <span>Payment Operations</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul className="sidebar-menu">
+                  <li className="treeview">
+                    <a href="/Financial Report" >
+                      <i className="fa fa-tree"></i> <span>Financial Report</span>
+                    </a>
+                  </li>
+                </ul>
+                
+                
+              </>
+            }
 
-            {/* <div className="pull-left image form-row" style={{ borderBottomStyle: 'solid', borderBottomWidth: 2, borderBottomColor: '#fff', marginTop: 10, padding: 5 }}> */}
-
-            {userPermission && userPermission?.menuPermission?.map((item, index) => {
+            {userProfile.role == "employee" && userPermission && userPermission?.menuPermission?.map((item, index) => {
               let link = `/${item.mainMenuName}`;
               return item.status &&
                 item.mainMenuName != 'User Access' &&
                 item.mainMenuName != 'Support' &&
                 item.mainMenuName != 'Multiple Release' &&
-
                 <ul className="sidebar-menu">
                   <li className="treeview">
                     {item.submenu.length > 0 ?
@@ -176,69 +259,12 @@ export const Nav = (props) => {
 
                   }
 
-                </ul>
-
-
-
-
+                </ul> 
             })
 
 
             }
 
-            {/* <ul className="sidebar-menu">
-              <li className="treeview">
-                <a href="/Upload" >
-                  <i className="fa fa-dashboard"></i> <span>Upload</span>
-                </a>
-              </li>
-            </ul> */}
-
-
-            {/* </div> */}
-
-
-            {/* <aside className="main-sidebar">
-          <section className="sidebar">
-            <div className="user-panel">
-              <div className="pull-left image form-row" style={{ borderBottomStyle: 'solid', borderBottomWidth: 2, borderBottomColor: '#fff', marginTop: 10, padding: 5 }}>
-                <img
-                  src={images.user}
-                  className="img-circle"
-                  alt="User Image"
-                />
-                <p>{userData?.email}</p>
-              </div>
-            </div>
-            {userPermission && userPermission?.menuPermission?.map((item, index) => {
-              let link = `/${item.mainMenuName}`;
-              return item.status && <ul className="sidebar-menu">
-                <li className="treeview">
-                  <a href={link}>
-                    <i className="fa fa-dashboard"></i> <span>{item.mainMenuName}</span>
-                  </a>
-
-                  {item.submenu.map((item, index) => {
-                    let subMenuLink = `/${item.subMenuName}`;
-                    return item.status && <li><a href={subMenuLink}><i className="fa fa-circle-o"></i>{item.subMenuName}</a></li>
-
-                  })}
-                </li>
-              </ul>
-
-            })
-
-            } 
-            <ul className="sidebar-menu">
-              <li className="treeview" onClick={handleLogout}>
-                <a href="#" >
-                  <i className="fa fa-dashboard"></i> <span>Logout</span>
-                </a>
-              </li>
-            </ul>
-
-          </section>
-        </aside> */}
           </section>
 
         </aside>

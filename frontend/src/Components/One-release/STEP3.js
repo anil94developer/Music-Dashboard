@@ -218,286 +218,317 @@ export default function STEP3(props) {
       </div>
 
       {isModalOpen &&
-        <div className="modal" style={{ display: 'block' }} >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <button type="btn btn-danger" className="close" onClick={closeModal} aria-label="Close">
-                  <span  >×</span>
-                </button>
-                <h4 className="modal-title">Add Track</h4>
-              </div>
-              <div className="modal-body">
-                <div className="row">
-                  <div className="col-md-12">
+        <div>
+          {/* Background Overlay */}
+          <div
+            className="modal-backdrop"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.1)', // Semi-transparent overlay
+              backdropFilter: 'blur(5px)', // Apply blur effect
+              zIndex: 1040, // Ensure it stays below the modal content
+            }}
+          ></div>
 
-                    <div className="col-md-6">
-                      <label>Content Type *{contentType}</label><br />
-                      <input type="radio" value="Audio" checked={contentType == "Audio"} onChange={() => setContentType("Audio")} /> Audio
-                      <input type="radio" value="Video" checked={contentType == "Video"} onChange={() => setContentType("Video")} style={{ marginLeft: "10px" }} /> Video
-                    </div>
+          {/* Modal Content */}
+          <div className="modal" style={{ display: 'block', zIndex: 1050 }}>
 
-                    {/* Primary Track Type */}
-                    <div className="col-md-6">
-                      <label>Primary Track Type *</label><br />
-                      <input type="radio" value="music" checked={primaryTrackType === "music"} onChange={() => setPrimaryTrackType("music")} /> Music
-                    </div>
+            <div className="modal-dialog" style={{ width: '80%' }}>
+              <div className="modal-content" >
+                <div className="modal-header">
+                  <button type="btn btn-danger" className="close" onClick={closeModal} aria-label="Close">
+                    <span  >×</span>
+                  </button>
+                  <h4 className="modal-title">Add Track</h4>
+                </div>
+                <div className="modal-body">
+                  <div className="row">
+                    <div className="col-md-12">
 
-                    {/* Secondary Track Type */}
-                    <div className="col-md-6">
-                      <label>Secondary Track Type *</label><br />
-                      <input type="radio" value="original" checked={secondaryTrackType === "original"} onChange={() => setSecondaryTrackType("original")} /> Original
-                      <input type="radio" value="karaoke" checked={secondaryTrackType === "karaoke"} onChange={() => setSecondaryTrackType("karaoke")} style={{ marginLeft: "10px" }} /> Karaoke
-                      <input type="radio" value="medley" checked={secondaryTrackType === "medley"} onChange={() => setSecondaryTrackType("medley")} style={{ marginLeft: "10px" }} /> Medley
-                      <input type="radio" value="cover" checked={secondaryTrackType === "cover"} onChange={() => setSecondaryTrackType("cover")} style={{ marginLeft: "10px" }} /> Cover
-                    </div>
+                      <div className="col-md-6">
+                        <label>Content Type *{contentType}</label><br />
+                        <input type="radio" value="Audio" checked={contentType == "Audio"} onChange={() => setContentType("Audio")} /> Audio
+                        <input type="radio" value="Video" checked={contentType == "Video"} onChange={() => setContentType("Video")} style={{ marginLeft: "10px" }} /> Video
+                      </div>
 
-                    {/* Instrumental */}
-                    <div className="col-md-6">
-                      <label>Instrumental *</label><br />
-                      <input type="radio" value={true} checked={instrumental === true} onChange={() => setInstrumental(true)} /> Yes
-                      <input type="radio" value={false} checked={instrumental === false} onChange={() => setInstrumental(false)} style={{ marginLeft: "10px" }} /> No
-                    </div>
+                      {/* Primary Track Type */}
+                      <div className="col-md-6">
+                        <label>Primary Track Type *</label><br />
+                        <input type="radio" value="music" checked={primaryTrackType === "music"} onChange={() => setPrimaryTrackType("music")} /> Music
+                      </div>
 
-                    {/* Volume Year */}
-                    <div className="col-md-6">
-                      <label>Volume Year</label>
-                      <select className="form-control" value={volume} onChange={(e) => setVolume(e.target.value)}>
-                        <option value="">- Select a Volume -</option>
-                        {[...Array(20)].map((_, i) => (
-                          <option key={i} value={`Volume` + (i + 1)}>{`Volume` + (i + 1)}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {/* Title */}
-                    <div className="col-md-6">
-                      <label>Title *</label>
-                      <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    </div>
+                      {/* Secondary Track Type */}
+                      <div className="col-md-6">
+                        <label>Secondary Track Type *</label><br />
+                        <input type="radio" value="original" checked={secondaryTrackType === "original"} onChange={() => setSecondaryTrackType("original")} /> Original
+                        <input type="radio" value="karaoke" checked={secondaryTrackType === "karaoke"} onChange={() => setSecondaryTrackType("karaoke")} style={{ marginLeft: "10px" }} /> Karaoke
+                        <input type="radio" value="medley" checked={secondaryTrackType === "medley"} onChange={() => setSecondaryTrackType("medley")} style={{ marginLeft: "10px" }} /> Medley
+                        <input type="radio" value="cover" checked={secondaryTrackType === "cover"} onChange={() => setSecondaryTrackType("cover")} style={{ marginLeft: "10px" }} /> Cover
+                      </div>
 
-                    {/* Version/Subtitle */}
-                    <div className="col-md-6">
-                      <label>Version/Subtitle</label>
-                      <input type="text" className="form-control" value={versionSubtitle} onChange={(e) => setVersionSubtitle(e.target.value)} />
-                    </div>
+                      {/* Instrumental */}
+                      <div className="col-md-6">
+                        <label>Instrumental *</label><br />
+                        <input type="radio" value={true} checked={instrumental === true} onChange={() => setInstrumental(true)} /> Yes
+                        <input type="radio" value={false} checked={instrumental === false} onChange={() => setInstrumental(false)} style={{ marginLeft: "10px" }} /> No
+                      </div>
 
-                    {/* Primary Artist */}
-                    <div className="col-md-6">
-                      <label>Primary Artist *</label>
-                      <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
-                    </div>
+                      {/* Volume Year */}
+                      <div className="col-md-6">
+                        <label>Volume Year</label>
+                        <select className="form-control" value={volume} onChange={(e) => setVolume(e.target.value)}>
+                          <option value="">- Select a Volume -</option>
+                          {[...Array(20)].map((_, i) => (
+                            <option key={i} value={`Volume` + (i + 1)}>{`Volume` + (i + 1)}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {/* Title */}
+                      <div className="col-md-6">
+                        <label>Title *</label>
+                        <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
+                      </div>
 
-                    {/* Featuring */}
-                    <div className="col-md-6">
-                      <label>Featuring</label>
-                      <SearchInput artistData={featuring} setSelectData={setFeaturing} />
+                      {/* Version/Subtitle */}
+                      <div className="col-md-6">
+                        <label>Version/Subtitle</label>
+                        <input type="text" className="form-control" value={versionSubtitle} onChange={(e) => setVersionSubtitle(e.target.value)} />
+                      </div>
 
-                    </div>
+                      {/* Primary Artist */}
+                      <div className="col-md-6">
+                        <label>Primary Artist *</label>
+                        <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
+                      </div>
 
-                    {/* Remixer */}
-                    <div className="col-md-6">
-                      <label>Remixer</label>
-                      <DynamicInputList inputs={remixer} setInputs={setRemixer} />
-                      {/* <SearchInput />  */}
-                    </div>
+                      {/* Featuring */}
+                      <div className="col-md-6">
+                        <label>Featuring</label>
+                        <SearchInput artistData={featuring} setSelectData={setFeaturing} />
 
-                    {/* Author */}
-                    <div className="col-md-6">
-                      <label>Author *</label>
-                      <DynamicInputList inputs={author} setInputs={setAuthor} />
+                      </div>
 
-                    </div>
+                      {/* Remixer */}
+                      <div className="col-md-6">
+                        <label>Remixer</label>
+                        <DynamicInputList inputs={remixer} setInputs={setRemixer} />
+                        {/* <SearchInput />  */}
+                      </div>
 
-                    {/* Composer */}
-                    <div className="col-md-6">
-                      <label>Composer *</label>
-                      <DynamicInputList inputs={composer} setInputs={setComposer} />
+                      {/* Author */}
+                      <div className="col-md-6">
+                        <label>Author *</label>
+                        <DynamicInputList inputs={author} setInputs={setAuthor} />
 
-                    </div>
+                      </div>
 
-                    {/* Arranger */}
-                    <div className="col-md-6">
-                      <label>Arranger</label>
-                      <DynamicInputList inputs={arranger} setInputs={setArranger} />
-                    </div>
+                      {/* Composer */}
+                      <div className="col-md-6">
+                        <label>Composer *</label>
+                        <DynamicInputList inputs={composer} setInputs={setComposer} />
 
-                    {/* Producer */}
-                    <div className="col-md-6">
-                      <label>Producer</label>
-                      <DynamicInputList inputs={producer} setInputs={setProducer} />
+                      </div>
 
-                    </div>
+                      {/* Arranger */}
+                      <div className="col-md-6">
+                        <label>Arranger</label>
+                        <DynamicInputList inputs={arranger} setInputs={setArranger} />
+                      </div>
 
-                    {/* P Line */}
-                    <div className="col-md-6">
-                      <label>P Line</label>
-                      <input type="text" className="form-control" value={pLine} onChange={(e) => setPLine(e.target.value)} />
-                    </div>
+                      {/* Producer */}
+                      <div className="col-md-6">
+                        <label>Producer</label>
+                        <DynamicInputList inputs={producer} setInputs={setProducer} />
 
-                    {/* Production Year */}
-                    <div className="col-md-6">
-                      <label>Production Year</label>
-                      <select className="form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
-                        <option value="">- Select a year -</option>
-                        {[...Array(100)].map((_, i) => (
-                          <option key={i} value={2023 - i}>{2023 - i}</option>
-                        ))}
-                      </select>
-                    </div>
+                      </div>
 
-                    {/* Publisher */}
-                    <div className="col-md-6">
-                      <label>Publisher</label>
-                      <input type="text" className="form-control" value={publisher} onChange={(e) => setPublisher(e.target.value)} />
-                    </div>
+                      {/* P Line */}
+                      <div className="col-md-6">
+                        <label>P Line</label>
+                        <input type="text" className="form-control" value={pLine} onChange={(e) => setPLine(e.target.value)} />
+                      </div>
 
-                    {/* ISRC */}
-                    <div className="col-md-6">
-                      <label>ISRC</label>
-                      <input disabled={generateISRC} type="text" className="form-control" value={isrc} onChange={(e) => setIsrc(e.target.value)} />
-                    </div>
+                      {/* Production Year */}
+                      <div className="col-md-6">
+                        <label>Production Year</label>
+                        <select className="form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
+                          <option value="">- Select a year -</option>
+                          {[...Array(100)].map((_, i) => (
+                            <option key={i} value={2023 - i}>{2023 - i}</option>
+                          ))}
+                        </select>
+                      </div>
 
-                    {/* Generate ISRC */}
-                    <div className="col-md-6">
-                      <label>Generate ISRC</label><br />
-                      <input type="radio" value={true} checked={generateISRC === true} onChange={() => setGenerateISRC(true)} /> Yes
-                      <input type="radio" value={false} checked={generateISRC === false} onChange={() => setGenerateISRC(false)} style={{ marginLeft: "10px" }} /> No
-                    </div>
+                      {/* Publisher */}
+                      <div className="col-md-6">
+                        <label>Publisher</label>
+                        <input type="text" className="form-control" value={publisher} onChange={(e) => setPublisher(e.target.value)} />
+                      </div>
 
-                    <div className="col-md-6">
-                      <label htmlFor="genre">Genre *</label>
-                      <select
-                        value={genre}
-                        className="form-control"
-                        id="genre"
-                        onChange={(e) => setGenre(e.target.value)}
-                      >
-                        <option value={genre}>{genre ? genre : 'Select a genre'}</option>
-                        {GENRES.map((item) =>
-                          (<option value={item.name}>{item.name}</option>)
-                        )}
-                      </select>
-                    </div>
+                      {/* ISRC */}
+                      {!generateISRC &&
+                        <div className="col-md-6">
+                          <label>ISRC</label>
+                          <input disabled={generateISRC} type="text" className="form-control" value={isrc} onChange={(e) => setIsrc(e.target.value)} />
+                        </div>
+                      }
 
-                    <div className="col-md-6">
-                      <label htmlFor="subgenre">SubGenre * </label>
-                      <select
-                        value={subgenre}
-                        className="form-control"
-                        id="subgenre"
-                        onChange={(e) => setSubgenre(e.target.value)}
-                        disabled={!subgenres.length} // Disable if no subgenres available
-                      >
-                        <option value={subgenre}>{subgenre ? subgenre : 'Select a Subgenre'}</option>
-                        {subgenres.map((sub) => (
-                          <option key={sub.id} value={sub.name}>{sub.name}</option>
-                        ))}
-                      </select>
-                    </div>
+                      {/* Generate ISRC */}
+                      <div className="col-md-6">
+                        <label>Generate ISRC</label><br />
+                        <input type="radio" value={true} checked={generateISRC === true} onChange={() => setGenerateISRC(true)} /> Yes
+                        <input type="radio" value={false} checked={generateISRC === false} onChange={() => setGenerateISRC(false)} style={{ marginLeft: "10px" }} /> No
+                      </div>
 
-                    <div className="col-md-6">
-                      <label htmlFor="genre">Secondary Genre *</label>
-                      <select
-                        value={secondaryGenre}
-                        className="form-control"
-                        id="genre"
-                        onChange={(e) => setSecondaryGenre(e.target.value)}
-                      >
-                        <option value={secondaryGenre}>{secondaryGenre ? secondaryGenre : 'Select a Secondary genre'}</option>
-                        {GENRES.map((item) =>
-                          (<option value={item.name}>{item.name}</option>)
-                        )}
-                      </select>
-                    </div>
+                      <div className="col-md-6">
+                        <label htmlFor="genre">Genre *</label>
+                        <select
+                          value={genre}
+                          className="form-control"
+                          id="genre"
+                          onChange={(e) => setGenre(e.target.value)}
+                        >
+                          <option value={genre}>{genre ? genre : 'Select a genre'}</option>
+                          {GENRES.map((item) =>
+                            (<option value={item.name}>{item.name}</option>)
+                          )}
+                        </select>
+                      </div>
 
-                    <div className="col-md-6">
-                      <label htmlFor="subgenre">Secondary SubGenre * </label>
-                      <select
-                        value={subSecondaryGenre}
-                        className="form-control"
-                        id="subgenre"
-                        onChange={(e) => setSubSecondaryGenre(e.target.value)}
-                        disabled={!subgenres.length} // Disable if no subgenres available
-                      >
-                        <option value={subSecondaryGenre}>{subSecondaryGenre ? subSecondaryGenre : 'Select a Secondary Subgenre'}</option>
-                        {subgenres.map((sub) => (
-                          <option key={sub.id} value={sub.name}>{sub.name}</option>
-                        ))}
-                      </select>
-                    </div>
+                      <div className="col-md-6">
+                        <label htmlFor="subgenre">SubGenre * </label>
+                        <select
+                          value={subgenre}
+                          className="form-control"
+                          id="subgenre"
+                          onChange={(e) => setSubgenre(e.target.value)}
+                          disabled={!subgenres.length} // Disable if no subgenres available
+                        >
+                          <option value={subgenre}>{subgenre ? subgenre : 'Select a Subgenre'}</option>
+                          {subgenres.map((sub) => (
+                            <option key={sub.id} value={sub.name}>{sub.name}</option>
+                          ))}
+                        </select>
+                      </div>
 
+                      <div className="col-md-6">
+                        <label htmlFor="genre">Secondary Genre *</label>
+                        <select
+                          value={secondaryGenre}
+                          className="form-control"
+                          id="genre"
+                          onChange={(e) => setSecondaryGenre(e.target.value)}
+                        >
+                          <option value={secondaryGenre}>{secondaryGenre ? secondaryGenre : 'Select a Secondary genre'}</option>
+                          {GENRES.map((item) =>
+                            (<option value={item.name}>{item.name}</option>)
+                          )}
+                        </select>
+                      </div>
 
-
-                    {/* Price */}
-                    <div className="col-md-6">
-                      <label>Price *</label>
-                      {/* <input type="text" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} /> */}
-                      <select
-                        value={price}
-                        className="form-control"
-                        id="price"
-                        onChange={(e) => setPrice(e.target.value)}
-                      >
-                        <option value="">Please select...</option>
-                        <option selected="selected" value="156">Back : 15₹ / 0.99$ / 0Sg$</option>
-                        <option value="155">Mid : 20₹ / 1.49$ / 0Sg$</option>
-                        <option value="154">Front : 30₹ / 1.99$ / 0Sg$</option>
-                      </select>
-
-
-                    </div>
-
-                    {/* Parental Advisory */}
-                    <div className="col-md-6">
-                      <label>Parental Advisory *</label><br />
-                      <input type="radio" value="yes" checked={parentalAdvisory === "yes"} onChange={() => setParentalAdvisory("yes")} /> Yes
-                      <input type="radio" value="no" checked={parentalAdvisory === "no"} onChange={() => setParentalAdvisory("no")} style={{ marginLeft: "10px" }} /> No
-                      <input type="radio" value="no" checked={parentalAdvisory === "Cleaned"} onChange={() => setParentalAdvisory("Cleaned")} style={{ marginLeft: "10px" }} /> Cleaned
-
-                    </div>
+                      <div className="col-md-6">
+                        <label htmlFor="subgenre">Secondary SubGenre * </label>
+                        <select
+                          value={subSecondaryGenre}
+                          className="form-control"
+                          id="subgenre"
+                          onChange={(e) => setSubSecondaryGenre(e.target.value)}
+                          disabled={!subgenres.length} // Disable if no subgenres available
+                        >
+                          <option value={subSecondaryGenre}>{subSecondaryGenre ? subSecondaryGenre : 'Select a Secondary Subgenre'}</option>
+                          {subgenres.map((sub) => (
+                            <option key={sub.id} value={sub.name}>{sub.name}</option>
+                          ))}
+                        </select>
+                      </div>
 
 
 
-                    <div className="col-md-6">
-                      <label>Preview start</label>
-                      <input type="text" className="form-control" value={previewStart} onChange={(e) => setPreviewStart(e.target.value)} />
-                    </div>
+                      {/* Price */}
+                      <div className="col-md-6">
+                        <label>Price *</label>
+                        {/* <input type="text" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} /> */}
+                        <select
+                          value={price}
+                          className="form-control"
+                          id="price"
+                          onChange={(e) => setPrice(e.target.value)}
+                        >
+                          <option value="">Please select...</option>
+                          <option selected="selected" value="156">Back : 15₹ / 0.99$ / 0Sg$</option>
+                          <option value="155">Mid : 20₹ / 1.49$ / 0Sg$</option>
+                          <option value="154">Front : 30₹ / 1.99$ / 0Sg$</option>
+                        </select>
 
 
-                    <div className="col-md-6">
-                      <label>Track title language</label>
-                      <input type="text" className="form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} />
-                    </div>
-                    <div className="col-md-6">
-                      <label>Lyrics language</label>
-                      <input type="text" className="form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} />
-                    </div>
+                      </div>
 
-                    {/* Lyrics */}
-                    <div className="col-md-6">
-                      <label>Lyrics</label>
-                      <textarea className="form-control" rows="4" value={lyrics} onChange={(e) => setLyrics(e.target.value)} />
+                      {/* Parental Advisory */}
+                      <div className="col-md-6">
+                        <label>Parental Advisory *</label><br />
+                        <input type="radio" value="yes" checked={parentalAdvisory === "yes"} onChange={() => setParentalAdvisory("yes")} /> Yes
+                        <input type="radio" value="no" checked={parentalAdvisory === "no"} onChange={() => setParentalAdvisory("no")} style={{ marginLeft: "10px" }} /> No
+                        <input type="radio" value="no" checked={parentalAdvisory === "Cleaned"} onChange={() => setParentalAdvisory("Cleaned")} style={{ marginLeft: "10px" }} /> Cleaned
+
+                      </div>
+
+
+
+                      <div className="col-md-6">
+                        <label>Preview start</label>
+                        <input type="text" className="form-control" value={previewStart} onChange={(e) => setPreviewStart(e.target.value)} />
+                      </div>
+
+
+                      <div className="col-md-6">
+                        <label>Track title language</label>
+                        <select type="text" className="form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
+                          <option value={"English"}>English</option>
+                          <option value={"Hindi"}>Hindi</option>
+                          <option value={"Punjabi"}>Punjabi</option>
+
+                        </select>
+                      </div>
+                      <div className="col-md-6">
+                        <label>Lyrics language</label>
+                        <select type="text" className="form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >
+
+                        <option value={"English"}>English</option>
+                        <option value={"Hindi"}>Hindi</option>
+                          <option value={"Punjabi"}>Punjabi</option>
+                        </select>
+                      </div>
+
+                      {/* Lyrics */}
+                      <div className="col-md-6">
+                        <label>Lyrics</label>
+                        <textarea className="form-control" rows="4" value={lyrics} onChange={(e) => setLyrics(e.target.value)} />
+                      </div>
+
                     </div>
 
                   </div>
 
+
+
+                  <div className="form-group">
+                    {/* Submit Button */}
+                    {/* <div className="col-ml-12"> */}
+
+                    <button type="submit" className="btn btn-primary"
+                      onClick={async () => {
+                        await handleSubmit();  // Ensure handleSubmit completes first
+                        closeModal();
+                        // Then close the modal
+                      }}
+                    >Save</button>
+                    {/* </div> */}
+                  </div>
                 </div>
-
-
-              
-              <div className="form-group">
-                {/* Submit Button */}
-                {/* <div className="col-ml-12"> */}
-
-                <button type="submit" className="btn btn-primary"
-                  onClick={async () => {
-                    await handleSubmit();  // Ensure handleSubmit completes first
-                    closeModal();
-                    // Then close the modal
-                  }}
-                >{btnName}</button>
-                {/* </div> */}
-              </div>
               </div>
             </div>
           </div>

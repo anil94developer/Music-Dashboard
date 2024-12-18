@@ -51,14 +51,18 @@ export default function SearchInput(props) {
 
   const addHandleSubmit = async () => {
     let body = { name: query, linkId: link, itunesLinkId: itunesLinkId };
-    console.log("artiest body======",body)
     let result = await postData(base.addArtist, body);
+    console.log("artiest result======",result)
+
     if (result.data.status === true) {
       Swal.fire("Success", result.message, "success");
       fetchArtistList();
       setQuery("");
       setLink("");
       setItunesLinkId("")
+      addArtist(result.data.data)
+
+
     } else {
       Swal.fire("Error", result.message, "error");
     }

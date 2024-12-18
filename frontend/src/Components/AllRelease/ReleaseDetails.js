@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import OneReleaseController from '../../Controllers/One-release-controller/OneReleaseController';
 import { Nav } from '../Common/Nav'
 import MainStepController from '../../Controllers/One-release-controller/MainStepController';
+import { domainUrl } from '../../Constants/Data.constant';
 export const ReleaseDetails = () => {
     const location = useLocation();
     const releaseId = location.state?.releaseId;
@@ -24,43 +25,133 @@ export const ReleaseDetails = () => {
                         <div className="col-md-12">
                             {myRelease.title != null &&
                                 <div style={{ padding: "20px" }}>
-                                    <h1>Data Display</h1>
+                                    {/* <h1>Data Display</h1> */}
 
                                     {/* Step 1 */}
-                                    <section>
-                                        <h2>Step 1</h2>
-                                        <p><strong>Sub Title:</strong> {myRelease.step1.subTitle}</p>
-                                        <p><strong>Genre:</strong> {myRelease.step1.genre}</p>
-                                        <p><strong>Sub Genre:</strong> {myRelease.step1.subGenre}</p>
-                                        <p><strong>Label Name:</strong> {myRelease.step1.labelName}</p>
-                                        <p><strong>Format:</strong> {myRelease.step1.format}</p>
-                                        <p><strong>Original Release Date:</strong> {myRelease.step1.originalReleaseDate}</p>
-                                        <p><strong>Production Year:</strong> {myRelease.step1.productionYear}</p>
-                                    </section>
-
-                                    {/* Step 3 */}
-                                    <section>
-                                        <h2>Step 3</h2>
-                                        {myRelease.step3.map((item, index) => (
-                                            <div key={index} style={{ marginBottom: "20px" }}>
-                                                <p><strong>Content Type:</strong> {item.ContentType}</p>
-                                                <p><strong>Primary Track Type:</strong> {item.PrimaryTrackType}</p>
-                                                <p><strong>Title:</strong> {item.Title}</p>
-                                                <p><strong>Primary Artists:</strong></p>
-                                                <ul>
-                                                    {item.PrimaryArtist.map((artist, idx) => (
-                                                        <li key={artist._id || idx}>{artist.name}</li>
-                                                    ))}
-                                                </ul>
-                                                <p><strong>Featuring:</strong></p>
-                                                <ul>
-                                                    {item.Featuring.map((feature, idx) => (
-                                                        <li key={feature._id || idx}>{feature.name}</li>
-                                                    ))}
-                                                </ul>
+                                    <div className="col-md-12">
+                                        <div className="box">
+                                            <div className="box-header">
+                                                <h3 className="box-title">Release Information</h3>
                                             </div>
-                                        ))}
-                                    </section>
+                                            <div className="box-body form-row">
+                                                <div className="col-md-6">
+                                                    <img style={{ height: 400, width: 200 }} src={domainUrl + myRelease.step1.coverImage} alt="Cover Preview" />
+
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p><strong>Sub Title:</strong> {myRelease.step1.subTitle}</p>
+                                                    <p><strong>Genre:</strong> {myRelease.step1.genre}</p>
+                                                    <p><strong>Sub Genre:</strong> {myRelease.step1.subGenre}</p>
+                                                    <p><strong>Label Name:</strong> {myRelease.step1.labelName}</p>
+                                                    <p><strong>Format:</strong> {myRelease.step1.format}</p>
+                                                    <p><strong>Original Release Date:</strong> {myRelease.step1.originalReleaseDate}</p>
+                                                    <p><strong>Production Year:</strong> {myRelease.step1.productionYear}</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <br></br>
+                                        <div className="box">
+                                            <div className="box-header">
+                                                <h3 className="box-title">Audio / Video Files</h3>
+                                            </div>
+                                            <div className="box-body">
+
+                                                <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th>Name</th>
+                                                            <th>TYPE</th>
+                                                            <th>FILE URL</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                        {myRelease?.step2 && myRelease?.step2.map((item) => (
+                                                            <tr className="odd">
+                                                                <td className="  sorting_1">{item.fileName}</td>
+                                                                <td className="  ">{item.fileType}</td>
+                                                                <td className=" "><a href={domainUrl + '' + item.fileData} target="_blank">PLAY</a></td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            {/* {isLoading && "Loading..."} */}
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-md-12">
+                                        <br></br>
+                                        <div className="box">
+                                            <div className="box-header">
+                                                <h3 className="box-title">Tracks</h3>
+                                            </div>
+                                            <div className="box-body">
+                                                <div className="box box-primary">
+                                                    <div className="box">
+                                                        <div className="box-body">
+                                                            <div className="dataTables_wrapper form-inline" role="grid">
+
+                                                                <table className="table" aria-describedby="example2_info">
+                                                                    <thead>
+                                                                        <tr draggable="true">
+                                                                            <th rowspan="1" colspan="1">Volume</th>
+                                                                            <th rowspan="1" colspan="1">Content Type</th>
+                                                                            <th rowspan="1" colspan="1">PrimaryTrackType</th>
+                                                                            <th rowspan="1" colspan="1">SecondaryTrackType</th>
+                                                                            <th rowspan="1" colspan="1">Title</th>
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                                        {myRelease?.step3 && myRelease?.step3.map((item) => (
+                                                                            <tr draggable="true" className="odd">
+                                                                                <td className="  sorting_1">{item.Volume}</td>
+                                                                                <td className="">{item.ContentType}</td>
+                                                                                <td className=" ">{item.PrimaryTrackType}</td>
+                                                                                <td className=" ">{item.SecondaryTrackType}</td>
+                                                                                <td className=" ">{item.Title}</td>
+                                                                            </tr>
+                                                                        ))}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <br></br>
+                                        <div className="box">
+                                            <div className="box-header">
+                                                <h3 className="box-title">Stores</h3>
+                                            </div>
+                                            <div className="box-body">
+
+                                                {myRelease?.step4?.map((item, index) => (
+                                                    <div key={index} className="colElement">
+                                                        <div className="countryItem">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={item.status === 'active'}
+                                                                
+                                                                // onChange={() => handleCheckboxChange(item)}
+                                                            />&nbsp;&nbsp;
+                                                            {item.name} 
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         </div>

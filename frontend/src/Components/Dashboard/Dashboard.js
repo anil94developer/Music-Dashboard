@@ -1,32 +1,19 @@
 import React from 'react'
+import { useUserProfile } from '../../Context/UserProfileContext';
 import useDashboardController from '../../Controllers/Dashboard-Controller/useDashboardController';
 import SimpleGraph from '../Common/Chart/SimpleGraph';
 import { Nav } from '../Common/Nav'
 
 export const Dashboard = () => {
     const { dashboardData } = useDashboardController();
+    const { userProfile } = useUserProfile();
     return (
         <div>
-            <Nav /> 
+            <Nav />
             <div className="content-wrapper">
-
-                {/* <section className="content-header">
-                    <h1>
-                        Dashboard
-
-                    </h1>
-                    <ol className="breadcrumb">
-                        <li><a href="#"><i className="fa fa-dashboard"></i> Home</a></li>
-                        <li className="active">Dashboard</li>
-                    </ol>
-                </section> */}
-
-
                 <section className="content">
-
                     <div className="row">
-                        <div className="col-lg-3 col-xs-6">
-
+                        <div className="col-lg-3 col-xs-6"> 
                             <div className="small-box bg-aqua">
                                 <div className="inner">
                                     <h3>{dashboardData.myReleaseCount}</h3>
@@ -34,12 +21,10 @@ export const Dashboard = () => {
                                 </div>
                                 <div className="icon">
                                     <i className="ion ion-bag"></i>
-                                </div>
-                                {/* <a href="all-release" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a> */}
-                            </div>
+                                </div> 
+                                 </div>
                         </div>
-                        <div className="col-lg-3 col-xs-6">
-
+                        <div className="col-lg-3 col-xs-6"> 
                             <div className="small-box bg-green">
                                 <div className="inner">
                                     <h3>{dashboardData.myTracksCount}</h3>
@@ -48,8 +33,7 @@ export const Dashboard = () => {
                                 <div className="icon">
                                     <i className="ion ion-stats-bars"></i>
                                 </div>
-                                {/* <a href="all-tracks" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a> */}
-                            </div>
+                               </div>
                         </div>
                         {/* <div className="col-lg-3 col-xs-6">
 
@@ -81,15 +65,16 @@ export const Dashboard = () => {
 
 
                 </section>
+                {userProfile?.role === "company" &&
+                    <section className="content">
 
-                <section className="content">
-
-                    <div className="row">
-                        <div className="col-lg-12 col-xs-12 border">
-                            <SimpleGraph />
+                        <div className="row">
+                            <div className="col-lg-12 col-xs-12 border">
+                                <SimpleGraph />
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                }
             </div>
         </div>
     )

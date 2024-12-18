@@ -3,29 +3,43 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { base } from "../../Constants/Data.constant";
 import { getData, postData } from "../../Services/Ops";
+import DataTable from "../Common/DataTable/DataTable";
 import { Nav } from "../Common/Nav";
 import "./styles.css";
+import { Box, Button, Modal, Typography } from '@mui/material';
 
 const WithdrawRequest = (props) => {
   const [search, setSearch] = useState("");
   const [accountStatus, setAccountStatus] = useState("All");
   const [permissionLevel, setPermissionLevel] = useState("All");
-  const [users, setUsers] = useState([]);
+  const [withdrawalRequest, setWithdrawalRequest] = useState([]);
   const navigate = useNavigate();
 
-  const handleDelete = (login) => {
-    setUsers(users.filter((user) => user.login !== login));
-  };
+  // const handleDelete = (login) => {
+  //   setUsers(users.filter((user) => user.login !== login));
+  // };
 
 
   useEffect(() => {
-
-    getUserList();
+    getWithdrawListList();
   }, [props])
-  const getUserList = async () => {
+  const getWithdrawListList = async () => {
     let result = await getData(base.getWithdrawList);
-    console.log("my user list=========>", result.data)
-    setUsers(result.data)
+    console.log("getWithdrawList list=========>", result.data)
+    const resultList = Array.isArray(result.data)
+      ? result.data
+        // .filter((item) => item.status === 'Pending') // Filter items with status 'pending'
+        .map((item, index) => ({
+          _id: item._doc._id,
+          id: index + 1,
+          amount: item._doc.amount,
+          email: item.userdetails.email,
+          status: item._doc.status,
+          // remark: item._doc.remark,
+          action: "",
+        }))
+      : [];
+    setWithdrawalRequest(resultList)
   }
   const handle_change_status = async (status, id) => {
     try {
@@ -36,7 +50,7 @@ const WithdrawRequest = (props) => {
       let result = await postData(base.withdrawStatus, body)
       if (result.data.status === true) {
         Swal.fire("Success", result.data.message, "success");
-        getUserList();
+        getWithdrawListList();
       } else {
         Swal.fire("Error", result.data.message, "error");
       }
@@ -45,8 +59,46 @@ const WithdrawRequest = (props) => {
       Swal.fire("Error", "Something went wrong. Please try again later.", "error");
     }
   }
+
+  const columns = [
+    { field: 'id', headerName: '#', headerClassName: 'black-header', width: 50 },
+    { field: '_id', headerName: 'Id', headerClassName: 'black-header', width: 250 },
+    { field: 'amount', headerName: 'AMOUNT', headerClassName: 'black-header', width: 150 },
+    { field: 'email', headerName: 'EMAIL', headerClassName: 'black-header', width: 250 },
+    { field: 'status', headerName: 'STATUS', headerClassName: 'black-header', width: 150 },
+    // { field: 'remark', headerName: 'REMARK', headerClassName: 'black-header' ,width:250},
+
+    {
+      field: 'action', headerName: 'ACTION', width: 300,
+      renderCell: (params) => (
+        <div style={{ gap: '8px', display: 'flex',padding:10 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={() => {
+            handle_change_status("Complete", params.row._id);
+          }}
+        >
+          Complete
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary" // Corrected the color to "secondary"
+          size="small"
+          onClick={() => {
+            handle_change_status("Reject", params.row._id);
+          }}
+        >
+          Reject
+        </Button>
+      </div>
+      
+      )
+    }
+  ];
   return (
-    <div style={{background:'#000'}}>
+    <div style={{ background: '#000' }}>
       <Nav />
       <div className="content-wrapper">
         <section className="content">
@@ -54,20 +106,15 @@ const WithdrawRequest = (props) => {
           <div className="content">
             <h1>Withdraw Request Management</h1>
 
-            {/* Filters */}
-            <div className="filters">
-              <input
-                type="text"
-                placeholder="Search by login or email"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-
-              {/* <a href="add-user"> <button className="add-user-button">Add a new user</button></a> */}
-            </div>
-
+            
+            <DataTable
+              columns={columns}
+              rows={withdrawalRequest}
+              height="500"
+              width="100%"
+            />
             {/* User List */}
-            <table className="user-table">
+            {/* <table className="user-table">
               <thead>
                 <tr>
                   <th>Amount</th>
@@ -94,20 +141,20 @@ const WithdrawRequest = (props) => {
 
                         </select>
                         {/* <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button> */}
-                        {/* <button
+            {/* <button
                           className="action-button delete"
                           onClick={() => handleDelete(user.login)}
                         >
                           Delete
                         </button>
-                        <button className="action-button disable">Disable</button> */}
-                        {/* {user.is_deleted == '0' && <button  onClick={() => user_delete(user._id)} className="action-button disable">Disable</button> } */}
+                        <button className="action-button disable">Disable</button>  
+                      {user.is_deleted == '0' && <button  onClick={() => user_delete(user._id)} className="action-button disable">Disable</button> } 
                       </td>
                     </tr>
                   )
                 })}
               </tbody>
-            </table>
+            </table> */}
           </div>
         </section>
       </div>

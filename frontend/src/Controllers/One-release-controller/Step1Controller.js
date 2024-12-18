@@ -25,7 +25,7 @@ const Step1Controller = (props) => {
   const [newLabelName, setNewLabelName] = useState('');
   const [labelNameStatus, setLabelNameStatus] = useState('');
   const [labelNameList, setLabelNameList] = useState([]);
-  const [coverImage, setCoverImage] = useState("");
+  const [coverImage, setCoverImage] = useState({});
 
 
   const navigate = useNavigate();
@@ -123,6 +123,7 @@ const Step1Controller = (props) => {
     //     return swal("Validation Error", "UPC/EAN is required", "error");
     // }
     // validation set end
+    try{
     const formData = new FormData();
     formData.append("title", releaseData.title);
     formData.append("type", releaseData.type);
@@ -155,26 +156,21 @@ const Step1Controller = (props) => {
     formData.append("step1[productionYear]", productionYear);
     formData.append("step1[UPCEAN]", upcEan);
     formData.append("step1[producerCatalogueNumber]", producerCatalogueNumber);
+    formData.append("coverImage", imageFile ?imageFile :coverImage);
+    console.log("body===========>", imageFile)
 
-    if (imageFile) {
-      formData.append("coverImage", imageFile);
-    } else {
-      if (coverImage) {
-        formData.append("coverImage", coverImage);
-      }
-    }
-
-    console.log("body===========>", formData)
-
-    let result = await postData(base.releaseStep1, formData);
-    console.log(result)
-    if (result.data.status === true) {
+    let result = await postDataContent(base.releaseStep1, formData);
+ 
+    if (result.status == true) {
       Swal.fire("Success", result.message, result.message);
-
     } else {
       Swal.fire("Error", result.message, result.message);
     }
-    // console.log("primaryArtist=========>",primaryArtist)
+  }catch(e){
+   // Swal.fire("Error", e.message, e.message);
+
+  }
+
   };
 
 
@@ -183,11 +179,13 @@ const Step1Controller = (props) => {
       "title": newLabelName
     }
     let result = await postData(base.addLabel, body);
-    console.log(result)
+    console.log("label addd ", result.data.data)
     if (result.data.status === true) {
       Swal.fire("Success", result.message, result.message);
       fetchLabel()
       setNewLabelName("")
+      setLabelName(result.data.data.title)
+      setLabelNameStatus(false)
     } else {
       Swal.fire("Error", result.message, result.message);
     }

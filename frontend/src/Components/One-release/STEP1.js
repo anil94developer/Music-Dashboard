@@ -35,8 +35,8 @@ export default function STEP1(props) {
                 console.log("jsonData.featuring====", releaseData);
                 setReleaseTitle(releaseData.title);
                 setVersionSubtitle(jsonData.subTitle);
-                setPrimaryArtist(jsonData.primaryArtist); 
-                setFeaturing(jsonData.featuring); 
+                setPrimaryArtist(jsonData.primaryArtist);
+                setFeaturing(jsonData.featuring);
                 setIsVariousArtists(jsonData.isVariousArtists);
                 setGenre(jsonData.genre);
                 setSubGenre(jsonData.subGenre);
@@ -58,6 +58,11 @@ export default function STEP1(props) {
     // Get the subgenres for the selected genre
     const selectedGenre = GENRES.find((g) => g.name === genre);
     const subgenres = selectedGenre ? selectedGenre.subgenres : [];
+    const startYear = 1991;
+    const endYear = 2026;
+
+    // Generate an array of years
+    const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
 
     return (<div>
         <div className="box-header">
@@ -98,12 +103,12 @@ export default function STEP1(props) {
                     <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group" key={primaryArtist}>
                     <label htmlFor="featuring">Featuring</label>
                     <SearchInput artistData={featuring} setSelectData={setFeaturing} />
                 </div>
 
-                <div
+                {/* <div
                     style={{
                         display: 'flex', // Ensure the container is a flex container
                         flexDirection: 'row', // Align items in a row 
@@ -115,10 +120,10 @@ export default function STEP1(props) {
                         type="checkbox"
                         // className="form-check-input"
                         id="variousArtists"
-                        onChange={(e) => setIsVariousArtists(e.target.checked)}
+                        onChange={(e) => [setIsVariousArtists(e.target.checked),setPrimaryArtist(primaryArtist[0])]}
                     />
                     <label className="form-check-label" htmlFor="variousArtists">Various Artists / Compilation</label>
-                </div>
+                </div> */}
 
                 <div className="form-group">
                     <label htmlFor="genre">Genre *</label>
@@ -301,7 +306,11 @@ export default function STEP1(props) {
                         onChange={(e) => setProductionYear(e.target.value)}
                     >
                         <option value="">Select a year</option>
-                        <option value="2024">2024</option>
+                        {years.map((year) => (
+                            <option key={year} value={year}>
+                                {year}
+                            </option>
+                        ))}
                         {/* Add more options as needed */}
                     </select>
                 </div>

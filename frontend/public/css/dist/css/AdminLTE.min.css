@@ -221,7 +221,7 @@ a:focus {
     z-index: 1030;
     background: #000;
     border-bottom: #777;
-    border-style: solid;
+    border-bottom-style: solid;
     border-bottom-width: 2;
 }
 
@@ -508,7 +508,8 @@ a:focus {
 
 .sidebar {
     padding-bottom: 10px;
-    border: 2px solid #777;
+    border-right: 2px solid #777;
+    height: '100%';
 }
 
 .fixed .sidebar {

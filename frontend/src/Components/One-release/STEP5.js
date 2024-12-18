@@ -82,7 +82,7 @@ export default function STEP5(props) {
             </div>
 
           ))}
-          <div className="form-group" style={{
+          {/* <div className="form-group" style={{
             marginTop: 50
           }}>
             <label>
@@ -93,7 +93,7 @@ export default function STEP5(props) {
               />
               Allow 90 sec of preview
             </label>
-          </div>
+          </div> */}
         </div>
         <div className="col-md-6">
           <div className="form-group">

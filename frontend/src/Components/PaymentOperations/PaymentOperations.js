@@ -42,17 +42,21 @@ export default function PaymentOperations() {
     }
   };
   const handleSubmit = async () => {
+    if(amount < 100){
+      Swal.fire("Error", "Please enter miimum $100", "error");
+
+    }else{
     let body = {
       amount: amount
     }
     let result = await postData(base.sendWithdrawal, body);
-    if (result.data.status === true) {
-
+    if (result.data.status === true) { 
       Swal.fire("Success", result.data.message, "success");
       window.location.reload();
     } else {
       Swal.fire("Error", result.message, "error");
     }
+  }
   }
   const getWidthdrawal = async () => {
     let result = await getData(base.getWithdraw);
