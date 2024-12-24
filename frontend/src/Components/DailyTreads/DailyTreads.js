@@ -48,7 +48,7 @@ export default function DailyTreads() {
       <Nav />
       <div className="content-wrapper">
         <section className="content-header">
-          <h1>Daily Treads</h1>
+          <h1>Daily Trends</h1>
         </section>
         <section className="content">
           <div class='row'>

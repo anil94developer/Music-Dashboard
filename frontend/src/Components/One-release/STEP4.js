@@ -3,10 +3,16 @@ import Swal from 'sweetalert2';
 import { base } from '../../Constants/Data.constant';
 import initialCountryList from '../../Enums/store.list.json';
 import { postData } from '../../Services/Ops';
-
+// import imagePath from './../../assets/images/store/'
 export default function STEP4(props) {
   const { releaseData } = props
-  const [countryList, setCountryList] = useState(releaseData?.step4?.length > 0 ? releaseData?.step4 : initialCountryList);
+  const countryListWithLogos = initialCountryList.map((item) => ({
+    ...item,
+    logo: require(`../../assets/images/store/${item.logo}`).default,
+  }));
+  const [countryList, setCountryList] = useState(initialCountryList);
+  // const [countryList, setCountryList] = useState(releaseData?.step4?.length > 0 ? releaseData?.step4 : initialCountryList);
+
 
   const handleCheckboxChange = (item) => {
     setCountryList((prevList) =>
@@ -51,20 +57,22 @@ export default function STEP4(props) {
                   onChange={() => handleCheckboxChange(item)}
                 />&nbsp;&nbsp;
                 {item.name}
-                {/* <img
-                  src={require(`${item.logo}`)}
-                  style={{ height: 50, width: 30 }}
+                &nbsp;&nbsp;
+                <img
+                  src={require(`../../assets/images/store/${item.logo}`)}
+                  style={{ height: 30, width: 30 }}
                   alt={item.name}
-                /> */}
+                />    
               </div>
             </div>
           ))}
-          <div className="mt-3">
+         
+        </div>
+       
+      </div>
+      <div className="mt-3">
             <button type="submit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Save</button>
           </div>
-        </div>
-
-      </div>
     </div>
   );
 }

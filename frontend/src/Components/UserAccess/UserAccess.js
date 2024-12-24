@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { base } from "../../Constants/Data.constant";
 import { useUserProfile } from "../../Context/UserProfileContext";
-import { getData } from "../../Services/Ops";
+import { getData, postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import "./styles.css";
 
@@ -20,13 +21,34 @@ const UserAccess = (props) => {
 
 
   useEffect(() => {
-    const getUserList = async () => {
-      let result = await getData(base.getUserList);
-      console.log("my user list=========>", result.data)
-      setUsers(result.data)
-    }
+
     getUserList();
   }, [props])
+  const getUserList = async () => {
+    let result = await getData(base.getUserList);
+    console.log("my user list=========>", result.data)
+    setUsers(result.data)
+  }
+
+  const user_delete = async (userId, status) => {
+
+    try {
+      let body = {
+        "userId": userId,
+        status: status == 1 ? 0 :1
+      }
+      let result = await postData(base.deleteUser, body)
+      if (result.data.status === true) {
+        Swal.fire("Success", result.data.message, "success");
+        getUserList();
+      } else {
+        Swal.fire("Error", result.data.message, "error");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      Swal.fire("Error", "Something went wrong. Please try again later.", "error");
+    }
+  }
 
   return (
     <div>
@@ -39,12 +61,12 @@ const UserAccess = (props) => {
 
             {/* Filters */}
             <div className="filters">
-              <input
+              {/* <input
                 type="text"
                 placeholder="Search by login or email"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-              />
+              /> */}
 
               <a href="add-user"> <button className="add-user-button">Add a new user</button></a>
             </div>
@@ -55,19 +77,25 @@ const UserAccess = (props) => {
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Wallet</th>
-                  {userProfile.role == 'admin' && <th>No Of Label</th>}
+                  <th>Status</th> 
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users && users?.map((user) => (
-                  <tr key={user.userDetails._id}>
-                    <td>{user.userDetails.name}</td>
-                    <td>{user.userDetails.email}</td>
-                    <td>{user.userDetails.wallet}</td>
-                    {userProfile.role == 'admin' && <td>{user.userDetails.noOfLabel}</td>}
+                  <tr key={user?.userDetails?._id}>
+                    <td>{user?.userDetails?.name}</td>
+                    <td>{user?.userDetails?.email}</td>
+                    <td>{user?.userDetails?.is_deleted == 1 ? "DeActive" : "Active"}</td> 
                     <td>
+                      <button
+                        className={user?.userDetails?.is_deleted == 0 ?"action-button delete":"action-button edit"}
+                        onClick={() => {
+                          user_delete(user?.userDetails?._id, user?.userDetails?.is_deleted);
+                        }}
+                      >
+                       { user?.userDetails?.is_deleted == 0 ? "DeActive" : "Active"}
+                      </button>
                       <button className="action-button edit" onClick={() => { navigate("/edit-permission", { state: { userData: user } }); }}>Edit</button>
                       {/* <button
                           className="action-button delete"

@@ -42,7 +42,7 @@ export const UserProfileProvider = ({ children }) => {
         }
     };
     return (
-        <UserProfileContext.Provider value={{ userProfile, userPermission, setUserProfile,getPermissoin }}>
+        <UserProfileContext.Provider value={{ userProfile, userPermission, setUserProfile,getPermissoin,getProfile }}>
             {children}
         </UserProfileContext.Provider>
     );

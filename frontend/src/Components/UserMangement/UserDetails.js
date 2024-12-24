@@ -287,12 +287,10 @@ export default function UserDetails() {
               </tr>
             </thead>
             <tbody>
-              {trackList && trackList?.map((item, index) => {
-
+              {trackList && trackList?.map((item, index) => { 
                 return (
                   <tr style={{}} key={item._id}>
-                    <td>{index + 1}</td>
-
+                    <td>{index + 1}</td> 
                     <td>{item.Track}</td>
                     <td>{item.Quantity}</td>
 

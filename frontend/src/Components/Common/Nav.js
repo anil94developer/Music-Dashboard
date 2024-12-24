@@ -37,7 +37,7 @@ export const Nav = (props) => {
             <b>Music Dashboard</b>{" "}
           </a>
           <nav className="navbar navbar-static-top" role="navigation" style={{ backgroundColor: '#000' }}>
-           
+
             <div className="navbar-custom-menu">
               <ul className="nav navbar-nav">
                 <li className="dropdown user user-menu" style={{ backgroundColor: '#000' }}>
@@ -49,7 +49,7 @@ export const Nav = (props) => {
                     />
                     <span className="hidden-xs">{userProfile?.name}</span>
                   </a>
-                 
+
                   {dropdownVisible &&
                     <div className="modal" style={{ display: 'block', marginTop: -50, }} onClick={toggleDropdown}>
                       <div style={{
@@ -57,7 +57,7 @@ export const Nav = (props) => {
                         right: 0,
                       }}>
                         <div className="modal-content">
-                          <div style={{}}> 
+                          <div style={{}}>
                             <ul className="sidebar-menu">
                               <li className="treeview">
                                 <a href="password change">
@@ -110,7 +110,6 @@ export const Nav = (props) => {
                       </div>
                     </div>
                   }
-                  
                 </li>
               </ul>
             </div>
@@ -126,11 +125,9 @@ export const Nav = (props) => {
                   alt="User Image"
                 />
                 <div>
-                <span>{userProfile?.name}</span> <br></br>
-                <span>{userProfile?.email}</span>  
+                  <span>{userProfile?.name}</span> <br></br>
+                  <span>{userProfile?.email}</span>
                 </div>
-               
-                
               </div>
               <p >{userProfile?._id}</p>
             </div>
@@ -147,28 +144,28 @@ export const Nav = (props) => {
                 <ul className="sidebar-menu">
                   <li className="treeview">
                     <a href="/CompanyManagement" >
-                      <i className="fa fa-company"></i> <span>Master Account</span>
+                      <i className="fa fa-clock-o"></i> <span>Master Account</span>
                     </a>
                   </li>
                 </ul>
                 <ul className="sidebar-menu">
                   <li className="treeview">
                     <a href="/All releases" >
-                      <i className="fa fa-company"></i> <span>All Release</span>
+                      <i className="fa  fa-bullseye"></i> <span>All Release</span>
                     </a>
                   </li>
                 </ul>
                 <ul className="sidebar-menu">
                   <li className="treeview">
                     <a href="/All Tracks" >
-                      <i className="fa fa-company"></i> <span>All Tracks</span>
+                      <i className="fa fa-clock-o"></i> <span>All Tracks</span>
                     </a>
                   </li>
                 </ul>
                 <ul className="sidebar-menu">
                   <li className="treeview">
                     <a href="/Withdraw Request" >
-                      <i className="fa fa-company"></i> <span>Withdraw Request</span>
+                      <i className="fa fa-money"></i> <span>Withdraw Request</span>
                     </a>
                   </li>
                 </ul>
@@ -206,12 +203,12 @@ export const Nav = (props) => {
                 </ul>
                 <ul className="sidebar-menu">
                   <li className="treeview">
-                  <a href="/Daily Trends" >
-                      <i className="fa fa-retweet"></i> <span>DailyTreads</span>
+                    <a href="/Daily Trends" >
+                      <i className="fa fa-retweet"></i> <span>Analytics</span>
                     </a>
                   </li>
                 </ul>
-                 
+
                 <ul className="sidebar-menu">
                   <li className="treeview">
                     <a href="/Payment Operations" >
@@ -226,8 +223,6 @@ export const Nav = (props) => {
                     </a>
                   </li>
                 </ul>
-                
-                
               </>
             }
 
@@ -259,10 +254,8 @@ export const Nav = (props) => {
 
                   }
 
-                </ul> 
+                </ul>
             })
-
-
             }
 
           </section>

@@ -8,12 +8,12 @@ import { Nav } from "../Common/Nav";
 import "./UserAccessForm.css";
 
 function UserAccessForm(props) {
-  const {navigate}=useNavigate()
+  const { navigate } = useNavigate()
   const { userProfile } = useUserProfile()
   const [labelNameList, setLabelNameList] = useState([])
   const [airtestNameList, setaAirtestNameList] = useState([])
 
-  
+
   const [menuPermission, setMenuPermission] = useState([]);
   const [otherPermission, setOtherPermission] = useState([
     { sectionName: "Airtest", status: false, list: [] },
@@ -203,8 +203,11 @@ function UserAccessForm(props) {
       menuPermission,
       ...otherPermission,
     };
-
-   console.log("payload=======",payload)
+    if (userPermission.email == "" || userPermission.name == "" || userPermission.password == "") {
+      Swal.fire("Error", "Please fill email , password and name", "error");
+      return 0;
+    }
+    console.log("payload=======", payload)
     try {
       const result = await postData(base.addPermission, payload);
       if (result?.data?.status === true) {
@@ -325,7 +328,7 @@ function UserAccessForm(props) {
                     {item.sectionName == "Label" &&
                       <select class="form-control"
                         multiple
-                        onChange={(e)=>selectHandleChange(e,index)} 
+                        onChange={(e) => selectHandleChange(e, index)}
                       >
 
                         {labelNameList?.map((iitt, iinn) => {
@@ -336,8 +339,8 @@ function UserAccessForm(props) {
                     {item.sectionName == "Airtest" &&
                       <select class="form-control"
                         multiple
-                        onChange={(e)=>selectHandleChange(e,index)}
-                      > 
+                        onChange={(e) => selectHandleChange(e, index)}
+                      >
                         {airtestNameList?.map((iitt, iinn) => {
                           return <option value={iitt?._id}>{iitt.name}</option>
                         })}

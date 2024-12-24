@@ -82,7 +82,7 @@ export default function PaymentOperations() {
               <div className="small-box bg-aqua">
                 <div className="inner">
                   <h3>My Wallet</h3>
-                  <p>Balance: ₹ {userData?.wallet}</p>
+                  <p>Balance: € {userData?.wallet}</p>
                 </div>
                 <div className="icon">
                   <i className="ion ion-bag"></i>
@@ -110,7 +110,7 @@ export default function PaymentOperations() {
                     </a>
 
                     <div className="payment-status">
-                      <h3>Your payment of ₹ {JSON.stringify(widthdraw[widthdraw.length - 1]?.amount)} </h3>
+                      <h3>Your payment of € {JSON.stringify(widthdraw[widthdraw.length - 1]?.amount)} </h3>
 
                       <div className="status-steps">
                         <div className={widthdraw[widthdraw.length - 1]?.status == 'pending' ? "step active" : "step"}>
@@ -128,7 +128,7 @@ export default function PaymentOperations() {
                       </div>
 
                       <p className="payment-info">
-                        You have requested the payment <strong>{widthdraw[widthdraw.length - 1]?._id}</strong> of ₹ {JSON.stringify(widthdraw[widthdraw.length - 1]?.amount)} on {moment(widthdraw[widthdraw.length - 1]?.createdAt).format("DD-MM-YYYY HH:MM:SS")}.
+                        You have requested the payment <strong>{widthdraw[widthdraw.length - 1]?._id}</strong> of € {JSON.stringify(widthdraw[widthdraw.length - 1]?.amount)} on {moment(widthdraw[widthdraw.length - 1]?.createdAt).format("DD-MM-YYYY HH:MM:SS")}.
                         <br />
                         Your payment request will be confirmed by our team and sent to the payout provider with in 7 days.
                       </p>

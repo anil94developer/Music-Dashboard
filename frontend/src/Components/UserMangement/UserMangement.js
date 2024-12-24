@@ -41,6 +41,12 @@ const UserManagement = (props) => {
       : [];
     setUsers(resultList)
   }
+ 
+
+  const onDetails = (id) => {
+    navigate("/UserDetails", { state: { userId: id } });
+  }
+
   const user_delete = async (userId) => {
 
     try {
@@ -59,11 +65,6 @@ const UserManagement = (props) => {
       Swal.fire("Error", "Something went wrong. Please try again later.", "error");
     }
   }
-
-  const onDetails = (id) => {
-    navigate("/UserDetails", { state: { userId: id } });
-  }
-
 
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header', width: 50 },

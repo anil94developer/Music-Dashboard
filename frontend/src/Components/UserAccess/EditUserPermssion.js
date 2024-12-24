@@ -15,10 +15,10 @@ function EditUserPermission() {
     const [menuPermission, setMenuPermission] = useState([]);
     const [otherPermission, setOtherPermission] = useState([]);
     const [userPermission, setUserPermission] = useState({
-        email: userData.userDetails.email,
-        password: userData.userDetails.password,
-        name: userData.userDetails.naem,
-        noOfLabel: userData.userDetails.noOfLabel,
+        email: userData.userDetails?.email,
+        password: userData.userDetails?.password,
+        name: userData.userDetails?.naem,
+        noOfLabel: userData.userDetails?.noOfLabel,
     });
     const [selectedItems, setSelectedItems] = useState(otherPermission.map(() => []));
 
@@ -54,7 +54,7 @@ function EditUserPermission() {
         const payload = {
             name: userPermission.name,
             noOfLabel: userPermission.noOfLabel,
-            "registeredUserId": userData.userDetails._id,
+            "registeredUserId": userData.userDetails?._id,
             menuPermission: menuPermission,
             otherPermission: otherPermission,
         };
@@ -94,7 +94,7 @@ function EditUserPermission() {
                         <div className="form-section">
                             <label>Name:
                                 <input
-                                    type="test"
+                                    type="text"
                                     value={userPermission.name}
                                     onChange={(e) => setUserPermission((prev) => ({ ...prev, name: e.target.value }))}
                                 />
@@ -103,24 +103,19 @@ function EditUserPermission() {
                                 <input
                                     type="email"
                                     value={userPermission.email}
+                                    
                                     onChange={(e) => setUserPermission((prev) => ({ ...prev, email: e.target.value }))}
                                 />
                             </label>
 
                             <label>Password:
                                 <input
-                                    type="password"
+                                    type="text"
                                     value={userPermission.password}
                                     onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
                                 />
                             </label>
-                            <label>No Of Label:
-                                <input
-                                    type="number"
-                                    value={userPermission.noOfLabel}
-                                    onChange={(e) => setUserPermission((prev) => ({ ...prev, noOfLabel: e.target.value }))}
-                                />
-                            </label>
+                            
                         </div>
                         <div className="form-section">
                             <h3>Menu Permissions</h3>
@@ -175,7 +170,7 @@ function EditUserPermission() {
                             )}
 
                         </div>
-
+<br></br>
                         <button
                             onClick={() => [handleSubmit()]}
                             className="btn btn-primary btn-block btn-flat"
@@ -184,7 +179,9 @@ function EditUserPermission() {
                             Submit
                         </button>
                     </div>
+                   
                 </section>
+                
             </div>
         </div>
     );

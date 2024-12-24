@@ -1,4 +1,4 @@
-// import Re{useEffect,useState} from 'react'
+import { useEffect, useState } from 'react'
 import { Routes, Route } from "react-router-dom";
 import { Login } from "./Components/Login/Login";
 import { Dashboard } from "./Components/Dashboard/Dashboard";
@@ -35,15 +35,17 @@ import { LoginScreen } from "./Components/Task/LoginScreen";
 import CompanyManagement from "./Components/CompanyMangement/CompanyMangement";
 import AddCompany from "./Components/CompanyMangement/AddCompany";
 import CompanyDetails from "./Components/CompanyMangement/CompanyDetails";
+ 
 
 function App() {
-  const { userProfile } = useUserProfile()
+  const { userProfile, getPermissoin, getProfile } = useUserProfile()
+
   const adminRoute = () => {
     return <Routes>
       <Route path="/" element={<Login />}></Route>
       <Route path="/Dashboard" element={<Dashboard />}></Route>
       <Route path="/CompanyManagement" element={<CompanyManagement />}></Route>
-      <Route path="/CompanyDetails" element={<CompanyDetails />}></Route> 
+      <Route path="/CompanyDetails" element={<CompanyDetails />}></Route>
       <Route path="All releases" element={<AllRelease />}></Route>
       <Route path="/all tracks" element={<AllTracks />}></Route>
       {/* <Route path="/final-submit" element={<FinalSubmit />}></Route>
@@ -57,7 +59,7 @@ function App() {
       <Route path="/AddCompany" element={<AddCompany />}></Route>
       {/* <Route path="/User Mangement" element={<UserMangement />}></Route> */}
       {/* <Route path="/UserDetails" element={<UserDetails />}></Route> */}
-   
+
       <Route path="/release-details" element={<ReleaseDetails />}></Route>
       {/* <Route path="/edit-permission" element={<EditUserPermission />}></Route> */}
       {/* <Route path="/Payment Operations" element={<PaymentOperations />}></Route>
@@ -125,11 +127,17 @@ function App() {
       <Route path="/multiple-release" element={<Dashboard />}></Route>
     </Routes>
   }
- 
-  return userProfile?.role === "employee" ? employeeRoute() :
-    userProfile?.role === "company" ? companyRoute() :
-      adminRoute()  
- 
+  
+
+  useEffect(() => {
+    getPermissoin();
+    getProfile();
+  }, [])
+
+  return  userProfile?.role === "employee" ? employeeRoute() :
+      userProfile?.role === "company" ? companyRoute() :
+        adminRoute()
+
 }
 
 export default App;

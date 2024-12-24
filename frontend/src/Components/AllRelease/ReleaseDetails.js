@@ -5,6 +5,7 @@ import OneReleaseController from '../../Controllers/One-release-controller/OneRe
 import { Nav } from '../Common/Nav'
 import MainStepController from '../../Controllers/One-release-controller/MainStepController';
 import { domainUrl } from '../../Constants/Data.constant';
+import appImage from "../../assets/images/store/apptune.png";
 export const ReleaseDetails = () => {
     const location = useLocation();
     const releaseId = location.state?.releaseId;
@@ -142,13 +143,43 @@ export const ReleaseDetails = () => {
                                                             <input
                                                                 type="checkbox"
                                                                 checked={item.status === 'active'}
-                                                                
-                                                                // onChange={() => handleCheckboxChange(item)}
                                                             />&nbsp;&nbsp;
-                                                            {item.name} 
+                                                            {item.name}
+                                                            &nbsp;&nbsp;
+                                                           <img src={appImage} height="100" width="100" />
+
                                                         </div>
                                                     </div>
                                                 ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-md-12">
+                                        <br></br>
+                                        <div className="box">
+                                            <div className="box-header">
+                                                <h3 className="box-title">Release Dates</h3>
+                                            </div>
+                                            <div className="box-body form-row">
+                                                <p><strong>Main Release Date:</strong> {myRelease?.step5?.MainReleaseDate}</p>
+                                                <div className="col-md-6"> 
+                                                    <p><strong>Pre Order Release Date:</strong></p>
+                                                    {myRelease?.step5?.PreOrder?.map((item, index) => (
+                                                        <div key={index}  >
+                                                            <p><strong>{item.name}:</strong> {item.date}</p>
+                                                        </div>
+                                                    ))} 
+                                                </div>
+                                                <div className="col-md-6"> 
+                                                    <p><strong>Exclusive Release Dates:</strong></p>
+                                                    {myRelease?.step5?.ExclusiveReleaseDates?.map((item, index) => (
+                                                        <div key={index}  >
+                                                            <p><strong>{item.name}:</strong> {item.date}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

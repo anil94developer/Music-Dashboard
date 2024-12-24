@@ -1,6 +1,6 @@
-// const domainUrl = 'https://api.tuneplus.org/';
+const domainUrl = 'https://api.tuneplus.org/';
 // const domainUrl = 'http://localhost:8002/';
-const domainUrl = 'http://192.168.162.81:8002/';
+// const domainUrl = 'http://192.168.162.81:8002/';
 const endpoint = "https://api.ridd.in/api/"
 
 
