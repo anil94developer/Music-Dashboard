@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { images } from "../../assets/images";
 import { useUserProfile } from "../../Context/UserProfileContext";
 import AuthController from "../../Controllers/Auth-controller/AuthController";
-import {SideBar} from "./SideBar"
-export const Nav = (props) => {
+
+export const SideBar = (props) => {
   const { handleLogout } = AuthController()
   const { userPermission, userProfile } = useUserProfile()
   const [financialMenu, setFinancialMenu] = useState(false)
@@ -30,40 +30,34 @@ export const Nav = (props) => {
 
   }
   return (
-    <nav className="navbar">
-      <div className="container-fluid">
-        <div className="row align-items-center w-100">
-          <div className="col-md-6 col-12">
-            <div className="topbar-left d-flex align-items-center">
-              <a className="navbar-brand" href="#">
-                <img className="img-fluid" src={require('../../assets/images/logo.png')}/>
-              </a>
-              <button className="d-block navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
-            </div>
-          </div>
-          <div className="col-md-6 col-12">
-            <div className="topbar-left">
-              <div className="navbar-collapse position-relative">
-                <ul className="navbar-nav text-end">
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown
-                    </a>
-                    <ul className="dropdown-menu position-absolute">
-                      <li><a href="#" className="dropdown-item">Action</a></li>
-                      <li><a href="#" className="dropdown-item">Another action</a></li>
-                      <li><a href="#" className="dropdown-item">Something else here</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+    <div className="sidebar-main" id="navbarSupportedContent">
+      <div className="user-detail d-flex flex-wrap align-items-center">
+        <div className="user-img">
+          <img className="img-fluid" src={require('../../assets/images/user.jpg')}/>
+        </div>
+        <div className="user-name">
+          <p>Gold <span className="d-block">gold@gmail.com</span></p>
         </div>
       </div>
-    </nav>
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <a className="nav-link active" aria-current="page" href="#"><img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')}/> Dashboard</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#"><img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')}/> Link</a>
+        </li>
+        <li className="nav-item dropdown">
+          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')}/> Dropdown
+          </a>
+          <ul className="dropdown-menu">
+            <li><a className="dropdown-item" href="#">Action</a></li>
+            <li><a className="dropdown-item" href="#">Another action</a></li>
+            <li><a className="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
     // <nav>
     //   <div>
     //     <header className="main-header">
