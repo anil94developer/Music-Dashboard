@@ -50,7 +50,7 @@ export const AllDraft = () => {
             <div className="col-md-12">
               <div className="box">
                 <div className="box-header">
-                  <h3 className="box-title">Draft Release</h3>
+                  <h3 className="box-title">Draft Releasess</h3>
                 </div>
                 <div className="box-body">
                   <DataTable
