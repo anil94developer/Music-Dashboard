@@ -101,6 +101,9 @@ export default function STEP1(props) {
                 <div className="form-group">
                     <label htmlFor="primaryArtist">Primary artist *</label>
                     <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
+                    {props.errors?.['step1.primaryArtist'] && (
+                        <span className="text-danger">{props.errors['step1.primaryArtist']}</span>
+                    )}
                 </div>
 
                 <div className="form-group" key={primaryArtist}>
@@ -138,6 +141,9 @@ export default function STEP1(props) {
                             (<option value={item.name}>{item.name}</option>)
                         )}
                     </select>
+                    {props.errors?.['step1.genre'] && (
+                        <span className="text-danger">{props.errors['step1.genre']}</span>
+                    )}
                 </div>
 
                 <div className="form-group">
@@ -154,6 +160,9 @@ export default function STEP1(props) {
                             <option key={sub.id} value={sub.name}>{sub.name}</option>
                         ))}
                     </select>
+                    {props.errors?.['step1.subgenre'] && (
+                        <span className="text-danger">{props.errors['step1.subgenre']}</span>
+                    )}
                 </div>
 
                 <div className="form-group">
@@ -192,6 +201,9 @@ export default function STEP1(props) {
                             +
                         </button>
                     </div>
+                    {props.errors?.['step1.labelName'] && (
+                        <span className="text-danger">{props.errors['step1.labelName']}</span>
+                    )}
                 </div>
 
 
@@ -230,6 +242,9 @@ export default function STEP1(props) {
                         <option value="EP">EP</option>
                         <option value="ALBUM">ALBUM</option>
                     </select>
+                    {props.errors?.['step1.format'] && (
+                        <span className="text-danger">{props.errors['step1.format']}</span>
+                    )}
                 </div>
 
                 <div className="form-group">
@@ -283,6 +298,9 @@ export default function STEP1(props) {
                         placeholder="Enter ℗ line"
                         onChange={(e) => setPLine(e.target.value)}
                     />
+                    {props.errors?.['step1.line'] && (
+                        <span className="text-danger">{props.errors['step1.line']}</span>
+                    )}
                 </div>
 
                 <div className="form-group">
@@ -295,6 +313,9 @@ export default function STEP1(props) {
                         placeholder="Enter © line"
                         onChange={(e) => setCLine(e.target.value)}
                     />
+                    {props.errors?.['step1.cLine'] && (
+                        <span className="text-danger">{props.errors['step1.cLine']}</span>
+                    )}
                 </div>
 
                 <div className="form-group">
@@ -313,6 +334,9 @@ export default function STEP1(props) {
                         ))}
                         {/* Add more options as needed */}
                     </select>
+                    {props.errors?.['step1.productionYear'] && (
+                        <span className="text-danger">{props.errors['step1.productionYear']}</span>
+                    )}
                 </div>
 
                 <div className="form-group">

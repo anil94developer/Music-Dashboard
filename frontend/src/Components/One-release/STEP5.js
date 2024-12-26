@@ -44,6 +44,9 @@ export default function STEP5(props) {
               value={mainReleaseDate}
               onChange={(e) => setMainReleaseDate(e.target.value)}
             />
+            {props.errors?.['step5.mainReleaseDate'] && (
+                <span className="text-danger">{props.errors['step5.mainReleaseDate']}</span>
+            )}
           </div>
           <div className="form-group">
             <label>Add a pre-order date</label>
