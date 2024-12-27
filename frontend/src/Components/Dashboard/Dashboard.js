@@ -3,12 +3,15 @@ import { useUserProfile } from '../../Context/UserProfileContext';
 import useDashboardController from '../../Controllers/Dashboard-Controller/useDashboardController';
 import SimpleGraph from '../Common/Chart/SimpleGraph';
 import { Nav } from '../Common/Nav'
+import { SideBar } from '../Common/SideBar'
 
 export const Dashboard = () => {
     const { dashboardData } = useDashboardController();
     const { userProfile } = useUserProfile();
     return (
         <div>
+        <SideBar/>
+        <div className="main-cotent">
             <Nav />
             <div className="content-wrapper">
                 <section className="content">
@@ -76,6 +79,7 @@ export const Dashboard = () => {
                     </section>
                 }
             </div>
+        </div>
         </div>
     )
 }

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { images } from "../../assets/images";
 import { useUserProfile } from "../../Context/UserProfileContext";
 import AuthController from "../../Controllers/Auth-controller/AuthController";
-import { SideBar } from "./SideBar"
-export const Nav = (props) => {
+
+export const SideBar = (props) => {
   const { handleLogout } = AuthController()
   const { userPermission, userProfile } = useUserProfile()
   const [financialMenu, setFinancialMenu] = useState(false)
@@ -30,86 +30,114 @@ export const Nav = (props) => {
 
   }
   return (
-    <nav className="navbar">
-      <div className="container-fluid">
-        <div className="row align-items-center w-100">
-          <div className="col-md-6 col-12">
-            <div className="topbar-left d-flex align-items-center">
-              <a className="navbar-brand" href="#">
-                <img className="img-fluid" src={require('../../assets/images/logo.png')} />
-              </a>
-              <button className="d-block navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
-            </div>
-          </div>
-          <div className="col-md-6 col-12">
-            <div className="topbar-left">
-              <div className="navbar-collapse position-relative">
-                <ul className="navbar-nav text-end">
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img
-                        src={images?.user}
-                        className="user-image"
-                        alt="User Image"
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          borderRadius: "40%",
-                          objectFit: "cover",
-                        }}
-                      />
-                      <span className="hidden-xs">{userProfile?.name}</span>
-                    </a>
-                    <ul className="dropdown-menu position-absolute">
-                      <li>
-                        <a href="password change" className="dropdown-item">
-                          <i className="fa fa-lock"></i> Change Password
-                        </a>
-                      </li>
-                      <li>
-                        <a href="profile" className="dropdown-item">
-                          <i className="fa fa-user"></i> Profile
-                        </a>
-                      </li>
-                      {userProfile.role === "company" && (
-                        <>
-                          <li>
-                            <a href="/User Access" className="dropdown-item">
-                              <i className="fa fa-sitemap"></i> User Access
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/bank information" className="dropdown-item">
-                              <i className="fa fa-bank"></i> Bank Information
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/Support" className="dropdown-item">
-                              <i className="fa fa-support"></i> Support
-                            </a>
-                          </li>
-                        </>
-                      )}
-
-
-
-                      <li>
-                        <a href="#" className="dropdown-item" onClick={handleLogout}>
-                          <i className="fa fa-sign-out"></i> Logout
-                        </a>
-                      </li>
-
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+    <div className="sidebar-main" id="navbarSupportedContent">
+      <div className="user-detail d-flex flex-wrap align-items-center">
+        <div className="user-img">
+          <img className="img-fluid" src={require('../../assets/images/user.jpg')} />
+        </div>
+        <div className="user-name">
+          <p>Gold <span className="d-block">gold@gmail.com</span></p>
         </div>
       </div>
-    </nav>
+      <ul className="navbar-nav">
+        {/* <li className="nav-item">
+          <a className="nav-link active" aria-current="page" href="#"><img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')} /> Dashboard</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#"><img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')} /> Link</a>
+        </li>
+        <li className="nav-item dropdown">
+          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')} /> Dropdown
+          </a>
+          <ul className="dropdown-menu">
+            <li><a className="dropdown-item" href="#">Action</a></li>
+            <li><a className="dropdown-item" href="#">Another action</a></li>
+            <li><a className="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li> */}
+        {userProfile.role === "admin" && (
+          <>
+            <li className="nav-item">
+              <a className="nav-link" href="/Dashboard">
+                <i className="fa fa-dashboard"></i> Dashboard
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/CompanyManagement">
+                <i className="fa fa-clock-o"></i> Master Account
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/All releases">
+                <i className="fa fa-bullseye"></i> All Releases
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/All Tracks">
+                <i className="fa fa-clock-o"></i> All Tracks
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/Withdraw Request">
+                <i className="fa fa-money"></i> Withdraw Request
+              </a>
+            </li>
+          </>
+
+        )}
+        {userProfile.role === "company" && (
+          <>
+            <li className="nav-item">
+              <a className="nav-link" href="/Dashboard">
+                <i className="fa fa-dashboard"></i> Dashboard
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/One Release">
+                <i className="fa fa-caret-square-o-left"></i> One Release
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/All releases">
+                <i className="fa fa-bullseye"></i> All Releases
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/All drafts">
+                <i className="fa fa-clock-o"></i> All Drafts
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/Daily Trends">
+                <i className="fa fa-retweet"></i> Analytics
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/Payment Operations">
+                <i className="fa fa-money"></i> Payment Operations
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/Financial Report">
+                <i className="fa fa-tree"></i> Financial Report
+              </a>
+            </li>
+          </>
+        )}
+        {userProfile.role === "employee" &&
+          userPermission?.menuPermission?.map((item, index) => (
+            <li className="nav-item" key={index}>
+              <a className="nav-link" href={`/${item.mainMenuName}`}>
+                <i className={renderIcon(item.mainMenuName)}></i> {item.mainMenuName}
+              </a>
+            </li>
+          ))}
+      </ul>
+    </div>
+
+
+
     // <nav>
     //   <div>
     //     <header className="main-header">
