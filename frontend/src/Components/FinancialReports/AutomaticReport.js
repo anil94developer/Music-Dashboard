@@ -70,7 +70,7 @@ const AutomaticReports = () => {
 
       <section className="content">
         <div className="row">
-          <div className="col-lg-12 col-xs-12 border">
+          <div className="col-lg-12 col-xs-12">
             <StreamGraph list={streamData} />
           </div>
         </div>

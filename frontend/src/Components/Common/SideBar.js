@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { images } from "../../assets/images";
 import { useUserProfile } from "../../Context/UserProfileContext";
 import AuthController from "../../Controllers/Auth-controller/AuthController";
-
 export const SideBar = (props) => {
   const { handleLogout } = AuthController()
   const { userPermission, userProfile } = useUserProfile()
@@ -10,11 +9,9 @@ export const SideBar = (props) => {
   const [subMenu, setSubMenu] = useState("")
   const [profileMenu, setProfileMenu] = useState(false)
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
   const renderIcon = (name) => {
     return name == "Dashboard" ? "fa fa-dashboard"
       : name == "One Release" ? "fa fa-caret-square-o-left"
@@ -26,8 +23,6 @@ export const SideBar = (props) => {
                   : name == "Withdraw Request" ? "fa fa-sort-amount-asc"
                     : name == "All Transcations" ? "fa fa-random"
                       : "fa fa-sort-amount-asc"
-
-
   }
   return (
     <div className="sidebar-main" id="navbarSupportedContent">
@@ -90,37 +85,37 @@ export const SideBar = (props) => {
           <>
             <li className="nav-item">
               <a className="nav-link" href="/Dashboard">
-                <i className="fa fa-dashboard"></i> Dashboard
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon1.png')} /> Dashboard
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/One Release">
-                <i className="fa fa-caret-square-o-left"></i> One Release
+                <img className="img-fluid" title="One Release" src={require('../../assets/images/menu-icon2.png')} /> One Release
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/All releases">
-                <i className="fa fa-bullseye"></i> All Releases
+                <img className="img-fluid" title="All Releases" src={require('../../assets/images/menu-icon3.png')} /> All Releases
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/All drafts">
-                <i className="fa fa-clock-o"></i> All Drafts
+                <img className="img-fluid" title="All Drafts" src={require('../../assets/images/menu-icon4.png')} /> All Drafts
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/Daily Trends">
-                <i className="fa fa-retweet"></i> Analytics
+                <img className="img-fluid" title="Analytics" src={require('../../assets/images/menu-icon5.png')} /> Analytics
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/Payment Operations">
-                <i className="fa fa-money"></i> Payment Operations
+                <img className="img-fluid" title="Payment Operations" src={require('../../assets/images/menu-icon6.png')} /> Payment Operations
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/Financial Report">
-                <i className="fa fa-tree"></i> Financial Report
+                <img className="img-fluid" title="Financial Report" src={require('../../assets/images/menu-icon7.png')} /> Financial Report
               </a>
             </li>
           </>

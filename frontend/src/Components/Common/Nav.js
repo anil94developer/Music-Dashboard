@@ -10,11 +10,9 @@ export const Nav = (props) => {
   const [subMenu, setSubMenu] = useState("")
   const [profileMenu, setProfileMenu] = useState(false)
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
   const renderIcon = (name) => {
     return name == "Dashboard" ? "fa fa-dashboard"
       : name == "One Release" ? "fa fa-caret-square-o-left"
@@ -26,8 +24,6 @@ export const Nav = (props) => {
                   : name == "Withdraw Request" ? "fa fa-sort-amount-asc"
                     : name == "All Transcations" ? "fa fa-random"
                       : "fa fa-sort-amount-asc"
-
-
   }
   return (
     <nav className="navbar">
@@ -49,18 +45,8 @@ export const Nav = (props) => {
                 <ul className="navbar-nav text-end">
                   <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img
-                        src={images?.user}
-                        className="user-image"
-                        alt="User Image"
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          borderRadius: "40%",
-                          objectFit: "cover",
-                        }}
-                      />
-                      <span className="hidden-xs">{userProfile?.name}</span>
+                      <img src={images?.user} className="img-fluid" alt="User Image"/>
+                      <span className="user-name hidden-xs">{userProfile?.name}</span>
                     </a>
                     <ul className="dropdown-menu position-absolute">
                       <li>
