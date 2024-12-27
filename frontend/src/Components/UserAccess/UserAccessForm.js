@@ -5,6 +5,7 @@ import { base } from "../../Constants/Data.constant";
 import { useUserProfile } from "../../Context/UserProfileContext";
 import { getData, postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
+import  SearchableDropdown  from "../Common/SearchableDropdown";
 import "./UserAccessForm.css";
 
 function UserAccessForm(props) {
@@ -30,6 +31,7 @@ function UserAccessForm(props) {
 
 
   });
+  
 
   const handleCheckboxChange = (e, category, index, subIndex = null) => {
     const { checked } = e.target;
@@ -222,18 +224,17 @@ function UserAccessForm(props) {
       console.error("Submission error:", error);
     }
   };
-  const selectHandleChange = (e, index) => {
-    const value = e.target.value;
-
+  const handleSelection = (selectedOption, index) => {
     setOtherPermission((prev) => {
       const updatedPermissions = [...prev];
       updatedPermissions[index] = {
         ...updatedPermissions[index],
-        list: [...(updatedPermissions[index].list || []), value],
+        list: [...(updatedPermissions[index].list || []), selectedOption._id],
       };
       return updatedPermissions;
     });
   };
+  
   return (
     <div>
       <Nav />
@@ -326,25 +327,22 @@ function UserAccessForm(props) {
                   <div class="form-group">
                     <label for="genre">{item.sectionName}</label>
                     {item.sectionName == "Label" &&
-                      <select class="form-control"
-                        multiple
-                        onChange={(e) => selectHandleChange(e, index)}
-                      >
-
-                        {labelNameList?.map((iitt, iinn) => {
-                          return <option value={iitt?._id}>{iitt.title}</option>
-                        })}
-                      </select>
+                      <SearchableDropdown
+                      options={labelNameList}
+                      onChange={(e)=> handleSelection(e,index)}
+                      placeholder="Select an Label"
+                      valueKey="_id"
+                      labelKey="title"
+                    />
                     }
                     {item.sectionName == "Airtest" &&
-                      <select class="form-control"
-                        multiple
-                        onChange={(e) => selectHandleChange(e, index)}
-                      >
-                        {airtestNameList?.map((iitt, iinn) => {
-                          return <option value={iitt?._id}>{iitt.name}</option>
-                        })}
-                      </select>
+                      <SearchableDropdown
+                      options={airtestNameList}
+                      onChange={(e)=> handleSelection(e,index)}
+                      placeholder="Select an airtest"
+                      valueKey="_id"
+                      labelKey="name"
+                    />
                     }
                   </div>
 
