@@ -32,36 +32,28 @@ return (
         <h1>One Release</h1>
       </div>
       <section className="content">
-        <div className="row">
-          <div className="col-md-4">
-            <div className="dash-detail">
-              <h2>New Release</h2>
-              <p>What is the type of your new release?</p>
-              <div className="form-main">
-                <div className="form-check form-check-inline">
-                  <input className="form-check-input" type="radio" name="type" id="type" value="Audio" checked="true" onChange={(e) => setType(e.target.value)}/>
-                  <label className="form-check-label" for="inlineRadio1">Audio</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input className="form-check-input" type="radio" name="type" id="type" value="Video" onChange={(e) => setType(e.target.value)}/>
-                  <label className="form-check-label" for="inlineRadio2">Video</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input className="form-check-input" type="radio" name="type" id="type" value="Ringtone" onChange={(e) => setType(e.target.value)}/>
-                  <label className="form-check-label" for="inlineRadio3">Ringtone</label>
-                </div>
-                <div className="form-group">
-                  <label for="exampleInputEmail1">Release Title *</label>
-                  <input type="text" className="form-control" id="releaseTitle" placeholder="Enter Release Title" onChange={(e) => setTitle(e.target.value)}/>
-                </div>
-                <div className="submit-btn">
-                  <button type="submit" id="btnsubmit" className="btn btn-secondary" onClick={() => { handleSubmit() }}>Submit</button>
-                </div>
-              </div>
+        <div className="dash-detail dash-detail-two new-release">
+          <h2>New Release</h2>
+          <p>What is the type of your new release?</p>
+          <div className="form-main">
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="type" id="type" value="Audio" checked="true" onChange={(e) => setType(e.target.value)}/>
+              <label className="form-check-label" for="inlineRadio1">Audio</label>
             </div>
-          </div>
-          <div className="col-md-4">
-            <div className="box">
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="type" id="type" value="Video" onChange={(e) => setType(e.target.value)}/>
+              <label className="form-check-label" for="inlineRadio2">Video</label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input className="form-check-input" type="radio" name="type" id="type" value="Ringtone" onChange={(e) => setType(e.target.value)}/>
+              <label className="form-check-label" for="inlineRadio3">Ringtone</label>
+            </div>
+            <div className="form-group">
+              <label for="exampleInputEmail1">Release Title *</label>
+              <input type="text" className="form-control" id="releaseTitle" placeholder="Enter Release Title" onChange={(e) => setTitle(e.target.value)}/>
+            </div>
+            <div className="submit-btn">
+              <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
             </div>
           </div>
         </div>

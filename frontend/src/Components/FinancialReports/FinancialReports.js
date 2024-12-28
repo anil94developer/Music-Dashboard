@@ -23,11 +23,11 @@ return (
         <h1>Financial Reports</h1>
       </section>
       <section className="content">
-        <div className="reports-outer">
+        <div className="steps-main reports-outer">
           {/* 
           <h2>AVAILABLE REPORTS</h2>
           */}
-          <div className="tabs">
+          <div className="step-tab report-tab">
             <button
             className={`tab ${activeTab === "automatic" ? "active" : ""}`}
             onClick={() => setActiveTab("automatic")}

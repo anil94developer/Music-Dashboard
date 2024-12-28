@@ -172,8 +172,8 @@ export default function STEP3(props) {
   return (
     <div>
       <div className='row'>
-        <div className="box-header">
-          <h1>Tracks</h1>
+        <div className="track-heading d-flex flex-wrap align-items-center justify-content-between">
+          <h2>Tracks</h2>
           <div className="mt-3">
             <button onClick={openModal} className="btn btn-primary ">+ Add Track</button>
           </div>
