@@ -679,7 +679,7 @@ a:focus {
   border-radius: 0 !important;
   box-shadow: none;
   border-color: #fff;
-  background: #000;
+  background-color: #000;
 }
 .form-control:focus {
   border-color: #fff !important;
@@ -1873,13 +1873,12 @@ a:focus {
 .table-bordered>thead>tr>td,
 .table-bordered>tbody>tr>td,
 .table-bordered>tfoot>tr>td {
-  border: 1px solid #f4f4f4;
+  border: 1px solid #2f2f31;
   color: #fff;
   background-color: #000;
 }
 .table-bordered>thead>tr>th,
 .table-bordered>thead>tr>td {
-  border-bottom-width: 2px;
   color: #fff;
   background-color: #000;
 }
@@ -3930,6 +3929,105 @@ select:-webkit-autofill:focus {
 }
 .navbar-nav .nav-link .user-name {
   text-transform: capitalize;
+}
+/*28-12-2024*/
+.dash-detail.dash-detail-two{
+  background: transparent;
+  border: 6px double #2f2f31;
+  border-radius:55px 0px 55px 0px;
+  transition:all ease-in-out 0.25s;
+  -webkit-transition:all ease-in-out 0.25s;
+  -moz-transition:all ease-in-out 0.25s;
+  -ms-transition:all ease-in-out 0.25s;
+}
+.dash-detail.dash-detail-two:hover{
+  border-radius:0px 70px 0px 70px;
+}
+.dash-detail.new-release {
+  max-width: 350px;
+}
+.steps-main .step-tab{
+  margin-bottom:50px;
+  text-align:center;
+}
+.steps-main .step-tab .tab {
+  margin-right: 15px;
+  border:6px double transparent;
+  padding: 10px 15px;
+  background: #2f2f31;
+  border-radius:20px 0px 20px 0px;
+  transition:all ease-in-out 0.25s;
+  -webkit-transition:all ease-in-out 0.25s;
+  -moz-transition:all ease-in-out 0.25s;
+  -ms-transition:all ease-in-out 0.25s;
+  outline:none !important;
+}
+.steps-main .step-tab .tab:hover, .steps-main .step-tab .tab.active{
+  border-radius:0px 20px 0px 20px;
+  border-color:#000;
+}
+.media-uploader .upload-files {
+  margin: 20px 0 0px;
+}
+.upload-files .form-group {
+  margin: 0;
+  width:calc(100% - 100px);
+  width:-webkit-calc(100% - 100px);
+  width:-moz-calc(100% - 100px);
+  width:-ms-calc(100% - 100px);
+}
+.upload-files .submit-btn{
+  width:82px;
+  margin-left: 18px;
+}
+.check-btn a:not(:last-of-type) {
+  margin-right: 15px;
+}
+.countryList{
+  margin: 20px 0 5px;
+}
+.countryList .colElement {
+  margin-right: 15px;
+  margin-bottom: 15px;
+  padding: 10px 15px;
+}
+.countryList .store-logo {
+  margin-right: 15px;
+  width:60px;
+}
+.countryItem .store-select {
+  width:calc(100% - 75px);
+  width:-webkit-calc(100% - 75px);
+  width:-moz-calc(100% - 75px);
+  width:-ms-calc(100% - 75px);
+}
+.top-store {
+  margin-top: 35px;
+}
+.top-store .store-heading {
+  margin-bottom: 15px;
+}
+.step-tab.report-tab {
+  margin-bottom: 30px;
+}
+.password-change .dash-detail {
+  max-width: 350px;
+}
+.profile-form textarea.form-control {
+  height: 38px;
+  resize: none;
+}
+.user-table td button:not(:last-of-type) {
+  margin-right: 10px;
+}
+.support-list{
+  margin-top: 35px;
+}
+.support-list .support-heading{
+  margin-bottom:20px;
+}
+.form-select.form-control {
+  background-color: #000 !important;
 }
 /*Responsive*/
 @media (min-width:768px) {

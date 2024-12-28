@@ -51,14 +51,14 @@ return (
       <section className="content">
         <div class='row'>
           <div class='col-md-4'>
-            <div className="box box-info">
+            <div className="dash-detail">
               <div className="box-body">
                 <ChartZoomPan />
               </div>
             </div>
           </div>
           <div class='col-md-4'>
-            <div className="box box-info">
+            <div className="dash-detail">
               <div className="box-body">
                 <SplineChart />
               </div>
@@ -66,7 +66,7 @@ return (
           </div>
           {/* {topStores.length > 0 && 
           <div class='col-md-4'>
-            <div className="box box-info">
+            <div className="dash-detail">
               <div className="box-body">
                 <PaiChart data={topStores} />
               </div>
@@ -74,7 +74,7 @@ return (
           </div>
           } */}
           <div class='col-md-4'>
-            <div className="box box-info">
+            <div className="dash-detail">
               <div className="box-body">
                 <CircleGraph />
               </div>

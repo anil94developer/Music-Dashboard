@@ -5,74 +5,59 @@ import initialCountryList from '../../Enums/store.list.json';
 import { postData } from '../../Services/Ops';
 // import imagePath from './../../assets/images/store/'
 export default function STEP4(props) {
-  const { releaseData } = props
-  const countryListWithLogos = initialCountryList.map((item) => ({
-    ...item,
-    logo: require(`../../assets/images/store/${item.logo}`).default,
-  }));
-  const [countryList, setCountryList] = useState(initialCountryList);
-  // const [countryList, setCountryList] = useState(releaseData?.step4?.length > 0 ? releaseData?.step4 : initialCountryList);
-
-
-  const handleCheckboxChange = (item) => {
-    setCountryList((prevList) =>
-      prevList.map((country) =>
-        country.id === item.id
-          ? { ...country, status: country.status === 'active' ? 'inactive' : 'active' }
-          : country
-      )
-    );
-  };
-  const handleSubmit = async () => {
-    let body = {
-      _id: releaseData._id,
-      step4: countryList
-    }
-    console.log(body)
-    let result = await postData(base.addStore, body);
-    if (result.data.status === true) {
-      Swal.fire("Success", result.message, result.message);
-    } else {
-      Swal.fire("Error", result.message, result.message);
-    }
-
-  }
-  return (
-    <div className="listColumns">
-      <div className="listColumn">
-        <div className="colHeader">
-          <div className="checkUncheckAll-header">
-            <a href="#" className="checkAll" rel="AS">Check all</a> /
-            <a href="#" className="uncheckAll" rel="AS">Uncheck all</a>
-          </div>
+const { releaseData } = props
+const countryListWithLogos = initialCountryList.map((item) => ({
+...item,
+logo: require(`../../assets/images/store/${item.logo}`).default,
+}));
+const [countryList, setCountryList] = useState(initialCountryList);
+// const [countryList, setCountryList] = useState(releaseData?.step4?.length > 0 ? releaseData?.step4 : initialCountryList);
+const handleCheckboxChange = (item) => {
+setCountryList((prevList) =>
+prevList.map((country) =>
+country.id === item.id
+? { ...country, status: country.status === 'active' ? 'inactive' : 'active' }
+: country
+)
+);
+};
+const handleSubmit = async () => {
+let body = {
+_id: releaseData._id,
+step4: countryList
+}
+console.log(body)
+let result = await postData(base.addStore, body);
+if (result.data.status === true) {
+Swal.fire("Success", result.message, result.message);
+} else {
+Swal.fire("Error", result.message, result.message);
+}
+}
+return (
+<div className="listColumns">
+  <div className="check-btn checkUncheckAll-header">
+    <a href="#" className="btn btn-primary checkAll" rel="AS">Check all</a>
+    <a href="#" className="btn btn-primary uncheckAll" rel="AS">Uncheck all</a>
+  </div>
+  <div className="countryList d-flex flex-wrap">
+    {countryList?.map((item, index) => (
+    <div key={index} className="colElement dash-detail">
+      <div className="countryItem d-flex align-items-center flex-wrap">
+        <div className="store-logo">
+          <img className="img-fluid" src={require(`../../assets/images/store/${item.logo}`)} alt={item.name}/>
         </div>
-
-        <div className="countryList">
-          {countryList?.map((item, index) => (
-            <div key={index} className="colElement">
-              <div className="countryItem">
-                <input
-                  type="checkbox"
-                  checked={item.status === 'active'}
-                  onChange={() => handleCheckboxChange(item)}
-                />&nbsp;&nbsp;
-                {item.name}
-                &nbsp;&nbsp;
-                <img
-                  src={require(`../../assets/images/store/${item.logo}`)}
-                  style={{ height: 30, width: 30 }}
-                  alt={item.name}
-                />    
-              </div>
-            </div>
-          ))}
-         
+        <div className="store-select">
+          <input type="checkbox" checked={item.status === 'active'} onChange={() => handleCheckboxChange(item)} />
+          {item.name}
         </div>
-       
       </div>
-      <div className="mt-3">
-            <button type="submit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Save</button>
-          </div>
     </div>
-  );
+    ))}
+  </div>
+  <div className="save-btn">
+    <button type="submit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Save</button>
+  </div>
+</div>
+);
 }
