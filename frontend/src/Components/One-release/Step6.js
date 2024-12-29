@@ -61,37 +61,24 @@ export default function STEP6(props) {
     
     return (
         <div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP1 releaseData={releaseData} errors={errors}/>
-                </div>
+            <div className="steps-detail step-one-main">
+                <STEP1 releaseData={releaseData} errors={errors}/>
             </div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP2 releaseData={releaseData}/>
-                </div>
+            <div className="steps-detail step-two-main">
+                <STEP2 releaseData={releaseData}/>
             </div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP3 releaseData={releaseData} fetchReleaseDetails={fetchReleaseDetails} />
-                </div>
+            <div className="steps-detail step-three-main">
+                <STEP3 releaseData={releaseData} fetchReleaseDetails={fetchReleaseDetails} />
             </div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP4 releaseData={releaseData} />
-                </div>
+            <div className="steps-detail step-four-main">
+                <STEP4 releaseData={releaseData} />
             </div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP5 releaseData={releaseData} erorrs={errors} />
-                </div>
+            <div className="steps-detail step-five-main">
+                <STEP5 releaseData={releaseData} erorrs={errors} />
             </div>
-            <br></br>
-            <div className="mt-3">
+            <div className="submit-btn">
                 <button type="submit" className="btn btn-primary" onClick={handleSubmitClick}>Submit</button>
             </div>
-
-
         </div>
     )
 }

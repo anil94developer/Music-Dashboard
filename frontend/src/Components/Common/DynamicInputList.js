@@ -23,7 +23,7 @@ export default function DynamicInputList(props) {
     <div className="dynamic-input-container d-flex row">
       
       {inputs.map((input, index) => (
-        <div className="input-group input-group-sm">
+        <div className="add-row input-group input-group-sm">
           <input
             type="text"
             value={input.name}
@@ -37,11 +37,11 @@ export default function DynamicInputList(props) {
               alignItems: 'center', // Align items vertically centered
           }}
           />
-          <span className="input-group-btn" style={{marginTop:5}}>
+          <span className="add-minus input-group-btn">
             {index == 0  ?
-              <button className="btn btn-info btn-flat" type="button" onClick={handleAddInput} >+</button>
+              <button className="btn btn-primary add-label" type="button" onClick={handleAddInput} >+</button>
               :
-              <button type="button" onClick={() => handleRemoveInput(index)} className="btn btn-danger btn-flat" >
+              <button type="button" onClick={() => handleRemoveInput(index)} className="btn btn-primary add-label" >
                 X
               </button>
               

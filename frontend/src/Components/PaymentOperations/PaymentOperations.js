@@ -64,95 +64,88 @@ setWidthdraw(result.data)
 }
 return (
 <div>
-  <SideBar/>
+  <SideBar />
+  <div className="main-cotent">
     <Nav />
     <div className="content-main">
-      <section className="content-header">
+      <section className="page-heading">
         <h1>Payment Operations</h1>
       </section>
-      <div className="row">
-        <div className="col-md-6">
-          <div className="box">
-            <div className="small-box bg-aqua">
-              <div className="inner">
-                <h3>My Wallet</h3>
-                <p>Balance: € {userData?.wallet}</p>
-              </div>
-              <div className="icon">
-                <i className="ion ion-bag"></i>
-              </div>
-              <div className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></div>
-            </div>
+      <div className="my-wallet dash-detail">
+        <div className="wallet-inner d-flex flex-wrap">
+          <div className="inner">
+            <h4>My Wallet</h4>
+            <p>Balance: € {userData?.wallet}</p>
           </div>
+          <div className="icon">
+            <img className="img-fluid" src={require('../../assets/images/music-wallet1.png')}/>
+          </div>
+          <div className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></div>
         </div>
       </div>
       <section className="content">
         <div className="row">
           {widthdraw[widthdraw.length - 1]?.amount > 0 ?
           <div className="col-md-6">
-            <div className="box box-primary">
-              <div className="balance-container">
-                <h2>My available balance</h2>
-                <p>
-                  Your Available balance is calculated according to your royalties and your advance, if you have an active advance.
-                </p>
-                <a href="#" className="faq-link">
-                Find out more on the FAQ
-                </a>
-                <div className="payment-status">
-                  <h3>Your payment of € {JSON.stringify(widthdraw[widthdraw.length - 1]?.amount)} </h3>
-                  <div className="status-steps">
-                    <div className={widthdraw[widthdraw.length - 1]?.status == 'pending' ? "step active" : "step"}>
-                    <span className="circle">✔</span>
-                    <span className="label">Requested</span>
-                  </div>
-                  <div className={widthdraw[widthdraw.length - 1]?.status == 'active' ? "step active" : "step"}>
-                  <span className="circle">2</span>
-                  <span className="label">Processed</span>
-                </div>
-                <div className={widthdraw[widthdraw.length - 1]?.status == 'complete' ? "step active" : "step"}>
-                <span className="circle">3</span>
-                <span className="label">Complete</span>
+            <div className="available-balance dash-detail dash-detail-two">
+              <h4>My available balance</h4>
+              <p>Your Available balance is calculated according to your royalties and your advance, if you have an active advance.</p>
+              <div className="find-btn">
+                <a href="#" className="btn btn-primary">Find out more on the FAQ</a>
               </div>
+              <div className="payment-status">
+                <h3>Your payment of € {JSON.stringify(widthdraw[widthdraw.length - 1]?.amount)} </h3>
+                <div className="balance-steps">
+                  <div className={widthdraw[widthdraw.length - 1]?.status == 'pending' ? "step active" : "step"}>
+                  <span className="circle">✔</span>
+                  <span className="label">Requested</span>
+                </div>
+                <div className={widthdraw[widthdraw.length - 1]?.status == 'active' ? "step active" : "step"}>
+                <span className="circle">2</span>
+                <span className="label">Processed</span>
+              </div>
+              <div className={widthdraw[widthdraw.length - 1]?.status == 'complete' ? "step active" : "step"}>
+              <span className="circle">3</span>
+              <span className="label">Complete</span>
             </div>
             <p className="payment-info">
               You have requested the payment <strong>{widthdraw[widthdraw.length - 1]?._id}</strong> of € {JSON.stringify(widthdraw[widthdraw.length - 1]?.amount)} on {moment(widthdraw[widthdraw.length - 1]?.createdAt).format("DD-MM-YYYY HH:MM:SS")}.
-              <br />
               Your payment request will be confirmed by our team and sent to the payout provider with in 7 days.
             </p>
-            <a href="#" className="transaction-history">
-            Transaction history & invoices
-            </a>
+            <div className="history-btn">
+              <a href="#" className="btn btn-primary">Transaction history & invoices</a>
+            </div>
           </div>
         </div>
     </div>
-</div>
-:
-<div className="col-md-6">
-<div className="box box-primary">
-<div className="box-header">
-<h3 className="box-title">Send Amount Request</h3>
-</div>
-<div className="box-body">
-<div className="form-group">
-<label for="exampleInputEmail1">Amount *</label>
-<input
-  type="text"
-  className="form-control"
-  id="amount"
-  placeholder="Enter Amount"
-  onChange={(e) => setAmount(e.target.value)}
-/>
-</div>
-</div>
-<div className="box-footer">
-<button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
-</div>
-</div>
-</div>
-}
+  </div>
+  :
+  <div className="col-md-6">
+  <div className="box box-primary">
+  <div className="box-header">
+  <h3 className="box-title">Send Amount Request</h3>
+  </div>
+  <div className="box-body">
+  <div className="form-group">
+  <label for="exampleInputEmail1">Amount *</label>
+  <input
+    type="text"
+    className="form-control"
+    id="amount"
+    placeholder="Enter Amount"
+    onChange={(e) => setAmount(e.target.value)}
+  />
+  </div>
+  </div>
+  <div className="box-footer">
+  <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
+  </div>
+  </div>
+  </div>
+  }
 </div>
 </section>
+</div>
 </div>
 </div>
 )

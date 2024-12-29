@@ -204,7 +204,7 @@ export default function STEP1(props) {
               </select>
               {/* Button */}
               <button
-                className="btn btn-info btn-flat"
+                className="btn btn-primary add-label"
                 type="button"
                 onClick={() => setLabelNameStatus(!labelNameStatus)}
               >
@@ -349,7 +349,7 @@ export default function STEP1(props) {
           </div>
         </div>
         <div className="col-12">
-          <button onClick={() => [handleSubmit()]} className="btn btn-primary btn-block btn-flat" type="submit">Save</button>
+          <button onClick={() => [handleSubmit()]} className="btn btn-primary" type="submit">Save</button>
         </div>
       </div>
       <div className="row">
