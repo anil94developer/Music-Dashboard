@@ -1,5 +1,5 @@
-const domainUrl = 'https://api.tuneplus.org/';
-// const domainUrl = 'http://localhost:8002/';
+// const domainUrl = 'https://api.tuneplus.org/';
+const domainUrl = 'http://localhost:8002/';
 // const domainUrl = 'http://192.168.150.83:8002/';
 const endpoint = "https://api.ridd.in/api/"
 
@@ -38,7 +38,7 @@ const base = {
   myPermission: mainUrl + 'permission/my-permission',
   getUserList: mainUrl + 'permission/my-user-list',
   sendWithdrawal: mainUrl + 'wallet/send-withdrawal',
-  getWithdraw: mainUrl + 'wallet/list-transactions',
+  getWithdraw: mainUrl + 'wallet/get-withdrawal-by-id',
   updatePermission: mainUrl + 'permission/update-permission',
   userList: mainUrl + 'auth/user-list',
   deleteUser: mainUrl + 'auth/user-delete',

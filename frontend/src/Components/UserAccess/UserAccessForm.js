@@ -9,7 +9,7 @@ import  SearchableDropdown  from "../Common/SearchableDropdown";
 import "./UserAccessForm.css";
 
 function UserAccessForm(props) {
-  const { navigate } = useNavigate()
+  const  navigate  = useNavigate()
   const { userProfile } = useUserProfile()
   const [labelNameList, setLabelNameList] = useState([])
   const [airtestNameList, setaAirtestNameList] = useState([])
@@ -35,15 +35,26 @@ function UserAccessForm(props) {
 
   const handleCheckboxChange = (e, category, index, subIndex = null) => {
     const { checked } = e.target;
-
-    if (category == "menuPermission") {
+    
+    if (category === "menuPermission") {
       setMenuPermission((prev) => {
-        const updated = [...prev];
-        if (subIndex !== null) {
+        const updated = [...prev];       
+        if (subIndex !== null) {         
           updated[index].submenu[subIndex].status = checked;
+          const allSubMenusUnchecked = updated[index].submenu.every((submenu) => !submenu.status);
+          if (allSubMenusUnchecked) {
+            updated[index].status = false;
+          } else {
+            updated[index].status = true;
+          }
         } else {
           updated[index].status = checked;
+          updated[index].submenu = updated[index].submenu.map((submenu) => ({
+            ...submenu,
+            status: checked,  
+          }));
         }
+  
         return updated;
       });
     } else if (category === "otherPermission") {
@@ -54,6 +65,8 @@ function UserAccessForm(props) {
       });
     }
   };
+  
+  
   useEffect(() => {
     fetchLabel()
     fetchAirtest()
@@ -214,7 +227,7 @@ function UserAccessForm(props) {
       const result = await postData(base.addPermission, payload);
       if (result?.data?.status === true) {
         Swal.fire("Success", result.data.message, "success");
-        navigate("user access")
+        navigate('/UserAccess')
       } else {
 
         Swal.fire("Error", result.message, "error");

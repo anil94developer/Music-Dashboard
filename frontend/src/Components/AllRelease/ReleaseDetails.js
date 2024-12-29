@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import OneReleaseController from '../../Controllers/One-release-controller/OneReleaseController';
 import { Nav } from '../Common/Nav'
+import initialCountryList from '../../Enums/store.list.json';
 import { SideBar } from '../Common/SideBar'
 import MainStepController from '../../Controllers/One-release-controller/MainStepController';
 import { domainUrl } from '../../Constants/Data.constant';
-import appImage from "../../assets/images/store/apptune.png";
 export const ReleaseDetails = () => {
 const location = useLocation();
 const releaseId = location.state?.releaseId;
@@ -14,11 +14,17 @@ const { myRelease, setMyRelease, fetchReleaseDetails, } = MainStepController();
 useEffect(() => {
 fetchReleaseDetails(releaseId)
 }, [])
+
+const getLogo=(name)=>{
+ let item= initialCountryList.find(item => item.name == name);
+ return item.logo
+}
 return (
 <div>
   <SideBar/>
+  <div  className="main-cotent">
     <Nav />
-    <div className="content-main">
+    <div className="content-wrapper">
       <section className="container-fluid content">
         <div className="row">
           <div className="col-md-12">
@@ -134,7 +140,8 @@ return (
                       />&nbsp;&nbsp;
                       {item.name}
                       &nbsp;&nbsp;
-                      <img src={appImage} height="100" width="100" />
+                      {/* {getLogo(item.name)} */}
+                      <img className="img-fluid" src={require(`../../assets/images/store/${getLogo(item.name)}`)} alt={item.name}/>
                     </div>
                   </div>
                   ))}
@@ -173,6 +180,7 @@ return (
         </div>
     </div>
   </section>
+</div>
 </div>
 </div>
 );

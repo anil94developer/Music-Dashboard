@@ -8,4 +8,5 @@
   { "id": "7", "name": "Soptify", "logo": "soptify.png", "status": "active" },
   { "id": "8", "name": "Tidal", "logo": "Tidal.png", "status": "active" },
   { "id": "9", "name": "Youtube", "logo": "youtube.png", "status": "active" }
-  ]
+
+]
