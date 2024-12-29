@@ -32,49 +32,34 @@ export default function CompanyDetails() {
   };
 
   // Parse the CSV file and convert it to JSON
-  // const parseCSV = (file) => {
-  //   Papa.parse(file, {
-  //     complete: (result) => {
-  //       console.log('CSV Parsed:', result);
-  //       const json = result.data; // Convert parsed CSV to JSON
-  //       setJsonData(json); // Store JSON data in state
-  //     },
-  //     header: true, // Treat first row as header (optional)
-  //     skipEmptyLines: true, // Skip empty lines in CSV (optional)
-  //   });
-  // };
-
-  const toCamelCase = (str) => {
-    return str
-      .toLowerCase()
-      .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>
-        index === 0 ? word.toLowerCase() : word.toUpperCase()
-      )
-      .replace(/\s+/g, ''); // Remove spaces
-  };
-  
   const parseCSV = (file) => {
     Papa.parse(file, {
       complete: (result) => {
         console.log('CSV Parsed:', result);
   
-        // Convert keys to camel case
+        // Remove spaces in keys with two or three words
         const json = result.data.map((row) => {
           const cleanedRow = {};
           Object.keys(row).forEach((key) => {
-            const cleanedKey = toCamelCase(key); // Convert to camel case
+            // Check if the key contains two or more words
+            const cleanedKey = key.trim().replace(/\s+/g, ''); // Trim and remove spaces within the key
             cleanedRow[cleanedKey] = row[key]; // Assign the value to the cleaned key
           });
           return cleanedRow;
         });
   
-        console.log('JSON with camel case keys:', json);
+        console.log('JSON with cleaned keys:', json);
         setJsonData(json); // Store JSON data in state
       },
-      header: true,
-      skipEmptyLines: true,
+      header: true, // Treat first row as header
+      skipEmptyLines: true, // Skip empty lines in CSV
     });
   };
+  
+
+ 
+  
+ 
   
   
 
@@ -147,15 +132,34 @@ export default function CompanyDetails() {
       userId: userId,
       data: jsonData
     }
-    console.log(jsonData)
-    let result = await postData(base.sendReport, body)
-    console.log(result)
-    if (result.data.status === true) {
-      Swal.fire("Success", result.message, result.message);
-    } else {
-      Swal.fire("Error", result.message, result.message);
-    }
+    uploadDataInChunks(jsonData,10)
+    // console.log(jsonData)
+    // let result = await postData(base.sendReport, body)
+    // console.log(result)
+    // if (result.data.status === true) {
+    //   Swal.fire("Success", result.message, result.message);
+    // } else {
+    //   Swal.fire("Error", result.message, result.message);
+    // }
   }
+
+  const uploadDataInChunks = async (data, chunkSize) => {
+    for (let i = 0; i < data.length; i += chunkSize) {
+      const chunk = data.slice(i, i + chunkSize);
+      let body = {
+        userId: userId,
+        data: chunk
+      }
+      try {
+        let result = await postData(base.sendReport, body)
+        console.log(`Chunk ${i / chunkSize + 1} uploaded`, await result.json());
+      } catch (error) {
+        console.error(`Error uploading chunk ${i / chunkSize + 1}:`, error);
+      }
+    }
+  };
+
+
 
   return (
     <div>
