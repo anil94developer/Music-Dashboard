@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import OneReleaseController from '../../Controllers/One-release-controller/OneReleaseController';
 import { Nav } from '../Common/Nav'
 import * as XLSX from 'xlsx';
+import { SideBar } from '../Common/SideBar';
 export const AllTracks = () => {
   const navigate = useNavigate();
   const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading ,myTracks, setMyTracks} = OneReleaseController();
@@ -27,7 +28,10 @@ export const AllTracks = () => {
     XLSX.writeFile(workbook, fileName);
 }
   return (
-    <div> <Nav />
+    <div>
+    <SideBar />
+    <div className="main-cotent">
+      <Nav />
       <div className="content-wrapper"> 
      
         <section className="content">
@@ -159,6 +163,7 @@ export const AllTracks = () => {
         </section>
        
         </div>
+      </div>
       </div>
  
     

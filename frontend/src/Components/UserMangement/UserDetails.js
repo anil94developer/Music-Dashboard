@@ -133,7 +133,6 @@ export default function UserDetails() {
                     />
                   </div>
                 </div>
-
                 <div className="col-md-6">
                   <div className="form-group">
                     <button
@@ -146,9 +145,6 @@ export default function UserDetails() {
                   </div>
                 </div>
               </div>
-
-
-
             </section>
           </div>
         </div>

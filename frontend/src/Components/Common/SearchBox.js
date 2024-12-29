@@ -79,14 +79,8 @@ export default function SearchInput(props) {
 
   return (
     <div>
+      <input className="form-control" type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search for an artist..."/>
       <div className="input-group input-group-sm">
-        <input
-          className="form-control"
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for an artist..."
-        />
       </div>
 
       {query && (

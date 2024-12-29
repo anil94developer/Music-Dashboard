@@ -4,6 +4,8 @@ import ARTISTLIST from '../../Enums/artist.list.json';
 import DynamicInputList from '../Common/DynamicInputList';
 import SearchInput from '../Common/SearchBox';
 import GENRES from '../../Enums/genres.json';
+import language from '../../Enums/language.json'
+
 export default function STEP3(props) {
   const { releaseData, fetchReleaseDetails } = props
   const {
@@ -291,32 +293,36 @@ export default function STEP3(props) {
                     <div className="col-md-3">
                       <div className="form-group">
                         <label>Remixer</label>
-                        <DynamicInputList inputs={remixer} setInputs={setRemixer} />
+                        <DynamicInputList inputs={remixer} setInputs={setRemixer} placeholder={"Remixer"}/>
+                        {/* <SearchInput />  */}
                       </div>
                       {/* <SearchInput />  */}
                     </div>
                     <div className="col-md-3">
                       <div className="form-group">
                         <label>Author *</label>
-                        <DynamicInputList inputs={author} setInputs={setAuthor} />
+                        <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"}/>
+
                       </div>
                     </div>
                     <div className="col-md-3">
                       <div className="form-group">
                         <label>Composer *</label>
-                        <DynamicInputList inputs={composer} setInputs={setComposer} />
+                        <DynamicInputList inputs={composer} setInputs={setComposer} placeholder={"Composer"} />
+
                       </div>
                     </div>
                     <div className="col-md-3">
                       <div className="form-group">
                         <label>Arranger</label>
-                        <DynamicInputList inputs={arranger} setInputs={setArranger} />
+                        <DynamicInputList inputs={arranger} setInputs={setArranger} placeholder={"Arranger"} />
                       </div>
                     </div>
                     <div className="col-md-3">
                       <div className="form-group">
                         <label>Producer</label>
-                        <DynamicInputList inputs={producer} setInputs={setProducer} />
+                        <DynamicInputList inputs={producer} setInputs={setProducer} placeholder={"Producer"}/>
+
                       </div>
                     </div>
                     <div className="col-md-3">
@@ -328,7 +334,7 @@ export default function STEP3(props) {
                     <div className="col-md-3">
                       <div className="form-group">
                         <label>Production Year</label>
-                        <select className="form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
+                        <select className="form-select form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
                           <option value="">- Select a year -</option>
                           {[...Array(100)].map((_, i) => (
                             <option key={i} value={2023 - i}>{2023 - i}</option>
@@ -346,7 +352,7 @@ export default function STEP3(props) {
                       <div className="col-md-3">
                         <div className="form-group">
                           <label>ISRC</label>
-                          <input disabled={generateISRC} type="text" className="form-control" value={isrc} onChange={(e) => setIsrc(e.target.value)} />
+                          <input disabled={generateISRC} type="text" className="form-control" value={!generateISRC ? "" : isrc} onChange={(e) => setIsrc(e.target.value)} />
                         </div>
                       </div>
                     }
@@ -362,7 +368,7 @@ export default function STEP3(props) {
                         <label htmlFor="genre">Genre *</label>
                         <select
                           value={genre}
-                          className="form-control"
+                          className="form-select form-control"
                           id="genre"
                           onChange={(e) => setGenre(e.target.value)}
                         >
@@ -378,7 +384,7 @@ export default function STEP3(props) {
                         <label htmlFor="subgenre">SubGenre * </label>
                         <select
                           value={subgenre}
-                          className="form-control"
+                          className="form-select form-control"
                           id="subgenre"
                           onChange={(e) => setSubgenre(e.target.value)}
                           disabled={!subgenres.length} // Disable if no subgenres available
@@ -395,7 +401,7 @@ export default function STEP3(props) {
                         <label htmlFor="genre">Secondary Genre *</label>
                         <select
                           value={secondaryGenre}
-                          className="form-control"
+                          className="form-select form-control"
                           id="genre"
                           onChange={(e) => setSecondaryGenre(e.target.value)}
                         >
@@ -411,7 +417,7 @@ export default function STEP3(props) {
                         <label htmlFor="subgenre">Secondary SubGenre * </label>
                         <select
                           value={subSecondaryGenre}
-                          className="form-control"
+                          className="form-select form-control"
                           id="subgenre"
                           onChange={(e) => setSubSecondaryGenre(e.target.value)}
                           disabled={!subgenres.length} // Disable if no subgenres available
@@ -429,7 +435,7 @@ export default function STEP3(props) {
                         {/* <input type="text" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} /> */}
                         <select
                           value={price}
-                          className="form-control"
+                          className="form-select form-control"
                           id="price"
                           onChange={(e) => setPrice(e.target.value)}
                         >
@@ -457,20 +463,26 @@ export default function STEP3(props) {
                     <div className="col-md-3">
                       <div className="form-group">
                         <label>Track title language</label>
-                        <select type="text" className="form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
-                          <option value={"English"}>English</option>
-                          <option value={"Hindi"}>Hindi</option>
-                          <option value={"Punjabi"}>Punjabi</option>
+                        <select type="text" className="form-select form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
+                        { language.map(item => (
+                          <option key={item} value={item.value}>
+                            {item.label}
+                          </option>
+                          ))
+                          }
+
                         </select>
                       </div>
                     </div>
                     <div className="col-md-3">
                       <div className="form-group">
                         <label>Lyrics language</label>
-                        <select type="text" className="form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >
-                          <option value={"English"}>English</option>
-                          <option value={"Hindi"}>Hindi</option>
-                          <option value={"Punjabi"}>Punjabi</option>
+                        <select type="text" className="form-select form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >
+                         { language.map(item => (
+                          <option key={item} value={item.value}>
+                            {item.label}
+                          </option>
+                          ))}
                         </select>
                       </div>
                     </div>

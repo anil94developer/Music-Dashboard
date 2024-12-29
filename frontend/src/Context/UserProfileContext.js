@@ -7,7 +7,7 @@ import { getData } from '../Services/Ops';
 const UserProfileContext = createContext();
 
 // Create a provider component
-export const UserProfileProvider = ({ children }) => {
+export const UserProfileProvider =  ({ children }) => {
     const [userProfile, setUserProfile] = useState({});
 
     const [userPermission, setUserPermission] = useState([]);

@@ -137,7 +137,7 @@ export default function STEP1(props) {
             <label htmlFor="genre">Genre *</label>
             <select
               value={genre}
-              className="form-control"
+              className="form-select form-control"
               id="genre"
               onChange={(e) =>
                 setGenre(e.target.value)}
@@ -159,7 +159,7 @@ export default function STEP1(props) {
             <label htmlFor="subgenre">SubGenre * </label>
             <select
               value={subGenre}
-              className="form-control"
+              className="form-select form-control"
               id="subgenre"
               onChange={(e) =>
                 setSubGenre(e.target.value)}
@@ -190,7 +190,7 @@ export default function STEP1(props) {
               <select
                 value={labelName}
                 id="labelName"
-                className="form-control"
+                className="form-select form-control"
                 style={{ flex: '1' }} // Ensure the dropdown takes most of the space
                 onChange={(e) => setLabelName(e.target.value)}
               >
@@ -240,7 +240,7 @@ export default function STEP1(props) {
             <label htmlFor="format">Format *</label>
             <select
               value={format}
-              className="form-control"
+              className="form-select form-control"
               id="format"
               onChange={(e) =>
                 setFormat(e.target.value)}
@@ -304,7 +304,7 @@ export default function STEP1(props) {
             <label htmlFor="productionYear">Production Year *</label>
             <select
               value={productionYear}
-              className="form-control"
+              className="form-select form-control"
               id="productionYear"
               onChange={(e) =>
                 setProductionYear(e.target.value)}

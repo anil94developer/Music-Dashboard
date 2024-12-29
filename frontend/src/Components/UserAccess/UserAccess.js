@@ -44,8 +44,8 @@ Swal.fire("Error", "Something went wrong. Please try again later.", "error");
 }
 }
 return (
-<div>
-  <SideBar/>
+  <div>
+  <SideBar />
   <div className="main-cotent">
     <Nav />
     <div className="content-main">

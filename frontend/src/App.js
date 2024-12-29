@@ -35,10 +35,11 @@ import { LoginScreen } from "./Components/Task/LoginScreen";
 import CompanyManagement from "./Components/CompanyMangement/CompanyMangement";
 import AddCompany from "./Components/CompanyMangement/AddCompany";
 import CompanyDetails from "./Components/CompanyMangement/CompanyDetails";
- 
+
 
 function App() {
   const { userProfile, getPermissoin, getProfile } = useUserProfile()
+  const [routeState, setRouteState] = useState(false)
 
   const adminRoute = () => {
     return <Routes>
@@ -127,16 +128,19 @@ function App() {
       <Route path="/multiple-release" element={<Dashboard />}></Route>
     </Routes>
   }
-  
+
 
   useEffect(() => {
     getPermissoin();
     getProfile();
-  }, [])
+    setRouteState(userProfile?.role ? true : false)
+  }, [userProfile?.role])
 
-  return  userProfile?.role === "employee" ? employeeRoute() :
-      userProfile?.role === "company" ? companyRoute() :
-        adminRoute()
+  return <div className='h-100' key={routeState}>
+    { userProfile?.role === "employee" ? employeeRoute() :
+    userProfile?.role === "company" ? companyRoute() :
+    adminRoute()}
+  </div>
 
 }
 

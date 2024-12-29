@@ -7,6 +7,7 @@ import DataTable from "../Common/DataTable/DataTable";
 import { Nav } from "../Common/Nav";
 import "./styles.css";
 import { Box, Button, Modal, Typography } from '@mui/material';
+import { SideBar } from "../Common/SideBar";
 
 const WithdrawRequest = (props) => {
   const [search, setSearch] = useState("");
@@ -98,7 +99,9 @@ const WithdrawRequest = (props) => {
     }
   ];
   return (
-    <div style={{ background: '#000' }}>
+    <div>
+    <SideBar />
+    <div className="main-cotent">
       <Nav />
       <div className="content-wrapper">
         <section className="content">
@@ -158,6 +161,7 @@ const WithdrawRequest = (props) => {
           </div>
         </section>
       </div>
+    </div>
     </div>
   );
 };

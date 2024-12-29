@@ -128,7 +128,7 @@ return (
 ))}
 </div>
 </div>
-<div className="submit-btn">
+<div className="submit-btn mt-4">
   <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
 </div>
 </div>

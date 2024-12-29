@@ -1,6 +1,6 @@
 const domainUrl = 'https://api.tuneplus.org/';
 // const domainUrl = 'http://localhost:8002/';
-// const domainUrl = 'http://192.168.162.81:8002/';
+// const domainUrl = 'http://192.168.150.83:8002/';
 const endpoint = "https://api.ridd.in/api/"
 
 
@@ -48,6 +48,9 @@ const base = {
   getTracks: mainUrl + 'excel/get-track',
   uploadStore: mainUrl + 'excel/sent-store',
   getStore: mainUrl + 'excel/get-store',
+  sendReport:mainUrl + 'excel/sent-salesAsset',
+  getReport:mainUrl + 'excel/get-salesAsset',
+  getFilterReport:mainUrl + 'excel/getFilterReport',
   uploadMarket: mainUrl + 'excel/sent-market',
   getMarket: mainUrl + 'excel/get-market',
   sendStream: mainUrl + 'excel/sent-stream',

@@ -47,11 +47,12 @@ const UserManagement = (props) => {
     navigate("/UserDetails", { state: { userId: id } });
   }
 
-  const user_delete = async (userId) => {
+  const user_delete = async (userId , status) => {
 
     try {
       let body = {
-        "userId": userId
+        "userId": userId,
+        "status": status === 1 ? 0 : 1
       }
       let result = await postData(base.deleteUser, body)
       if (result.data.status === true) {
@@ -82,7 +83,7 @@ const UserManagement = (props) => {
           color="info"
           size="small"
           onClick={() => {
-            user_delete(params.row._id);
+            user_delete(params.row._id, params.row.status);
           }}
         >
           Disable
