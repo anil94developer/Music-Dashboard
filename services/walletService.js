@@ -63,6 +63,20 @@ wallet.withdrowList = async (req, res, next) => {
   }
 }
 
+wallet.getWithdrawalbyId =async(req, res, next) => {
+  try {
+    const transactions = await withdrawalModel.getWithdrawalbyId(req.doc.userId);
+    if (!transactions) {
+      return R(res, false, "No transactions found", "", 404);
+    }
+    return R(res, true, "Transactions fetched successfully", transactions, 200);
+  } catch (err) {
+    console.log(err);
+    return R(res, false, err.message, "", 500);
+  }
+}
+
+
 wallet.withdrawStatus = async (req, res, next) => {
   try {
     const { id, status } = req.body;

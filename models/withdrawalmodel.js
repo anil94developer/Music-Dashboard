@@ -16,11 +16,11 @@ const withdrawalSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["Active", "Pending", "Complete"]
+        enum: ["active", "pending", "complete"]
     }
 }, { timestamps: true })
 
-const withdrawalModel = {}// mongoose.model("withdrawal", withdrawalSchema);
+const withdrawalModel = mongoose.model("withdrawal", withdrawalSchema);
 
 
 withdrawalModel.add = async (data) => {
@@ -28,12 +28,24 @@ withdrawalModel.add = async (data) => {
     try {
         const newWithdrawal = new withdrawalModel(data);
         await newWithdrawal.save();
+        console.log("this is what",newWithdrawal)
         return newWithdrawal;
     } catch (e) {
         console.log(e);
         return false;
     }
 }
+withdrawalModel.getWithdrawalbyId = async (userId) => {
+    const result = await db.connectDb("withdrawal", withdrawalSchema); 
+    try {
+        const transactions = await withdrawalModel.find({ userId:userId }); // Retrieve all transactions for the given user
+        console.log("Transactions retrieved successfully:", transactions);
+        return transactions; // Return the retrieved transactions
+    } catch (error) {
+        console.error("Error retrieving transactions:", error.message);
+        return false; // Return false on error
+    }
+};
 
 withdrawalModel.withdrawList = async () => {
     const result = await db.connectDb("withdrawal", withdrawalSchema);

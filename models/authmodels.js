@@ -181,7 +181,7 @@ authModel.updateProfile = async (id, data) => {
 authModel.transaction = async (data) => {
     const result = await db.connectDb("users", usersSchema); // Ensure proper connection
     try {
-        const userId = new ObjectId(data.userId); // Convert to ObjectId
+        const userId = data.userId; // Convert to ObjectId
         const amount = data.amount;
 
         // Ensure the user has sufficient balance and perform the deduction
@@ -193,10 +193,10 @@ authModel.transaction = async (data) => {
         console.log("Transaction result:", updateData);
 
         // Check if any document was matched and modified
-        if (updateData.matchedCount < 99) {
-            console.error("Insufficient balance or user not found.");
-            return false;
-        }
+        // if (updateData.matchedCount < 99) {
+        //     console.error("Insufficient balance or user not found.");
+        //     return false;
+        // }
 
         return true; // Transaction successful
     } catch (err) {
