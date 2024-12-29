@@ -48,6 +48,7 @@ export const Nav = (props) => {
                       <img src={images?.user} className="img-fluid" alt="User Image"/>
                       <span className="user-name hidden-xs">{userProfile?.name}</span>
                     </a>
+                    <p>4654546542</p>
                     <ul className="dropdown-menu position-absolute">
                       <li>
                         <a href="password change" className="dropdown-item">

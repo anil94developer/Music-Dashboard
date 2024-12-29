@@ -3632,6 +3632,9 @@ p:last-of-type{
   position: relative;
   z-index: 1;
 }
+.login-logo {
+  margin-bottom: 25px;
+}
 .login-box-body {
   max-width: 470px;
 }
@@ -3895,6 +3898,9 @@ select:-webkit-autofill:focus {
   padding:30px 15px;
   border-radius: 12px;
 }
+.dash-main .dash-detail {
+  margin-bottom: 25px;
+}
 .dash-detail .icon {
   width: 80px;
   margin-left:15px;
@@ -4028,6 +4034,34 @@ select:-webkit-autofill:focus {
 }
 .form-select.form-control {
   background-color: #000 !important;
+}
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+.cover-image {
+  margin: 20px 0 0;
+  max-width:880px;
+}
+.cover-image .img-cover {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px 0 30px;
+  background-color: #2f2f31;
+  padding: 15px;
+  border-radius: 15px;
+  outline: 2px solid #000;
+  outline-offset: -6px;
+}
+.cover-image .img-cover img {
+  width:130px;
+  height: 100%;
+  margin-right:15px;
+}
+.cover-image .img-cover p {
+  width:calc(100% - 145px);
+  width:-webkit-calc(100% - 145px);
+  width:-moz-calc(100% - 145px);
+  width:-ms-calc(100% - 145px);
 }
 /*Responsive*/
 @media (min-width:768px) {
