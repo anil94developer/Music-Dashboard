@@ -51,7 +51,7 @@ const SearchableDropdown = ({
               <li key={option[valueKey]}>
                 <button
                   type="button"
-                  className="dropdown-item"
+                  className="dropdown-item  font-semibold"
                   onClick={() => handleOptionClick(option)}
                 >
                   {option[labelKey]}
