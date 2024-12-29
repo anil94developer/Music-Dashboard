@@ -38,7 +38,7 @@ return (
   <div className="container">
     <div className="login-outer d-flex flex-column justify-content-center">
       <div className="login-logo">
-        <h1>Music Admin</h1>
+        <img className="img-fluid" title="Dashboard" src={require('../../assets/images/logo.png')} /> 
       </div>
       <div className="login-box-body">
         <h2>Welcome to Music</h2>

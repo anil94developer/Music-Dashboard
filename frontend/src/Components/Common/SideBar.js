@@ -84,7 +84,7 @@ export const SideBar = (props) => {
         {userProfile.role === "company" && (
           <>
             <li className="nav-item">
-              <a className="nav-link" href="/Dashboard">
+              <a className="nav-link active" href="/Dashboard">
                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon1.png')} /> Dashboard
               </a>
             </li>
