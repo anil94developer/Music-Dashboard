@@ -59,6 +59,7 @@ export default function STEP6(props) {
     };
 
     
+    
     return (
         <div>
             <div className="box box-primary">
