@@ -259,7 +259,7 @@ auth.is_deleted = async (req, res, next) => {
             return R(res, false, "User not found", "", 404)
         }
 
-        return R(res, true, "User deleted successfully", "", 200)
+        return R(res, true, status == 0 ? "User deleted successfully" : "User Active successfully", "", 200)
 
     } catch (error) {
         next(error)
