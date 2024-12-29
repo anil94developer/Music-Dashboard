@@ -16,6 +16,7 @@ const walletRoutes = require("./routes/wallet.route");
 const permissionsRoutes = require("./routes/permission.routes");
 const importExcel = require("./routes/importExcel.routes");
 const companyRoutes = require("./routes/company.routes");
+// const dashboardRoutes= require("./routes/dashbaord.routes");
 
 
 
@@ -46,7 +47,7 @@ app.use(cors({
 }));
 
 
-// app.use("/auth/createSecure", adminRoutes)
+// app.use("/dashboard", dashboardRoutes)
 app.use("/auth", authRoutes);
 app.use("/company", companyRoutes);
 app.use("/release", releaseRoutes);

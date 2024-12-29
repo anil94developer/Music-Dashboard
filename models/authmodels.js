@@ -45,7 +45,7 @@ const usersSchema = mongoose.Schema(
         companyName: { type: String },
         noOfLabel: { type: String },
         panNo: { type: String },
-        aadharCard: { type: String }, 
+        aadharCard: { type: String },
         clientNumber: { type: String },
         mainEmailAddress: { type: String },
         royaltiesEmailAddress: { type: String },
@@ -58,14 +58,14 @@ const usersSchema = mongoose.Schema(
         country: { type: String },
         timeZone: { type: String },
         language: { type: String },
-        wallet: { type: Number , default: 0 },
-        noOfLabel: { type: Number , default: 0 }
+        wallet: { type: Number, default: 0 },
+        noOfLabel: { type: Number, default: 0 }
     },
     { timestamps: true }
 );
 
 authModel.cronForOneHour = async () => {
-    const nowInMillis = Date.now(); 
+    const nowInMillis = Date.now();
     const check = await db.connectDb("users", usersSchema)
     const resultForCurrentAffairs = await check.updateMany(
         { is_subscribed_for_current_affairs: true, subscription_end_for_current_affairs: { $lt: nowInMillis } }, // Replace 'subscriptionDate' with your date field
@@ -109,9 +109,9 @@ authModel.signUp = async (data) => {
         return false
     }
 };
-authModel.addCompany = async (data) => { 
+authModel.addCompany = async (data) => {
     const result = await db.connectDb("users", usersSchema);
-    let insData = await result.insertMany(data); 
+    let insData = await result.insertMany(data);
     if (insData.length > 0) {
         return insData[0];
     } else {
@@ -125,12 +125,12 @@ authModel.getUser = async (userId) => {
     return getUser[0]
 }
 authModel.changePassword = async (userId, oldpass, pass) => {
-    try { 
+    try {
         const Login = await db.connectDb("users", usersSchema);
- 
+
         const user = await Login.findOne({ _id: userId });
         console.log("Fetched User:", user);
- 
+
         if (!user) {
             return false;
         }
@@ -232,34 +232,34 @@ authModel.permission = async (data) => {
     }
 }
 
-authModel.is_deleted =async (userId,status)=>{
+authModel.is_deleted = async (userId, status) => {
     const result = await db.connectDb("users", usersSchema);
-    try{
+    try {
         let updateData = await result.updateOne(
-        { _id: userId },
-        { $set: { is_deleted: status} },
-        { runValidators: true }
-    );
-    return updateData;
-}catch(err){
-    console.error("Error in is_deleted:", err.message);
-    return false; // Return false on error
-}
+            { _id: userId },
+            { $set: { is_deleted: status } },
+            { runValidators: true }
+        );
+        return updateData;
+    } catch (err) {
+        console.error("Error in is_deleted:", err.message);
+        return false; // Return false on error
+    }
 }
 
 authModel.userList = async () => {
     const users = await db.connectDb("users", usersSchema)
-    const getUser = await users.find({role:"company"})
+    const getUser = await users.find({ role: "company" })
     return getUser;
 }
-authModel.checkAvailablity = async(email)=>{
+authModel.checkAvailablity = async (email) => {
     const checkUser = await db.connectDb("users", usersSchema);
     let val = await checkUser.find({
         $or: [
-          { email: email }
+            { email: email }
         ]
-      })
-      return val
+    })
+    return val
 }
 // authModel.findAdminByRole = async(email, password) => {
 //     let findadmin = await db.connectDb("usersSchemas",usersSchema)

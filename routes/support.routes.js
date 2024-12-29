@@ -11,12 +11,4 @@ router.get('/support-list', verifyToken, support.listdata)
 
 
 
-
-
-
-
-
-
-
-
 module.exports = router 
