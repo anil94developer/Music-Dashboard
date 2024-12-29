@@ -14,6 +14,7 @@ export default function STEP6(props) {
     const { handleSubmit } = Step6Controller();
     const [finalStep, setFinalStep] = useState('');
     
+    
     return (
         <div>
             <div className="box box-primary">

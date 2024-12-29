@@ -85,6 +85,7 @@ export default function STEP1(props) {
                         onChange={(e) => setReleaseTitle(e.target.value)}
                     />
                 </div>
+                
 
                 <div className="form-group" >
                     <label htmlFor="versionSubtitle">Version/Subtitle</label>

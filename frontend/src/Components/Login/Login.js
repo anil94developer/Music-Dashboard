@@ -48,6 +48,10 @@ export const Login = () => {
                         <b>Music Admin</b>
                     </a>
                 </div>
+                <img
+                  src={require(`../../assets/images/store/apptune.png`)}
+                  style={{ height: 30, width: 30 }} 
+                />  
                 <div className="login-box-body" style={{ borderWidth: 2 }}>
                     <p className="login-box-msg">Welcome to Sign in</p>
                     <form id="dataform" onSubmit={onSubmit}>
