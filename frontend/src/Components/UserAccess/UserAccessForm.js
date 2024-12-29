@@ -6,10 +6,11 @@ import { useUserProfile } from "../../Context/UserProfileContext";
 import { getData, postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import  SearchableDropdown  from "../Common/SearchableDropdown";
+import { SideBar } from "../Common/SideBar";
 import "./UserAccessForm.css";
 
 function UserAccessForm(props) {
-  const { navigate } = useNavigate()
+  const  navigate  = useNavigate()
   const { userProfile } = useUserProfile()
   const [labelNameList, setLabelNameList] = useState([])
   const [airtestNameList, setaAirtestNameList] = useState([])
@@ -214,7 +215,7 @@ function UserAccessForm(props) {
       const result = await postData(base.addPermission, payload);
       if (result?.data?.status === true) {
         Swal.fire("Success", result.data.message, "success");
-        navigate("user access")
+        navigate("/User Access")
       } else {
 
         Swal.fire("Error", result.message, "error");
@@ -237,6 +238,8 @@ function UserAccessForm(props) {
   
   return (
     <div>
+    <SideBar />
+    <div className="main-cotent">
       <Nav />
       <div className="content-wrapper">
         <section className="content">
@@ -360,6 +363,7 @@ function UserAccessForm(props) {
           </div>
         </section>
       </div>
+    </div>
     </div>
   );
 }

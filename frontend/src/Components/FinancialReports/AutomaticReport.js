@@ -68,13 +68,13 @@ const AutomaticReports = () => {
         </table>
       </div>
 
-      <section className="content">
+      {/* <section className="content">
         <div className="row">
           <div className="col-lg-12 col-xs-12">
             <StreamGraph list={streamData} />
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

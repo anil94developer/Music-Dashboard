@@ -7,6 +7,7 @@ import { Nav } from "../Common/Nav";
 import "./styles.css";
 import { Box, Button, Modal, Typography } from '@mui/material';
 import DataTable from "../Common/DataTable/DataTable";
+import { SideBar } from "../Common/SideBar";
 
 const CompanyManagement = (props) => {
   const [search, setSearch] = useState("");
@@ -35,17 +36,18 @@ const CompanyManagement = (props) => {
           name: item.name,
           email: item.email,
           wallet: item.wallet,
-          status: item.is_deleted == 1 ? "DeActive" : "Active", 
+          status: item.is_deleted == 0 ? "Active" : "DeActive",
           action: "",
         }))
       : [];
     setUsers(resultList)
   }
-  const user_delete = async (userId) => {
+  const user_delete = async (userId, status) => {
 
     try {
       let body = {
-        "userId": userId
+        "userId": userId,
+        "status": status == "DeActive" ? 0 : 1
       }
       let result = await postData(base.deleteUser, body)
       if (result.data.status === true) {
@@ -67,72 +69,76 @@ const CompanyManagement = (props) => {
 
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header', width: 50 },
-    { field: '_id', headerName: 'Client ID', headerClassName: 'black-header', width: 250 }, 
+    { field: '_id', headerName: 'Client ID', headerClassName: 'black-header', width: 250 },
     { field: 'name', headerName: 'Name', headerClassName: 'black-header', width: 100 },
     { field: 'email', headerName: 'EMAIL', headerClassName: 'black-header', width: 200 },
-    { field: 'wallet', headerName: 'WALLET', headerClassName: 'black-header', width: 60 }, 
+    { field: 'wallet', headerName: 'WALLET', headerClassName: 'black-header', width: 60 },
     { field: 'status', headerName: 'STATUS', headerClassName: 'black-header', width: 200 },
     {
       field: 'action', headerName: 'ACTION', width: 300,
       renderCell: (params) => (
-        <div style={{ gap: '8px', display: 'flex',padding:10 }}>
-        <Button
-          variant="contained"
-          color="info"
-          size="small"
-          onClick={() => {
-            user_delete(params.row._id);
-          }}
-        >
-          Disable
-        </Button>
-         <Button
-          variant="contained"
-          color="secondary" // Corrected the color to "secondary"
-          size="small"
-          onClick={() => {
-            navigate("/CompanyDetails", { state: { userId: params.row._id } });
+        <div style={{ gap: '8px', display: 'flex', padding: 10 }}>
+          <Button
+            variant="contained"
+            color="info"
+            size="small"
+            onClick={() => {
+              user_delete(params.row._id, params.row.status);
+            }}
+          >
+            {params.row.status == "DeActive" ? "Active" : "DeActive"}
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary" // Corrected the color to "secondary"
+            size="small"
+            onClick={() => {
+              navigate("/CompanyDetails", { state: { userId: params.row._id } });
 
-          }}
-        >
-          View
-        </Button>  
-      </div>
-      
+            }}
+          >
+            View
+          </Button>
+        </div>
+
       )
     }
   ];
   return (
     <div>
-      <Nav />
-      <div className="content-wrapper">
-        <section className="content">
+      <SideBar />
+      <div className="main-cotent">
+        <Nav />
+        <div className="content-wrapper">
+          <section className="content">
 
-          <div className="content">
-            <h1>User Management</h1>
+            <div className="content">
+              <h1>User Management</h1>
 
-            {/* Filters */}
-            <div className="filters">
-              {/* <input
+              {/* Filters */}
+              <div className="filters">
+                {/* <input
                 type="text"
                 placeholder="Search by login or email"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               /> */}
 
-              <a href="AddCompany"> <button className="add-user-button">Add Master Account</button></a>
+                <a href="AddCompany"> <button className="add-user-button">Add Master Account</button></a>
+              </div>
+
+              <DataTable
+                columns={columns}
+                rows={users}
+                height="500"
+                width="100%"
+              />
             </div>
- 
-            <DataTable
-              columns={columns}
-              rows={users}
-              height="500"
-              width="100%"
-            />
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
     </div>
+
   );
 };
 

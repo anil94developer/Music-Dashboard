@@ -5,6 +5,7 @@ import { base } from "../../Constants/Data.constant";
 import { getData, postData, putData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import SearchInput from "../Common/SearchBox";
+import { SideBar } from "../Common/SideBar";
 import "./UserAccessForm.css";
 
 function EditUserPermission() {
@@ -86,102 +87,105 @@ function EditUserPermission() {
     //   }
     return (
         <div>
-            <Nav />
-            <div className="content-wrapper">
-                <section className="content">
-                    <div className="form-container">
-                        <h2>User Access Management</h2>
-                        <div className="form-section">
-                            <label>Name:
-                                <input
-                                    type="text"
-                                    value={userPermission.name}
-                                    onChange={(e) => setUserPermission((prev) => ({ ...prev, name: e.target.value }))}
-                                />
-                            </label>
-                            <label>Email:
-                                <input
-                                    type="email"
-                                    value={userPermission.email}
-                                    
-                                    onChange={(e) => setUserPermission((prev) => ({ ...prev, email: e.target.value }))}
-                                />
-                            </label>
+            <SideBar />
+            <div className="main-cotent">
+                <Nav />
+                <div className="content-wrapper">
+                    <section className="content">
+                        <div className="form-container">
+                            <h2>User Access Management</h2>
+                            <div className="form-section">
+                                <label>Name:
+                                    <input
+                                        type="text"
+                                        value={userPermission.name}
+                                        onChange={(e) => setUserPermission((prev) => ({ ...prev, name: e.target.value }))}
+                                    />
+                                </label>
+                                <label>Email:
+                                    <input
+                                        type="email"
+                                        value={userPermission.email}
 
-                            <label>Password:
-                                <input
-                                    type="text"
-                                    value={userPermission.password}
-                                    onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
-                                />
-                            </label>
-                            
-                        </div>
-                        <div className="form-section">
-                            <h3>Menu Permissions</h3>
-                            {menuPermission.map((menu, index) => (
-                                <div key={menu.mainMenuName}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            checked={menu.status}
-                                            onChange={(e) => handleCheckboxChange(e, "menuPermission", index)}
-                                        />
-                                        {menu.mainMenuName}
-                                    </label>
-                                    {menu.submenu.map((submenu, subIndex) => (
-                                        <label key={submenu.subMenuName} style={{ marginLeft: "20px" }}>
+                                        onChange={(e) => setUserPermission((prev) => ({ ...prev, email: e.target.value }))}
+                                    />
+                                </label>
+
+                                <label>Password:
+                                    <input
+                                        type="text"
+                                        value={userPermission.password}
+                                        onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
+                                    />
+                                </label>
+
+                            </div>
+                            <div className="form-section">
+                                <h3>Menu Permissions</h3>
+                                {menuPermission.map((menu, index) => (
+                                    <div key={menu.mainMenuName}>
+                                        <label>
                                             <input
                                                 type="checkbox"
-                                                checked={submenu.status}
-                                                onChange={(e) => handleCheckboxChange(e, "menuPermission", index, subIndex)}
+                                                checked={menu.status}
+                                                onChange={(e) => handleCheckboxChange(e, "menuPermission", index)}
                                             />
-                                            {submenu.subMenuName}
+                                            {menu.mainMenuName}
                                         </label>
-                                    ))}
-                                </div>
-                            ))}
-                        </div>
-                        {/* Catalog Scope */}
-                        <div className="form-section">
-                            <h3>Catalog Scope</h3>
+                                        {menu.submenu.map((submenu, subIndex) => (
+                                            <label key={submenu.subMenuName} style={{ marginLeft: "20px" }}>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={submenu.status}
+                                                    onChange={(e) => handleCheckboxChange(e, "menuPermission", index, subIndex)}
+                                                />
+                                                {submenu.subMenuName}
+                                            </label>
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                            {/* Catalog Scope */}
+                            <div className="form-section">
+                                <h3>Catalog Scope</h3>
 
-                            {otherPermission.map((item, index) =>
-                            (
-                                <label key={item.sectionName}>
-                                    <input
-                                        type="checkbox"
-                                        checked={item.status}
-                                        onChange={(e) => handleCheckboxChange(e, "otherPermission", index)}
-                                    />
-                                    {item.sectionName}
-                                    {item.status && (
-                                        <div className="form-group">
-                                            <label htmlFor="featuring">Search {item.sectionName}</label>
-                                            {/* <SearchInput
+                                {otherPermission.map((item, index) =>
+                                (
+                                    <label key={item.sectionName}>
+                                        <input
+                                            type="checkbox"
+                                            checked={item.status}
+                                            onChange={(e) => handleCheckboxChange(e, "otherPermission", index)}
+                                        />
+                                        {item.sectionName}
+                                        {item.status && (
+                                            <div className="form-group">
+                                                <label htmlFor="featuring">Search {item.sectionName}</label>
+                                                {/* <SearchInput
                                                         artistData={selectedItems[index]}
                                                         setSelectData={(data) => handleSearchChange(index, data)}
                                                     /> */}
-                                        </div>
-                                    )}
-                                </label>
+                                            </div>
+                                        )}
+                                    </label>
 
-                            )
-                            )}
+                                )
+                                )}
 
+                            </div>
+                            <br></br>
+                            <button
+                                onClick={() => [handleSubmit()]}
+                                className="btn btn-primary btn-block btn-flat"
+                                type="submit"
+                            >
+                                Submit
+                            </button>
                         </div>
-<br></br>
-                        <button
-                            onClick={() => [handleSubmit()]}
-                            className="btn btn-primary btn-block btn-flat"
-                            type="submit"
-                        >
-                            Submit
-                        </button>
-                    </div>
-                   
-                </section>
-                
+
+                    </section>
+
+                </div>
             </div>
         </div>
     );

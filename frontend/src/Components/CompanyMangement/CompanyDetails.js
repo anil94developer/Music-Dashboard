@@ -5,6 +5,7 @@ import Papa from 'papaparse'
 import { getData, postData } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
 import Swal from 'sweetalert2';
+import { SideBar } from '../Common/SideBar';
 export default function CompanyDetails() {
 
   const location = useLocation();
@@ -31,18 +32,51 @@ export default function CompanyDetails() {
   };
 
   // Parse the CSV file and convert it to JSON
+  // const parseCSV = (file) => {
+  //   Papa.parse(file, {
+  //     complete: (result) => {
+  //       console.log('CSV Parsed:', result);
+  //       const json = result.data; // Convert parsed CSV to JSON
+  //       setJsonData(json); // Store JSON data in state
+  //     },
+  //     header: true, // Treat first row as header (optional)
+  //     skipEmptyLines: true, // Skip empty lines in CSV (optional)
+  //   });
+  // };
+
+  const toCamelCase = (str) => {
+    return str
+      .toLowerCase()
+      .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>
+        index === 0 ? word.toLowerCase() : word.toUpperCase()
+      )
+      .replace(/\s+/g, ''); // Remove spaces
+  };
+  
   const parseCSV = (file) => {
     Papa.parse(file, {
       complete: (result) => {
         console.log('CSV Parsed:', result);
-        const json = result.data; // Convert parsed CSV to JSON
+  
+        // Convert keys to camel case
+        const json = result.data.map((row) => {
+          const cleanedRow = {};
+          Object.keys(row).forEach((key) => {
+            const cleanedKey = toCamelCase(key); // Convert to camel case
+            cleanedRow[cleanedKey] = row[key]; // Assign the value to the cleaned key
+          });
+          return cleanedRow;
+        });
+  
+        console.log('JSON with camel case keys:', json);
         setJsonData(json); // Store JSON data in state
       },
-      header: true, // Treat first row as header (optional)
-      skipEmptyLines: true, // Skip empty lines in CSV (optional)
+      header: true,
+      skipEmptyLines: true,
     });
   };
-
+  
+  
 
   const uploadExcel = async () => {
     let body = {
@@ -108,9 +142,25 @@ export default function CompanyDetails() {
     }
   }
 
+  const uploadReportStream=async()=>{
+    let body = {
+      userId: userId,
+      data: jsonData
+    }
+    console.log(jsonData)
+    let result = await postData(base.sendReport, body)
+    console.log(result)
+    if (result.data.status === true) {
+      Swal.fire("Success", result.message, result.message);
+    } else {
+      Swal.fire("Error", result.message, result.message);
+    }
+  }
 
   return (
     <div>
+    <SideBar />
+    <div className="main-cotent">
       <Nav />
       <div className="content-wrapper">
 
@@ -276,6 +326,47 @@ export default function CompanyDetails() {
         </div>
 
 
+        <div className="col-md-12">
+          <div className="">
+            <h3 className="mb-4">Report Upload Excel</h3>
+            <section className="content-header">
+
+              {/* Upload Input */}
+              <div className="row">
+                {/* Left Column */}
+                <div className="col-md-6">
+                  <div className="form-group">
+                    {/* <label className="form-label">Select Media Files:</label> */}
+                    <input
+                      type="file"
+                      accept=".csv"
+                      onChange={handleFileChange}
+                      className="form-control"
+                    // onChange={handleFileChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <button
+                      onClick={() => uploadReportStream()}
+                      type="submit"
+                      className="btn btn-primary"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </section>
+          </div>
+        </div>
+
+
         <section className="content">
           <br></br>
           <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
@@ -304,6 +395,7 @@ export default function CompanyDetails() {
         </section>
       </div>
 
+    </div>
     </div>
   )
 }
