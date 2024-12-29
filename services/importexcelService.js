@@ -209,8 +209,7 @@ upload.getSalesYoutube = async (req,res,next)=>{
 
 upload.salesAsset = async (req,res,next)=>{
 try{
-    const {userId,data} =req.body;
-    
+    const {userId,data} =req.body; 
     if(!userId){
       return R(res,false,"User ID not found","",400);
     }
@@ -291,6 +290,32 @@ upload.getStream = async (req,res,next) =>{
     }
     console.log(">>>>>>>>>>>>>>>>>>>>>",data);
     return R(res,true,"Data fetched successfully",data,200);
+  }catch(err){
+    console.log(err)
+    next();
+  }
+}
+
+upload.sendReport = async (req,res,next) =>{
+  try{
+    const {userId,data} =req.body;
+    
+    if(!userId){
+      return R(res,false,"User ID not found","",400);
+    }
+    if(!data){
+      return R(res,false,"Data not found","",400);
+    }
+  
+    let result = await Promise.all(data.map(async (val,ind,arr)=>{
+      val = await stream.create(String(userId),arr[ind]);
+       return val;
+    }))
+  
+    console.log(result);
+  
+    // Process your data here and save it to the database or any other storage medium.
+    return R(res,true,"Data upload successful","",200);
   }catch(err){
     console.log(err)
     next();
