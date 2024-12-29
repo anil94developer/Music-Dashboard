@@ -247,13 +247,13 @@ auth.profileUpdate = async (req, res, next) => {
 
 auth.is_deleted = async (req, res, next) => {
     try {
-        const { userId } = req.body;
+        const { userId ,status} = req.body;
 
         if (!userId) {
             return R(res, false, "User ID is required", "", 400)
         }
 
-        const update = await authModel.is_deleted(userId);
+        const update = await authModel.is_deleted(userId,status);
 
         if (!update) {
             return R(res, false, "User not found", "", 404)
@@ -266,8 +266,7 @@ auth.is_deleted = async (req, res, next) => {
     }
 }
 
-auth.userList = async (req, res, next) => {
-
+auth.userList = async (req, res, next) => { 
     try {
         const get = await authModel.userList()
         if (!get) {

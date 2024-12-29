@@ -32,9 +32,15 @@ router.post('/add-one-release', verifyToken, releaseService.addOneRelease)
 router.post('/step-one-release', verifyToken, upload.single('coverImage'), async (req, res, next) => {
     try {
       // Attach the file path to req.body
+      // if (req.file) {
+      //   req.body.coverImage = req.file.path; // Set file path in req.body for access in service
+      // }
+      console.log("File received:", req.file);
+      console.log("Body received:", req.body);
+    
       if (req.file) {
-        req.body.coverImage = req.file.path; // Set file path in req.body for access in service
-      }
+        req.body.coverImage = req.file.path;
+      }  
       console.log("req.body====", req.body);
       // Call the release service function
       await releaseService.addOneStepRelease(req, res, next);
@@ -55,6 +61,8 @@ router.post('/tracks-update', verifyToken, releaseService.trackUpdate)
 router.get('/tracks-list', verifyToken, releaseService.tracksList)
 router.post('/add-label',verifyToken, releaseService.addLabel)
 router.get('/label-list',verifyToken, releaseService.labelList)
+router.get('/all-release-list',verifyToken, releaseService.allReleaseList)
+
 
 // router.post('/add-store',verifyToken, releaseService.addStore)
 // router.get('/list-store',verifyToken, releaseService.storeList)

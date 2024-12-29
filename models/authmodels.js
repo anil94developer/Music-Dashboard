@@ -6,16 +6,46 @@ let { ObjectId } = require("mongodb");
 
 authModel = {}
 
+// const usersSchema = mongoose.Schema(
+//     {
+//         name: { type: String },
+//         email: { type: String, required: true, unique: true },
+//         phone: { type: Number, unique: true },
+//         password: { type: String, required: true },
+//         role: { type: String, default: 'admin' },
+//         is_active: { type: Number, default: 1 },
+//         is_deleted: { type: Number, default: 0 },
+//         companyName: { type: String },
+//         clientNumber: { type: String },
+//         mainEmailAddress: { type: String },
+//         royaltiesEmailAddress: { type: String },
+//         firstName: { type: String },
+//         lastName: { type: String },
+//         phoneNumber: { type: String },
+//         postalAddress: { type: String },
+//         postalCode: { type: String },
+//         city: { type: String },
+//         country: { type: String },
+//         timeZone: { type: String },
+//         language: { type: String },
+//         wallet: { type: Number , default: 0 },
+//         noOfLabel: { type: Number , default: 0 }
+//     },
+//     { timestamps: true }
+// );
 const usersSchema = mongoose.Schema(
     {
         name: { type: String },
         email: { type: String, required: true, unique: true },
-        phone: { type: Number, unique: true },
+        phone: { type: Number },
         password: { type: String, required: true },
-        role: { type: String, default: 'user' },
+        role: { type: String, default: 'company' },
         is_active: { type: Number, default: 1 },
         is_deleted: { type: Number, default: 0 },
         companyName: { type: String },
+        noOfLabel: { type: String },
+        panNo: { type: String },
+        aadharCard: { type: String }, 
         clientNumber: { type: String },
         mainEmailAddress: { type: String },
         royaltiesEmailAddress: { type: String },
@@ -34,10 +64,8 @@ const usersSchema = mongoose.Schema(
     { timestamps: true }
 );
 
-
 authModel.cronForOneHour = async () => {
-    const nowInMillis = Date.now();
-
+    const nowInMillis = Date.now(); 
     const check = await db.connectDb("users", usersSchema)
     const resultForCurrentAffairs = await check.updateMany(
         { is_subscribed_for_current_affairs: true, subscription_end_for_current_affairs: { $lt: nowInMillis } }, // Replace 'subscriptionDate' with your date field
@@ -81,21 +109,28 @@ authModel.signUp = async (data) => {
         return false
     }
 };
+authModel.addCompany = async (data) => { 
+    const result = await db.connectDb("users", usersSchema);
+    let insData = await result.insertMany(data); 
+    if (insData.length > 0) {
+        return insData[0];
+    } else {
+        return false
+    }
+};
+
 authModel.getUser = async (userId) => {
     const add = await db.connectDb("users", usersSchema)
     const getUser = await add.find({ _id: userId })
     return getUser[0]
 }
 authModel.changePassword = async (userId, oldpass, pass) => {
-    try {
-        // Connect to the database
+    try { 
         const Login = await db.connectDb("users", usersSchema);
-
-        // Fetch the user by their ID
+ 
         const user = await Login.findOne({ _id: userId });
         console.log("Fetched User:", user);
-
-        // If user is not found, return false
+ 
         if (!user) {
             return false;
         }
@@ -143,8 +178,6 @@ authModel.updateProfile = async (id, data) => {
         return false;
     }
 }
-
-
 authModel.transaction = async (data) => {
     const result = await db.connectDb("users", usersSchema); // Ensure proper connection
     try {
@@ -154,13 +187,13 @@ authModel.transaction = async (data) => {
         // Ensure the user has sufficient balance and perform the deduction
         const updateData = await result.updateOne(
             { _id: userId, wallet: { $gte: amount } }, // Ensure sufficient balance
-            { $inc: { wallet: -amount } } // Deduct directly
+            { $inc: { wallet: - amount } } // Deduct directly
         );
 
         console.log("Transaction result:", updateData);
 
         // Check if any document was matched and modified
-        if (updateData.matchedCount === 0) {
+        if (updateData.matchedCount < 99) {
             console.error("Insufficient balance or user not found.");
             return false;
         }
@@ -187,6 +220,8 @@ authModel.permission = async (data) => {
             password: hashedPassword,
             name: data.name,
             noOfLabel: data.noOfLabel,
+            role: data.role,
+
         });
         console.log("permission permission permission ======>>>", user)
 
@@ -197,12 +232,12 @@ authModel.permission = async (data) => {
     }
 }
 
-authModel.is_deleted =async (userId)=>{
+authModel.is_deleted =async (userId,status)=>{
     const result = await db.connectDb("users", usersSchema);
     try{
         let updateData = await result.updateOne(
         { _id: userId },
-        { $set: { is_deleted: 1 } },
+        { $set: { is_deleted: status} },
         { runValidators: true }
     );
     return updateData;
@@ -214,8 +249,17 @@ authModel.is_deleted =async (userId)=>{
 
 authModel.userList = async () => {
     const users = await db.connectDb("users", usersSchema)
-    const getUser = await users.find()
+    const getUser = await users.find({role:"company"})
     return getUser;
+}
+authModel.checkAvailablity = async(email)=>{
+    const checkUser = await db.connectDb("users", usersSchema);
+    let val = await checkUser.find({
+        $or: [
+          { email: email }
+        ]
+      })
+      return val
 }
 // authModel.findAdminByRole = async(email, password) => {
 //     let findadmin = await db.connectDb("usersSchemas",usersSchema)
@@ -302,15 +346,7 @@ authModel.userList = async () => {
 //       return val
 // }
 
-// authModel.checkAvailablity = async(email)=>{
-//     const checkUser = await db.connectDb("users", usersSchema);
-//     let val = await checkUser.find({
-//         $or: [
-//           { email: email }
-//         ]
-//       })
-//       return val
-// }
+
 // authModel.checkAvailablityForAdmin = async(email)=>{
 //     const checkUser = await db.connectDb("usersSchemas",usersSchema)
 //     let val = await checkUser.find({ email: email })

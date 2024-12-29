@@ -141,6 +141,15 @@ release.releaseList= async (req, res, next) => {
         next(err)
     }
 };
+release.allReleaseList= async (req, res, next) => { 
+    try {  
+        const result = await releaseModel.allReleaseList(req.doc.userId) 
+        return R(res, true, "Fetch Successfully!!", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+
 release.releaseDetails= async (req, res, next) => { 
     let {releaseId} =req.body;
     try {  

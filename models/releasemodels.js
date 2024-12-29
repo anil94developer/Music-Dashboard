@@ -17,6 +17,7 @@ const releaseSchema = mongoose.Schema({
         userId: String,
         name: String,
         linkId: String,
+        itunesLinkId:String
       }], default: []
     },   
     featuring: {
@@ -24,6 +25,7 @@ const releaseSchema = mongoose.Schema({
         userId: String,
         name: String,
         linkId: String,
+        itunesLinkId:String
       }], default: []
     },
     isVariousArtists: { type: String, default: null },
@@ -321,12 +323,19 @@ releaseModel.submitFinalRelease = async (body) => {
     return false;
   }
 };
-
-
-
+ 
 releaseModel.releaseList = async (uId) => {
   const result = await db.connectDb("release", releaseSchema);
   let fetData = await result.find({ userId: uId });
+  if (fetData.length > 0) {
+    return fetData;
+  } else {
+    return [];
+  }
+};
+releaseModel.allReleaseList= async (uId) => {
+  const result = await db.connectDb("release", releaseSchema);
+  let fetData = await result.find();
   if (fetData.length > 0) {
     return fetData;
   } else {

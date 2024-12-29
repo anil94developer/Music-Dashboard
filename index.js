@@ -15,6 +15,8 @@ const bankRoutes = require("./routes/bank.routes");
 const walletRoutes = require("./routes/wallet.route");
 const permissionsRoutes = require("./routes/permission.routes");
 const importExcel = require("./routes/importExcel.routes");
+const companyRoutes = require("./routes/company.routes");
+
 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -46,6 +48,7 @@ app.use(cors({
 
 // app.use("/auth/createSecure", adminRoutes)
 app.use("/auth", authRoutes);
+app.use("/company", companyRoutes);
 app.use("/release", releaseRoutes);
 app.use("/artist", artistRoutes);
 app.use("/support", supportRoutes);
