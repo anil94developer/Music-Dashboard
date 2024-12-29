@@ -69,7 +69,7 @@ export default function PaymentOperations() {
         <Nav />
         <div className="content-wrapper">
           <section className="content-header">
-            <h1>Payment Operations</h1>
+            <h1>Payment Operation</h1>
           </section>
           <div className="row">
             <div className="col-md-6">
