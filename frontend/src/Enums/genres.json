@@ -1,171 +1,129 @@
 [
-      {
-        "id": 1,
-        "name": "Early Music",
-        "subgenres": [
-          { "id": 101, "name": "High Classical" },
-          { "id": 102, "name": "Impressionist" },
-          { "id": 103, "name": "Medieval" },
-          { "id": 104, "name": "Minimalism" },
-          { "id": 105, "name": "Modern Composition" },
-          { "id": 106, "name": "Opera" },
-          { "id": 107, "name": "Orchestral" },
-          { "id": 108, "name": "Renaissance" },
-          { "id": 109, "name": "Romantic" },
-          { "id": 110, "name": "Wedding Music" }
-        ]
-      },
-      {
-        "id": 2,
-        "name": "Comedy",
-        "subgenres": [
-          { "id": 201, "name": "Comedy" },
-          { "id": 202, "name": "Novelty" },
-          { "id": 203, "name": "Standup Comedy" }
-        ]
-      },
-      {
-        "id": 3,
-        "name": "Country",
-        "subgenres": [
-          { "id": 301, "name": "Alternative Country" },
-          { "id": 302, "name": "Americana" },
-          { "id": 303, "name": "Bluegrass" },
-          { "id": 304, "name": "Contemporary Bluegrass" },
-          { "id": 305, "name": "Contemporary Country" },
-          { "id": 306, "name": "Country Gospel" },
-          { "id": 307, "name": "Honky Tonk" },
-          { "id": 308, "name": "Outlaw Country" },
-          { "id": 309, "name": "Traditional Bluegrass" },
-          { "id": 310, "name": "Traditional Country" },
-          { "id": 311, "name": "Urban Cowboy" }
-        ]
-      },
-      {
-        "id": 4,
-        "name": "Dance / EMD",
-        "subgenres": [
-          { "id": 401, "name": "Breakbeat" },
-          { "id": 402, "name": "Dubstep" },
-          { "id": 403, "name": "Exercise" },
-          { "id": 404, "name": "Garage" },
-          { "id": 405, "name": "Hardcore" },
-          { "id": 406, "name": "Hard Dance" },
-          { "id": 407, "name": "Hi-NRG / Eurodance" },
-          { "id": 408, "name": "House" },
-          { "id": 409, "name": "Jackin House" },
-          { "id": 410, "name": "Jungle/Drum’n'bass" },
-          { "id": 411, "name": "Techno" },
-          { "id": 412, "name": "Trance" }
-        ]
-      },
-      {
-        "id": 5,
-        "name": "Disney",
-        "subgenres": []
-      },
-      {
-        "id": 6,
-        "name": "Easy Listening",
-        "subgenres": [
-          { "id": 601, "name": "Bop" },
-          { "id": 602, "name": "Lounge" },
-          { "id": 603, "name": "Swing" }
-        ]
-      },
-      {
-        "id": 7,
-        "name": "Electronic",
-        "subgenres": [
-          { "id": 701, "name": "Ambient" },
-          { "id": 702, "name": "Crunk" },
-          { "id": 703, "name": "Downtempo" },
-          { "id": 704, "name": "Electro" },
-          { "id": 705, "name": "Electronica" },
-          { "id": 706, "name": "Electronic Rock" },
-          { "id": 707, "name": "IDM/Experimental" },
-          { "id": 708, "name": "Industrial" }
-        ]
-      },
-      {
-        "id": 8,
-        "name": "Enka",
-        "subgenres": []
-      },
-      {
-        "id": 9,
-        "name": "French Pop",
-        "subgenres": []
-      },
-      {
-        "id": 10,
-        "name": "German Folk",
-        "subgenres": []
-      },
-      {
-        "id": 11,
-        "name": "German Pop",
-        "subgenres": []
-      },
-      {
-        "id": 12,
-        "name": "Fitness & Workout",
-        "subgenres": []
-      },
-      {
-        "id": 13,
-        "name": "Hip-Hop/Rap",
-        "subgenres": [
-          { "id": 1301, "name": "Alternative Rap" },
-          { "id": 1302, "name": "Bounce" },
-          { "id": 1303, "name": "Dirty South" },
-          { "id": 1304, "name": "East Coast Rap" },
-          { "id": 1305, "name": "Gangsta Rap" },
-          { "id": 1306, "name": "Hardcore Rap" },
-          { "id": 1307, "name": "Hip-Hop" },
-          { "id": 1308, "name": "Latin Rap" },
-          { "id": 1309, "name": "Old School Rap" },
-          { "id": 1310, "name": "Rap" },
-          { "id": 1311, "name": "Underground Rap" },
-          { "id": 1312, "name": "West Coast Rap" }
-        ]
-      },
-      {
-        "id": 14,
-        "name": "Holiday",
-        "subgenres": [
-          { "id": 1401, "name": "Chanukah" },
-          { "id": 1402, "name": "Christmas" },
-          { "id": 1403, "name": "Easter" },
-          { "id": 1404, "name": "Halloween" },
-          { "id": 1405, "name": "Holiday: Other" },
-          { "id": 1406, "name": "Thanksgiving" }
-        ]
-      },
-      {
-        "id": 15,
-        "name": "Inspirational – Christian & Gospel",
-        "subgenres": [
-          { "id": 1501, "name": "CCM" },
-          { "id": 1502, "name": "Christian Metal" },
-          { "id": 1503, "name": "Christian Pop" },
-          { "id": 1504, "name": "Christian Rap" },
-          { "id": 1505, "name": "Christian Rock" },
-          { "id": 1506, "name": "Classic Christian" },
-          { "id": 1507, "name": "Contemporary Gospel" },
-          { "id": 1508, "name": "Gospel" },
-          { "id": 1509, "name": "Christian & Gospel" },
-          { "id": 1510, "name": "Praise & Worship" },
-          { "id": 1511, "name": "Qawwali" },
-          { "id": 1512, "name": "Southern Gospel" },
-          { "id": 1513, "name": "Traditional Gospel" }
-        ]
-      },
-      {
-        "id": 16,
-        "name": "Instrumental",
-        "subgenres": [
-          { "id": 1601, "name": "March (Marching Band)" }
-        ]
-      }
+  {
+    "id": 1,
+    "name": "Pop",
+    "subgenres": [
+      { "id": 101, "name": "Dance-Pop" },
+      { "id": 102, "name": "Electropop" },
+      { "id": 103, "name": "Indie Pop" },
+      { "id": 104, "name": "Pop-Rock" },
+      { "id": 105, "name": "Soft Rock" },
+      { "id": 106, "name": "Adult Contemporary" },
+      { "id": 107, "name": "Teen Pop" }
     ]
+  },
+  {
+    "id": 2,
+    "name": "Rock",
+    "subgenres": [
+      { "id": 201, "name": "Alternative Rock" },
+      { "id": 202, "name": "Classic Rock" },
+      { "id": 203, "name": "Hard Rock" },
+      { "id": 204, "name": "Heavy Metal" },
+      { "id": 205, "name": "Indie Rock" },
+      { "id": 206, "name": "Progressive Rock" },
+      { "id": 207, "name": "Punk Rock" },
+      { "id": 208, "name": "Soft Rock" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Hip-Hop/Rap",
+    "subgenres": [
+      { "id": 301, "name": "Gangsta Rap" },
+      { "id": 302, "name": "Hip-Hop" },
+      { "id": 303, "name": "Old-School Rap" },
+      { "id": 304, "name": "Trap" },
+      { "id": 305, "name": "Underground Rap" },
+      { "id": 306, "name": "West Coast Rap" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Electronic",
+    "subgenres": [
+      { "id": 401, "name": "Ambient" },
+      { "id": 402, "name": "Breakcore" },
+      { "id": 403, "name": "Drum and Bass" },
+      { "id": 404, "name": "Dubstep" },
+      { "id": 405, "name": "Electro" },
+      { "id": 406, "name": "House" },
+      { "id": 407, "name": "Techno" },
+      { "id": 408, "name": "Trance" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Classical",
+    "subgenres": [
+      { "id": 501, "name": "Baroque" },
+      { "id": 502, "name": "Chamber Music" },
+      { "id": 503, "name": "Choral" },
+      { "id": 504, "name": "Classical Crossover" },
+      { "id": 505, "name": "Contemporary Classical" },
+      { "id": 506, "name": "Early Music" },
+      { "id": 507, "name": "Instrumental" },
+      { "id": 508, "name": "Opera" },
+      { "id": 509, "name": "Orchestral" },
+      { "id": 510, "name": "Romantic" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Jazz",
+    "subgenres": [
+      { "id": 601, "name": "Acid Jazz" },
+      { "id": 602, "name": "Bebop" },
+      { "id": 603, "name": "Big Band" },
+      { "id": 604, "name": "Contemporary Jazz" },
+      { "id": 605, "name": "Cool Jazz" },
+      { "id": 606, "name": "Free Jazz" },
+      { "id": 607, "name": "Fusion" },
+      { "id": 608, "name": "Hard Bop" },
+      { "id": 609, "name": "Latin Jazz" },
+      { "id": 610, "name": "Smooth Jazz" },
+      { "id": 611, "name": "Swing" }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Indian Classical",
+    "subgenres": [
+      { "id": 701, "name": "Carnatic" },
+      { "id": 702, "name": "Hindustani" },
+      { "id": 703, "name": "Dhrupad" },
+      { "id": 704, "name": "Khayal" },
+      { "id": 705, "name": "Thumri" },
+      { "id": 706, "name": "Ghazal" },
+      { "id": 707, "name": "Qawwali" }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Bollywood",
+    "subgenres": [
+      { "id": 801, "name": "Filmi" },
+      { "id": 802, "name": "Item Number" },
+      { "id": 803, "name": "Playback Singing" },
+      { "id": 804, "name": "Romantic Ballad" }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Regional Indian",
+    "subgenres": [
+      { "id": 901, "name": "Assamese" },
+      { "id": 902, "name": "Bengali" },
+      { "id": 903, "name": "Bhojpuri" },
+      { "id": 904, "name": "Gujarati" },
+      { "id": 905, "name": "Kannada" },
+      { "id": 906, "name": "Malayalam" },
+      { "id": 907, "name": "Marathi" },
+      { "id": 908, "name": "Odia" },
+      { "id": 909, "name": "Punjabi" },
+      { "id": 910, "name": "Rajasthani" },
+      { "id": 911, "name": "Tamil" },
+      { "id": 912, "name": "Telugu" }
+    ]
+  }
+]

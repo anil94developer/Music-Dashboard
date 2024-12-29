@@ -34,11 +34,16 @@ Swal.fire("Success", result.message, result.message);
 Swal.fire("Error", result.message, result.message);
 }
 }
+
 return (
 <div className="listColumns">
   <div className="check-btn checkUncheckAll-header">
-    <a href="#" className="btn btn-primary checkAll" rel="AS">Check all</a>
-    <a href="#" className="btn btn-primary uncheckAll" rel="AS">Uncheck all</a>
+    <a  href="#" className="btn btn-primary checkAll" rel="AS" onClick={() => setCountryList((prevList) =>
+            prevList.map((country) => ({ ...country, status: "active" }))
+          )}>Check all</a>
+    <a href="#" className="btn btn-primary uncheckAll" rel="AS" onClick={() => setCountryList((prevList) =>
+            prevList.map((country) => ({ ...country, status: "inactive" }))
+          )}>Uncheck all</a>
   </div>
   <div className="countryList d-flex flex-wrap">
     {countryList?.map((item, index) => (

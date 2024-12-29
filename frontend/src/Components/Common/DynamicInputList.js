@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function DynamicInputList(props) {
-  const {inputs, setInputs}= props 
+  const {inputs, setInputs , placeholder }= props 
 
   const handleInputChange = (index, event) => {
     const newInputs = [...inputs];
@@ -28,7 +28,7 @@ export default function DynamicInputList(props) {
             type="text"
             value={input.name}
             onChange={(event) => handleInputChange(index, event)}
-            placeholder={`Input ${index + 1}`}
+            placeholder={placeholder}
             className="form-control"
             style={{
               width:'90%',

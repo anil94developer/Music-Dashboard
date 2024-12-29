@@ -5,6 +5,7 @@ import ARTISTLIST from '../../Enums/artist.list.json';
 import DynamicInputList from '../Common/DynamicInputList';
 import SearchInput from '../Common/SearchBox';
 import GENRES from '../../Enums/genres.json';
+import language from '../../Enums/language.json'
 
 export default function STEP3(props) {
   const { releaseData, fetchReleaseDetails } = props
@@ -315,34 +316,34 @@ export default function STEP3(props) {
                       {/* Remixer */}
                       <div className="col-md-6">
                         <label>Remixer</label>
-                        <DynamicInputList inputs={remixer} setInputs={setRemixer} />
+                        <DynamicInputList inputs={remixer} setInputs={setRemixer} placeholder={"Remixer"}/>
                         {/* <SearchInput />  */}
                       </div>
 
                       {/* Author */}
                       <div className="col-md-6">
                         <label>Author *</label>
-                        <DynamicInputList inputs={author} setInputs={setAuthor} />
+                        <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"}/>
 
                       </div>
 
                       {/* Composer */}
                       <div className="col-md-6">
                         <label>Composer *</label>
-                        <DynamicInputList inputs={composer} setInputs={setComposer} />
+                        <DynamicInputList inputs={composer} setInputs={setComposer} placeholder={"Composer"} />
 
                       </div>
 
                       {/* Arranger */}
                       <div className="col-md-6">
                         <label>Arranger</label>
-                        <DynamicInputList inputs={arranger} setInputs={setArranger} />
+                        <DynamicInputList inputs={arranger} setInputs={setArranger} placeholder={"Arranger"} />
                       </div>
 
                       {/* Producer */}
                       <div className="col-md-6">
                         <label>Producer</label>
-                        <DynamicInputList inputs={producer} setInputs={setProducer} />
+                        <DynamicInputList inputs={producer} setInputs={setProducer} placeholder={"Producer"}/>
 
                       </div>
 
@@ -373,7 +374,7 @@ export default function STEP3(props) {
                       {!generateISRC &&
                         <div className="col-md-6">
                           <label>ISRC</label>
-                          <input disabled={generateISRC} type="text" className="form-control" value={isrc} onChange={(e) => setIsrc(e.target.value)} />
+                          <input disabled={generateISRC} type="text" className="form-control" value={!generateISRC ? "" : isrc} onChange={(e) => setIsrc(e.target.value)} />
                         </div>
                       }
 
@@ -487,19 +488,23 @@ export default function STEP3(props) {
                       <div className="col-md-6">
                         <label>Track title language</label>
                         <select type="text" className="form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
-                          <option value={"English"}>English</option>
-                          <option value={"Hindi"}>Hindi</option>
-                          <option value={"Punjabi"}>Punjabi</option>
+                        { language.map(item => (
+                          <option key={item} value={item.value}>
+                            {item.label}
+                          </option>
+                          ))
+                          }
 
                         </select>
                       </div>
                       <div className="col-md-6">
                         <label>Lyrics language</label>
                         <select type="text" className="form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >
-
-                        <option value={"English"}>English</option>
-                        <option value={"Hindi"}>Hindi</option>
-                          <option value={"Punjabi"}>Punjabi</option>
+                         { language.map(item => (
+                          <option key={item} value={item.value}>
+                            {item.label}
+                          </option>
+                          ))}
                         </select>
                       </div>
 
