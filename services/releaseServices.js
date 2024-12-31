@@ -160,6 +160,18 @@ release.releaseDetails= async (req, res, next) => {
     }
 };
 
+release.updateStatus= async (req, res, next) => { 
+    let body = req.body;
+    try {  
+        const result = await releaseModel.updateStatus(body) 
+        return R(res, true, "Responsed Successfully ", result, 200)
+    } catch (err) { 
+        next(err)
+    }
+};
+
+
+
 release.addLabel= async (req, res, next) => { 
     const body = {
         ...req.body,           // Spread the existing keys from req.body
@@ -172,6 +184,7 @@ release.addLabel= async (req, res, next) => {
         next(err)
     }
 };
+
 release.labelList= async (req, res, next) => { 
     try {  
         const result = await releaseModel.labelList(req.doc.userId) 

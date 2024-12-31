@@ -8,7 +8,7 @@ const releaseSchema = mongoose.Schema({
   userId: { type: String },
   title: { type: String, required: true },
   type: { type: String, required: true },
-  status:{ type: String,default:'Pending'},
+  status:{ type: String,default:'pending'},
   youtubechannelLinkId:{ type: String,default:''},
   step1: {
     subTitle: { type: String, default: null },
@@ -350,6 +350,22 @@ releaseModel.releaseDetails = async (releaseId) => {
     return fetData[0];
   } else {
     return [];
+  }
+};
+releaseModel.updateStatus = async (body) => {
+  let id=body.id;
+  let status=body.status;
+  let releaseResult = await db.connectDb("release", releaseSchema); 
+  let result = await releaseResult.updateOne({ _id:id },
+    {
+      $set: {
+        status,
+        }
+    })
+  if (result.modifiedCount > 0 || result.upsertedCount > 0) {
+    return true;
+  } else {
+    return false;
   }
 };
 
