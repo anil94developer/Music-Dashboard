@@ -38,12 +38,12 @@ Swal.fire("Error", result.message, result.message);
 return (
 <div className="listColumns">
   <div className="check-btn checkUncheckAll-header">
-    <a  href="#" className="btn btn-primary checkAll" rel="AS" onClick={() => setCountryList((prevList) =>
+    <button className="btn btn-primary checkAll" rel="AS" onClick={() => setCountryList((prevList) =>
             prevList.map((country) => ({ ...country, status: "active" }))
-          )}>Check all</a>
-    <a href="#" className="btn btn-primary uncheckAll" rel="AS" onClick={() => setCountryList((prevList) =>
+          )}>Check all</button>
+    <button className="btn btn-primary uncheckAll mx-3" rel="AS" onClick={() => setCountryList((prevList) =>
             prevList.map((country) => ({ ...country, status: "inactive" }))
-          )}>Uncheck all</a>
+          )}>Uncheck all</button>
   </div>
   <div className="countryList d-flex flex-wrap">
     {countryList?.map((item, index) => (
