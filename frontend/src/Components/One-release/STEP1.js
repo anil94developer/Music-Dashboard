@@ -63,8 +63,7 @@ export default function STEP1(props) {
     <div>
       <div className="tab-heading">
         <h2>Release Information</h2>
-        <p>{releaseData._id}
-          {releaseData.status}</p>
+        
       </div>
       <div className='cover-image'>
         <div className="form-group">

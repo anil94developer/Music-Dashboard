@@ -1,7 +1,7 @@
-const domainUrl = 'https://api.tuneplus.org/';
-// const domainUrl = 'http://localhost:8002/';
+// const domainUrl = 'https://api.tuneplus.org/';
+const domainUrl = 'http://localhost:8002/';
 // const domainUrl = 'http://192.168.150.83:8002/';
-const endpoint = "https://api.ridd.in/api/"
+// const endpoint = "https://api.ridd.in/api/"
 
 
 const mainUrl = domainUrl
@@ -68,4 +68,4 @@ const base = {
 
 
 };
-export { base, domainUrl, imageServerUrl, USER_TYPE, endpoint };
+export { base, domainUrl, imageServerUrl, USER_TYPE };

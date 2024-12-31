@@ -27,55 +27,40 @@ export const SideBar = (props) => {
   return (
     <div className="sidebar-main" id="navbarSupportedContent">
       <div className="user-detail d-flex flex-wrap align-items-center">
-        <div className="user-img">
+        {/* <div className="user-img">
           <img className="img-fluid" src={require('../../assets/images/user.jpg')} />
-        </div>
-        <div className="user-name">
-          <p>Gold <span className="d-block">gold@gmail.com</span></p>
-        </div>
+        </div> */}
+        {/* <div className="user-img"> */}
+        <img className="img-fluid" src={require('../../assets/images/logo.png')} />
+          {/* <p>Gold <span className="d-block">gold@gmail.com</span></p> */}
+        {/* </div> */}
       </div>
-      <ul className="navbar-nav">
-        {/* <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#"><img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')} /> Dashboard</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#"><img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')} /> Link</a>
-        </li>
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img className="img-fluid" title="dashboard" src={require('../../assets/images/dash-icon.png')} /> Dropdown
-          </a>
-          <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">Action</a></li>
-            <li><a className="dropdown-item" href="#">Another action</a></li>
-            <li><a className="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li> */}
+      <ul className="navbar-nav"> 
         {userProfile.role === "admin" && (
           <>
             <li className="nav-item">
               <a className="nav-link" href="/Dashboard">
-                <i className="fa fa-dashboard"></i> Dashboard
+                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon1.png')} /> Dashboard
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/CompanyManagement">
-                <i className="fa fa-clock-o"></i> Master Account
+                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon2.png')} />Master Account
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/All releases">
-                <i className="fa fa-bullseye"></i> All Releases
+                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon3.png')} /> All Releases
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/All Tracks">
-                <i className="fa fa-clock-o"></i> All Tracks
+                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon4.png')} />All Tracks
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/Withdraw Request">
-                <i className="fa fa-money"></i> Withdraw Request
+                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon5.png')} />Withdraw Request
               </a>
             </li>
           </>

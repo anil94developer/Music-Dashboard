@@ -28,10 +28,10 @@ import UserDetails from "./Components/UserMangement/UserDetails";
 import { UserProfileProvider, useUserProfile } from "./Context/UserProfileContext";
 import { getData } from './Services/Ops';
 import { base } from './Constants/Data.constant';
-import Task from "./Components/Task/Task";
-import ClientList from "./Components/Task/client/clientList";
-import EmployeeList from "./Components/Task/employee/employeeList";
-import { LoginScreen } from "./Components/Task/LoginScreen";
+// import Task from "./Components/Task/Task";
+// import ClientList from "./Components/Task/client/clientList";
+// import EmployeeList from "./Components/Task/employee/employeeList";
+// import { LoginScreen } from "./Components/Task/LoginScreen";
 import CompanyManagement from "./Components/CompanyMangement/CompanyMangement";
 import AddCompany from "./Components/CompanyMangement/AddCompany";
 import CompanyDetails from "./Components/CompanyMangement/CompanyDetails";
@@ -94,9 +94,9 @@ function App() {
       <Route path="/Payment Operations" element={<PaymentOperations />}></Route>
       <Route path="/Financial Report" element={<FinancialReport />}></Route>
       <Route path="/multiple-release" element={<Dashboard />}></Route>
-      <Route path="/Task" element={<Task />}></Route>
-      <Route path="/ClientList" element={<ClientList />}></Route>
-      <Route path="/EmployeeList" element={<EmployeeList />}></Route>
+      {/* <Route path="/Task" element={<Task />}></Route> */}
+      {/* <Route path="/ClientList" element={<ClientList />}></Route>
+      <Route path="/EmployeeList" element={<EmployeeList />}></Route> */}
 
 
 

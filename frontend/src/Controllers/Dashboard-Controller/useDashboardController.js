@@ -14,10 +14,13 @@ const useDashboardController = (props) => {
         try {
             const releaseList = await getData(base.releaseList); // pass as query parameter
             const tracksList = await getData(base.tracksList); // pass as query parameter
+            const userList = await getData(base.userList); // pass as query parameter
+
             // alert(releaseList.data.length)
             setDashboardData({
                 "myReleaseCount": releaseList.data.length,
-                "myTracksCount": tracksList.data.length
+                "myTracksCount": tracksList.data.length,
+                "masterAccount":userList.data.length
             });  
 
         } catch (error) {
