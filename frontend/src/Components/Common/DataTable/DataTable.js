@@ -7,9 +7,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Modal, Typography } from '@mui/material';
   
 export default function DataTable(props) {
-    const {columns, height,width,rows,checkboxSelection=false}=props;
+    const {columns, height,width='100%',rows,checkboxSelection=false,columnNo=10}=props;
    
-    const paginationModel = { page: 0, pageSize: 10 };
+    const paginationModel = { page: 0, pageSize: columnNo };
 
 
     return ( 
@@ -18,12 +18,13 @@ export default function DataTable(props) {
                 rows={rows}
                 columns={columns}
                 initialState={{ pagination: { paginationModel } }}
-                pageSizeOptions={[5, 10]}
+                pageSizeOptions={[5, 10,20,50,70,100]}
                 checkboxSelection={checkboxSelection}
                 fontWeight={20}
                 sx={{
                     border: 0,
                     color: "white", // Customize text color
+                    width:width,
                     backgroundColor:'#000',
                     '& .MuiDataGrid-cell': {
                             backgroundColor: 'black !important', // Cell background

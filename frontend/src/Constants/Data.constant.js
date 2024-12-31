@@ -48,14 +48,15 @@ const base = {
   getTracks: mainUrl + 'excel/get-track',
   uploadStore: mainUrl + 'excel/sent-store',
   getStore: mainUrl + 'excel/get-store',
-  sendReport:mainUrl + 'excel/sent-salesAsset',
-  getReport:mainUrl + 'excel/get-salesAsset',
-  getFilterReport:mainUrl + 'excel/getFilterReport',
+  sendReport: mainUrl + 'excel/sent-salesAsset',
+  getReport: mainUrl + 'excel/get-salesAsset',
+  getFilterReport: mainUrl + 'excel/getFilterReport',
   uploadMarket: mainUrl + 'excel/sent-market',
   getMarket: mainUrl + 'excel/get-market',
   sendStream: mainUrl + 'excel/sent-stream',
   getStream: mainUrl + 'excel/get-stream',
   addCompany: mainUrl + 'company/addCompany',
+  getReportbydate: mainUrl + 'excel/get-report-by-date'
 
 
 

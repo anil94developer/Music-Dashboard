@@ -7,56 +7,56 @@ import * as XLSX from 'xlsx';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import DataTable from '../Common/DataTable/DataTable';
 export const AllDraft = () => {
-const navigate = useNavigate();
-const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading, myReleaseDraft, setMyTracks } = OneReleaseController();
-const columns = [
-{ field: 'id', headerName: '#', headerClassName: 'black-header' },
-{ field: '_id', headerName: 'id', headerClassName: 'black-header' },
-{ field: 'type', headerName: 'Type', headerClassName: 'black-header' },
-{ field: 'status', headerName: 'Status', headerClassName: 'black-header' },
-{ field: 'title', headerName: 'Title / Artist', headerClassName: 'black-header' },
-{ field: 'label', headerName: 'Label', headerClassName: 'black-header' },
-{ field: 'releaseDate', headerName: 'Release date / Hour / Time zone', headerClassName: 'black-header', width: 150 },
-{ field: 'noOfTrack', headerName: '# of track', headerClassName: 'black-header' },
-{ field: 'upcCatalogNumber', headerName: 'UPC / Catalog Number', headerClassName: 'black-header', width: 150 },
-{ field: 'deliveredTerritories', headerName: 'Delivered Territories & Stores  ', headerClassName: 'black-header' },
-{
-field: 'action', headerName: 'Action',
-renderCell: (params) => (
-<div style={{ gap: '8px' }}>
-<Button
-  variant="contained"
-  color="primary"
-  size="small"
-  onClick={() => moreAction(params.row) }
->
-More
-</Button>
-</div>
-)
-}
-];
-return (
-<div>
-  <SideBar/>
-  <div className="main-cotent">
-    <Nav />
-    <div className="content-main">
-      <section className="content">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="box">
-              <div className="box-header">
-                <h3 className="box-title">Draft Releasess</h3>
-              </div>
-              <div className="box-body">
-                <DataTable
-                  columns={columns}
-                  rows={myReleaseDraft}
-                  height="500"
-                  width="100%"
-                  />
-                {/* 
+  const navigate = useNavigate();
+  const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading, myReleaseDraft, setMyTracks } = OneReleaseController();
+  const columns = [
+    { field: 'id', headerName: '#', headerClassName: 'black-header' },
+    { field: '_id', headerName: 'id', headerClassName: 'black-header' },
+    { field: 'type', headerName: 'Type', headerClassName: 'black-header' },
+    { field: 'status', headerName: 'Status', headerClassName: 'black-header' },
+    { field: 'title', headerName: 'Title / Artist', headerClassName: 'black-header' },
+    { field: 'label', headerName: 'Label', headerClassName: 'black-header' },
+    { field: 'releaseDate', headerName: 'Release date / Hour / Time zone', headerClassName: 'black-header', width: 150 },
+    { field: 'noOfTrack', headerName: '# of track', headerClassName: 'black-header' },
+    { field: 'upcCatalogNumber', headerName: 'UPC / Catalog Number', headerClassName: 'black-header', width: 150 },
+    { field: 'deliveredTerritories', headerName: 'Delivered Territories & Stores  ', headerClassName: 'black-header' },
+    {
+      field: 'action', headerName: 'Action',
+      renderCell: (params) => (
+        <div style={{ gap: '8px' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => moreAction(params.row)}
+          >
+            More
+          </Button>
+        </div>
+      )
+    }
+  ];
+  return (
+    <div>
+      <SideBar />
+      <div className="main-cotent">
+        <Nav />
+        <div className="content-main">
+          <section className="content">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="box">
+                  <div className="box-header">
+                    <h3 className="box-title">Draft Releasess</h3>
+                  </div>
+                  <div className="box-body">
+                    <DataTable
+                      columns={columns}
+                      rows={myReleaseDraft}
+                      height="500"
+                      width="100%"
+                    />
+                    {/* 
                 <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                   <thead>
                     <tr role="row">
@@ -77,14 +77,14 @@ return (
                   </tbody>
                 </table>
                 */}
+                  </div>
+                  {isLoading && "Loading..."}
+                </div>
               </div>
-              {isLoading && "Loading..."}
             </div>
-          </div>
+          </section>
         </div>
-      </section>
+      </div>
     </div>
-  </div>
-</div>
-);
+  );
 };
