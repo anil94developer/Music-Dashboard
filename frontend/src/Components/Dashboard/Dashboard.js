@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { base } from '../../Constants/Data.constant';
 import { useUserProfile } from '../../Context/UserProfileContext';
 import useDashboardController from '../../Controllers/Dashboard-Controller/useDashboardController';
@@ -12,9 +12,9 @@ export const Dashboard = () => {
   const { userProfile } = useUserProfile();
 
   const [marketList, setMarketList] = useState([])
-  useEffect(() => { 
+  useEffect(() => {
     getMarket();
-  }, []) 
+  }, [])
   const getMarket = async () => {
     let result = await getData(base.getMarket)
     console.log(result)
@@ -162,7 +162,15 @@ export const Dashboard = () => {
           </section>
           {userProfile?.role === "company" &&
             <section className="sale-graph">
-              <SimpleGraph data={marketList} title={"Market"}/>
+              {marketList.length > 0 ?
+                <SimpleGraph data={marketList} title={"Market"} />
+                :
+                <>
+                <h2>Market Data</h2> 
+                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
+                </>
+               
+              }
             </section>
           }
         </div>

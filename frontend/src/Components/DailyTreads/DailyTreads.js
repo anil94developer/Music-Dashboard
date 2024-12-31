@@ -49,11 +49,11 @@ export default function DailyTreads() {
 
   const getStream = async () => {
     let result = await getData(base.getStream)
-    console.log("result stream-------",result)
+    console.log("result stream-------", result)
     if (result?.status) {
       let arr = []
       result.data?.map((item, index) => {
-        arr.push({ x: index, label: item.dsp , y: item.streams })
+        arr.push({ x: index, label: item.dsp, y: item.streams })
       })
       setStreamList(arr);
     }
@@ -61,7 +61,7 @@ export default function DailyTreads() {
 
   const getTracks = async () => {
     let result = await getData(base.getTracks)
-    console.log("result getTracks-------",result)
+    console.log("result getTracks-------", result)
     if (result?.status) {
       let arr = []
       result.data?.map((item, index) => {
@@ -83,23 +83,34 @@ export default function DailyTreads() {
           </section>
           <section className="content">
             <div class='row'>
-              {topStores.length > 0 &&
+              {topStores.length > 0 ?
                 <div class='col-md-4'>
                   <div className="dash-detail">
                     <div className="box-body">
-                      {/* <ChartZoomPan /> */}
                       <PaiChart data={topStores} />
                     </div>
                   </div>
                 </div>
+                :
+                <>
+                  <h2>Top Store Data</h2>
+                  <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
+                </>
               }
-              {marketList.length > 0 && <div class='col-md-4'>
-                <div className="dash-detail">
-                  <div className="box-body">
-                    <MarketGraph charDdata={marketList} />
+
+              {marketList.length > 0 ?
+                <div class='col-md-4'>
+                  <div className="dash-detail">
+                    <div className="box-body">
+                      <MarketGraph charDdata={marketList} />
+                    </div>
                   </div>
                 </div>
-              </div>
+                :
+                <>
+                  <h2>Market Data</h2>
+                  <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
+                </>
               }
               {/* {topStores.length > 0 && 
           <div class='col-md-4'>
@@ -117,45 +128,57 @@ export default function DailyTreads() {
                   </div>
                 </div>
               </div> */}
-            </div>
-          </section>
-          {/* {marketList.length > 0 && 
+
+
+              {/* {marketList.length > 0 && 
       <section className="market-list">
         <MarketGraph charDdata={marketList} />
       </section>
       } */}
-          <section className="top-store">
-            <div className="store-main">
-              <div className="store-heading">
-                <h3 className="title">TOP STORES</h3>
+              <div className="dash-detail" style={{ marginTop: 20 }}>
+                {topStores.length > 0 &&
+
+                  <section className="top-store">
+                    <div className="store-main">
+                      <div className="store-heading">
+                        <h3 className="title">TOP STORES</h3>
+                      </div>
+                      <div className="store-table">
+                        <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                          <thead>
+                            <tr role="row">
+                              <th >#</th>
+                              <th >Stores</th>
+                              <th > Quantity</th>
+                            </tr>
+                          </thead>
+                          <tbody role="alert" aria-live="polite" aria-relevant="all">
+                            {topStores.length > 0 && topStores.map((item, index) => (
+                              <tr className="odd">
+                                <td className="  sorting_1">{index + 1}</td>
+                                <td className="  sorting_1">{item.name}</td>
+                                <td className="  ">{item.y}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </section> 
+                }
               </div>
-              <div className="store-table">
-                <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
-                  <thead>
-                    <tr role="row">
-                      <th >#</th>
-                      <th >Stores</th>
-                      <th > Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody role="alert" aria-live="polite" aria-relevant="all">
-                    {topStores.length > 0 && topStores.map((item, index) => (
-                      <tr className="odd">
-                        <td className="  sorting_1">{index + 1}</td>
-                        <td className="  sorting_1">{item.name}</td>
-                        <td className="  ">{item.y}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="dash-detail" style={{ marginTop: 20 }}>
+                {streamList.length > 0 ? 
+                  <SimpleGraph data={streamList} title={"Stream"} type={'column'} /> 
+                  :
+                  <>
+                    <h2>Stream Data</h2>
+                    <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
+                  </>
+                }
               </div>
-              {/* {isLoading && "Loading..."} */}
-            </div>
-          </section>
-          <section className="sale-graph">
-              <SimpleGraph data={streamList} title={"Stream"} type={'column'}/>
-            </section>
-          {/* <section className="top-store">
+
+              {/* <section className="top-store">
             <div className="store-main">
               <div className="store-heading">
                 <h3 className="title">STREAMS</h3>
@@ -185,12 +208,18 @@ export default function DailyTreads() {
               </div> 
             </div>
           </section> */}
+              <div className="dash-detail" style={{ marginTop: 20 }}>
+                {trackList.length > 0 ? 
+                  <SimpleGraph data={trackList} title={"Tracks"} type={'pyramid'} />
+                  :
+                  <>
+                    <h2>Track Data</h2>
+                    <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
+                  </>
+                }
+              </div>
 
-          <section className="sale-graph">
-              <SimpleGraph data={trackList} title={"Tracks"} type={'pyramid'}/>
-            </section>
-
-          {/* <section className="top-store">
+              {/* <section className="top-store">
             <div className="store-main">
               <div className="store-heading">
                 <h3 className="title">TRACKS</h3>
@@ -216,7 +245,10 @@ export default function DailyTreads() {
                 </table>
               </div>  
             </div>
+
           </section> */}
+            </div>
+          </section>
         </div>
       </div>
     </div>
