@@ -56,6 +56,7 @@ const base = {
   sendStream: mainUrl + 'excel/sent-stream',
   getStream: mainUrl + 'excel/get-stream',
   addCompany: mainUrl + 'company/addCompany',
+  releaseChangeStatus:mainUrl+'release/release-update-status',
   getReportbydate: mainUrl + 'excel/get-report-by-date'
 
 
