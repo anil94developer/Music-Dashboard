@@ -177,7 +177,8 @@ auth.signUp = async (req, res, next) => {
             is_deleted: 0,
             ip_address: ipAddress,
             create_at: futureTimeInMillis,
-            is_active: 1
+            is_active: 1,
+            clientNumber:new Date().getTime()
         }
         const register = await authModel.signUp(newUser)
         const userData = {
@@ -259,7 +260,7 @@ auth.is_deleted = async (req, res, next) => {
             return R(res, false, "User not found", "", 404)
         }
 
-        return R(res, true, status == 0 ? "User deleted successfully" : "User Active successfully", "", 200)
+        return R(res, true, status == 1 ? "User deleted successfully" : "User Active successfully", "", 200)
 
     } catch (error) {
         next(error)

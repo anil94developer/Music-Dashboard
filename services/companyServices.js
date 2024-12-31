@@ -34,7 +34,8 @@ auth.addCompany = async (req, res, next) => {
             is_deleted: 0,
             ip_address: ipAddress,
             create_at: futureTimeInMillis,
-            is_active: 1
+            is_active: 1,
+            clientNumber:new Date().getTime()
         }
     
         const register = await authModel.addCompany(newUser)
