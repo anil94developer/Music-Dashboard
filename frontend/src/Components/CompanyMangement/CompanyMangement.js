@@ -109,32 +109,32 @@ const CompanyManagement = (props) => {
       <SideBar />
       <div className="main-cotent">
         <Nav />
-        <div className="content-wrapper">
-          <section className="content">
-
-            <div className="content">
-              <h1>User Management</h1>
-
-              {/* Filters */}
-              <div className="filters">
-                {/* <input
-                type="text"
-                placeholder="Search by login or email"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              /> */}
-
-                <a href="AddCompany"> <button className="add-user-button">Add Master Account</button></a>
+        <div className="content-main">
+          <div className="page-heading">
+            <div className='row'>
+              <div className="track-heading d-flex flex-wrap align-items-center justify-content-between">
+                <h2>User Management</h2>
+                <div className="add-track-btn">
+                  <a href="AddCompany"> <button className="btn btn-primary ">Add Master Account</button></a>
+                </div>
               </div>
-
-              <DataTable
-                columns={columns}
-                rows={users}
-                height="500"
-                width="100%"
-              />
             </div>
-          </section>
+          </div>
+          <div className="content-wrapper">
+
+            <section className="content">
+
+              <div className="content">
+
+                <DataTable
+                  columns={columns}
+                  rows={users}
+                  height="500"
+                  width="100%"
+                />
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>

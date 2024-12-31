@@ -38,18 +38,18 @@ export default function CompanyDetails() {
         console.log('CSV Parsed:', result);
   
         // Remove spaces in keys with two or three words
-        const json = result.data.map((row) => {
-          const cleanedRow = {};
-          Object.keys(row).forEach((key) => {
-            // Check if the key contains two or more words
-            const cleanedKey = key.trim().replace(/\s+/g, ''); // Trim and remove spaces within the key
-            cleanedRow[cleanedKey] = row[key]; // Assign the value to the cleaned key
-          });
-          return cleanedRow;
-        });
+        // const json = result.data.map((row) => {
+        //   const cleanedRow = {};
+        //   Object.keys(row).forEach((key) => {
+        //     // Check if the key contains two or more words
+        //     const cleanedKey = key.trim().replace(/\s+/g, ''); // Trim and remove spaces within the key
+        //     cleanedRow[cleanedKey] = row[key]; // Assign the value to the cleaned key
+        //   });
+        //   return cleanedRow;
+        // });
   
-        console.log('JSON with cleaned keys:', json);
-        setJsonData(json); // Store JSON data in state
+        // console.log('JSON with cleaned keys:', json);
+        setJsonData(result.data); // Store JSON data in state
       },
       header: true, // Treat first row as header
       skipEmptyLines: true, // Skip empty lines in CSV

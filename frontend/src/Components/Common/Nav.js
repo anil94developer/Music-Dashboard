@@ -31,9 +31,9 @@ export const Nav = (props) => {
         <div className="row align-items-center w-100">
           <div className="col-md-6 col-12">
             <div className="topbar-left d-flex align-items-center">
-              <a className="navbar-brand" href="#">
+              {/* <a className="navbar-brand" href="#">
                 <img className="img-fluid" src={require('../../assets/images/logo.png')} />
-              </a>
+              </a> */}
               <button className="d-block navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
@@ -48,7 +48,7 @@ export const Nav = (props) => {
                       <img src={images?.user} className="img-fluid" alt="User Image" />
                       <span className="user-name hidden-xs">{userProfile?.name}</span>
                     </a>
-                    {useUserProfile?.role == "company" || useUserProfile?.role == "employee" && <p>4654546542</p> }
+                    {userProfile?.role == "company" && <p>{userProfile.clientNumber}3213</p> }
                     <ul className="dropdown-menu position-absolute">
 
                       <li>

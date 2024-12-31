@@ -86,48 +86,48 @@ return (
     </label>
   </div>
   */}
-</div>
-<div className="col-md-3">
-  <div className="form-group">
-    <label>Add an exclusive release date</label>
-    <select className="form-select form-control" onChange={(e) =>
-      exclusiveOrderSelect(e.target.value)}>
-      <option value="">Please Select</option>
-      {exclusiveDates?.map((item) => (
-      <option key={item.id} value={item.id}>{item.name}</option>
-      ))}
-    </select>
-  </div>
-  {selectexclusiveDate?.map((item) => (
-  <div
-  className="form-control"
-  style={{
-  display: 'flex', // Ensure the container is a flex container
-  flexDirection: 'row', // Align items in a row
-  gap: '10px', // Add space between items
-  alignItems: 'center', // Align items vertically centered,
-  marginTop: 20
-  }}
-  >
-  <input
-    className="form-control" 
-    value={item.name}
-    disbled 
-    />
-  <input
-    className="form-control"
-    type="date"
-    value={item.date}
-    onChange={(e) => handleExclusiveDateChange(item.id, e.target.value)}
-  />
-  <button type="button" onClick={() => removeExclusiveDate(item.id)}>X</button>
-</div>
-))}
-</div>
-</div>
-<div className="submit-btn mt-4">
-  <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
-</div>
-</div>
-);
+        </div>
+        <div className="col-md-3">
+          <div className="form-group">
+            <label>Add an exclusive release date</label>
+            <select className="form-select form-control" onChange={(e) =>
+              exclusiveOrderSelect(e.target.value)}>
+              <option value="">Please Select</option>
+              {exclusiveDates?.map((item) => (
+                <option key={item.id} value={item.id}>{item.name}</option>
+              ))}
+            </select>
+          </div>
+          {selectexclusiveDate?.map((item) => (
+            <div
+              className="form-control"
+              style={{
+                display: 'flex', // Ensure the container is a flex container
+                flexDirection: 'row', // Align items in a row
+                gap: '10px', // Add space between items
+                alignItems: 'center', // Align items vertically centered,
+                marginTop: 20
+              }}
+            >
+              <input
+                className="form-control"
+                value={item.name}
+                disbled
+              />
+              <input
+                className="form-control"
+                type="date"
+                value={item.date}
+                onChange={(e) => handleExclusiveDateChange(item.id, e.target.value)}
+              />
+              <button type="button" onClick={() => removeExclusiveDate(item.id)}>X</button>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="submit-btn mt-4">
+        <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
+      </div>
+    </div>
+  );
 }
