@@ -41,7 +41,7 @@ return (
         <img className="img-fluid" title="Dashboard" src={require('../../assets/images/logo.png')} /> 
       </div>
       <div className="login-box-body">
-        <h2>Welcome to Music</h2>
+        {/* <h2>Welcome to Tune</h2> */}
         <p className="login-box-msg">Login Your Account for More</p>
         <div className="login-form">
           <form id="dataform" onSubmit={onSubmit}>
