@@ -24,7 +24,6 @@ export default function STEP6(props) {
             'step1.cline',
             'step1.productionYear',
             'step1.format',
-            'step5.MainReleaseDate',
         ];
     
         const newErrors = {};
@@ -48,7 +47,7 @@ export default function STEP6(props) {
     
         setErrors(newErrors);
     
-        return Object.keys(newErrors).length === 0; // Return true if no errors
+        return Object.keys(newErrors).length === 0; 
     };
     
 
@@ -56,43 +55,36 @@ export default function STEP6(props) {
         if (validateFields()) {
             navigate("/final-submit", { state: { releaseId: releaseData._id } });
         }
+        else {  
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth', 
+                });
+        }
     };
 
     
     
     return (
         <div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP1 releaseData={releaseData} errors={errors}/>
-                </div>
+            <div className="steps-detail step-one-main">
+                <STEP1 releaseData={releaseData} errors={errors}/>
             </div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP2 releaseData={releaseData}/>
-                </div>
+            <div className="steps-detail step-two-main">
+                <STEP2 releaseData={releaseData}/>
             </div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP3 releaseData={releaseData} fetchReleaseDetails={fetchReleaseDetails} />
-                </div>
+            <div className="steps-detail step-three-main">
+                <STEP3 releaseData={releaseData} fetchReleaseDetails={fetchReleaseDetails} />
             </div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP4 releaseData={releaseData} />
-                </div>
+            <div className="steps-detail step-four-main">
+                <STEP4 releaseData={releaseData} />
             </div>
-            <div className="box box-primary">
-                <div className="box-body">
-                    <STEP5 releaseData={releaseData} erorrs={errors} />
-                </div>
+            <div className="steps-detail step-five-main">
+                <STEP5 releaseData={releaseData} />
             </div>
-            <br></br>
-            <div className="mt-3">
+            <div className="submit-btn text-center">
                 <button type="submit" className="btn btn-primary" onClick={handleSubmitClick}>Submit</button>
             </div>
-
-
         </div>
     )
 }

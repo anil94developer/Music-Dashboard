@@ -136,7 +136,7 @@ function App() {
     setRouteState(userProfile?.role ? true : false)
   }, [userProfile?.role])
 
-  return <div key={routeState}>
+  return <div className='h-100' key={routeState}>
     { userProfile?.role === "employee" ? employeeRoute() :
     userProfile?.role === "company" ? companyRoute() :
     adminRoute()}

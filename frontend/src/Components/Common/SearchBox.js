@@ -79,14 +79,8 @@ export default function SearchInput(props) {
 
   return (
     <div>
+      <input className="form-control" type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search for an artist..."/>
       <div className="input-group input-group-sm">
-        <input
-          className="form-control"
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for an artist..."
-        />
       </div>
 
       {query && (
@@ -155,21 +149,20 @@ export default function SearchInput(props) {
 
       <div>
         {selectedArtists.map((artist) => (
-          <div key={artist._id} className="artist-item form-control d-flex row">
-            <img
-              src={images.user}
-              className="artist-image"
-            />
-            <span>{artist.name}</span>
-            {artist.linkId && <a href={artist.linkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/204.svg' className="artist-image"></img></a>}
-            {artist.itunesLinkId && <a href={artist.itunesLinkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/408.svg' className="artist-image"></img></a>}
-
-            <button
-              onClick={() => removeArtist(artist._id)}
-              style={{ background: 'red', borderRadius: 20, color: '#fff' }}
-            >
-              x
-            </button>
+          <div key={artist._id} className="artist-item form-control d-flex flex-wrap align-items-center">
+            <div className="artist-img d-flex align-items-center">
+              <img src={images.user} className="img-fluid"/>
+              <div className="artist-name">
+                <span>{artist.name}</span>
+              </div>
+            </div>
+            <div className="artist-music d-flex align-items-start">
+              {artist.linkId && <a href={artist.linkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/204.svg' className="img-fluid"></img></a>}
+              {artist.itunesLinkId && <a href={artist.itunesLinkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/408.svg' className="img-fluid"></img></a>}
+              <div className="remove-artist">
+                <button className="btn btn-primary" onClick={() => removeArtist(artist._id)}>x</button>
+              </div>
+            </div>
           </div>
         ))}
       </div>

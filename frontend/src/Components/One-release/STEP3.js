@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 import Step3Controller from '../../Controllers/One-release-controller/Step3Controller'
 import ARTISTLIST from '../../Enums/artist.list.json';
@@ -73,21 +72,16 @@ export default function STEP3(props) {
     setReleaseData,
     btnName, setBtnName, setRowId,
     volume, setVolume,
-
   } = Step3Controller()
-
   // State to manage the modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   // Function to open the modal
   const openModal = () => {
     setBtnName("Add");
     setIsModalOpen(true)
   };
-
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
-
   useEffect(() => {
     const getData = async () => {
       setStep3(releaseData.step3);
@@ -105,11 +99,9 @@ export default function STEP3(props) {
     }
     getData()
   }, [releaseData.step3])
-
   useEffect(() => {
     fetchReleaseDetails(releaseData._id)
   }, [isModalOpen])
-
   const editTracks = (item) => {
     setBtnName("Edit")
     setRowId(item._id)
@@ -146,9 +138,6 @@ export default function STEP3(props) {
     setLyrics(item.Lyrics || "");
     setVolume(item.Volume || "");
   }
-
-
-
   // Function to generate ISRC code
   const generateISRCCode = () => {
     const countryCode = "IN";         // Country code
@@ -157,36 +146,29 @@ export default function STEP3(props) {
     const designationCode = Math.floor(100000 + Math.random() * 900000); // Random 6-digit number
     return `${countryCode}${registrantCode}${yearCode}${designationCode}`;
   };
-
   // useEffect to set ISRC when generateISRC is true
   useEffect(() => {
     if (generateISRC) {
       setIsrc(generateISRCCode());
     }
   }, [generateISRC]);
-
-
   const selectedGenre = GENRES.find((g) => g.name === genre);
   const subgenres = selectedGenre ? selectedGenre.subgenres : [];
-
-
   return (
     <div>
       <div className='row'>
         <div className="track-heading d-flex flex-wrap align-items-center justify-content-between">
           <h2>Tracks</h2>
-          <div className="mt-3">
+          <div className="add-track-btn">
             <button onClick={openModal} className="btn btn-primary ">+ Add Track</button>
           </div>
         </div>
-
       </div>
       <br></br>
       <div className="box box-primary">
         <div className="box">
           <div className="box-body">
             <div className="dataTables_wrapper form-inline" role="grid">
-
               <table className="table" aria-describedby="example2_info">
                 <thead>
                   <tr draggable="true">
@@ -197,7 +179,6 @@ export default function STEP3(props) {
                     <th rowspan="1" colspan="1">Title</th>
                     <th rowspan="1" colspan="1">ACTION</th>
                   </tr>                </thead>
-
                 <tbody role="alert" aria-live="polite" aria-relevant="all">
                   {step3 && step3.map((item) => (
                     <tr draggable="true" className="odd">
@@ -217,7 +198,6 @@ export default function STEP3(props) {
           </div>
         </div>
       </div>
-
       {isModalOpen &&
         <div>
           {/* Background Overlay */}
@@ -234,162 +214,161 @@ export default function STEP3(props) {
               zIndex: 1040, // Ensure it stays below the modal content
             }}
           ></div>
-
           {/* Modal Content */}
-          <div className="modal" style={{ display: 'block', zIndex: 1050 }}>
+          <div className="add-track-popup modal" style={{ display: 'block', zIndex: 1050 }}>
 
-            <div className="modal-dialog" style={{ width: '80%' }}>
-              <div className="modal-content" >
+            <div className="modal-dialog modal-xl">
+              <div className="modal-content">
                 <div className="modal-header">
-                  <button type="btn btn-danger" className="close" onClick={closeModal} aria-label="Close">
+                  <h4 className="modal-title">Add Track</h4>
+                  <button type="btn btn-danger" className="btn btn-primary close" onClick={closeModal} aria-label="Close">
                     <span  >×</span>
                   </button>
-                  <h4 className="modal-title">Add Track</h4>
                 </div>
                 <div className="modal-body">
                   <div className="row">
-                    <div className="col-md-12">
-
-                      <div className="col-md-6">
-                        <label>Content Type *{contentType}</label><br />
+                    <div className="col-md-3">
+                      <div className="form-group">
+                        <label>Content Type {contentType} *</label>
                         <input type="radio" value="Audio" checked={contentType == "Audio"} onChange={() => setContentType("Audio")} /> Audio
                         <input type="radio" value="Video" checked={contentType == "Video"} onChange={() => setContentType("Video")} style={{ marginLeft: "10px" }} /> Video
                       </div>
-
-                      {/* Primary Track Type */}
-                      <div className="col-md-6">
-                        <label>Primary Track Type *</label><br />
+                    </div>
+                    {/* Primary Track Type */}
+                    <div className="col-md-3">
+                      <div className="form-group">
+                        <label>Primary Track Type *</label>
                         <input type="radio" value="music" checked={primaryTrackType === "music"} onChange={() => setPrimaryTrackType("music")} /> Music
                       </div>
-
-                      {/* Secondary Track Type */}
-                      <div className="col-md-6">
-                        <label>Secondary Track Type *</label><br />
-                        <input type="radio" value="original" checked={secondaryTrackType === "original"} onChange={() => setSecondaryTrackType("original")} /> Original
-                        <input type="radio" value="karaoke" checked={secondaryTrackType === "karaoke"} onChange={() => setSecondaryTrackType("karaoke")} style={{ marginLeft: "10px" }} /> Karaoke
-                        <input type="radio" value="medley" checked={secondaryTrackType === "medley"} onChange={() => setSecondaryTrackType("medley")} style={{ marginLeft: "10px" }} /> Medley
-                        <input type="radio" value="cover" checked={secondaryTrackType === "cover"} onChange={() => setSecondaryTrackType("cover")} style={{ marginLeft: "10px" }} /> Cover
-                      </div>
-
-                      {/* Instrumental */}
-                      <div className="col-md-6">
-                        <label>Instrumental *</label><br />
-                        <input type="radio" value={true} checked={instrumental === true} onChange={() => setInstrumental(true)} /> Yes
-                        <input type="radio" value={false} checked={instrumental === false} onChange={() => setInstrumental(false)} style={{ marginLeft: "10px" }} /> No
-                      </div>
-
-                      {/* Volume Year */}
-                      <div className="col-md-6">
+                    </div>
+                    {/* Secondary Track Type */}
+                    <div className="col-md-4">
+                      <label>Secondary Track Type *</label>
+                      <input type="radio" value="original" checked={secondaryTrackType === "original"} onChange={() => setSecondaryTrackType("original")} /> Original
+                      <input type="radio" value="karaoke" checked={secondaryTrackType === "karaoke"} onChange={() => setSecondaryTrackType("karaoke")} style={{ marginLeft: "10px" }} /> Karaoke
+                      <input type="radio" value="medley" checked={secondaryTrackType === "medley"} onChange={() => setSecondaryTrackType("medley")} style={{ marginLeft: "10px" }} /> Medley
+                      <input type="radio" value="cover" checked={secondaryTrackType === "cover"} onChange={() => setSecondaryTrackType("cover")} style={{ marginLeft: "10px" }} /> Cover
+                    </div>
+                    {/* Instrumental */}
+                    <div className="col-md-2">
+                      <label>Instrumental *</label>
+                      <input type="radio" value={true} checked={instrumental === true} onChange={() => setInstrumental(true)} /> Yes
+                      <input type="radio" value={false} checked={instrumental === false} onChange={() => setInstrumental(false)} style={{ marginLeft: "10px" }} /> No
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Volume Year</label>
-                        <select className="form-control" value={volume} onChange={(e) => setVolume(e.target.value)}>
+                        <select className="form-select form-control" value={volume} onChange={(e) => setVolume(e.target.value)}>
                           <option value="">- Select a Volume -</option>
                           {[...Array(20)].map((_, i) => (
                             <option key={i} value={`Volume` + (i + 1)}>{`Volume` + (i + 1)}</option>
                           ))}
                         </select>
                       </div>
-                      {/* Title */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Title *</label>
                         <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
                       </div>
-
-                      {/* Version/Subtitle */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Version/Subtitle</label>
                         <input type="text" className="form-control" value={versionSubtitle} onChange={(e) => setVersionSubtitle(e.target.value)} />
                       </div>
-
-                      {/* Primary Artist */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Primary Artist *</label>
                         <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
                       </div>
-
-                      {/* Featuring */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Featuring</label>
                         <SearchInput artistData={featuring} setSelectData={setFeaturing} />
-
                       </div>
-
-                      {/* Remixer */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Remixer</label>
                         <DynamicInputList inputs={remixer} setInputs={setRemixer} placeholder={"Remixer"}/>
                         {/* <SearchInput />  */}
                       </div>
-
-                      {/* Author */}
-                      <div className="col-md-6">
+                      {/* <SearchInput />  */}
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Author *</label>
                         <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"}/>
 
                       </div>
-
-                      {/* Composer */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Composer *</label>
                         <DynamicInputList inputs={composer} setInputs={setComposer} placeholder={"Composer"} />
 
                       </div>
-
-                      {/* Arranger */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Arranger</label>
                         <DynamicInputList inputs={arranger} setInputs={setArranger} placeholder={"Arranger"} />
                       </div>
-
-                      {/* Producer */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Producer</label>
                         <DynamicInputList inputs={producer} setInputs={setProducer} placeholder={"Producer"}/>
 
                       </div>
-
-                      {/* P Line */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>P Line</label>
                         <input type="text" className="form-control" value={pLine} onChange={(e) => setPLine(e.target.value)} />
                       </div>
-
-                      {/* Production Year */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Production Year</label>
-                        <select className="form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
+                        <select className="form-select form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
                           <option value="">- Select a year -</option>
                           {[...Array(100)].map((_, i) => (
                             <option key={i} value={2023 - i}>{2023 - i}</option>
                           ))}
                         </select>
                       </div>
-
-                      {/* Publisher */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Publisher</label>
                         <input type="text" className="form-control" value={publisher} onChange={(e) => setPublisher(e.target.value)} />
                       </div>
-
-                      {/* ISRC */}
-                      {!generateISRC &&
-                        <div className="col-md-6">
+                    </div>
+                    {!generateISRC &&
+                      <div className="col-md-3">
+                        <div className="form-group">
                           <label>ISRC</label>
                           <input disabled={generateISRC} type="text" className="form-control" value={!generateISRC ? "" : isrc} onChange={(e) => setIsrc(e.target.value)} />
                         </div>
-                      }
-
-                      {/* Generate ISRC */}
-                      <div className="col-md-6">
-                        <label>Generate ISRC</label><br />
+                      </div>
+                    }
+                    <div className="col-md-3">
+                      <div className="form-group">
+                        <label>Generate ISRC</label>
                         <input type="radio" value={true} checked={generateISRC === true} onChange={() => setGenerateISRC(true)} /> Yes
                         <input type="radio" value={false} checked={generateISRC === false} onChange={() => setGenerateISRC(false)} style={{ marginLeft: "10px" }} /> No
                       </div>
-
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label htmlFor="genre">Genre *</label>
                         <select
                           value={genre}
-                          className="form-control"
+                          className="form-select form-control"
                           id="genre"
                           onChange={(e) => setGenre(e.target.value)}
                         >
@@ -399,12 +378,13 @@ export default function STEP3(props) {
                           )}
                         </select>
                       </div>
-
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label htmlFor="subgenre">SubGenre * </label>
                         <select
                           value={subgenre}
-                          className="form-control"
+                          className="form-select form-control"
                           id="subgenre"
                           onChange={(e) => setSubgenre(e.target.value)}
                           disabled={!subgenres.length} // Disable if no subgenres available
@@ -415,12 +395,13 @@ export default function STEP3(props) {
                           ))}
                         </select>
                       </div>
-
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label htmlFor="genre">Secondary Genre *</label>
                         <select
                           value={secondaryGenre}
-                          className="form-control"
+                          className="form-select form-control"
                           id="genre"
                           onChange={(e) => setSecondaryGenre(e.target.value)}
                         >
@@ -430,12 +411,13 @@ export default function STEP3(props) {
                           )}
                         </select>
                       </div>
-
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label htmlFor="subgenre">Secondary SubGenre * </label>
                         <select
                           value={subSecondaryGenre}
-                          className="form-control"
+                          className="form-select form-control"
                           id="subgenre"
                           onChange={(e) => setSubSecondaryGenre(e.target.value)}
                           disabled={!subgenres.length} // Disable if no subgenres available
@@ -446,16 +428,14 @@ export default function STEP3(props) {
                           ))}
                         </select>
                       </div>
-
-
-
-                      {/* Price */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Price *</label>
                         {/* <input type="text" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} /> */}
                         <select
                           value={price}
-                          className="form-control"
+                          className="form-select form-control"
                           id="price"
                           onChange={(e) => setPrice(e.target.value)}
                         >
@@ -464,30 +444,26 @@ export default function STEP3(props) {
                           <option value="155">Mid : 20₹ / 1.49$ / 0Sg$</option>
                           <option value="154">Front : 30₹ / 1.99$ / 0Sg$</option>
                         </select>
-
-
                       </div>
-
-                      {/* Parental Advisory */}
-                      <div className="col-md-6">
-                        <label>Parental Advisory *</label><br />
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
+                        <label>Parental Advisory *</label>
                         <input type="radio" value="yes" checked={parentalAdvisory === "yes"} onChange={() => setParentalAdvisory("yes")} /> Yes
                         <input type="radio" value="no" checked={parentalAdvisory === "no"} onChange={() => setParentalAdvisory("no")} style={{ marginLeft: "10px" }} /> No
                         <input type="radio" value="no" checked={parentalAdvisory === "Cleaned"} onChange={() => setParentalAdvisory("Cleaned")} style={{ marginLeft: "10px" }} /> Cleaned
-
                       </div>
-
-
-
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Preview start</label>
                         <input type="text" className="form-control" value={previewStart} onChange={(e) => setPreviewStart(e.target.value)} />
                       </div>
-
-
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Track title language</label>
-                        <select type="text" className="form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
+                        <select type="text" className="form-select form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
                         { language.map(item => (
                           <option key={item} value={item.value}>
                             {item.label}
@@ -497,9 +473,11 @@ export default function STEP3(props) {
 
                         </select>
                       </div>
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-md-3">
+                      <div className="form-group">
                         <label>Lyrics language</label>
-                        <select type="text" className="form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >
+                        <select type="text" className="form-select form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >
                          { language.map(item => (
                           <option key={item} value={item.value}>
                             {item.label}
@@ -507,23 +485,17 @@ export default function STEP3(props) {
                           ))}
                         </select>
                       </div>
-
-                      {/* Lyrics */}
-                      <div className="col-md-6">
+                    </div>
+                    <div className="col-12">
+                      <div className="form-group">
                         <label>Lyrics</label>
                         <textarea className="form-control" rows="4" value={lyrics} onChange={(e) => setLyrics(e.target.value)} />
                       </div>
-
                     </div>
-
                   </div>
-
-
-
                   <div className="form-group">
                     {/* Submit Button */}
                     {/* <div className="col-ml-12"> */}
-
                     <button type="submit" className="btn btn-primary"
                       onClick={async () => {
                         await handleSubmit();  // Ensure handleSubmit completes first

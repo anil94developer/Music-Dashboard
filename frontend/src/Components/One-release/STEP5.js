@@ -28,7 +28,7 @@ getData()
 return (
 <div>
   <div className="row">
-    <div className="col-md-4">
+    <div className="col-md-3">
       <div className="form-group">
         <label>Choose a main release date <span>*</span></label>
         <input
@@ -37,13 +37,10 @@ return (
           value={mainReleaseDate}
           onChange={(e) => setMainReleaseDate(e.target.value)}
         />
-        {props.errors?.['step5.mainReleaseDate'] && (
-        <span className="text-danger">{props.errors['step5.mainReleaseDate']}</span>
-        )}
       </div>
       <div className="form-group">
         <label>Add a pre-order date</label>
-        <select className="form-control" onChange={(e) =>
+        <select className="form-select form-control" onChange={(e) =>
           preOrderSelect(e.target.value)}>
           <option value="">Select Music</option>
           {preOrderDate.map((item) => (
@@ -90,7 +87,7 @@ return (
   </div>
   */}
 </div>
-<div className="col-md-4">
+<div className="col-md-3">
   <div className="form-group">
     <label>Add an exclusive release date</label>
     <select className="form-select form-control" onChange={(e) =>
@@ -128,7 +125,7 @@ return (
 ))}
 </div>
 </div>
-<div className="submit-btn">
+<div className="submit-btn mt-4">
   <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
 </div>
 </div>

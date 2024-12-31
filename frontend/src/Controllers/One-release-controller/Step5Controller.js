@@ -31,7 +31,7 @@ const initialStoreList = [
     { id: '20', name: 'YouTube', logo: 'fa fa-icon', date: '' }
   ];
  
-  const [mainReleaseDate,setMainReleaseDate]=useState('')
+  const [mainReleaseDate, setMainReleaseDate] = useState(new Date().toISOString().split('T')[0]);
   const [preOrderDate, setPreOrderDate] = useState(initialStoreList);
   const [selectPreOrderDate, setSelectPreOrderDate] = useState([]);
   const [exclusiveDates, setExclusiveDates] = useState(initialStoreList);

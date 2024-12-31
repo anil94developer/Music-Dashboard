@@ -43,7 +43,7 @@ export default function PaymentOperations() {
   };
   const handleSubmit = async () => {
     if (amount < 100) {
-      Swal.fire("Error", "Please enter miimum € 100", "error");
+      Swal.fire("Error", "Please enter miimum $100", "error");
     } else {
       let body = {
         amount: amount
@@ -59,7 +59,7 @@ export default function PaymentOperations() {
   }
   const getWidthdrawal = async () => {
     let result = await getData(base.getWithdraw);
-    console.log("get widrwal>>>>>>",result)
+    console.log(result)
     setWidthdraw(result.data)
   }
   return (
@@ -69,7 +69,7 @@ export default function PaymentOperations() {
         <Nav />
         <div className="content-wrapper">
           <section className="content-header">
-            <h1>Payment Operations</h1>
+            <h1>Payment Operation</h1>
           </section>
           <div className="row">
             <div className="col-md-6">
@@ -89,7 +89,7 @@ export default function PaymentOperations() {
           </div>
           <section className="content">
             <div className="row">
-              {widthdraw[widthdraw.length - 1]?.amount > 0 && widthdraw[widthdraw.length - 1]?.status== "pending"?
+              {widthdraw[widthdraw.length - 1]?.amount > 0  && widthdraw[widthdraw.length - 1]?.status == "pending" ?
                 <div className="col-md-6">
                   <div className="box box-primary">
                     <div className="balance-container">

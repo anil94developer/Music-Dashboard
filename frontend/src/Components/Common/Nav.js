@@ -45,16 +45,12 @@ export const Nav = (props) => {
                 <ul className="navbar-nav text-end">
                   <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img src={images?.user} className="img-fluid" alt="User Image"/>
+                      <img src={images?.user} className="img-fluid" alt="User Image" />
                       <span className="user-name hidden-xs">{userProfile?.name}</span>
                     </a>
-                    <p>4654546542</p>
+                    {useUserProfile?.role == "company" || useUserProfile?.role == "employee" && <p>4654546542</p> }
                     <ul className="dropdown-menu position-absolute">
-                      <li>
-                        <a href="password change" className="dropdown-item">
-                          <i className="fa fa-lock"></i> Change Password
-                        </a>
-                      </li>
+
                       <li>
                         <a href="profile" className="dropdown-item">
                           <i className="fa fa-user"></i> Profile
@@ -70,6 +66,11 @@ export const Nav = (props) => {
                           <li>
                             <a href="/bank information" className="dropdown-item">
                               <i className="fa fa-bank"></i> Bank Information
+                            </a>
+                          </li>
+                          <li>
+                            <a href="password change" className="dropdown-item">
+                              <i className="fa fa-lock"></i> Change Password
                             </a>
                           </li>
                           <li>
