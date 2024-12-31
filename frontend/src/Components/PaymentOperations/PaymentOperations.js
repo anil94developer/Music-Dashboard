@@ -7,11 +7,19 @@ import { SideBar } from '../Common/SideBar'
 import "./styles.css";
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+
+
+import DataTable from "../Common/DataTable/DataTable";
+import { Box, Button, Modal, Typography } from '@mui/material';
+
+
 export default function PaymentOperations() {
   const navigate = useNavigate()
   const [amount, setAmount] = useState();
   const [widthdraw, setWidthdraw] = useState([]);
   const [userData, setUserData] = useState({})
+  const [withdrawalRequest, setWithdrawalRequest] = useState([]);
+
   useEffect(() => {
     getWidthdrawal()
     getProfile()
@@ -61,7 +69,23 @@ export default function PaymentOperations() {
     let result = await getData(base.getWithdraw);
     console.log(result)
     setWidthdraw(result.data)
+    const resultList = Array.isArray(result?.data)
+      ? result.data
+        .map((item, index) => ({
+          id: index + 1,
+          amount: item.amount,
+          status: item.status,
+        }))
+      : [];
+    setWithdrawalRequest(resultList)
   }
+
+
+  const columns = [
+    { field: 'id', headerName: '#', headerClassName: 'black-header', },
+    { field: 'amount', headerName: 'AMOUNT', headerClassName: 'black-header', },
+    { field: 'status', headerName: 'STATUS', headerClassName: 'black-header', },
+  ];
   return (
     <div>
       <SideBar />
@@ -71,25 +95,41 @@ export default function PaymentOperations() {
           <section className="content-header">
             <h1>Payment Operation</h1>
           </section>
-          <div className="row">
-            <div className="col-md-6">
-              <div className="box">
-                <div className="small-box bg-aqua">
-                  <div className="inner">
-                    <h3>My Wallet</h3>
-                    <p>Balance: € {userData?.wallet}</p>
-                  </div>
-                  <div className="icon">
-                    <i className="ion ion-bag"></i>
-                  </div>
-                  <div className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <br></br>
           <section className="content">
             <div className="row">
-              {widthdraw[widthdraw.length - 1]?.amount > 0  && widthdraw[widthdraw.length - 1]?.status == "pending" ?
+              <div className="col-md-6">
+                <div className="box">
+                  <div className="balance-container">
+                    <div className="status-steps">
+                      <div className="small-box bg-aqua">
+                        <div className="inner">
+                          <h3>Available Balance</h3>
+                          <p>Balance: € {userData?.wallet}</p>
+                        </div>
+
+                        {/* <div className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></div> */}
+                      </div>
+                      <div className="balance-container">
+                        <div className="small-box bg-aqua">
+                          <div className="inner">
+                            <div className="icon">
+                              <i className="ion ion-bag large-icon" style={{ fontSize: '48px' }}></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+          <br></br>
+          <section className="content">
+            <div className="row">
+              {widthdraw[widthdraw.length - 1]?.amount > 0 && widthdraw[widthdraw.length - 1]?.status == "pending" ?
                 <div className="col-md-6">
                   <div className="box box-primary">
                     <div className="balance-container">
@@ -121,9 +161,9 @@ export default function PaymentOperations() {
                           <br />
                           Your payment request will be confirmed by our team and sent to the payout provider with in 7 days.
                         </p>
-                        <a href="#" className="transaction-history">
+                        {/* <a href="#" className="transaction-history">
                           Transaction history & invoices
-                        </a>
+                        </a> */}
                       </div>
                     </div>
                   </div>
@@ -152,8 +192,21 @@ export default function PaymentOperations() {
                   </div>
                 </div>
               }
+
+              <div className="col-md-6">
+                <div className="box box-primary">
+                  <DataTable
+                    columns={columns}
+                    rows={withdrawalRequest}
+                    height="500"
+                    columnNo={5}
+                  // width={300}
+                  />
+                </div>
+              </div>
             </div>
           </section>
+
         </div>
       </div>
     </div>

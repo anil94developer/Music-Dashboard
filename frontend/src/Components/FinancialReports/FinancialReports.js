@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
+import { base } from '../../Constants/Data.constant';
+import { getData } from '../../Services/Ops';
 import { Nav } from '../Common/Nav'
 import { SideBar } from '../Common/SideBar'
 import AutomaticReports from './AutomaticReport';
@@ -6,13 +8,16 @@ import RequestedReports from './RequestedReports';
 import "./styles.css";
 export default function FinancialReport() {
 const [activeTab, setActiveTab] = useState("automatic");
-const reports = [
-{ period: "Q3 2024", type: "Full catalog single report", amount: "871.38 €", status: "✔", actions: "Download" },
-{ period: "August 2024", type: "Full catalog single report", amount: "165.83 €", status: "✔", actions: "Download" },
-{ period: "July 2024", type: "Full catalog single report", amount: "443.87 €", status: "✔", actions: "Download" },
-{ period: "Q2 2024", type: "Full catalog single report", amount: "1 936.36 €", status: "✔", actions: "Download" },
-{ period: "May 2024", type: "Full catalog single report", amount: "560.22 €", status: "✔", actions: "Download" },
-];
+const [report,setReport]= useState([])
+useEffect(() => {
+  getReoprt(); 
+}, [])
+const getReoprt = async () => {
+  let result = await getData(base.getReport)
+  console.log("getReoprt------------", result)
+  setReport(result?.data)
+    // setTopStores(arr)
+  } 
 return (
 <div>
   <SideBar/>
@@ -42,7 +47,7 @@ return (
             </button>
           </div>
           {activeTab === "automatic" ?
-          <AutomaticReports />
+          <AutomaticReports report={report}/>
           :
           <RequestedReports />
           }
