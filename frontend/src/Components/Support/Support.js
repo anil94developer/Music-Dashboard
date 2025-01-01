@@ -40,7 +40,7 @@ return (
         <div className="dash-detail dash-detail-two">
           <form onSubmit={handleSubmit} >
             <div className="row">
-              <div className="col-4">
+              <div className="col-lg-4 col-md-6 col-12">
                 {/* Issue Type */}
                 <div className="form-group">
                   <label htmlFor="issueType">Please choose your issue below</label>
@@ -62,7 +62,7 @@ return (
                   </select>
                 </div>
               </div>
-              <div className="col-4">
+              <div className="col-lg-4 col-md-6 col-12">
                 {/* Email */}
                 <div className="form-group">
                   <label htmlFor="email">Your email address</label>
@@ -77,7 +77,7 @@ return (
                   />
                 </div>
               </div>
-              <div className="col-4">
+              <div className="col-lg-4 col-md-6 col-12">
                 {/* Client Number */}
                 <div className="form-group">
                   <label htmlFor="clientNumber">Client number</label>
@@ -92,7 +92,7 @@ return (
                   />
                 </div>
               </div>
-              <div className="col-md-3 col-sm-6 col-12">
+              <div className="col-lg-4 col-md-6 col-12">
                 {/* Motion Type */}
                 <div className="form-group">
                   <label htmlFor="motionType">Type of motion</label>
@@ -110,7 +110,7 @@ return (
                   </select>
                 </div>
               </div>
-              <div className="col-md-3 col-sm-6 col-12">
+              <div className="col-lg-4 col-md-6 col-12">
                 {/* Country */}
                 <div className="form-group">
                   <label htmlFor="country">Country</label>
@@ -129,7 +129,7 @@ return (
                   </select>
                 </div>
               </div>
-              <div className="col-md-3 col-sm-6 col-12">
+              <div className="col-lg-4 col-md-6 col-12">
                 {/* Motion Link */}
                 <div className="form-group">
                   <label htmlFor="motionLink">Link to your motion</label>
@@ -144,7 +144,7 @@ return (
                   />
                 </div>
               </div>
-              <div className="col-md-3 col-sm-6 col-12">
+              <div className="col-lg-4 col-md-6 col-12">
                 {/* Attachments */}
                 <div className="form-group">
                   <label htmlFor="attachments">Attachments (optional)</label>

@@ -37,7 +37,7 @@ export const Dashboard = () => {
           <section className="dash-main content">
             {userProfile?.role === "company" &&
               <div className="row">
-                <div className="col-lg-3 col-xs-6">
+                <div className="col-lg-3 col-md-6">
                   <div className="dash-detail d-flex flex-wrap">
                     <div className="inner">
                       <p>All Release</p>
@@ -48,7 +48,7 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-xs-6">
+                <div className="col-lg-3 col-md-6">
                   <div className="dash-detail d-flex flex-wrap">
                     <div className="inner">
                       <p>All Tracks</p>

@@ -14,7 +14,7 @@ getData();
 return (
 <div className="media-uploader">
   <div className="row">
-    <div className="col-md-4 col-12">
+    <div className="col-lg-5 col-12">
       <div className="dash-detail dash-detail-two media-heading">
         <h2>Upload Media Files</h2>
         {/* Uploaded Media Files */}
@@ -80,7 +80,7 @@ return (
       </div>
     </div>
   </div>
-    <div className="col-md-8 col-12">
+    <div className="col-lg-7 col-12">
       <div className="dash-detail dash-detail-two">
         <div className="old-heading">
           <h3 className="title">Old Files</h3>

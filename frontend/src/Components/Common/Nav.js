@@ -29,7 +29,7 @@ export const Nav = (props) => {
     <nav className="navbar">
       <div className="container-fluid">
         <div className="row align-items-center w-100">
-          <div className="col-md-6 col-12">
+          <div className="col-sm-6 col-6">
             <div className="topbar-left d-flex align-items-center">
               {/* <a className="navbar-brand" href="#">
                 <img className="img-fluid" src={require('../../assets/images/logo.png')} />
@@ -39,7 +39,7 @@ export const Nav = (props) => {
               </button>
             </div>
           </div>
-          <div className="col-md-6 col-12">
+          <div className="col-sm-6 col-6">
             <div className="topbar-left">
               <div className="navbar-collapse position-relative">
                 <ul className="navbar-nav text-end">

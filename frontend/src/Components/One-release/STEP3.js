@@ -167,7 +167,7 @@ export default function STEP3(props) {
       <br></br>
       <div className="box box-primary">
         <div className="box">
-          <div className="box-body">
+          <div className="track-table box-body">
             <div className="dataTables_wrapper form-inline" role="grid">
               <table className="table" aria-describedby="example2_info">
                 <thead>
@@ -235,14 +235,14 @@ export default function STEP3(props) {
                       </div>
                     </div>
                     {/* Primary Track Type */}
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Primary Track Type *</label>
                         <input type="radio" value="music" checked={primaryTrackType === "music"} onChange={() => setPrimaryTrackType("music")} /> Music
                       </div>
                     </div>
                     {/* Secondary Track Type */}
-                    <div className="col-md-4">
+                    <div className="col-lg-4 col-md-6">
                       <label>Secondary Track Type *</label>
                       <input type="radio" value="original" checked={secondaryTrackType === "original"} onChange={() => setSecondaryTrackType("original")} /> Original
                       <input type="radio" value="karaoke" checked={secondaryTrackType === "karaoke"} onChange={() => setSecondaryTrackType("karaoke")} style={{ marginLeft: "10px" }} /> Karaoke
@@ -250,12 +250,12 @@ export default function STEP3(props) {
                       <input type="radio" value="cover" checked={secondaryTrackType === "cover"} onChange={() => setSecondaryTrackType("cover")} style={{ marginLeft: "10px" }} /> Cover
                     </div>
                     {/* Instrumental */}
-                    <div className="col-md-2">
+                    <div className="col-lg-2 col-md-6">
                       <label>Instrumental *</label>
                       <input type="radio" value={true} checked={instrumental === true} onChange={() => setInstrumental(true)} /> Yes
                       <input type="radio" value={false} checked={instrumental === false} onChange={() => setInstrumental(false)} style={{ marginLeft: "10px" }} /> No
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Volume Year</label>
                         <select className="form-select form-control" value={volume} onChange={(e) => setVolume(e.target.value)}>
@@ -266,31 +266,31 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Title *</label>
                         <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Version/Subtitle</label>
                         <input type="text" className="form-control" value={versionSubtitle} onChange={(e) => setVersionSubtitle(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Primary Artist *</label>
                         <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Featuring</label>
                         <SearchInput artistData={featuring} setSelectData={setFeaturing} />
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Remixer</label>
                         <DynamicInputList inputs={remixer} setInputs={setRemixer} placeholder={"Remixer"}/>
@@ -298,40 +298,40 @@ export default function STEP3(props) {
                       </div>
                       {/* <SearchInput />  */}
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Author *</label>
                         <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"}/>
 
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Composer *</label>
                         <DynamicInputList inputs={composer} setInputs={setComposer} placeholder={"Composer"} />
 
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Arranger</label>
                         <DynamicInputList inputs={arranger} setInputs={setArranger} placeholder={"Arranger"} />
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Producer</label>
                         <DynamicInputList inputs={producer} setInputs={setProducer} placeholder={"Producer"}/>
 
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>P Line</label>
                         <input type="text" className="form-control" value={pLine} onChange={(e) => setPLine(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Production Year</label>
                         <select className="form-select form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
@@ -342,28 +342,28 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Publisher</label>
                         <input type="text" className="form-control" value={publisher} onChange={(e) => setPublisher(e.target.value)} />
                       </div>
                     </div>
                     {!generateISRC &&
-                      <div className="col-md-3">
+                      <div className="col-lg-3 col-md-6">
                         <div className="form-group">
                           <label>ISRC</label>
                           <input disabled={generateISRC} type="text" className="form-control" value={!generateISRC ? "" : isrc} onChange={(e) => setIsrc(e.target.value)} />
                         </div>
                       </div>
                     }
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Generate ISRC</label>
                         <input type="radio" value={true} checked={generateISRC === true} onChange={() => setGenerateISRC(true)} /> Yes
                         <input type="radio" value={false} checked={generateISRC === false} onChange={() => setGenerateISRC(false)} style={{ marginLeft: "10px" }} /> No
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label htmlFor="genre">Genre *</label>
                         <select
@@ -379,7 +379,7 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label htmlFor="subgenre">SubGenre * </label>
                         <select
@@ -396,7 +396,7 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label htmlFor="genre">Secondary Genre *</label>
                         <select
@@ -412,7 +412,7 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label htmlFor="subgenre">Secondary SubGenre * </label>
                         <select
@@ -429,7 +429,7 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Price *</label>
                         {/* <input type="text" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} /> */}
@@ -446,7 +446,7 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Parental Advisory *</label>
                         <input type="radio" value="yes" checked={parentalAdvisory === "yes"} onChange={() => setParentalAdvisory("yes")} /> Yes
@@ -454,13 +454,13 @@ export default function STEP3(props) {
                         <input type="radio" value="no" checked={parentalAdvisory === "Cleaned"} onChange={() => setParentalAdvisory("Cleaned")} style={{ marginLeft: "10px" }} /> Cleaned
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Preview start</label>
                         <input type="text" className="form-control" value={previewStart} onChange={(e) => setPreviewStart(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Track title language</label>
                         <select type="text" className="form-select form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
@@ -474,7 +474,7 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Lyrics language</label>
                         <select type="text" className="form-select form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >

@@ -90,7 +90,7 @@ export default function STEP1(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="releaseTitle">Release title *</label>
             <input
@@ -103,7 +103,7 @@ export default function STEP1(props) {
             />
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group" >
             <label htmlFor="versionSubtitle">Version/Subtitle</label>
             <input
@@ -116,7 +116,7 @@ export default function STEP1(props) {
             />
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="primaryArtist">Primary artist *</label>
             <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
@@ -125,13 +125,13 @@ export default function STEP1(props) {
             )}
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group" key={primaryArtist}>
             <label htmlFor="featuring">Featuring</label>
             <SearchInput artistData={featuring} setSelectData={setFeaturing} />
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="genre">Genre *</label>
             <select
@@ -153,7 +153,7 @@ export default function STEP1(props) {
             )}
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="subgenre">SubGenre * </label>
             <select
@@ -174,7 +174,7 @@ export default function STEP1(props) {
             )}
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="labelName">Label name *</label>
             <div
@@ -234,7 +234,7 @@ export default function STEP1(props) {
             }
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="format">Format *</label>
             <select
@@ -254,7 +254,7 @@ export default function STEP1(props) {
             )}
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="releaseDate">Physical/Original release date</label>
             <input
@@ -266,7 +266,7 @@ export default function STEP1(props) {
             />
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="pLine">℗ line *</label>
             <input
@@ -282,7 +282,7 @@ export default function STEP1(props) {
             )}
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="cLine">© line *</label>
             <input
@@ -298,7 +298,7 @@ export default function STEP1(props) {
             )}
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="productionYear">Production Year *</label>
             <select
@@ -321,7 +321,7 @@ export default function STEP1(props) {
             )}
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="upcEan">UPC/EAN</label>
             <input
@@ -334,7 +334,7 @@ export default function STEP1(props) {
             />
           </div>
         </div>
-        <div className="col-md-3 col-sm-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="producerCatalogueNumber">Producer catalogue number</label>
             <input

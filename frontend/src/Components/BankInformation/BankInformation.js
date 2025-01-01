@@ -17,7 +17,7 @@ return (
         <div className="bank-main dash-detail dash-detail-two">
           <form onSubmit={handleSubmit}>
             <div className="row">
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-6 col-12">
                 {/* PAN Number */}
                 <div className="form-group">
                   <label className="form-group-text" id="pan_number-addon">
@@ -36,7 +36,7 @@ return (
                     />
                 </div>
               </div>
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-6 col-12">
                 {/* Account Holder */}
                 <div className="form-group">
                   <label className="form-group-text" id="account-holder-addon">
@@ -55,7 +55,7 @@ return (
                     />
                 </div>
               </div>
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-6 col-12">
                 {/* Bank Name */}
                 <div className="form-group">
                   <label className="form-group-text" id="bank-name-addon">
@@ -74,7 +74,7 @@ return (
                     />
                 </div>
               </div>
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-6 col-12">
                 {/* IFSC Code */}
                 <div className="form-group">
                   <label className="form-group-text" id="ifsc-code-addon">
@@ -93,7 +93,7 @@ return (
                     />
                 </div>
               </div>
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-6 col-12">
                 {/* Account Number */}
                 <div className="form-group">
                   <label className="form-group-text" id="account-number-addon">
@@ -112,7 +112,7 @@ return (
                     />
                 </div>
               </div>
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-6 col-12">
                 {/* Account Type */}
                 <div className="form-group">
                   <label className="form-group-text" id="account-type-addon">

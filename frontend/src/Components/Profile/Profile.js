@@ -22,7 +22,7 @@ return (
               {userProfile?.role == "company" &&
               <>
               {/* Company Name */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label for="exampleInputEmail1"> Company Name</label>
                   <input
@@ -37,7 +37,7 @@ return (
                 </div>
               </div>
               {/* Client Number */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Client Number</label>
                   <input
@@ -52,7 +52,7 @@ return (
                 </div>
               </div>
               {/* Main Email */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Main Email Address</label>
                   <input
@@ -67,7 +67,7 @@ return (
                 </div>
               </div>
               {/* Royalties Email */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Royalties Email Address</label>
                   <input
@@ -84,7 +84,7 @@ return (
               </>
               }
               {/* First Name */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >First Name</label>
                   <input
@@ -99,7 +99,7 @@ return (
                 </div>
               </div>
               {/* Last Name */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Last Name</label>
                   <input
@@ -114,7 +114,7 @@ return (
                 </div>
               </div>
               {/* Phone Number */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Phone Number</label>
                   <input
@@ -129,7 +129,7 @@ return (
                 </div>
               </div>
               {/* Postal Address */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Postal Address</label>
                   <textarea
@@ -143,7 +143,7 @@ return (
                 </div>
               </div>
               {/* Postal Code */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Postal Code</label>
                   <input
@@ -158,7 +158,7 @@ return (
                 </div>
               </div>
               {/* City */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >City</label>
                   <input
@@ -173,7 +173,7 @@ return (
                 </div>
               </div>
               {/* Country */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Country</label>
                   <input
@@ -188,7 +188,7 @@ return (
                 </div>
               </div>
               {/* Time Zone */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Default Time Zone</label>
                   <input
@@ -203,7 +203,7 @@ return (
                 </div>
               </div>
               {/* Language */}
-              <div className="col-md-2 col-sm-4 col-6">
+              <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
                   <label >Default Language</label>
                   <input
