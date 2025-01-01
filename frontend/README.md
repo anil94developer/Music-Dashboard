@@ -76,11 +76,20 @@ sudo ssh root@195.35.23.219
 Dashboard@123!
 
 sudo scp build.zip root@195.35.23.219:/var/www
+
+cd html
+
+rm -rf build/ favicon.ico logo512.png logo192.png robots.txt css/ index.html mainfest.json static/ nodesource_setup.sh asset-manifest.json  manifest.json
+
+cd ..
+
 unzip build.zip -d html
+
+cd html/build
 
 mv favicon.ico logo512.png logo192.png robots.txt css/ index.html mainfest.json static/ nodesource_setup.sh asset-manifest.json  manifest.json  ./../
  
  
-rm -rf build/ favicon.ico logo512.png logo192.png robots.txt css/ index.html mainfest.json static/ nodesource_setup.sh asset-manifest.json  manifest.json 
+ 
 
 

@@ -21,7 +21,7 @@ export default function PaymentOperations() {
   const [withdrawalRequest, setWithdrawalRequest] = useState([]);
 
   useEffect(() => {
-   // getWidthdrawal()
+    // getWidthdrawal()
     getProfile()
   }, [])
   const getProfile = async () => {
@@ -79,113 +79,107 @@ export default function PaymentOperations() {
       : [];
     setWithdrawalRequest(resultList)
   }
-
-
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header', },
     { field: 'amount', headerName: 'AMOUNT', headerClassName: 'black-header', },
     { field: 'status', headerName: 'STATUS', headerClassName: 'black-header', },
   ];
-  return (
-    <div>
-      <SideBar />
-      <div className="main-cotent">
-        <Nav />
-        <div className="content-main">
-          <section className="page-heading">
-            <h1>Payment Operation</h1>
-          </section>
-          <section className="my-wallet dash-detail">
-            <div className="wallet-inner d-flex flex-wrap align-items-center">
-              <div className="inner">
-                <h4>Available Balance</h4>
-                <p>Balance: € {userData?.wallet}</p>
-              </div>
-              <div className="icon">
-                <img className="img-fluid" src={require('../../assets/images/music-wallet1.png')}/>
-              </div>
+return (
+  <div>
+    <SideBar />
+    <div className="main-cotent">
+      <Nav />
+      <div className="content-main">
+        <section className="page-heading">
+          <h1>Payment Operation</h1>
+        </section>
+        <section className="my-wallet dash-detail">
+          <div className="wallet-inner d-flex flex-wrap align-items-center">
+            <div className="inner">
+              <h4>Available Balance</h4>
+              <p>Balance: € {userData?.wallet}</p>
             </div>
-          </section>
-          <section className="amount-request">
-            <div className="row">
-              {widthdraw[widthdraw?.length - 1]?.amount > 0 && widthdraw[widthdraw?.length - 1]?.status == "pending" ?
-                <div className="col-md-6">
-                  <div className="box box-primary">
-                    <div className="balance-container">
-                      <h2>My available balance</h2>
-                      <p>
-                        Your Available balance is calculated according to your royalties and your advance, if you have an active advance.
-                      </p>
-                      <a href="#" className="faq-link">
-                        Find out more on the FAQ
-                      </a>
-                      <div className="payment-status">
-                        <h3>Your payment of € {JSON.stringify(widthdraw[widthdraw?.length - 1]?.amount)} </h3>
-                        <div className="status-steps">
-                          <div className={widthdraw[widthdraw?.length - 1]?.status == 'pending' ? "step active" : "step"}>
-                            <span className="circle">✔</span>
-                            <span className="label">Requested</span>
-                          </div>
-                          <div className={widthdraw[widthdraw?.length - 1]?.status == 'active' ? "step active" : "step"}>
-                            <span className="circle">2</span>
-                            <span className="label">Processed</span>
-                          </div>
-                          <div className={widthdraw[widthdraw?.length - 1]?.status == 'complete' ? "step active" : "step"}>
-                            <span className="circle">3</span>
-                            <span className="label">Complete</span>
-                          </div>
+            <div className="icon">
+              <img className="img-fluid" src={require('../../assets/images/music-wallet1.png')} />
+            </div>
+          </div>
+        </section>
+        <section className="amount-request">
+          <div className="row">
+            {widthdraw[widthdraw?.length - 1]?.amount > 0 && widthdraw[widthdraw?.length - 1]?.status == "pending" ?
+              <div className="col-md-6">
+                <div className="box box-primary">
+                  <div className="balance-container">
+                    <h2>My available balance</h2>
+                    <p>
+                      Your Available balance is calculated according to your royalties and your advance, if you have an active advance.
+                    </p>
+                    <a href="#" className="faq-link">
+                      Find out more on the FAQ
+                    </a>
+                    <div className="payment-status">
+                      <h3>Your payment of € {JSON.stringify(widthdraw[widthdraw?.length - 1]?.amount)} </h3>
+                      <div className="status-steps">
+                        <div className={widthdraw[widthdraw?.length - 1]?.status == 'pending' ? "step active" : "step"}>
+                          <span className="circle">✔</span>
+                          <span className="label">Requested</span>
                         </div>
-                        <p className="payment-info">
-                          You have requested the payment <strong>{widthdraw[widthdraw?.length - 1]?._id}</strong> of € {JSON.stringify(widthdraw[widthdraw?.length - 1]?.amount)} on {moment(widthdraw[widthdraw?.length - 1]?.createdAt).format("DD-MM-YYYY HH:MM:SS")}.
-                          <br />
-                          Your payment request will be confirmed by our team and sent to the payout provider with in 7 days.
-                        </p>
-                        {/* <a href="#" className="transaction-history">
-                          Transaction history & invoices
-                        </a> */}
+                        <div className={widthdraw[widthdraw?.length - 1]?.status == 'active' ? "step active" : "step"}>
+                          <span className="circle">2</span>
+                          <span className="label">Processed</span>
+                        </div>
+                        <div className={widthdraw[widthdraw?.length - 1]?.status == 'complete' ? "step active" : "step"}>
+                          <span className="circle">3</span>
+                          <span className="label">Complete</span>
+                        </div>
                       </div>
+                      <p className="payment-info">
+                        You have requested the payment <strong>{widthdraw[widthdraw?.length - 1]?._id}</strong> of € {JSON.stringify(widthdraw[widthdraw?.length - 1]?.amount)} on {moment(widthdraw[widthdraw?.length - 1]?.createdAt).format("DD-MM-YYYY HH:MM:SS")}.
+                        <br />
+                        Your payment request will be confirmed by our team and sent to the payout provider with in 7 days.
+                      </p>
                     </div>
                   </div>
-                </div>
-                :
-                <div className="col-lg-5 col-12">
-                  <div className="dash-detail dash-detail-two amount-form">
-                    <div className="amount-request-heading">
-                      <h3 className="title">Send Amount Request</h3>
-                    </div>
-                    <div className="form-group">
-                      <label for="exampleInputEmail1">Amount *</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="amount"
-                        placeholder="Enter Amount"
-                        onChange={(e) => setAmount(e.target.value)}
-                      />
-                    </div>
-                    <div className="submit-btn">
-                      <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
-                    </div>
-                  </div>
-                </div>
-              }
-
-              <div className="col-lg-7 col-12">
-                <div className="dash-detail dash-detail-two">
-                  <DataTable
-                    columns={columns}
-                    rows={withdrawalRequest}
-                    height="500"
-                    columnNo={5}
-                  // width={300}
-                  />
                 </div>
               </div>
-            </div>
-          </section>
+              :
+              <div className="col-lg-5 col-12">
+                <div className="dash-detail dash-detail-two amount-form">
+                  <div className="amount-request-heading">
+                    <h3 className="title">Send Amount Request</h3>
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleInputEmail1">Amount *</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="amount"
+                      placeholder="Enter Amount"
+                      onChange={(e) => setAmount(e.target.value)}
+                    />
+                  </div>
+                  <div className="submit-btn">
+                    <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
+                  </div>
+                </div>
+              </div>
+            }
 
-        </div>
+            <div className="col-lg-7 col-12">
+              <div className="dash-detail dash-detail-two">
+                <DataTable
+                  columns={columns}
+                  rows={withdrawalRequest}
+                  height="500"
+                  columnNo={5}
+                // width={300}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
-  )
+  </div>
+)
 }

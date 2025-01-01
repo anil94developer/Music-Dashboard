@@ -8,11 +8,13 @@ import MainStepController from '../../Controllers/One-release-controller/MainSte
 import { base, domainUrl } from '../../Constants/Data.constant';
 import { postData } from '../../Services/Ops';
 import Swal from 'sweetalert2';
+import { useUserProfile } from '../../Context/UserProfileContext';
 export const ReleaseDetails = () => {
   const location = useLocation();
   const releaseId = location.state?.releaseId;
   const navigate = useNavigate();
   const { myRelease, setMyRelease, fetchReleaseDetails, } = MainStepController();
+  const { userProfile, getPermissoin, getProfile } = useUserProfile()
   useEffect(() => {
     fetchReleaseDetails(releaseId)
   }, [])
@@ -23,8 +25,8 @@ export const ReleaseDetails = () => {
   }
   const changeStatus=async(status)=>{
     let body={
-      releaseId:releaseId,
-      status:status
+      id : releaseId,
+      status: status
     }
     try{
       let result= await postData(base.releaseChangeStatus,body)
@@ -172,8 +174,8 @@ export const ReleaseDetails = () => {
                 </div>
               </div>
             </div>
-
             <h2>{myRelease.status}</h2>
+            {userProfile?.role == "admin" &&
              <div className="submit-btn text-center my-4">
                 <button type="submit" className="btn btn-success" onClick={()=>{
                   changeStatus("approve")
@@ -185,6 +187,7 @@ export const ReleaseDetails = () => {
                   changeStatus("pending")
                 }}>Pending </button>
             </div>
+            }
           </section>
         </div>
       </div>

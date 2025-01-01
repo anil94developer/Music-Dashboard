@@ -33,7 +33,7 @@ const OneReleaseController = (props) => {
       if (result.status === true) {
         arrRelease = Array.isArray(result.data)
           ? result.data
-          .filter((item) => item.status == 'submit') 
+          .filter((item) => item.status == 'submit' ||  item.status == 'approve' ||  item.status == 'reject') 
           .map((item, index) => ({
             _id: item._id,
             id: index + 1,
@@ -55,7 +55,7 @@ const OneReleaseController = (props) => {
       if (result.status === true) {
         arrRelease = Array.isArray(result.data)
           ? result.data
-            .filter((item) => item.status == 'submit') // Filter items with status 'pending'
+            .filter((item) => item.status != 'Pending') // Filter items with status 'pending'
             .map((item, index) => ({
               _id: item._id,
               id: index + 1,
@@ -94,7 +94,7 @@ const OneReleaseController = (props) => {
         if (result.status === true) {
           arrRelease = Array.isArray(result.data)
             ? result.data
-              .filter((item) => item.status == 'done') // Filter items with status 'pending'
+              .filter((item) => item.status != 'pending') // Filter items with status 'pending'
               .map((item, index) => ({
                 _id: item._id,
                 id: index + 1,
