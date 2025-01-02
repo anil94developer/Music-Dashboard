@@ -21,7 +21,7 @@ export default function PaymentOperations() {
   const [withdrawalRequest, setWithdrawalRequest] = useState([]);
 
   useEffect(() => {
-    // getWidthdrawal()
+    getWidthdrawal()
     getProfile()
   }, [])
   const getProfile = async () => {
@@ -67,8 +67,9 @@ export default function PaymentOperations() {
   }
   const getWidthdrawal = async () => {
     let result = await getData(base.getWithdraw);
-    console.log(result)
-    setWidthdraw(result.data)
+    // console.log("setWidthdraw"result)
+    setWidthdraw(result?.data)
+
     const resultList = Array.isArray(result?.data)
       ? result.data
         .map((item, index) => ({
@@ -107,8 +108,9 @@ return (
         <section className="amount-request">
           <div className="row">
             {widthdraw[widthdraw?.length - 1]?.amount > 0 && widthdraw[widthdraw?.length - 1]?.status == "pending" ?
-              <div className="col-md-6">
-                <div className="box box-primary">
+              <div className="col-lg-5 col-12">
+                 <div className="dash-detail dash-detail-two amount-form">
+                <div className="">
                   <div className="balance-container">
                     <h2>My available balance</h2>
                     <p>
@@ -140,6 +142,7 @@ return (
                       </p>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
               :

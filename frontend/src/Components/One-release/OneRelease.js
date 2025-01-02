@@ -40,10 +40,10 @@ return (
               <input className="form-check-input" type="radio" name="type" id="type" value="Audio" checked="true" onChange={(e) => setType(e.target.value)}/>
               <label className="form-check-label" for="inlineRadio1">Audio</label>
             </div>
-            <div className="form-check form-check-inline">
+            {/* <div className="form-check form-check-inline">
               <input className="form-check-input" type="radio" name="type" id="type" value="Video" onChange={(e) => setType(e.target.value)}/>
               <label className="form-check-label" for="inlineRadio2">Video</label>
-            </div>
+            </div> */}
             <div className="form-check form-check-inline">
               <input className="form-check-input" type="radio" name="type" id="type" value="Ringtone" onChange={(e) => setType(e.target.value)}/>
               <label className="form-check-label" for="inlineRadio3">Ringtone</label>
