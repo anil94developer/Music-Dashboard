@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom"; 
 import LoginController from '../../Controllers/Login-controller/LoginController';
 export const Login = () => {
 const navigate = useNavigate();
@@ -73,7 +73,7 @@ return (
               <p className="text-danger">{errors.password}</p>
               }
             </div>
-            <div className="row">
+            <div className="d-flex justify-content-between align-items-center">
               <div className="col-xs-4">
                 {!isLoading ? (
                 <button className="btn btn-primary" type="submit">
@@ -84,6 +84,9 @@ return (
                 Loading...
                 </button>
                 )}
+              </div>
+              <div>
+                <Link to="/forgetpassword" className="btn btn-primary">Forget Password</Link>
               </div>
             </div>
           </form>

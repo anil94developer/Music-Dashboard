@@ -35,6 +35,7 @@ import { base } from './Constants/Data.constant';
 import CompanyManagement from "./Components/CompanyMangement/CompanyMangement";
 import AddCompany from "./Components/CompanyMangement/AddCompany";
 import CompanyDetails from "./Components/CompanyMangement/CompanyDetails";
+import { ForgetPassword } from './Components/Login/ForgetPassword';
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
   const adminRoute = () => {
     return <Routes>
       <Route path="/" element={<Login />}></Route>
+      <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
       <Route path="/Dashboard" element={<Dashboard />}></Route>
       <Route path="/CompanyManagement" element={<CompanyManagement />}></Route>
       <Route path="/CompanyDetails" element={<CompanyDetails />}></Route>
@@ -74,6 +76,7 @@ function App() {
   const companyRoute = () => {
     return <Routes>
       <Route path="/" element={<Login />}></Route>
+      <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
       <Route path="/Dashboard" element={<Dashboard />}></Route>
       <Route path="/One Release" element={<OneRelease />}></Route>
       <Route path="/main-step" element={<MainStep />}></Route>
@@ -105,6 +108,7 @@ function App() {
   const employeeRoute = () => {
     return <Routes>
       <Route path="/" element={<Login />}></Route>
+      <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
       <Route path="/Dashboard" element={<Dashboard />}></Route>
       <Route path="/One Release" element={<OneRelease />}></Route>
       <Route path="/main-step" element={<MainStep />}></Route>

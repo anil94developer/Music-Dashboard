@@ -5,156 +5,301 @@ import { base } from "../../Constants/Data.constant";
 import { useUserProfile } from "../../Context/UserProfileContext";
 import { getData, postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
+import { SideBar } from "../Common/SideBar";
 // import "./UserAccessForm.css";
 
 function AddCompany(props) {
-    const  navigate  = useNavigate()
+    const navigate = useNavigate()
     const { userProfile } = useUserProfile()
+    const [form, setForm] = useState({
+        email: "",
+        noofLabel: "",
+        role: "company",
+        panNo: "",
+        aadharNo: "",
+        companyName: "",
+        clientNumber: "",
+        mainEmail: "",
+        royaltiesEmail: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        postalAddress: "",
+        postalCode: "",
+        city: "",
+        country: "",
+        timeZone: "",
+        language: "",
+    });
 
-    const [userPermission, setUserPermission] = useState([
-        { key: 'email', label: "Email", value: "", disable: false, type: 'text' },
-        { key: 'password', label: "Password", value: "", disable: false, type: 'password' },
-        { key: 'phone', label: "Phone Number", value: "", disable: false, type: 'number' },
-        { key: 'name', label: "Name", value: "", disable: false, type: 'text' },
-        { key: 'noOfLabel', label: "Number Of Label", value: "", disable: false, type: 'number' },
-        { key: 'role', label: "Role", value: "company", disable: true, type: 'text' },
-        { key: 'panNO', label: "Pan Card Number", value: "", disable: false, type: 'text' },
-        { key: 'aadharNo', label: "Aadhar  Number", value: "", disable: false, type: 'number' },
-
-    ]);
-    // Handle input change
-    const handleInputChange = (index, newValue) => {
-        setUserPermission((prev) =>
-            prev.map((item, idx) =>
-                idx === index ? { ...item, value: newValue } : item
-            )
-        );
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
     };
 
-    // Handle form submission
-    const handleSubmit = async () => {
-        const requestBody = userPermission.reduce((acc, item) => {
-            acc[item.key] = item.value;
-            return acc;
-        }, {});
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
 
-        try { 
-            const result = await postData(base.addCompany, requestBody);
-            console.log("Response:", result);
-            if (result.data.status == true) { 
+        try {
+            const result = await postData(base.addCompany, form);
+            if (result.data?.status === true) {
                 Swal.fire({
-                    icon: 'success',              // Use "error" icon for unauthorized message
-                    title: 'Success !!',    // Set your custom title here
-                    text: result.message, // Custom message (optional)
-                  });
-                navigate("/CompanyManagement");
-                
-              } else {
-                Swal.fire({
-                  icon: 'error',              // Use "error" icon for unauthorized message
-                  title: 'Error !!',    // Set your custom title here
-                  text: result.message, // Custom message (optional)
+                    icon: "success",
+                    title: "Success",
+                    text: result.message,
                 });
-                // Swal.fire("Error", result.message, result.message); 
-              }
+                navigate("/CompanyManagement");
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: result.message || "An error occurred.",
+                });
+            }
         } catch (error) {
             console.error("Error sending data:", error);
+            Swal.fire("Error", "An unexpected error occurred. Please try again.", "error");
         }
     };
-    // const handleSubmit = async () => {
-    //     const payload = {
-    //         ...userPermission,
-    //         menuPermission,
-    //         ...otherPermission,
-    //     };
-
-    //     console.log("payload=======", payload)
-    //     try {
-    //         const result = await postData(base.addPermission, payload);
-    //         if (result?.data?.status === true) {
-    //             Swal.fire("Success", result.data.message, "success");
-    //             navigate("user access")
-    //         } else {
-
-    //             Swal.fire("Error", result.message, "error");
-    //         }
-    //     } catch (error) {
-    //         Swal.fire("Error", "An error occurred during submission", "error");
-    //         console.error("Submission error:", error);
-    //     }
-    // };
 
     return (
         <div>
-            <Nav />
-            <div className="content-wrapper">
-                <section className="content">
-                    <div className="form-container">
-                        <h2>Add Master Account</h2>
-                        <div className="form-section">
-                            <div className="row">
-                                {userPermission.map((item, index) => (
-                                    <div className="col-md-6" key={index}>
+            <SideBar />
+            <div className="main-cotent">
+                <Nav />
+                <div className="content-main">
+                    <section className="page-heading">
+                        <h1>Add Company</h1>
+                    </section>
+                    <section className="content">
+                        <form className="profile-form" onSubmit={handleSubmit}>
+                            <div className="dash-detail dash-detail-two">
+                                <div className="row">
+
+
+                                    {/* Company Name */}
+                                    <div className="col-lg-3 col-md-4 col-12">
                                         <div className="form-group">
-                                            <label>{item.label}:</label>
+                                            <label for="exampleInputEmail1"> Company Name</label>
                                             <input
-                                                disabled={item.disable} // Corrected attribute
-                                                type={item.type}
-                                                secure={item.secure}
+                                                type="text"
                                                 className="form-control"
-                                                value={item.value}
-                                                onChange={(e) => handleInputChange(index, e.target.value)}
+                                                placeholder="Enter company name"
+                                                name="companyName"
+                                                value={form.companyName}
+                                                onChange={handleChange}
+                                                required
                                             />
                                         </div>
                                     </div>
-                                ))}
+                                    
+                                    {/* Main Email */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Main Email Address</label> 
+                                            <input
+                                                type="email"
+                                                className="form-control"
+                                                placeholder="Enter main email address"
+                                                name="email"
+                                                value={form.email}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Royalties Email */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Royalties Email Address</label>
+                                            <input
+                                                type="royaltiesEmail"
+                                                className="form-control"
+                                                placeholder="Enter royalties email address"
+                                                name="royaltiesEmail"
+                                                value={form.royaltiesEmail}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
 
-                                {/* <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label>Email: </label>
-                                        <input
-                                            type="email"
-                                            className="form-control"
-                                            value={userPermission.email}
-                                            onChange={(e) => setUserPermission((prev) => ({ ...prev, email: e.target.value }))}
-                                        />
+                                    {/* First Name */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >First Name</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter first name"
+                                                name="firstName"
+                                                value={form.firstName}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Last Name */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Last Name</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter last name"
+                                                name="lastName"
+                                                value={form.lastName}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Phone Number */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Phone Number</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter phone number"
+                                                name="phoneNumber"
+                                                value={form.phoneNumber}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Pan Card Number */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Pan Card</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Pan Card Number"
+                                                name="panNo"
+                                                value={form.panNo}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Aadhar Card  number*/}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Pan Card</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Aadhar Card Number"
+                                                name="aadharNo"
+                                                value={form.aadharNo}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Postal Address */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Postal Address</label>
+                                            <textarea
+                                                className="form-control"
+                                                placeholder="Enter postal address"
+                                                name="postalAddress"
+                                                value={form.postalAddress}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Postal Code */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Postal Code</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter postal code"
+                                                name="postalCode"
+                                                value={form.postalCode}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* City */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >City</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter city"
+                                                name="city"
+                                                value={form.city}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Country */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Country</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter country"
+                                                name="country"
+                                                value={form.country}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Time Zone */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Default Time Zone</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter default time zone"
+                                                name="timeZone"
+                                                value={form.timeZone}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Language */}
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >Default Language</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter default language"
+                                                name="language"
+                                                value={form.language}
+                                                onChange={handleChange}
+                                                
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Submit Button */}
+                                    <div className="submit-btn">
+                                        <button type="submit" className="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label>Password: </label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            value={userPermission.password}
-                                            onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
-                                        />
-                                    </div>
-                                </div> 
-                                <div className="col-md-6">
-                                    <div className="form-group">
-                                        <label>No Of Label: </label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            value={userPermission.noOfLabel}
-                                            onChange={(e) => setUserPermission((prev) => ({ ...prev, noOfLabel: e.target.value }))}
-                                        />
-                                    </div>
-                                </div> */}
-
                             </div>
-                        </div>
-                        <br></br>
-                        <button
-                            onClick={() => [handleSubmit()]}
-                            className="btn btn-primary btn-block btn-flat"
-                            type="submit"
-                        >
-                            Submit
-                        </button>
-                    </div>
-                </section>
+                        </form>
+                    </section>
+                </div>
             </div>
         </div>
     );
