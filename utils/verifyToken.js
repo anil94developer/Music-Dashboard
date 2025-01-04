@@ -19,13 +19,13 @@ const verifyJWT = (req, res, next) => {
             complete: true,
           });
           req.doc = decoded.payload;
-          console.log(req.doc);
+          // console.log(req.doc);
           next();
         }
       }
     );
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     // throw(e)
     return R(res, false, "Unauthorized !!", e, 404);
   }

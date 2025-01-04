@@ -11,7 +11,7 @@ wallet.transactions = async (req, res, next) => {
     data["userId"] = req.doc.userId;
     data["status"] = 'pending';
 
-    console.log(data);
+    // console.log(data);
     if (!data) {
       return R(res, false, "Amount is required", "", 400);
     }
@@ -46,7 +46,7 @@ wallet.listTransactions = async (req, res, next) => {
     }
     return R(res, true, "Transactions fetched successfully", transactions, 200);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return R(res, false, err.message, "", 500);
   }
 }
@@ -58,7 +58,7 @@ wallet.withdrowList = async (req, res, next) => {
     }
     return R(res, true, "Transactions fetched successfully", transactions, 200);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return R(res, false, err.message, "", 500);
   }
 }
@@ -71,7 +71,7 @@ wallet.getWithdrawalbyId =async(req, res, next) => {
     }
     return R(res, true, "Transactions fetched successfully", transactions, 200);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return R(res, false, err.message, "", 500);
   }
 }
@@ -80,7 +80,7 @@ wallet.getWithdrawalbyId =async(req, res, next) => {
 wallet.withdrawStatus = async (req, res, next) => {
   try {
     const { id, status } = req.body;
-    console.log(id, status);
+    // console.log(id, status);
     const update = await withdrawalModel.updateStatus(id, status);
 
     if (!update) {
@@ -102,7 +102,7 @@ wallet.getTranscations = async (req, res, next) => {
     }
     return R(res, true, "Transactions fetched successfully", transactions, 200);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return R(res, false, err.message, "", 500);
   }
 }

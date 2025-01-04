@@ -37,6 +37,8 @@ const usersSchema = mongoose.Schema(
     {
         name: { type: String },
         email: { type: String, required: true, unique: true },
+        otp: { type: String },
+        otpExpiresAt: { type: Date },
         phone: { type: Number },
         password: { type: String, required: true },
         role: { type: String, default: 'company' },
@@ -102,13 +104,81 @@ authModel.login = async (key, email) => {
 authModel.signUp = async (data) => {
     const Login = await db.connectDb("users", usersSchema);
     let insData = await Login.insertMany(data);
-    console.log(insData);
+    // console.log(insData);
     if (insData.length > 0) {
         return insData[0];
     } else {
         return false
     }
 };
+
+authModel.forgetPassword = async (key, email) => {
+
+    let check = {};
+    check[key] = email;
+    const result = await db.connectDb("users", usersSchema);
+    let val = await result.findOne(check, { __v: 0 });
+    if (!val) {
+        return false
+    }
+    return val;
+};
+
+
+authModel.verifyOtp = async (key, email, otp) => {
+    try {
+      let query = {};
+      query[key] = email;
+      const result = await db.connectDb("users", usersSchema);
+      const user = await result.findOne(query, { __v: 0 });
+      if (!user) {
+        return { success: false, message: "User not found." };
+      }
+      if (user.otp !== otp) {
+        return { success: false, message: "Invalid OTP." };
+      }
+      const currentTime = new Date();
+      if (currentTime > user.otpExpiresAt) {
+        return { success: false, message: "OTP has expired." };
+      }
+      return { success: true, message: "OTP verified successfully." };
+    } catch (error) {
+      return { success: false, message: "An error occurred while verifying OTP." };
+    }
+};
+  
+
+authModel.updateOtp = async (key, email , otp ,expiresAt) => {
+    const result = await db.connectDb("users", usersSchema);
+    const updatedUser = await result.findOneAndUpdate(
+        { email }, // Query by email
+        { $set: { otp, otpExpiresAt: expiresAt } }, // Update OTP and expiry time
+        { new: true, projection: { __v: 0 } } // Return the updated document without the __v field
+      );
+  
+      // Check if the user was found and updated
+      if (!updatedUser) {
+        return false
+      }
+      return true;
+};
+
+authModel.setPassword = async (key, email , newPassword) => {
+
+    const result = await db.connectDb("users", usersSchema);
+    const updatedUser = await result.findOneAndUpdate(
+        { email }, // Query by email
+        { $set: { password : newPassword } }, // Update OTP and expiry time
+        { new: true, projection: { __v: 0 } } // Return the updated document without the __v field
+      );
+  
+      // Check if the user was found and updated
+      if (!updatedUser) {
+        return false
+      }
+      return true;
+};
+
 authModel.addCompany = async (data) => {
     const result = await db.connectDb("users", usersSchema);
     let insData = await result.insertMany(data);
@@ -129,7 +199,7 @@ authModel.changePassword = async (userId, oldpass, pass) => {
         const Login = await db.connectDb("users", usersSchema);
 
         const user = await Login.findOne({ _id: userId });
-        console.log("Fetched User:", user);
+        // console.log("Fetched User:", user);
 
         if (!user) {
             return false;
@@ -137,7 +207,7 @@ authModel.changePassword = async (userId, oldpass, pass) => {
 
         // Compare the old password with the stored one
         const isOldPassValid = await bcrypt.compare(oldpass, user.password);
-        console.log("Is Old Password Valid:", isOldPassValid);
+        // console.log("Is Old Password Valid:", isOldPassValid);
 
         // If the old password is invalid, return false
         if (isOldPassValid === false) {
@@ -146,7 +216,7 @@ authModel.changePassword = async (userId, oldpass, pass) => {
 
         // Update the password with the new one
         const hashedPassword = await bcrypt.hash(pass, 10);
-        console.log("Hashed New Password:", hashedPassword);
+        // console.log("Hashed New Password:", hashedPassword);
 
         const passData = await Login.updateOne(
             { _id: userId },
@@ -154,12 +224,12 @@ authModel.changePassword = async (userId, oldpass, pass) => {
             { runValidators: true }
         );
 
-        console.log("Password Update Result:", passData);
+        // console.log("Password Update Result:", passData);
 
         // Return true if password was updated, else false
         return passData.modifiedCount > 0;
     } catch (error) {
-        console.error("Error changing password:", error);
+        // console.error("Error changing password:", error);
         return false;
     }
 };
@@ -174,7 +244,7 @@ authModel.updateProfile = async (id, data) => {
         return updateData;
     }
     catch (err) {
-        console.error("Error updating profile:", err);
+        // console.error("Error updating profile:", err);
         return false;
     }
 }
@@ -190,7 +260,7 @@ authModel.transaction = async (data) => {
             { $inc: { wallet: - amount } } // Deduct directly
         );
 
-        console.log("Transaction result:", updateData);
+        // console.log("Transaction result:", updateData);
 
         // Check if any document was matched and modified
         // if (updateData.matchedCount < 99) {
@@ -200,7 +270,7 @@ authModel.transaction = async (data) => {
 
         return true; // Transaction successful
     } catch (err) {
-        console.error("Error in transaction:", err.message);
+        // console.error("Error in transaction:", err.message);
         return false; // Return false on error
     }
 };
@@ -208,7 +278,7 @@ authModel.transaction = async (data) => {
 authModel.permission = async (data) => {
     const result = await db.connectDb("users", usersSchema);
     try {
-        console.log(data.email);
+        // console.log(data.email);
         let val = await result.findOne({ email: data.email });
         if (val) {
             return false;
@@ -223,11 +293,11 @@ authModel.permission = async (data) => {
             role: data.role,
 
         });
-        console.log("permission permission permission ======>>>", user)
+        // console.log("permission permission permission ======>>>", user)
 
         return user;
     } catch (err) {
-        console.error("Error in permission:", err.message);
+        // console.error("Error in permission:", err.message);
         return false; // Return false on error
     }
 }
@@ -242,7 +312,7 @@ authModel.is_deleted = async (userId, status) => {
         );
         return updateData;
     } catch (err) {
-        console.error("Error in is_deleted:", err.message);
+        // console.error("Error in is_deleted:", err.message);
         return false; // Return false on error
     }
 }

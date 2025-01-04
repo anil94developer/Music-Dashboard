@@ -16,7 +16,7 @@ const artistSchema = mongoose.Schema({
 artistModel.addArtist = async (data) => {
     const result = await db.connectDb("artist", artistSchema);
     let insData = await result.insertMany(data);
-    console.log(insData);
+    // console.log(insData);
     if (insData.length > 0) {
         return insData[0];
     } else {

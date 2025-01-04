@@ -7,7 +7,7 @@ const release = {};
 
 release.addOneRelease = async (req, res, next) => {
     const { type,title } = req.body
-    console.log("userId=======",req.doc.userId); 
+    // console.log("userId=======",req.doc.userId); 
     
     try { 
         const newReq = {
@@ -15,7 +15,7 @@ release.addOneRelease = async (req, res, next) => {
             title: title,
             type: type
         }
-        console.error(newReq)
+        // console.error(newReq)
         const result = await releaseModel.addOneRelease(newReq) 
         return R(res, true, "Add Successfully!!", result, 200)
     } catch (err) { 
@@ -25,7 +25,7 @@ release.addOneRelease = async (req, res, next) => {
 release.addOneStepRelease = async (req, res, next) => {
     const  body  = req.body 
     try {  
-        console.log("bodyData====",body);
+        // console.log("bodyData====",body);
         const result = await releaseModel.addOneStepRelease(body) 
         return R(res, true, "Update Successfully!!", result, 200)
     } catch (err) { 
@@ -41,7 +41,7 @@ release.addTwoStepRelease = async (req, res, next) => {
         if (!id || !files || files.length === 0) {
             return res.status(400).json({ status: false, message: "Invalid request. ID or files are missing." });
         }
-        console.log("File data:", JSON.stringify(files));
+        // console.log("File data:", JSON.stringify(files));
         // Extract file metadata
         const fileDataSet = files.map((file) => ({
             fileName: file.originalname,
@@ -53,7 +53,7 @@ release.addTwoStepRelease = async (req, res, next) => {
 
         // Update database
         const result = await releaseModel.addTwoStepRelease(id, fileDataSet);
-        console.log("Database update result:", result);
+        // console.log("Database update result:", result);
 
         if (result) {
             res.status(200).json({ status: true, message: "Files uploaded successfully!" });
@@ -61,7 +61,7 @@ release.addTwoStepRelease = async (req, res, next) => {
             res.status(400).json({ status: false, message: "Failed to update release." });
         }
     } catch (error) {
-        console.error("File upload error:", error);
+        // console.error("File upload error:", error);
         res.status(500).json({ status: false, message: "File upload failed", error });
     }
 };
@@ -95,6 +95,8 @@ release.addTwoStepRelease = async (req, res, next) => {
 //     //     next(err)
 //     // }
 // };
+
+
 release.addThreeStepRelease = async (req, res, next) => {
     const  body  = req.body 
     try {  

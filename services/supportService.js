@@ -5,7 +5,7 @@ const support = {};
 support.addData = async (req, res, next) => {
   try {
     let data = req.body;
-    console.log(data);
+    // console.log(data);
     if (!data) {
       return R(res, false, "Data is required", {}, 400);
     }

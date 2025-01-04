@@ -35,17 +35,17 @@ router.post('/step-one-release', verifyToken, upload.single('coverImage'), async
       // if (req.file) {
       //   req.body.coverImage = req.file.path; // Set file path in req.body for access in service
       // }
-      console.log("File received:", req.file);
-      console.log("Body received:", req.body);
+      // console.log("File received:", req.file);
+      // console.log("Body received:", req.body);
     
       if (req.file) {
         req.body.coverImage = req.file.path;
       }  
-      console.log("req.body====", req.body);
+      // console.log("req.body====", req.body);
       // Call the release service function
       await releaseService.addOneStepRelease(req, res, next);
     } catch (error) {
-      console.error("Error in /step-one-release:", error);
+      // console.error("Error in /step-one-release:", error);
       res.status(500).json({ status: false, message: "Server error" });
     }
   });

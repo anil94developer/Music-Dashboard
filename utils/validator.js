@@ -20,9 +20,9 @@ validators.checkTypeNew = async (address) => {
 
 validators.emailValidation = async (address) => {
     if (address == "") {
-        console.log("Field empty. Enter a valid email!");
+        // console.log("Field empty. Enter a valid email!");
     } else {
-        console.log(address);
+        // console.log(address);
         let regexEmail = /^[\w.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
         // const isEmailValid = await validateEmail(address);
         if (!address.match(regexEmail)) {
@@ -35,7 +35,7 @@ validators.emailValidation = async (address) => {
 };
 validators.passwordValidation = async (pass) => {
     if (pass == "") {
-        console.log("Field empty. Enter a valid password!");
+        // console.log("Field empty. Enter a valid password!");
     } else {
         let regexPass =
             /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;

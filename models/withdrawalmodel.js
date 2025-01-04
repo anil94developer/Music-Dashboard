@@ -28,10 +28,10 @@ withdrawalModel.add = async (data) => {
     try {
         const newWithdrawal = new withdrawalModel(data);
         await newWithdrawal.save();
-        console.log("this is what",newWithdrawal)
+        // console.log("this is what",newWithdrawal)
         return newWithdrawal;
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         return false;
     }
 }
@@ -39,10 +39,10 @@ withdrawalModel.getWithdrawalbyId = async (userId) => {
     const result = await db.connectDb("withdrawal", withdrawalSchema); 
     try {
         const transactions = await withdrawalModel.find({ userId:userId }); // Retrieve all transactions for the given user
-        console.log("Transactions retrieved successfully:", transactions);
+        // console.log("Transactions retrieved successfully:", transactions);
         return transactions; // Return the retrieved transactions
     } catch (error) {
-        console.error("Error retrieving transactions:", error.message);
+        // console.error("Error retrieving transactions:", error.message);
         return false; // Return false on error
     }
 };
@@ -54,7 +54,7 @@ withdrawalModel.withdrawList = async () => {
         const transactions = await result.find(); // Fetch all transactions
 
         if (!transactions || transactions.length === 0) {
-            console.log("No transactions found");
+            // console.log("No transactions found");
             return false;
         }
 
@@ -71,13 +71,13 @@ withdrawalModel.withdrawList = async () => {
 
         return updatedTransactions; // Return the transactions with user details
     } catch (error) {
-        console.error("Error retrieving transactions:", error.message);
+        // console.error("Error retrieving transactions:", error.message);
         return false;
     }
 };
 
 withdrawalModel.updateStatus = async (id, status) => {
-    console.log(id,status);
+    // console.log(id,status);
     const result = await db.connectDb("withdrawal", withdrawalSchema);
     try {
         let updateData = await result.updateOne(
@@ -86,7 +86,7 @@ withdrawalModel.updateStatus = async (id, status) => {
         );
         return updateData;
     } catch (err) {
-        console.error("Error in is_deleted:", err.message);
+        // console.error("Error in is_deleted:", err.message);
         return false; // Return false on error
     }
 }

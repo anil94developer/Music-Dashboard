@@ -7,8 +7,16 @@ const validateInput = require("../helper/emailmobileVal")
 const sendOtpEmail = require("../utils/Sendgrid")
 const IP = require('ip');
 const authModel = require("../models/authmodels");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
-
+const transporter = nodemailer.createTransport({
+  service: "Gmail", // Replace with your email service
+  auth: {
+    user: process.env.EMAIL_USER, // Your email from environment variables
+    pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
+  },
+});
 
 // auth.addUsers = async (req, res, next) => {
 //     try {
@@ -119,7 +127,7 @@ auth.login = async (req, res, next) => {
     try {
         let { email, password } = req.body
         const ipAddress = IP.address();
-        console.log(ipAddress)
+        // console.log(ipAddress)
         let val = await authModel.login("email", email);
         if (Object.values(val).length > 0 && !val?.is_active) {
             return R(res, false, "User not active! contact to admin!! ", {}, 200)
@@ -156,6 +164,7 @@ auth.login = async (req, res, next) => {
     }
 
 };
+
 auth.signUp = async (req, res, next) => {
     const { email, phone, name, password, role, dob } = req.body
     const now = new Date();
@@ -178,7 +187,7 @@ auth.signUp = async (req, res, next) => {
             ip_address: ipAddress,
             create_at: futureTimeInMillis,
             is_active: 1,
-            clientNumber:new Date().getTime()
+            clientNumber: new Date().getTime()
         }
         const register = await authModel.signUp(newUser)
         const userData = {
@@ -211,6 +220,7 @@ auth.getUsers = async (req, res, next) => {
         next(error)
     }
 };
+
 auth.passwordChange = async (req, res, next) => {
     const { newPassword, oldPassword } = req.body
 
@@ -225,6 +235,102 @@ auth.passwordChange = async (req, res, next) => {
         next(error)
     }
 };
+
+auth.setPassword = async (req, res, next) => {
+    const {email , newPassword } = req.body
+
+    try {
+        const result = await authModel.setPassword("email",email,newPassword);
+        if (!result) {
+            return R(res, false, "failed to set Password", "", 400)
+        }
+        return R(res, true, "Update successfully!!","", 200)
+    } catch (error) {
+        next(error)
+    }
+};
+
+
+
+auth.forgetPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    // Validate email
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      return res.status(400).json({ success: false, message: "Invalid email address." });
+    }
+
+    // Check user existence
+    const user = await authModel.forgetPassword("email", email);
+
+    if (!user || Object.values(user).length === 0) {
+      return res.status(404).json({ success: false, message: "Email not found!" });
+    }
+
+    if (!user.is_active) {
+      return res.status(400).json({ success: false, message: "User not active! Contact admin." });
+    }
+
+    if (user.is_deleted) {
+      return res.status(400).json({ success: false, message: "User is deleted!" });
+    }
+
+    // Generate OTP
+    const otp = crypto.randomInt(100000, 999999).toString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // Valid for 10 minutes
+
+    // Update OTP in the database
+    const otpUpdated = await authModel.updateOtp("email", email, otp, expiresAt);
+
+    if (!otpUpdated) {
+      return res.status(500).json({ success: false, message: "Failed to update OTP." });
+    }
+
+    // Email options
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Password Reset OTP",
+      text: `Your OTP for password reset is: ${otp}. It is valid for 10 minutes.`,
+    };
+
+    // Send email
+    try {
+      const emailResponse = await transporter.sendMail(mailOptions);
+      console.log("Email sent:", emailResponse);
+      res.status(200).json({ success: true, message: "OTP sent to your email." });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      res.status(500).json({ success: false, message: "Failed to send OTP. Please try again." });
+    }
+  } catch (error) {
+    console.error("Error in forgetPassword:", error);
+    next(error);
+  }
+};
+
+auth.verifyOtp = async (req, res, next) => {
+  try {
+    const { email , Otp } = req.body;
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      return res.status(400).json({ success: false, message: "Invalid email address." });
+    }
+    const user = await authModel.verifyOtp("email", email ,Otp);
+    if (!user.success) {
+        return res.status(400).json({ success: false, message: "Invalid OTP." });
+    }
+    else {
+        return res.status(200).json({ success: true, message: "OTP is valid."})
+    }
+
+  } catch (error) {
+    console.error("failed to verify otp", error);
+    next(error);
+  }
+};
+
+
 auth.profileUpdate = async (req, res, next) => {
     try {
         const id = req.doc.userId;
@@ -233,7 +339,7 @@ auth.profileUpdate = async (req, res, next) => {
         }
 
         let data = req.body;
-        console.log(data);
+        // console.log(data);
         if (!data) {
             return R(res, false, "Data is required", {}, 400);
         }
@@ -248,13 +354,13 @@ auth.profileUpdate = async (req, res, next) => {
 
 auth.is_deleted = async (req, res, next) => {
     try {
-        const { userId ,status} = req.body;
+        const { userId, status } = req.body;
 
         if (!userId) {
             return R(res, false, "User ID is required", "", 400)
         }
 
-        const update = await authModel.is_deleted(userId,status);
+        const update = await authModel.is_deleted(userId, status);
 
         if (!update) {
             return R(res, false, "User not found", "", 404)
@@ -267,7 +373,7 @@ auth.is_deleted = async (req, res, next) => {
     }
 }
 
-auth.userList = async (req, res, next) => { 
+auth.userList = async (req, res, next) => {
     try {
         const get = await authModel.userList()
         if (!get) {

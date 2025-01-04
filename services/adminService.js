@@ -9,7 +9,7 @@ const R = require("../utils/responseHelper");
 adminS = {}
 
 adminS.login = async (req,res,next) => {
-    console.log("req.",req.body)
+    // console.log("req.",req.body)
     try {
         let {
             emailId,
@@ -75,7 +75,7 @@ adminS.login = async (req,res,next) => {
 
 adminS.forgotPassword = async (req,res,next) => {
     try{
-        console.log("req.body.emailId",req.body)
+        // console.log("req.body.emailId",req.body)
         let val = await authModel.checkAvailablityForAdmin(req.body.emailId);
         if(!val){
             return R(res,false,"No user exist",{},403)
@@ -87,7 +87,7 @@ adminS.forgotPassword = async (req,res,next) => {
                 return R(res,true,`Password changed successfully your new password is: 123456`,{},200)
             }
     }catch(error){
-        console.log("erroroororor",error)
+        // console.log("erroroororor",error)
         next(error)
     }
    

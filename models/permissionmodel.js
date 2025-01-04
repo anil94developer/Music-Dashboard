@@ -57,7 +57,7 @@ permission.addPermission = async (userId, registeredUserId, data) => {
         await user.save();
         return user;
     } catch (err) {
-        console.log("Error connecting to DB", err);
+        // console.log("Error connecting to DB", err);
         return false;
     }
 }
@@ -77,7 +77,7 @@ permission.listPermissions = async (userId) => {
         const data = await Promise.all(
             users.map(async (userPermission) => {
                 const registeredUserId = userPermission.registeredUserId;
-                console.log("Registered UserId:", registeredUserId);
+                // console.log("Registered UserId:", registeredUserId);
 
                 // Fetch user details
                 const userData = await authModel.getUser(registeredUserId);
@@ -93,7 +93,7 @@ permission.listPermissions = async (userId) => {
 
         return data; // Return all permissions with user details
     } catch (err) {
-        console.error("Error connecting to DB:", err.message);
+        // console.error("Error connecting to DB:", err.message);
         return false; // Return false in case of an error
     }
 };
@@ -102,25 +102,25 @@ permission.listPermissions = async (userId) => {
 permission.updatePermission = async (userId, data) => {
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     try {
-        console.log(result,"new data")
+        // console.log(result,"new data")
         const user = await result.findOneAndUpdate({ registeredUserId: userId }, data, { new: true });
         if (!user) {
             return false;
         }
         return user;
     } catch (err) {
-        console.log("Error connecting to DB", err);
+        // console.log("Error connecting to DB", err);
         return false;
     }
 }
 
 permission.profilePermissions = async (userId) => {
-    console.log(userId);
+    // console.log(userId);
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     try {
 
         const user = await permissionModel.findOne({ registeredUserId: new ObjectId(userId) });
-        console.log(user);
+        // console.log(user);
         if (!user) {
             return false;
         }
@@ -128,7 +128,7 @@ permission.profilePermissions = async (userId) => {
         if (!userData) {
             return false;
         }
-        console.log("User>>>>>", userData);
+        // console.log("User>>>>>", userData);
         user["userdetails"] = userData;
 
         const data = {
@@ -139,7 +139,7 @@ permission.profilePermissions = async (userId) => {
         }
         return data;
     } catch (err) {
-        console.log("Error connecting to DB", err);
+        // console.log("Error connecting to DB", err);
         return false;
     }
 }

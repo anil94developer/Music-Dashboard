@@ -16,7 +16,7 @@ collection.connectDb = async (collectionName, schema) => {
                 socketTimeoutMS: 45000,
             })).model(collectionName, schema)
     } catch (err) {
-        console.log((err));
+        // console.log((err));
         let error = new Error("Could not connect to database")
         error.status = 500
         throw error
