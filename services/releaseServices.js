@@ -61,14 +61,14 @@ release.addTwoStepRelease = async (req, res) => {
         //     },
         // ];
 
-        const result = await releaseModel.addTwoStepRelease(id, fileDataSet);
+      //  const result = await releaseModel.addTwoStepRelease(id, fileDataSet);
         // console.log("Database update result:", result);
 
-        if (result) {
-            return res.status(200).json({ status: true, message: "Files uploaded successfully!" });
-        } else {
-            return res.status(400).json({ status: false, message: "Failed to update release." });
-        }
+        // if (result) {
+        //     return res.status(200).json({ status: true, message: "Files uploaded successfully!" });
+        // } else {
+        //     return res.status(400).json({ status: false, message: "Failed to update release." });
+        // }
     } catch (error) {
         // console.error("File upload error:", error);
         res.status(500).json({ status: false, message: "File upload failed", error });

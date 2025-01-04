@@ -21,83 +21,175 @@ const transporter = nodemailer.createTransport({
   },
 });
 auth.addCompany = async (req, res, next) => {
-    const { email, phone, name, role ,panNo,aadharNo ,companyName,
-        mainEmail,
-        royaltiesEmail,
-        firstName,
-        lastName,
-        postalAddress,
-        postalCode,
-        city,
-        country,
-        timeZone,
-        language } = req.body
-    // console.log("newUsernewUsernewUsernewUser",req.body.email)
+  const {
+    aadharNo,
+    city,
+    companyName,
+    country, email,
+    firstName, language,
+    lastName, panNo,
+    phoneNumber, postalAddress,
+    postalCode, role,
+    royaltiesEmail,noOfLabel
+  } = req.body;
 
-    const now = new Date();
-    const futureDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
-    const futureTimeInMillis = futureDate.getTime()
-    const ipAddress = IP.address();
-    try {
-        let isUserExist = await authModel.checkAvailablity(email)
-        if (isUserExist?.length > 0) {
-            return R(res, false, "Email Id already exists!!", {}, 406)
-        }
-        const newPassword = generateRandomPassword(12);
-        const newUser = {
-            email: email,
-            name: name,
-            phone: phone,
-            password: await bcrypt.passwordEncryption(newPassword),
-            noOfLabel: noOfLabel || "",
-            panNo: panNo || "",
-            aadharNo: aadharNo || "",
-            role: role || "company",
-            is_deleted: 0,
-            ip_address: ipAddress || "0.0.0.0",
-            create_at: futureTimeInMillis,
-            is_active: 1,
-            clientNumber: new Date().getTime(),
-            companyName: companyName || "",
-            mainEmail: mainEmail || "",
-            royaltiesEmail: royaltiesEmail || "",
-            firstName: firstName || "",
-            lastName: lastName || "",
-            postalAddress: postalAddress || "",
-            postalCode: postalCode || "",
-            city: city || "",
-            country: country || "",
-            timeZone: timeZone || "",
-            language: language || "",
-        };
-        
-    
-        const register = await authModel.addCompany(newUser)
+  const now = new Date();
+  const futureDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
+  const futureTimeInMillis = futureDate.getTime();
+  const ipAddress = IP.address();
 
-        if(!register){
-            return R(res, false, "Failed to register Company!!", {}, 500)
-        }
-
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: "Password Reset OTP",
-            text: `thanks being part of us . your email for login is ${email} and paswword is ${newPassword} `,
-          };
-      
-          // Send email
-          try {
-            const emailResponse = await transporter.sendMail(mailOptions);
-            console.log("Email sent:", emailResponse);
-            res.status(200).json({ success: true, message: ` Email of id , password is sent to ${email} .` });
-          } catch (error) {
-            console.error("Error sending email:", error);
-            res.status(500).json({ success: false, message: "Failed to  send Email But Account is Created" });
-          }
-    } catch (err) {
-        next(err)
+  try {
+    // Check if email already exists
+    let isUserExist = await authModel.checkAvailablity(email);
+    if (isUserExist?.length > 0) {
+      return res.status(406).json({
+        success: false,
+        message: "Email Id already exists!",
+      });
     }
+
+    const newPassword = generateRandomPassword(12); // Random password generator function
+
+    const newUser = {
+      email,
+      name:firstName + " "+lastName,
+      phone:phoneNumber,
+      password:await bcrypt.passwordEncryption(firstName+"@123!", 12), // Encrypt password
+      noOfLabel: noOfLabel,
+      panNo: panNo || "",
+      aadharNo: aadharNo || "",
+      role: role || "company",
+      is_deleted: 0,
+      ip_address: ipAddress || "0.0.0.0",
+      create_at: futureTimeInMillis,
+      is_active: 1,
+      clientNumber: Date.now(),
+      companyName: companyName || "",
+      mainEmail: email || "",
+      royaltiesEmail: royaltiesEmail || "",
+      firstName: firstName || "",
+      lastName: lastName || "",
+      postalAddress: postalAddress || "",
+      postalCode: postalCode || "",
+      city: city || "",
+      country: country || "",
+      language: language || "",
+    };
+
+    const register = await authModel.addCompany(newUser);
+
+    if (!register) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to register Company!",
+      });
+    }
+
+    // Send Email with Password
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Welcome to Our Platform",
+      text: `Thanks for being part of us. Your email for login is ${email} and your password is ${newPassword}.`,
+    };
+
+    try {
+      const emailResponse = await transporter.sendMail(mailOptions);
+      console.log("Email sent:", emailResponse);
+      res.status(200).json({
+        success: true,
+        message: `Account created successfully! Login details sent to ${email}.`,
+      });
+    } catch (error) {
+      console.error("Error sending email:", error.message);
+      res.status(500).json({
+        success: false,
+        message: "Failed to send email. Account created but no email sent.",
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
 };
+
+// auth.addCompany = async (req, res, next) => {
+//     const { email, phone, name, role ,panNo,aadharNo ,companyName,
+//         mainEmail,
+//         royaltiesEmail,
+//         firstName,
+//         lastName,
+//         postalAddress,
+//         postalCode,
+//         city,
+//         country,
+//         timeZone,
+//         language } = req.body
+//     // console.log("newUsernewUsernewUsernewUser",req.body.email)
+
+//     const now = new Date();
+//     const futureDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+//     const futureTimeInMillis = futureDate.getTime()
+//     const ipAddress = IP.address();
+//     try {
+//         let isUserExist = await authModel.checkAvailablity(email)
+//         if (isUserExist?.length > 0) {
+//             return R(res, false, "Email Id already exists!!", {}, 406)
+//         }
+//         const newPassword = generateRandomPassword(12);
+//         const newUser = {
+//             email: email,
+//             name: name,
+//             phone: phone,
+//             password: await bcrypt.passwordEncryption(newPassword),
+//             noOfLabel: noOfLabel || "",
+//             panNo: panNo || "",
+//             aadharNo: aadharNo || "",
+//             role: role || "company",
+//             is_deleted: 0,
+//             ip_address: ipAddress || "0.0.0.0",
+//             create_at: futureTimeInMillis,
+//             is_active: 1,
+//             clientNumber: Date.now(),
+//             companyName: companyName || "",
+//             mainEmail: mainEmail || "",
+//             royaltiesEmail: royaltiesEmail || "",
+//             firstName: firstName || "",
+//             lastName: lastName || "",
+//             postalAddress: postalAddress || "",
+//             postalCode: postalCode || "",
+//             city: city || "",
+//             country: country || "",
+//             // timeZone: timeZone || "",
+//             language: language || "",
+//         };
+
+
+//         const register = await authModel.addCompany(newUser)
+
+//         if(!register){
+//             return R(res, false, "Failed to register Company!!", {}, 500)
+//         }
+
+//         const mailOptions = {
+//             from: process.env.EMAIL_USER,
+//             to: email,
+//             subject: "Password Reset OTP",
+//             text: `thanks being part of us . your email for login is ${email} and paswword is ${newPassword} `,
+//           };
+
+//           // Send email
+//           try {
+//             const emailResponse = await transporter.sendMail(mailOptions);
+//             console.log("Email sent:", emailResponse);
+//             res.status(200).json({ success: true, message: ` Email of id , password is sent to ${email} .` });
+//           } catch (error) {
+//             console.error("Error sending email:", error);
+//             res.status(500).json({ success: false, message: "Failed to  send Email But Account is Created" });
+//           }
+//     } catch (err) {
+//         next(err)
+//     }
+// };
 
 
 // auth.getUsers = async (req, res, next) => {
