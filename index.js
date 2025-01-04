@@ -18,7 +18,7 @@ const importExcel = require("./routes/importExcel.routes");
 const companyRoutes = require("./routes/company.routes");
 // const dashboardRoutes= require("./routes/dashbaord.routes");
 
-
+const bodyParser = require('body-parser');
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
@@ -40,6 +40,9 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
+// Increase payload size limits
+app.use(bodyParser.json({ limit: '200mb' })); // Adjust based on your dataset size
+app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
 
 dotenv.config();
 app.use(cors({

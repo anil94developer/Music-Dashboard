@@ -1,15 +1,11 @@
-const R = require("../utils/responseHelper"); 
-const {Track,Store,Market,salesYoutube,salesAssets,stream} =require("../models/csvdatamodel");
+const R = require("../utils/responseHelper");
+const { Track, Store, Market, salesYoutube, salesAssets, stream } = require("../models/csvdatamodel");
 const { string } = require("joi");
-const upload={}
+const upload = {}
 
-upload.track =async (req,res,next)=>{
-try{
-  const {userId,data} =req.body;
-  
-  if(!userId){
-    return R(res,false,"User ID not found","",400);
-  }
+upload.track = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
 
   if(!data){
     return R(res,false,"Data not found","",400);
@@ -74,13 +70,12 @@ upload.store = async (req,res,next)=>{
     // console.log(data);
   
     // Process your data here and save it to the database or any other storage medium.
-    return R(res,true,"Store upload successful","",200); 
+    return R(res, true, "Track upload successful", "", 200);
   }
-  catch(e){
+  catch (e) {
     next();
   }
 }
-  
 
 upload.getStore = async (req,res,next)=>{
   try{
@@ -89,11 +84,55 @@ upload.getStore = async (req,res,next)=>{
     if(!userId){
       return R(res,false,"User ID not found","",400);
     }
-    
+    console.log(">>>>>>>>>>>>>>>>>>>>>", track);
+    return R(res, true, "Track fetched successfully", track, 200);
+  } catch (err) {
+    console.log(err)
+    next();
+  }
+}
+
+upload.store = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
+
+    if (!data) {
+      return R(res, false, "Data not found", "", 400);
+    }
+
+    console.log(data);
+
+    let result = data.map(async (val, ind, arr) => {
+      val = await Store.create(userId, arr[ind]);
+      if (!val) {
+        return R(res, false, "Excel file not found", "", 400);
+      }
+      return val;
+    })
+
+    console.log(data);
+
+    // Process your data here and save it to the database or any other storage medium.
+    return R(res, true, "Store upload successful", "", 200);
+  }
+  catch (e) {
+    next();
+  }
+}
+
+
+upload.getStore = async (req, res, next) => {
+  try {
+    const userId = req.doc.userId;
+    console.log(userId);
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
+    }
+
     const data = await Store.get(userId);
-   
-    if(data === false){
-      return R(res,false,"Store not found","",400);
+
+    if (data === false) {
+      return R(res, false, "Store not found", "", 400);
     }
   // console.log(">>>>>>>>>>>>>>>>>>>>>",data);
     return R(res,true,"Store fetched successfully",data,200);
@@ -104,16 +143,16 @@ upload.getStore = async (req,res,next)=>{
 }
 
 
-upload.marketData = async (req,res,next)=>{
-  try{
-    const {userId,data} =req.body;
-    
-    if(!userId){
-      return R(res,false,"User ID not found","",400);
+upload.marketData = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
 
-    if(!data){
-      return R(res,false,"Data not found","",400);
+    if (!data) {
+      return R(res, false, "Data not found", "", 400);
     }
   
     // console.log(data);
@@ -129,14 +168,13 @@ upload.marketData = async (req,res,next)=>{
     // console.log(result);
   
     // Process your data here and save it to the database or any other storage medium.
-    return R(res,true,"Market Data upload successful","",200); 
+    return R(res, true, "Market Data upload successful", "", 200);
   }
   catch(e){
     // console
     next();
   }
 }
-  
 
 upload.getMarketData = async (req,res,next)=>{
   try{
@@ -156,16 +194,16 @@ upload.getMarketData = async (req,res,next)=>{
   }
 }
 
-upload.salesYoutube =async (req,res,next)=>{
-  try{
-    const {userId,data} =req.body;
-    
-    if(!userId){
-      return R(res,false,"User ID not found","",400);
+upload.salesYoutube = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
 
-    if(!data){
-      return R(res,false,"Data not found","",400);
+    if (!data) {
+      return R(res, false, "Data not found", "", 400);
     }
   
     // console.log(data);
@@ -180,7 +218,7 @@ upload.salesYoutube =async (req,res,next)=>{
     // console.log(">>>>>>>>>>>>>>>>>>>>",result);
   
     // Process your data here and save it to the database or any other storage medium.
-    return R(res,true," Data upload successful","",200); 
+    return R(res, true, " Data upload successful", "", 200);
   }
   catch(e){
     // console.log(e)
@@ -207,14 +245,14 @@ upload.getSalesYoutube = async (req,res,next)=>{
 }
 
 
-upload.salesAsset = async (req,res,next)=>{
-try{
-    const {userId,data} =req.body; 
-    if(!userId){
-      return R(res,false,"User ID not found","",400);
+upload.salesAsset = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
-    if(!data){
-      return R(res,false,"Data not found","",400);
+    if (!data) {
+      return R(res, false, "Data not found", "", 400);
     }
     // console.log(data);
     let result = await Promise.all(data.map(async (val,ind,arr)=>{
@@ -250,15 +288,15 @@ upload.getSalesAssets = async (req,res,next) =>{
   }
 }
 
-upload.salesStream = async (req,res,next) =>{
-  try{
-    const {userId,data} =req.body;
-    
-    if(!userId){
-      return R(res,false,"User ID not found","",400);
+upload.salesStream = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
-    if(!data){
-      return R(res,false,"Data not found","",400);
+    if (!data) {
+      return R(res, false, "Data not found", "", 400);
     }
     // console.log(data);
     let result = await Promise.all (data.map(async (val,ind,arr)=>{
@@ -296,20 +334,20 @@ upload.getStream = async (req,res,next) =>{
   }
 }
 
-upload.sendReport = async (req,res,next) =>{
-  try{
-    const {userId,data} =req.body;
-    
-    if(!userId){
-      return R(res,false,"User ID not found","",400);
+upload.sendReport = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
-    if(!data){
-      return R(res,false,"Data not found","",400);
+    if (!data) {
+      return R(res, false, "Data not found", "", 400);
     }
-  
-    let result = await Promise.all(data.map(async (val,ind,arr)=>{
-      val = await stream.create(String(userId),arr[ind]);
-       return val;
+
+    let result = await Promise.all(data.map(async (val, ind, arr) => {
+      val = await stream.create(String(userId), arr[ind]);
+      return val;
     }))
   
     // console.log(result);
@@ -335,4 +373,4 @@ upload.sendReport = async (req,res,next) =>{
 
 
 
-module.exports=upload;
+module.exports = upload;

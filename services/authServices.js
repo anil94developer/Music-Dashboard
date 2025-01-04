@@ -187,7 +187,7 @@ auth.signUp = async (req, res, next) => {
             ip_address: ipAddress,
             create_at: futureTimeInMillis,
             is_active: 1,
-            clientNumber: new Date().getTime()
+            clientNumber:Date.now()
         }
         const register = await authModel.signUp(newUser)
         const userData = {
