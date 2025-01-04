@@ -223,10 +223,12 @@ releaseModel.addTwoStepRelease = async (id, filesData) => {
   try {
     const releaseResult = await db.connectDb("release", releaseSchema);
 
-    const result = await releaseResult.updateOne(
-      { _id: id },
-      { $set: { step2: filesData } }
-    );
+    // Handle adding single or multiple items
+    const updateData = Array.isArray(filesData)
+      ? { $push: { step2: { $each: filesData } } } // Push multiple items
+      : { $push: { step2: filesData } };          // Push single item
+
+    const result = await releaseResult.updateOne({ _id: id }, updateData);
 
     console.log("Database update result:", result);
     return result.modifiedCount > 0 || result.upsertedCount > 0;
@@ -235,6 +237,24 @@ releaseModel.addTwoStepRelease = async (id, filesData) => {
     throw error;
   }
 };
+
+// releaseModel.addTwoStepRelease = async (id, filesData) => {
+//   console.log("Updating release with ID:", id);
+//   try {
+//     const releaseResult = await db.connectDb("release", releaseSchema);
+
+//     const result = await releaseResult.updateOne(
+//       { _id: id },
+//       { $set: { step2: filesData } }
+//     );
+
+//     console.log("Database update result:", result);
+//     return result.modifiedCount > 0 || result.upsertedCount > 0;
+//   } catch (error) {
+//     console.error("Database update error:", error);
+//     throw error;
+//   }
+// };
 // releaseModel.addTwoStepRelease = async (id,filesData) => {
 //   console.log("one release body======", id,filesData)
 //   let releaseResult = await db.connectDb("release", releaseSchema);
