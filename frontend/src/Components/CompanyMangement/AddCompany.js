@@ -7,19 +7,20 @@ import { getData, postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import { SideBar } from "../Common/SideBar";
 // import "./UserAccessForm.css";
+import language from '../../Enums/language.json'
+import country from '../../Enums/country.list.json'
+
 
 function AddCompany(props) {
     const navigate = useNavigate()
     const { userProfile } = useUserProfile()
+
     const [form, setForm] = useState({
-        email: "",
-        noofLabel: "",
         role: "company",
         panNo: "",
         aadharNo: "",
         companyName: "",
-        clientNumber: "",
-        mainEmail: "",
+        email: "",
         royaltiesEmail: "",
         firstName: "",
         lastName: "",
@@ -28,7 +29,6 @@ function AddCompany(props) {
         postalCode: "",
         city: "",
         country: "",
-        timeZone: "",
         language: "",
     });
 
@@ -39,8 +39,7 @@ function AddCompany(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-
+        console.log("Payload:", form); // Debugging the payload
         try {
             const result = await postData(base.addCompany, form);
             if (result.data?.status === true) {
@@ -76,8 +75,6 @@ function AddCompany(props) {
                         <form className="profile-form" onSubmit={handleSubmit}>
                             <div className="dash-detail dash-detail-two">
                                 <div className="row">
-
-
                                     {/* Company Name */}
                                     <div className="col-lg-3 col-md-4 col-12">
                                         <div className="form-group">
@@ -93,11 +90,10 @@ function AddCompany(props) {
                                             />
                                         </div>
                                     </div>
-                                    
                                     {/* Main Email */}
                                     <div className="col-lg-3 col-md-4 col-12">
                                         <div className="form-group">
-                                            <label >Main Email Address</label> 
+                                            <label >Main Email Address</label>
                                             <input
                                                 type="email"
                                                 className="form-control"
@@ -120,7 +116,7 @@ function AddCompany(props) {
                                                 name="royaltiesEmail"
                                                 value={form.royaltiesEmail}
                                                 onChange={handleChange}
-                                                
+                                                required
                                             />
                                         </div>
                                     </div>
@@ -136,7 +132,7 @@ function AddCompany(props) {
                                                 name="firstName"
                                                 value={form.firstName}
                                                 onChange={handleChange}
-                                                
+                                                required
                                             />
                                         </div>
                                     </div>
@@ -151,7 +147,7 @@ function AddCompany(props) {
                                                 name="lastName"
                                                 value={form.lastName}
                                                 onChange={handleChange}
-                                                
+                                                required
                                             />
                                         </div>
                                     </div>
@@ -166,30 +162,42 @@ function AddCompany(props) {
                                                 name="phoneNumber"
                                                 value={form.phoneNumber}
                                                 onChange={handleChange}
-                                                
+                                                required
                                             />
                                         </div>
                                     </div>
-
+                                    <div className="col-lg-3 col-md-4 col-12">
+                                        <div className="form-group">
+                                            <label >No Of Lanel</label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                placeholder="Enter Number"
+                                                name="noOfLabel"
+                                                value={form.noOfLabel}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
                                     {/* Pan Card Number */}
                                     <div className="col-lg-3 col-md-4 col-12">
                                         <div className="form-group">
-                                            <label >Pan Card</label>
+                                            <label >Pan Card Number</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 placeholder="Pan Card Number"
                                                 name="panNo"
                                                 value={form.panNo}
-                                                onChange={handleChange}
-                                                
+                                                required onChange={handleChange}
                                             />
                                         </div>
                                     </div>
                                     {/* Aadhar Card  number*/}
                                     <div className="col-lg-3 col-md-4 col-12">
                                         <div className="form-group">
-                                            <label >Pan Card</label>
+                                            <label >Aadhar Card</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -197,7 +205,7 @@ function AddCompany(props) {
                                                 name="aadharNo"
                                                 value={form.aadharNo}
                                                 onChange={handleChange}
-                                                
+                                                required
                                             />
                                         </div>
                                     </div>
@@ -212,7 +220,7 @@ function AddCompany(props) {
                                                 name="postalAddress"
                                                 value={form.postalAddress}
                                                 onChange={handleChange}
-                                                
+                                                required
                                             />
                                         </div>
                                     </div>
@@ -227,7 +235,7 @@ function AddCompany(props) {
                                                 name="postalCode"
                                                 value={form.postalCode}
                                                 onChange={handleChange}
-                                                
+                                                required
                                             />
                                         </div>
                                     </div>
@@ -242,53 +250,55 @@ function AddCompany(props) {
                                                 name="city"
                                                 value={form.city}
                                                 onChange={handleChange}
-                                                
+                                                required
                                             />
                                         </div>
                                     </div>
+                                   
                                     {/* Country */}
-                                    <div className="col-lg-3 col-md-4 col-12">
+
+                                    <div className="col-lg-3 col-md-6">
                                         <div className="form-group">
-                                            <label >Country</label>
-                                            <input
+                                            <label>Default Country</label>
+                                            <select
                                                 type="text"
-                                                className="form-control"
-                                                placeholder="Enter country"
-                                                name="country"
+                                                className="form-select form-control"
                                                 value={form.country}
+                                                name="country"
                                                 onChange={handleChange}
-                                                
-                                            />
-                                        </div>
-                                    </div>
-                                    {/* Time Zone */}
-                                    <div className="col-lg-3 col-md-4 col-12">
-                                        <div className="form-group">
-                                            <label >Default Time Zone</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Enter default time zone"
-                                                name="timeZone"
-                                                value={form.timeZone}
-                                                onChange={handleChange}
-                                                
-                                            />
+                                            >
+                                                <option value="" disabled>
+                                                    Select a Country
+                                                </option>
+                                                {country.map((item) => (
+                                                    <option key={item.value} value={item.value}>
+                                                        {item.value}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
                                     {/* Language */}
-                                    <div className="col-lg-3 col-md-4 col-12">
+
+                                    <div className="col-lg-3 col-md-6">
                                         <div className="form-group">
-                                            <label >Default Language</label>
-                                            <input
+                                            <label>Default Language</label>
+                                            <select
                                                 type="text"
-                                                className="form-control"
-                                                placeholder="Enter default language"
-                                                name="language"
+                                                className="form-select form-control"
                                                 value={form.language}
+                                                name={"language"}
                                                 onChange={handleChange}
-                                                
-                                            />
+                                            >
+                                                <option value="" disabled>
+                                                    Select a Language
+                                                </option>
+                                                {language.map((item) => (
+                                                    <option key={item.value} value={item.value}>
+                                                        {item.label}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
                                     {/* Submit Button */}

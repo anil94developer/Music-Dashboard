@@ -63,7 +63,7 @@ export default function STEP1(props) {
     <div>
       <div className="tab-heading">
         <h2>Release Information</h2>
-        
+
       </div>
       <div className='cover-image'>
         <div className="form-group">
@@ -254,7 +254,9 @@ export default function STEP1(props) {
             )}
           </div>
         </div>
-        <div className="col-lg-3 col-md-6 col-12">
+        <div className="col-lg-3 col-md-6 col-12"
+          onClick={() => document.querySelector('#releaseDate').click()}
+        >
           <div className="form-group">
             <label htmlFor="releaseDate">Physical/Original release date</label>
             <input

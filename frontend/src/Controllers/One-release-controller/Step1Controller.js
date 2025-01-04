@@ -76,7 +76,11 @@ const Step1Controller = (props) => {
       };
     }
   };
-
+  function generateNumber() {
+    const prefix = "361"; // Fixed prefix
+    const randomPart = Math.floor(1000000000 + Math.random() * 9000000000); // Random 10-digit number
+    return prefix + randomPart;
+  }
 
   const handleSubmit = async (e) => {
     // validation set
@@ -154,7 +158,7 @@ const Step1Controller = (props) => {
     formData.append("step1[line]", pLine);
     formData.append("step1[cline]", cLine);
     formData.append("step1[productionYear]", productionYear);
-    formData.append("step1[UPCEAN]", upcEan);
+    formData.append("step1[UPCEAN]", upcEan == "" || upcEan ?generateNumber():upcEan );
     formData.append("step1[producerCatalogueNumber]", producerCatalogueNumber);
     formData.append("coverImage", imageFile ?imageFile :coverImage);
     console.log("body===========>", imageFile)
