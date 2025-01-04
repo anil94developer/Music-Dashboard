@@ -31,13 +31,7 @@ return (
               <div className="row " style={{ padding: 10 }}>
               {/* Left Column */}
               <div className="col-md-6 ">
-                <div className="form-group">
-                  {/* <input
-                    type="file"
-                    accept="audio/*,video/*"
-                    className="form-control form-control-sm me-2"
-                    onChange={handleFileChange} 
-                    /> */}
+                <div className="form-group"> 
                   <p className="mb-1 fw-bold">{fileData.name}</p>
                   {/* <small className="text-muted">Type: {fileType}</small> */}
                 </div>
