@@ -344,15 +344,15 @@ releaseModel.submitFinalRelease = async (body) => {
   }
 };
  
-releaseModel.releaseList = async (uId) => {
+releaseModel.releaseList = async (uId, statusFilter) => {
   const result = await db.connectDb("release", releaseSchema);
-  let fetData = await result.find({ userId: uId });
-  if (fetData.length > 0) {
-    return fetData;
-  } else {
-    return [];
-  }
+  let fetData = await result.find({
+    userId: uId,
+    status: { $in: statusFilter } // Use the enum values for filtering
+  });
+  return fetData.length > 0 ? fetData : [];
 };
+
 releaseModel.allReleaseList= async (uId) => {
   const result = await db.connectDb("release", releaseSchema);
   let fetData = await result.find();
@@ -465,6 +465,45 @@ releaseModel.storeList = async (uId) => {
   }
 };
 
+releaseModel.getTotalTrack = async (uId, role) => {
+  try {
+    const result = await db.connectDb("release", releaseSchema);
+    if (role === "Admin") {
+      let fetData = await result.find();
+      let totalCount = 0;
+      fetData.forEach((doc) => {
+        if (Array.isArray(doc.step3)) {
+          totalCount += doc.step3.length;
+        }
+      });
+      
+      const totalPending = await result.countDocuments({status: "pending"})
+      const totalApprove = await result.countDocuments({status: "Approve"});
+      const totalReject = await result.countDocuments({status: "Reject"});
+      const totalCompany = await authModel.getCompanyCount();
+
+      return {totalCount,totalPending ,totalApprove,totalReject,totalCompany};
+    } else {
+      let fetData = await result.find({ userId: uId });
+
+      let totalCount = 0;
+      fetData.forEach((doc) => {
+        if (Array.isArray(doc.step3)) {
+          totalCount += doc.step3.length;
+        }
+      });
+      const totalPending = await result.countDocuments({userId: uId ,status: "pending"});
+      const totalApprove = await result.countDocuments({userId: uId ,status: "Approve"});
+      const totalReject = await result.countDocuments({userId: uId ,status: "Reject"});
+      const totalCompany = 0;
+
+      return {totalCount,totalPending ,totalApprove,totalReject,totalCompany};
+    }
+  } catch (error) {
+    console.error("Error in getTracks:", error);
+    throw error;
+  }
+};
 
 
 

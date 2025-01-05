@@ -1,6 +1,6 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
-
+const { ObjectId } = require('mongodb');
 trans={}
 
 const transcationSchema=mongoose.Schema({
@@ -100,7 +100,6 @@ console.log(`User profile`, userData);
 
 trans.getTranscations = async (req, res, next) => {
     const result = await db.connectDb("transactions", transcationSchema); 
-
     try {
         const transactions = await result.find(); // Retrieve all transactions for the given user
         console.log("Transactions retrieved successfully:", transactions);
@@ -110,6 +109,39 @@ trans.getTranscations = async (req, res, next) => {
         return false; // Return false on error
     }
   }
+
+  trans.recentTransaction = async (userId) => {
+      const result = await db.connectDb("transactions", transcationSchema); 
+      try {
+          const threeMonthsAgo = new Date();
+          threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+  
+          console.log("User ID:", userId);
+          console.log("Three months ago:", threeMonthsAgo.toISOString());
+  
+          // Convert userId to ObjectId
+          const objectId = new ObjectId(userId);
+  
+          // Find all transactions within the last three months for the given user
+          const transactions = await result.find({ 
+              userId: objectId, 
+              createdAt: { $gte: threeMonthsAgo } 
+          }).sort({ createdAt: -1 });
+  
+          if (transactions.length > 0) {
+              console.log("Most recent transaction retrieved successfully:", transactions[0]);
+              return transactions[0]; // Return the most recent transaction
+          } else {
+              console.log("No transactions found in the last three months for user:", userId);
+              return false; // Return false if no transactions are found
+          }
+      } catch (error) {
+          console.error("Error retrieving most recent transaction:", error); // Log full error object
+          return false; // Return false on error
+      }
+  }
+  
+
 
 
 module.exports = trans;

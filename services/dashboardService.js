@@ -31,4 +31,16 @@ dashboard.getDashboard = async(req,res,next) => {
     } 
 }
 
+dashboard.getDashboardList = async(req,res,next) => {
+    try {
+        const userId = req.doc.userId;
+        const role = await authModal.getRole(userId);
+        const dashboardList = await releaseModel.getTotalTrack(userId,role);
+        
+        return R(res, true, "Total Tracks fetched successfully", dashboardList, 200);
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = dashboard

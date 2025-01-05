@@ -18,7 +18,7 @@ wallet.transactions = async (req, res, next) => {
     const amount = await authModal.transaction(data);
 
     if (!amount) {
-      return R(res, false, "amount will not withdrawal", "", 400);
+      return R(res, false, "Current withdrawal request is pending, try to send next request after three month ", "", 400);
     }
 
     const withdrawal = await withdrawalModel.add(data);

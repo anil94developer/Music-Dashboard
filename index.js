@@ -16,8 +16,7 @@ const walletRoutes = require("./routes/wallet.route");
 const permissionsRoutes = require("./routes/permission.routes");
 const importExcel = require("./routes/importExcel.routes");
 const companyRoutes = require("./routes/company.routes");
-// const dashboardRoutes= require("./routes/dashbaord.routes");
-
+const dashboardRoutes= require("./routes/dashboard.route");
 const bodyParser = require('body-parser');
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -60,6 +59,7 @@ app.use("/bank", bankRoutes);
 app.use("/wallet", walletRoutes); 
 app.use("/permission",permissionsRoutes);
 app.use("/excel",importExcel);
+app.use("/dashboard", dashboardRoutes);
 
 
 

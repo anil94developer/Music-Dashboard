@@ -147,12 +147,15 @@ release.submitFinalRelease = async (req, res, next) => {
 
 release.releaseList = async (req, res, next) => {
     try {
-        const result = await releaseModel.releaseList(req.doc.userId)
-        return R(res, true, "Fetch Successfully!!", result, 200)
+      const statusFilter = req.query.status; // Default to all statuses if none are provided
+      console.log(">>>>>>>",statusFilter);
+      const result = await releaseModel.releaseList(req.doc.userId, statusFilter);
+      return R(res, true, "Fetch Successfully!!", result, 200);
     } catch (err) {
-        next(err)
+      next(err);
     }
-};
+  };
+  
 release.allReleaseList = async (req, res, next) => {
     try {
         const result = await releaseModel.allReleaseList(req.doc.userId)

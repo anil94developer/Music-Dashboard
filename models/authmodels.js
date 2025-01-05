@@ -1,7 +1,6 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
 let { ObjectId } = require("mongodb");
 
 authModel = {}
@@ -250,30 +249,45 @@ authModel.updateProfile = async (id, data) => {
 }
 authModel.transaction = async (data) => {
     const result = await db.connectDb("users", usersSchema); // Ensure proper connection
+    // const transactionsResult = await db.connectDb("transactions", transactionsSchema); // Connect to transactions collection
+
     try {
-        const userId = data.userId; // Convert to ObjectId
+        const userId = data.userId; // User ID
         const amount = data.amount;
+
+        // Calculate the date three months ago
+        const threeMonthsAgo = new Date();
+        threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+        // Check if the user has any transactions within the last three months
+        const recentTransaction = await trans.recentTransaction(userId);
+        console.log("Recent transaction:", recentTransaction);
+
+        if (recentTransaction) {
+            console.error("Transaction blocked: User has recent transactions within the last three months.");
+            return false; // Block the transaction
+        }
 
         // Ensure the user has sufficient balance and perform the deduction
         const updateData = await result.updateOne(
             { _id: userId, wallet: { $gte: amount } }, // Ensure sufficient balance
-            { $inc: { wallet: - amount } } // Deduct directly
+            { $inc: { wallet: -amount } } // Deduct directly
         );
 
-        // console.log("Transaction result:", updateData);
+        if (updateData.modifiedCount === 0) {
+            console.error("Transaction failed: Insufficient balance or user not found.");
+            return false;
+        }
 
-        // Check if any document was matched and modified
-        // if (updateData.matchedCount < 99) {
-        //     console.error("Insufficient balance or user not found.");
-        //     return false;
-        // }
+        // Log the transaction (optional)
 
         return true; // Transaction successful
     } catch (err) {
-        // console.error("Error in transaction:", err.message);
+        console.error("Error in transaction:", err.message);
         return false; // Return false on error
     }
 };
+
 
 authModel.permission = async (data) => {
     const result = await db.connectDb("users", usersSchema);
@@ -337,6 +351,19 @@ authModel.getNoOfLabels = async (userId) => {
     let val = await result.findOne({_id:new ObjectId(userId)});
     return val.noOfLabel;
 }
+
+authModel.getRole = async (userId) => {
+    const result = await db.connectDb("users", usersSchema);
+    let val = await result.findOne({_id:new ObjectId(userId)});
+    return val.role;
+}
+
+authModel.getCompanyCount = async () =>{
+    const result = await db.connectDb("users", usersSchema);
+    let val = await result.countDocuments({ role: "company" });
+    return val;
+}
+
 // authModel.findAdminByRole = async(email, password) => {
 //     let findadmin = await db.connectDb("usersSchemas",usersSchema)
 //     let val = await findadmin.findOne(
