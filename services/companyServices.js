@@ -42,10 +42,7 @@ auth.addCompany = async (req, res, next) => {
     // Check if email already exists
     let isUserExist = await authModel.checkAvailablity(email);
     if (isUserExist?.length > 0) {
-      return res.status(406).json({
-        success: false,
-        message: "Email Id already exists!",
-      });
+      return R(res,false,"Email already exists","",400);
     }
 
     const newPassword = generateRandomPassword(12); // Random password generator function
@@ -79,10 +76,7 @@ auth.addCompany = async (req, res, next) => {
     const register = await authModel.addCompany(newUser);
 
     if (!register) {
-      return res.status(500).json({
-        success: false,
-        message: "Failed to register Company!",
-      });
+      return R(res,false,"Failed to register Company!","",400);
     }
 
     // Send Email with Password
@@ -90,22 +84,16 @@ auth.addCompany = async (req, res, next) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Welcome to Our Platform",
-      text: `Thanks for being part of us. Your email for login is ${email} and your password is ${newPassword}.`,
+      text: `Thanks for being part of us. Your email for login is ${email} and your password is ${firstName+"@123!"}.`,
     };
 
     try {
       const emailResponse = await transporter.sendMail(mailOptions);
       console.log("Email sent:", emailResponse);
-      res.status(200).json({
-        success: true,
-        message: `Account created successfully! Login details sent to ${email}.`,
-      });
+      return R(res,true,`Account created successfully! Login details sent to ${email}.`,"",200);
     } catch (error) {
       console.error("Error sending email:", error.message);
-      res.status(500).json({
-        success: false,
-        message: "Failed to send email. Account created but no email sent.",
-      });
+      return R(res,false, "Failed to send email. Account created but no email sent.","",500);
     }
   } catch (err) {
     next(err);

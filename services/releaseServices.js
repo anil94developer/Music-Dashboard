@@ -191,6 +191,9 @@ release.addLabel = async (req, res, next) => {
     };
     try {
         const result = await releaseModel.addLabel(body)
+        if(result === "Cannot add more labels. Maximum limit reached."){
+            return R(res, false,"Cannot add more labels. Maximum limit reached.", {}, 400)
+        }
         return R(res, true, "Add Successfully!!", result, 200)
     } catch (err) {
         next(err)

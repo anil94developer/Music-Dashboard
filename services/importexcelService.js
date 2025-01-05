@@ -31,23 +31,22 @@ catch(e){
 }
 }
 
-upload.getTrack = async (req,res,next)=>{
-try{
-  const userId =req.doc.userId;
-  // console.log(userId);
+upload.getTrack = async (req, res, next) => {
+  try {
+    const userId = req.doc.userId;
+    const { startDate, endDate } = req.query; // Assuming the dates are passed as query parameters
 
-  const track = await Track.get(userId);
+    const track = await Track.get(userId, startDate, endDate);
 
-  if(track===false){
-    return R(res,false,"Track not found","",400);
+    if (track === false) {
+      return R(res, false, "Track not found", "", 400);
+    }
+
+    return R(res, true, "Track fetched successfully", track, 200);
+  } catch (err) {
+    next(err);
   }
-// console.log(">>>>>>>>>>>>>>>>>>>>>",track);
-  return R(res,true,"Track fetched successfully",track,200);
-}catch(err){
-  // console.log(err)
-  next();
-}
-}
+};
 
 upload.store = async (req,res,next)=>{
   try{
@@ -77,20 +76,27 @@ upload.store = async (req,res,next)=>{
   }
 }
 
-upload.getStore = async (req,res,next)=>{
-  try{
-    const userId =req.doc.userId;
-    // console.log(userId);
-    if(!userId){
-      return R(res,false,"User ID not found","",400);
+upload.getStore = async (req, res, next) => {
+  try {
+    const userId = req.doc.userId;
+    const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
-    console.log(">>>>>>>>>>>>>>>>>>>>>", track);
-    return R(res, true, "Track fetched successfully", track, 200);
+
+    const store = await Store.get(userId, startDate, endDate);
+    if (store === false) {
+      return R(res, false, "Store not found", "", 400);
+    }
+
+    return R(res, true, "Store fetched successfully", store, 200);
   } catch (err) {
-    console.log(err)
-    next();
+    console.log(err);
+    next(err);
   }
-}
+};
+
 
 upload.store = async (req, res, next) => {
   try {
@@ -124,23 +130,23 @@ upload.store = async (req, res, next) => {
 upload.getStore = async (req, res, next) => {
   try {
     const userId = req.doc.userId;
-    console.log(userId);
+    const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
+
     if (!userId) {
       return R(res, false, "User ID not found", "", 400);
     }
 
-    const data = await Store.get(userId);
-
-    if (data === false) {
+    const store = await Store.get(userId, startDate, endDate);
+    if (store === false) {
       return R(res, false, "Store not found", "", 400);
     }
-  // console.log(">>>>>>>>>>>>>>>>>>>>>",data);
-    return R(res,true,"Store fetched successfully",data,200);
-  }catch(err){
-    // console.log(err)
-    next();
+
+    return R(res, true, "Store fetched successfully", store, 200);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
-}
+};
 
 
 upload.marketData = async (req, res, next) => {
@@ -176,23 +182,27 @@ upload.marketData = async (req, res, next) => {
   }
 }
 
-upload.getMarketData = async (req,res,next)=>{
-  try{
-    const userId =req.doc.userId;
-    // console.log(userId);
-  
-    const data = await Market.getData(userId);
-  // console.log(data);
-    if(data === false){
-      return R(res,false,"Market Data not found","",400);
+upload.getMarketData = async (req, res, next) => {
+  try {
+    const userId = req.doc.userId;
+    const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
-  // console.log(">>>>>>>>>>>>>>>>>>>>>",data);
-    return R(res,true,"Market fetched successfully",data,200);
-  }catch(err){
-    // console.log(">>>>>>>>>>>>>>>>>>>>>",err);
-    next();
+
+    const data = await Market.getData(userId, startDate, endDate);
+    if (data === false) {
+      return R(res, false, "Market Data not found", "", 400);
+    }
+
+    return R(res, true, "Market fetched successfully", data, 200);
+  } catch (err) {
+    console.log(">>>>>>>>>>>>>>>>>>>>>", err);
+    next(err);
   }
-}
+};
+
 
 upload.salesYoutube = async (req, res, next) => {
   try {
@@ -226,23 +236,27 @@ upload.salesYoutube = async (req, res, next) => {
   }
 }
 
-upload.getSalesYoutube = async (req,res,next)=>{
-  try{
-    const userId =req.doc.userId;
-    // console.log(userId);
-  
-    const data = await salesYoutube.getData(userId);
-    // console.log(data);
-    if(data === false){
-      return R(res,false,"Data not found","",400);
+upload.getSalesYoutube = async (req, res, next) => {
+  try {
+    const userId = req.doc.userId;
+    const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
-  // console.log(">>>>>>>>>>>>>>>>>>>>>",data);
-    return R(res,true,"Data fetched successfully",data,200);
-  }catch(err){
-    // console.log(err)
-    next();
+
+    const data = await salesYoutube.getData(userId, startDate, endDate);
+    if (data === false) {
+      return R(res, false, "Data not found", "", 400);
+    }
+
+    return R(res, true, "Data fetched successfully", data, 200);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
-}
+};
+
 
 
 upload.salesAsset = async (req, res, next) => {
@@ -270,23 +284,27 @@ upload.salesAsset = async (req, res, next) => {
 }
 }
 
-upload.getSalesAssets = async (req,res,next) =>{
-  try{
-    const userId =req.doc.userId;
-    // console.log(userId);
-  
-    const data = await salesAssets.getData(userId);
-    // console.log(data);
-    if(data === false){
-      return R(res,false,"Data not found","",400);
+upload.getSalesAssets = async (req, res, next) => {
+  try {
+    const userId = req.doc.userId;
+    const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
-  // console.log(">>>>>>>>>>>>>>>>>>>>>",data);
-    return R(res,true,"Data fetched successfully",data,200);
-  }catch(err){
-    // console.log(err)
-    next();
+
+    const data = await salesAssets.getData(userId, startDate, endDate);
+    if (data === false) {
+      return R(res, false, "Data not found", "", 400);
+    }
+
+    return R(res, true, "Data fetched successfully", data, 200);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
-}
+};
+
 
 upload.salesStream = async (req, res, next) => {
   try {
@@ -314,25 +332,27 @@ upload.salesStream = async (req, res, next) => {
   }
 }
 
-upload.getStream = async (req,res,next) =>{
-  try{
-    const userId =req.doc.userId;
-    // console.log(userId);
-  if(!userId){
-    return R(res,false,"User ID not found","",400);
-  }
-    const data = await stream.getData(userId);
-    // console.log(data);
-    if(data === false){
-      return R(res,false,"Data not found","",400);
+upload.getStream = async (req, res, next) => {
+  try {
+    const userId = req.doc.userId;
+    const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
+
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
     }
-    // console.log(">>>>>>>>>>>>>>>>>>>>>",data);
-    return R(res,true,"Data fetched successfully",data,200);
-  }catch(err){
-    // console.log(err)
-    next();
+
+    const data = await stream.getData(userId, startDate, endDate);
+    if (data === false) {
+      return R(res, false, "Data not found", "", 400);
+    }
+
+    return R(res, true, "Data fetched successfully", data, 200);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
-}
+};
+
 
 upload.sendReport = async (req, res, next) => {
   try {

@@ -331,6 +331,12 @@ authModel.checkAvailablity = async (email) => {
     })
     return val
 }
+
+authModel.getNoOfLabels = async (userId) => {
+    const result = await db.connectDb("users", usersSchema);
+    let val = await result.findOne({_id:new ObjectId(userId)});
+    return val.noOfLabel;
+}
 // authModel.findAdminByRole = async(email, password) => {
 //     let findadmin = await db.connectDb("usersSchemas",usersSchema)
 //     let val = await findadmin.findOne(

@@ -403,6 +403,16 @@ releaseModel.trackUpdate = async (body) => {
 };
 releaseModel.addLabel = async (data) => {
   const result = await db.connectDb("label", labelSchema);
+  const userId = data.userId; // Assuming the `data` object contains a `userId` field
+  const noOfLabel = await authModel.getNoOfLabels(userId);
+  console.log(`Current label count for user ${userId}: ${noOfLabel}`);
+  const existingLabelCount = await result.countDocuments({ userId: userId });
+  console.log(`Current label count for user ${userId}: ${existingLabelCount}`);
+  if (existingLabelCount >= noOfLabel) {
+    console.log("Cannot add more labels. Maximum limit reached.");
+    return "Cannot add more labels. Maximum limit reached.";
+  }
+
   let insData = await result.insertMany(data);
   console.log(insData);
   if (insData.length > 0) {

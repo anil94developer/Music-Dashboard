@@ -31,16 +31,34 @@ Track.create = async (userId, data) => {
   }
 }
 
-Track.get = async (userId) => {
+Track.get = async (userId, startDate, endDate) => {
   const result = await db.connectDb("Track", TrackSchema);
-  let trackData = await result.find({ userId: userId });
+  let query = { userId: userId };
+
+  // Function to parse date in YYYY-MM-DD format
+  const parseDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day); // Month is zero-indexed in Date constructor
+  };
+
+  if (startDate) {
+    query.createdAt = { ...query.createdAt, $gte: parseDate(startDate) };
+  }
+  if (endDate) {
+    query.createdAt = { ...query.createdAt, $lte: parseDate(endDate) };
+  }
+
+  let trackData = await result.find(query);
   console.log(">>>>>>>>", trackData);
+
   if (trackData.length <= 0) {
     return false;
   }
-  console.log(trackData);
+
   return trackData;
-}
+};
+
+
 
 const Store = {}
 
@@ -72,17 +90,43 @@ Store.create = async (userId, data) => {
   }
 }
 
-Store.get = async (userId) => {
+Store.get = async (userId, startDate, endDate) => {
   const result = await db.connectDb("Store", StoreSchema);
   console.log(">>>>>>>", userId);
-  let storeData = await result.find({ userId: userId });
+
+  let query = { userId: userId };
+
+  // Function to parse date in YYYY-MM-DD format
+  const parseDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day); // Month is zero-indexed in Date constructor
+  };
+
+  // Initialize date filters
+  let dateFilter = {};
+  if (startDate) {
+    dateFilter.$gte = parseDate(startDate);
+  }
+  if (endDate) {
+    dateFilter.$lte = parseDate(endDate);
+  }
+
+  // Add date filters to query if applicable
+  if (Object.keys(dateFilter).length > 0) {
+    query.createdAt = dateFilter;
+  }
+
+  let storeData = await result.find(query);
   console.log(">>>>>>>>", storeData);
+
   if (storeData.length <= 0) {
     return false;
   }
-  console.log(storeData);
+
   return storeData;
-}
+};
+
+
 
 
 
@@ -137,17 +181,42 @@ Market.create = async (userId, data) => {
   }
 }
 
-Market.getData = async (userId) => {
+Market.getData = async (userId, startDate, endDate) => {
   const result = await db.connectDb("Market", MarketSchema);
   console.log(">>>>>>>", userId);
-  let Data = await result.find({ userId: userId });
+
+  let query = { userId: userId };
+
+  // Function to parse date in YYYY-MM-DD format
+  const parseDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day); // Month is zero-indexed in Date constructor
+  };
+
+  // Initialize date filters
+  let dateFilter = {};
+  if (startDate) {
+    dateFilter.$gte = parseDate(startDate);
+  }
+  if (endDate) {
+    dateFilter.$lte = parseDate(endDate);
+  }
+
+  // Add date filters to query if applicable
+  if (Object.keys(dateFilter).length > 0) {
+    query.createdAt = dateFilter;
+  }
+
+  let Data = await result.find(query);
   console.log(">>>>>>>>", Data);
+
   if (Data.length <= 0) {
     return false;
   }
-  console.log(Data);
+
   return Data;
-}
+};
+
 
 
 const salesYoutube = {}
@@ -264,17 +333,42 @@ salesYoutube.create = async (userId, data) => {
   }
 }
 
-salesYoutube.getData = async (userId) => {
+salesYoutube.getData = async (userId, startDate, endDate) => {
   const result = await db.connectDb("SalesYoutube", salesSchemaYoutube);
   console.log(">>>>>>>", userId);
-  let Data = await result.find({ userId: userId });
+
+  let query = { userId: userId };
+
+  // Function to parse date in YYYY-MM-DD format
+  const parseDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day); // Month is zero-indexed in Date constructor
+  };
+
+  // Initialize date filters
+  let dateFilter = {};
+  if (startDate) {
+    dateFilter.$gte = parseDate(startDate);
+  }
+  if (endDate) {
+    dateFilter.$lte = parseDate(endDate);
+  }
+
+  // Add date filters to query if applicable
+  if (Object.keys(dateFilter).length > 0) {
+    query.createdAt = dateFilter;
+  }
+
+  let Data = await result.find(query);
   console.log(">>>>>>>>", Data);
+
   if (Data.length <= 0) {
     return false;
   }
-  console.log(Data);
+
   return Data;
-}
+};
+
 
 const salesAssets = {};
 const salesSchemaAssets = new mongoose.Schema({
@@ -401,17 +495,42 @@ salesAssets.create = async (userId, data) => {
     return false
   }
 }
-salesAssets.getData = async (userId) => {
+salesAssets.getData = async (userId, startDate, endDate) => {
   const result = db.connectDb("SalesAssets", salesSchemaAssets);
   console.log(">>>>>>>", userId);
-  let Data = await AssetModel.find({ userId: userId });
+
+  let query = { userId: userId };
+
+  // Function to parse date in YYYY-MM-DD format
+  const parseDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day); // Month is zero-indexed in Date constructor
+  };
+
+  // Initialize date filters
+  let dateFilter = {};
+  if (startDate) {
+    dateFilter.$gte = parseDate(startDate);
+  }
+  if (endDate) {
+    dateFilter.$lte = parseDate(endDate);
+  }
+
+  // Add date filters to query if applicable
+  if (Object.keys(dateFilter).length > 0) {
+    query.createdAt = dateFilter; // Ensure 'createdAt' is the correct date field in your schema
+  }
+
+  let Data = await AssetModel.find(query);
   console.log(">>>>>>>>", Data);
+
   if (Data.length <= 0) {
     return false;
   }
-  console.log(Data);
+
   return Data;
-}
+};
+
 
 const stream = {};
 
@@ -452,17 +571,42 @@ stream.create = async (userId, data) => {
   }
 }
 
-stream.getData = async (userId) => {
+stream.getData = async (userId, startDate, endDate) => {
   const result = await db.connectDb("stream", dataStream);
   console.log(">>>>>>>", userId);
-  let Data = await dataModel.find({ userId: userId });
+
+  let query = { userId: userId };
+
+  // Function to parse date in YYYY-MM-DD format
+  const parseDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day); // Month is zero-indexed in Date constructor
+  };
+
+  // Initialize date filters
+  let dateFilter = {};
+  if (startDate) {
+    dateFilter.$gte = parseDate(startDate);
+  }
+  if (endDate) {
+    dateFilter.$lte = parseDate(endDate);
+  }
+
+  // Add date filters to query if applicable
+  if (Object.keys(dateFilter).length > 0) {
+    query.createdAt = dateFilter; // Ensure 'createdAt' is the correct date field in your schema
+  }
+
+  let Data = await dataModel.find(query);
   console.log(">>>>>>>>", Data);
+
   if (Data.length <= 0) {
     return false;
   }
-  console.log(Data);
+
   return Data;
-}
+};
+
 
 
 module.exports = {
