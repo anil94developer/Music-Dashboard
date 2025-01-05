@@ -389,6 +389,16 @@ releaseModel.updateStatus = async (body) => {
   }
 };
 
+
+releaseModel.getEmail = async (body) => {
+  let id = body.id;
+  let releaseResult = await db.connectDb("release", releaseSchema);
+  let fetData = await releaseResult.findOne({ _id: id });
+  console.log(fetData);
+  let email = await authModel.getEmail(fetData.userId);
+  return email;
+}
+
 releaseModel.trackUpdate = async (body) => {
   const result = await db.connectDb("release", releaseSchema);
   let fetData = await result.updateOne(

@@ -364,6 +364,12 @@ authModel.getCompanyCount = async () =>{
     return val;
 }
 
+authModel.getEmail = async (id) => {
+    const result = await db.connectDb("users", usersSchema);
+    let val = await result.findOne({_id:new ObjectId(id)});
+    return val.email;
+}
+
 // authModel.findAdminByRole = async(email, password) => {
 //     let findadmin = await db.connectDb("usersSchemas",usersSchema)
 //     let val = await findadmin.findOne(

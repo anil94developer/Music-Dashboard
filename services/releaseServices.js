@@ -2,6 +2,7 @@ const R = require("../utils/responseHelper");
 const releaseModel = require('./../models/releasemodels')
 const express = require('express');
 const multer = require('multer');
+const nodemailer = require("nodemailer");
 const path = require('path');
 const { uploadOnCloudinary } = require("../utils/cloudinary");
 const release = {};
@@ -106,6 +107,14 @@ release.addTwoStepRelease = async (req, res) => {
 //     // }
 // };
 
+const transporter = nodemailer.createTransport({
+  service: "Gmail", // Replace with your email service
+  auth: {
+    user: process.env.EMAIL_USER, // Your email from environment variables
+    pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
+  },
+});
+
 
 release.addThreeStepRelease = async (req, res, next) => {
     const body = req.body
@@ -178,8 +187,27 @@ release.releaseDetails = async (req, res, next) => {
 release.updateStatus = async (req, res, next) => {
     let body = req.body;
     try {
-        const result = await releaseModel.updateStatus(body)
-        return R(res, true, "Responsed Successfully ", result, 200)
+        const result = await releaseModel.updateStatus(body);
+        const email = await releaseModel.getEmail(body);
+        console.log(email);
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: "Status Update Notification",
+            text: `Hello, your status has been updated to: ${body.status}`,
+        };
+        if(body.status === "Approve" || body.status === "Reject") {
+           // Send email
+            try {
+                const emailResponse = await transporter.sendMail(mailOptions);
+                console.log("Email sent:", emailResponse);
+                return R(res,true,"Status Updated Successfully",{},200);
+            } catch (error) {
+                console.error("Error sending email:", error);
+                res.status(500).json({ success: false, message: "Status updated but email not sent" });
+            }
+        }
+        return R(res, true, "Status Updated Successfully!!", result, 200)
     } catch (err) {
         next(err)
     }
