@@ -231,7 +231,7 @@ export default function STEP3(props) {
                       <div className="form-group">
                         <label>Content Type {contentType} *</label>
                         <input type="radio" value="Audio" checked={contentType == "Audio"} onChange={() => setContentType("Audio")} /> Audio
-                        <input type="radio" value="Video" checked={contentType == "Video"} onChange={() => setContentType("Video")} style={{ marginLeft: "10px" }} /> Video
+                        {/* <input type="radio" value="Video" checked={contentType == "Video"} onChange={() => setContentType("Video")} style={{ marginLeft: "10px" }} /> Video */}
                       </div>
                     </div>
                     {/* Primary Track Type */}

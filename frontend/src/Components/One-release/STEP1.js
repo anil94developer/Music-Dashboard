@@ -58,7 +58,7 @@ export default function STEP1(props) {
   const startYear = 1991;
   const endYear = 2026;
   // Generate an array of years
-  const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
+  const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => endYear - i);
   return (
     <div>
       <div className="tab-heading">
@@ -76,10 +76,19 @@ export default function STEP1(props) {
             onChange={handleImageChange} // Trigger this function on file selection
           />
           <div className="img-cover">
-            {coverImage && coverImage != null ?
-              <img className="img-thumbnail" src={domainUrl + coverImage} alt="Cover Preview" />
-              : <img className="img-thumbnail" src={imagePreview || images.user} alt="Cover Preview" />
-            }
+            {coverImage && coverImage !== null ? (
+              <img
+                className="img-thumbnail"
+                src={coverImage}
+                alt="Cover Preview"
+              />
+            ) : (
+              <img
+                className="img-thumbnail"
+                src={imagePreview || images.user}
+                alt="Cover Preview"
+              />
+            )}
             <p><strong>Your cover must be:</strong><br />
               Size: 3000*3000 pixels
               Format: .jpeg
