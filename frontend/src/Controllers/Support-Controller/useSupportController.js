@@ -45,7 +45,7 @@ const useSupportController = (props) => {
       "country": country,
       "description": description,
       "motionType": motionType,
-      "motionLink": motionLink
+      "motionLink": ""
     }
 
     // console.log("FormData Values:");
@@ -59,7 +59,8 @@ const useSupportController = (props) => {
 
       if (result.status === true) {
         Swal.fire("Success", result.data.message, "success");
-        navigate("/support", { replace: true, state: { reload: Date.now() } });
+        getsupportList();
+        // navigate("/support", { replace: true, state: { reload: Date.now() } });
       } else {
         Swal.fire("Error", result.data.message, "error");
 

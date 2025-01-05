@@ -24,7 +24,7 @@ export const ReleaseDetails = () => {
 
   const getLogo = (name) => {
     let item = initialCountryList.find(item => item.name == name);
-    return item.logo
+    return item?.logo 
   }
   const changeStatus = async (status) => {
     let body = {
@@ -175,7 +175,8 @@ export const ReleaseDetails = () => {
                       <div key={index} className="colElement">
                         <div className="countryItem">
                           <input type="checkbox" checked={item.status === 'active'} />{item.name}
-                          <img className="img-fluid" src={require(`../../assets/images/store/${getLogo(item.name)}`)} alt={item.name} />
+                        {getLogo(item.name) != "" && getLogo(item.name) != undefined ? 
+                         <img className="img-fluid" src={require(`../../assets/images/store/${getLogo(item.name)}`)} alt={item.name} />:<></>}
                         </div>
                       </div>
                     ))}

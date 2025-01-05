@@ -1,79 +1,81 @@
 import React, { useEffect } from 'react';
 import Step5Controller from '../../Controllers/One-release-controller/Step5Controller';
 export default function STEP5(props) {
-const { releaseData, fetchReleaseDetails } = props
-const { handleSubmit,
-removeExclusiveDate,
-removePreOrder,
-exclusiveOrderSelect,
-preOrderSelect,
-handlePreOrderDateChange,
-handleExclusiveDateChange,
-preOrderDate, setPreOrderDate,
-selectPreOrderDate, setSelectPreOrderDate,
-exclusiveDates, setExclusiveDates,
-selectexclusiveDate, setSelectexclusiveDate, allowPreview, setAllowPreview,
-setReleaseData, mainReleaseDate, setMainReleaseDate
-} = Step5Controller();
-useEffect(() => {
-const getData = async () => {
-setReleaseData(releaseData)
-setMainReleaseDate(releaseData?.step5?.MainReleaseDate)
-setAllowPreview(releaseData?.step5?.Preview?.Allow90Sec)
-setSelectPreOrderDate(releaseData?.step5?.PreOrder)
-setSelectexclusiveDate(releaseData?.step5?.ExclusiveReleaseDates)
-}
-getData()
-}, [releaseData])
-return (
-<div>
-  <div className="row">
-    <div className="col-md-3">
-      <div className="form-group">
-        <label>Choose a main release date <span>*</span></label>
-        <input
-          className="form-control"
-          type="date"
-          value={mainReleaseDate}
-          onChange={(e) => setMainReleaseDate(e.target.value)}
-        />
-      </div>
-      <div className="form-group">
-        <label>Add a pre-order date</label>
-        <select className="form-select form-control" onChange={(e) =>
-          preOrderSelect(e.target.value)}>
-          <option value="">Select Music</option>
-          {preOrderDate.map((item) => (
-          <option key={item.id} value={item.id}>{item.name}</option>
+  const { releaseData, fetchReleaseDetails } = props
+  const { handleSubmit,
+    removeExclusiveDate,
+    removePreOrder,
+    exclusiveOrderSelect,
+    preOrderSelect,
+    handlePreOrderDateChange,
+    handleExclusiveDateChange,
+    preOrderDate, setPreOrderDate,
+    selectPreOrderDate, setSelectPreOrderDate,
+    exclusiveDates, setExclusiveDates,
+    selectexclusiveDate, setSelectexclusiveDate, allowPreview, setAllowPreview,
+    setReleaseData, mainReleaseDate, setMainReleaseDate
+  } = Step5Controller();
+  useEffect(() => {
+    const getData = async () => {
+      setReleaseData(releaseData)
+      setMainReleaseDate(releaseData?.step5?.MainReleaseDate)
+      setAllowPreview(releaseData?.step5?.Preview?.Allow90Sec)
+      setSelectPreOrderDate(releaseData?.step5?.PreOrder)
+      setSelectexclusiveDate(releaseData?.step5?.ExclusiveReleaseDates)
+    }
+    getData()
+  }, [releaseData])
+  return (
+    <div>
+      <div className="row">
+        <div className="col-md-3">
+          <div className="form-group">
+            <label>Choose a main release date <span>*</span></label>
+            <input
+              className="form-control"
+              type="date"
+              value={mainReleaseDate}
+              onChange={(e) => setMainReleaseDate(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Add a pre-order date</label>
+            <select className="form-select form-control" onChange={(e) =>
+              preOrderSelect(e.target.value)}>
+              <option value="">Select Music</option>
+              {preOrderDate.map((item) => (
+                <option key={item.id} value={item.id}>{item.name}</option>
+              ))}
+            </select>
+          </div>
+          {selectPreOrderDate.map((item) => (
+            <div
+              // className="form-control"
+              style={{
+                width:'600px',
+                display: 'flex', // Ensure the container is a flex container
+                flexDirection: 'row', // Align items in a row
+                gap: '10px', // Add space between items
+                alignItems: 'center', // Align items vertically centered,
+                marginTop: 20
+              }}
+            >
+              
+              <input
+                className="form-control"
+                value={item.name}
+                disbled
+              />
+              <input
+                className="form-control"
+                type="date"
+                value={item.date}
+                onChange={(e) => handlePreOrderDateChange(item.id, e.target.value)}
+              />
+              <button type="button" onClick={() => removePreOrder(item.id)}>X</button>
+            </div>
           ))}
-        </select>
-      </div>
-      {selectPreOrderDate.map((item) => (
-      <div
-      className="form-control"
-      style={{
-      display: 'flex', // Ensure the container is a flex container
-      flexDirection: 'row', // Align items in a row
-      gap: '10px', // Add space between items
-      alignItems: 'center', // Align items vertically centered,
-      marginTop: 20
-      }}
-      > 
-      <input
-        className="form-control" 
-        value={item.name}
-        disbled 
-        />
-      <input
-        className="form-control"
-        type="date"
-        value={item.date}
-        onChange={(e) => handlePreOrderDateChange(item.id, e.target.value)}
-      />
-      <button type="button" onClick={() => removePreOrder(item.id)}>X</button>
-    </div>
-    ))}
-    {/* <div className="form-group" style={{
+          {/* <div className="form-group" style={{
     marginTop: 50
     }}>
     <label>
