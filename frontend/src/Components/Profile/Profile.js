@@ -24,7 +24,7 @@ return (
               {/* Company Name */}
               <div className="col-lg-3 col-md-4 col-12">
                 <div className="form-group">
-                  <label for="exampleInputEmail1"> Company Name</label>
+                  <label for="exampleInputEmail1">Company Name</label>
                   <input
                     type="text"
                     className="form-control"
@@ -218,9 +218,9 @@ return (
                 </div>
               </div>
               {/* Submit Button */}
-              <div className="submit-btn">
+              {/* <div className="submit-btn">
                 <button type="submit" className="btn btn-primary">Update Profile</button>
-              </div>
+              </div> */}
             </div>
           </div>
         </form>

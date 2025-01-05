@@ -58,7 +58,7 @@ const OneReleaseController = (props) => {
       if (result.status === true) {
         arrRelease = Array.isArray(result.data)
           ? result.data
-            .filter((item) => item.status != 'Pending') // Filter items with status 'pending'
+            .filter((item) => item.status != 'Pending' ||  item.status == 'reject') // Filter items with status 'pending'
             .map((item, index) => ({
               _id: item._id,
               id: index + 1,

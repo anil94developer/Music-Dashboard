@@ -113,14 +113,7 @@ const UserManagement = (props) => {
             <h1>User Management</h1>
 
             {/* Filters */}
-            <div className="filters">
-              {/* <input
-                type="text"
-                placeholder="Search by login or email"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              /> */}
-
+            <div className="filters"> 
               <a href="add-user"> <button className="add-user-button">Add Master Account</button></a>
             </div>
  

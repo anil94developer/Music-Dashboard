@@ -82,7 +82,7 @@ export default function STEP6(props) {
             <div className="steps-detail step-five-main">
                 <STEP5 releaseData={releaseData} />
             </div>
-            <div className="submit-btn text-center">
+            <div className="text-center">
                 <button type="submit" className="btn btn-primary" onClick={handleSubmitClick}>Submit</button>
             </div>
         </div>

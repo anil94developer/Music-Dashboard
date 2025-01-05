@@ -59,11 +59,11 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* <div className="col-lg-3 col-xs-6">
+               <div className="col-lg-3 col-xs-6">
             <div className="dash-detail d-flex flex-wrap">
               <div className="inner">
-                <p>All Release</p>
-                <h3>{dashboardData.myReleaseCount}</h3>
+                <p>Total Tracks</p>
+                <h3>0</h3>
               </div>
               <div className="icon">
                 <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')}/>
@@ -73,8 +73,8 @@ export const Dashboard = () => {
           <div className="col-lg-3 col-xs-6">
             <div className="dash-detail d-flex flex-wrap">
               <div className="inner">
-                <p>All Tracks</p>
-                <h3>{dashboardData.myTracksCount}</h3>
+                <p>Total Pending Tracks</p>
+                <h3>{0}</h3>
               </div>
               <div className="icon">
                 <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')}/>
@@ -84,8 +84,8 @@ export const Dashboard = () => {
           <div className="col-lg-3 col-xs-6">
             <div className="dash-detail d-flex flex-wrap">
               <div className="inner">
-                <p>All Release</p>
-                <h3>{dashboardData.myReleaseCount}</h3>
+                <p>Approve Content</p>
+                <h3>{0}</h3>
               </div>
               <div className="icon">
                 <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')}/>
@@ -95,14 +95,14 @@ export const Dashboard = () => {
           <div className="col-lg-3 col-xs-6">
             <div className="dash-detail d-flex flex-wrap">
               <div className="inner">
-                <p>All Tracks</p>
-                <h3>{dashboardData.myTracksCount}</h3>
+                <p>Reject Content</p>
+                <h3>{0}</h3>
               </div>
               <div className="icon">
                 <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')}/>
               </div>
             </div>
-          </div> */}
+          </div>  
                 {/* 
           <div className="col-lg-3 col-xs-6">
             <div className="small-box bg-yellow">

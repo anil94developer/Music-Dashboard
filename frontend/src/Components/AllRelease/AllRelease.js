@@ -92,7 +92,18 @@ export const AllRelease = () => {
                             <tr className="odd">
                               <td className="  sorting_1">{item.title}</td>
                               <td className="  ">{item.type}</td>
-                              <td className="  ">{item.status}</td>
+                              <td  >
+                              {
+                              item.status == "pending" ?
+                              <i class="fa fa-clock"></i>
+                              :  item.status == "submit" ?
+                               <i class="fa fa-upload"></i>
+                              : item.status == "approve" ?
+                               <i class="fa fa-check-circle"></i>
+                              : 
+                               <i class="fa fa-times-circle"></i> 
+
+                              }</td>
                               <td className="  ">{item?.step1?.labelName}</td>
                               <td className="  ">{item.step1?.originalReleaseDate}</td>
                               <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
