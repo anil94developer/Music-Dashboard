@@ -187,7 +187,7 @@ auth.signUp = async (req, res, next) => {
             ip_address: ipAddress,
             create_at: futureTimeInMillis,
             is_active: 1,
-            clientNumber:Date.now()
+            clientNumber:Math.floor(10000000 + Math.random() * 90000000)
         }
         const register = await authModel.signUp(newUser)
         const userData = {

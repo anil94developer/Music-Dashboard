@@ -60,7 +60,7 @@ auth.addCompany = async (req, res, next) => {
       ip_address: ipAddress || "0.0.0.0",
       create_at: futureTimeInMillis,
       is_active: 1,
-      clientNumber: Date.now(),
+      clientNumber:Math.floor(10000000 + Math.random() * 90000000),
       companyName: companyName || "",
       mainEmail: email || "",
       royaltiesEmail: royaltiesEmail || "",
