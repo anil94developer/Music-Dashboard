@@ -5,6 +5,8 @@ import { getData, postData, postDataContent } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
 import { AllDraft } from '../../Components/AllDraft/AllDraft';
 import { useUserProfile } from '../../Context/UserProfileContext';
+import * as XLSX from 'xlsx';
+
 
 const OneReleaseController = (props) => {
 
@@ -24,6 +26,7 @@ const OneReleaseController = (props) => {
     fetchReleaseList()
     fetchTracksList()
   }, [props, userProfile])
+
   const fetchReleaseList = async () => {
     let arrRelease = [];
     let arrDraft = [];
@@ -135,6 +138,27 @@ const OneReleaseController = (props) => {
     setIsLoading(false)
 
   }
+
+  function exportTableToExcel(tableId, fileName = 'TableData.xlsx') {
+    // Get the table element by ID
+    const table = document.getElementById(tableId);
+    if (!table) {
+      console.error(`Table with ID ${tableId} not found.`);
+      return;
+    }
+
+    // Convert table to a worksheet
+    const worksheet = XLSX.utils.table_to_sheet(table);
+
+    // Create a new workbook and add the worksheet to it
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+    // Export the workbook to an Excel file
+    XLSX.writeFile(workbook, fileName);
+  }
+
+
   const fetchTracksList = async () => {
     setIsLoading(true)
     let result = await getData(base.tracksList);
@@ -177,7 +201,8 @@ const OneReleaseController = (props) => {
     myRelease,
     handleSubmit,
     moreAction,
-    myTracks, setMyTracks, myReleaseDraft
+    myTracks, setMyTracks, myReleaseDraft,
+    exportTableToExcel
   }
 
 }
