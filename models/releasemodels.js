@@ -219,22 +219,21 @@ releaseModel.addOneStepRelease = async (body) => {
   }
 };
 releaseModel.addTwoStepRelease = async (id, filesData) => {
-  console.log("Updating release with ID:", id);
   try {
+
     const releaseResult = await db.connectDb("release", releaseSchema);
 
-    // Handle adding single or multiple items
-    const updateData = Array.isArray(filesData)
-      ? { $push: { step2: { $each: filesData } } } // Push multiple items
-      : { $push: { step2: filesData } };          // Push single item
-
-    const result = await releaseResult.updateOne({ _id: id }, updateData);
+    const result = await releaseResult.updateOne(
+      { _id: id },
+      { $push: { step2: filesData } } 
+    );
 
     console.log("Database update result:", result);
+      
     return result.modifiedCount > 0 || result.upsertedCount > 0;
   } catch (error) {
     console.error("Database update error:", error);
-    throw error;
+    throw new Error("Failed to update release with the provided file data.");
   }
 };
 

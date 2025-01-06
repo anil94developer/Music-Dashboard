@@ -25,10 +25,20 @@ release.addOneRelease = async (req, res, next) => {
     }
 };
 release.addOneStepRelease = async (req, res, next) => {
-    const  body  = req.body 
-    try {  
+    const body = req.body
+    const { type, title } = req.body
+    // console.log("userId=======",req.doc.userId); 
+    if(req.file?.path){
+        const coverImage = req.file?.path
+    console.log("###################",coverImage)
+    const coverImageurl = await uploadOnCloudinary(coverImage)
+    console.log("*******************",coverImageurl)
+    body["coverImage"]=coverImageurl.url
+    }
+    
+    try {
         // console.log("bodyData====",body);
-        const result = await releaseModel.addOneStepRelease(body) 
+        const result = await releaseModel.addOneStepRelease(body)
         return R(res, true, "Update Successfully!!", result, 200)
     } catch (err) {
         next(err)
@@ -36,43 +46,54 @@ release.addOneStepRelease = async (req, res, next) => {
 };
 release.addTwoStepRelease = async (req, res) => {
     try {
-        const id = req.body.id;
-        const localFilePath = req.file?.path;
+        const { id } = req.body; // Extract release ID from the request body
+        const localFilePath = req.file?.path; // Extract file path from the uploaded file
 
+        // Log the file path for debugging
+        console.log("Local File Path:", localFilePath);
+
+        // Check if a file was uploaded
         if (!localFilePath) {
-            return res.status(400).json({ status: false, message: "File is missing." });
+            return res.status(400).json({
+                status: false,
+                message: "File is missing.",
+            });
         }
-        // console.log("File data:", JSON.stringify(files));
-        // Extract file metadata
-        const fileDataSet = files.map((file) => ({
-            fileName: file.originalname,
-            fileData: file.path, // Replace with cloud storage URL if applicable
-            fileType: file.mimetype.includes("audio") ? "audio" : "video",
-        }));
 
-        
+        // Upload the file to Cloudinary
         const cloudinaryUrl = await uploadOnCloudinary(localFilePath, "audio");
-        
-        console.log("cloudinaryUrl ---------------------------", cloudinaryUrl);
-        // const fileDataSet = [
-        //     {
-        //         fileName: req.file.originalname,
-        //         fileData: cloudinaryUrl,
-        //         fileType: req.file.mimetype.startsWith("audio") ? "audio" : "video",
-        //     },
-        // ];
+        console.log("Cloudinary URL:", cloudinaryUrl);
 
-      //  const result = await releaseModel.addTwoStepRelease(id, fileDataSet);
-        // console.log("Database update result:", result);
+        // Prepare file data to be added to the release
+        const fileDataSet = {
+            fileName: req.file.originalname, // Get the file's original name
+            fileData: cloudinaryUrl.url,    // Get the URL from Cloudinary's response
+            fileType: req.file.mimetype.includes("audio") ? "audio" : "video", // Determine file type
+        };
 
-        // if (result) {
-        //     return res.status(200).json({ status: true, message: "Files uploaded successfully!" });
-        // } else {
-        //     return res.status(400).json({ status: false, message: "Failed to update release." });
-        // }
+        // Update the release with the new file data
+        const result = await releaseModel.addTwoStepRelease(id, fileDataSet);
+        console.log("Database Update Result:", result);
+
+        // Send the appropriate response based on the result
+        if (result) {
+            return res.status(200).json({
+                status: true,
+                message: "Files uploaded successfully!",
+            });
+        } else {
+            return res.status(400).json({
+                status: false,
+                message: "Failed to update release.",
+            });
+        }
     } catch (error) {
-        // console.error("File upload error:", error);
-        res.status(500).json({ status: false, message: "File upload failed", error });
+        console.error("File upload error:", error);
+        res.status(500).json({
+            status: false,
+            message: "File upload failed.",
+            error: error.message || error,
+        });
     }
 };
 
