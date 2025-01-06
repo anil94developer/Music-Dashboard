@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
 // auth.addUsers = async (req, res, next) => {
 //     try {
 //         let userAddition = await authModel.addUser()
-//         return R(res, true, "Data submitted successfully!!", {}, 200)
+//         return R(res, true, "Data Submitted successfully!!", {}, 200)
 //     } catch (error) {
 //         next(error)
 //     }
@@ -392,7 +392,7 @@ auth.userList = async (req, res, next) => {
 //             return R(res, false, "Email Id Already Exists Please choose different email Id!!!", {}, 200)
 //         }
 //         let ins = await authModel.subadmin(req.body);
-//         return R(res, true, "Data submitted successfully!!", {}, 200)
+//         return R(res, true, "Data Submitted successfully!!", {}, 200)
 //     } catch (error) {
 //         next(error)
 //     }

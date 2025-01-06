@@ -18,7 +18,7 @@ const transcationSchema=mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["active", "pending", "complete"]
+        enum:["active", "Pending", "complete"]
     },
     creditAmount:{
         type:Number,

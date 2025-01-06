@@ -8,7 +8,7 @@ const releaseSchema = mongoose.Schema({
   userId: { type: String },
   title: { type: String, required: true },
   type: { type: String, required: true },
-  status:{ type: String,default:'pending'},
+  status:{ type: String,default:'Pending'},
   youtubechannelLinkId:{ type: String,default:''},
   step1: {
     subTitle: { type: String, default: null },
@@ -320,7 +320,7 @@ releaseModel.addFiveStepRelease = async (body) => {
   }
 };
 
-releaseModel.submitFinalRelease = async (body) => {
+releaseModel.SubmitFinalRelease = async (body) => {
   let id=body.id;
   let releaseDate=body.id;
   let youtubechannelLinkId=body.youtubechannelLinkId;
@@ -331,7 +331,7 @@ releaseModel.submitFinalRelease = async (body) => {
   let result = await releaseResult.updateOne({ _id:id },
     {
       $set: {
-        status: "submit",
+        status: "Submit",
         youtubechannelLinkId:youtubechannelLinkId,
         "step1.originalReleaseDate":releaseDate,
         }
@@ -486,7 +486,7 @@ releaseModel.getTotalTrack = async (uId, role) => {
         }
       });
       
-      const totalPending = await result.countDocuments({status: "pending"})
+      const totalPending = await result.countDocuments({status: "Pending"})
       const totalApprove = await result.countDocuments({status: "Approve"});
       const totalReject = await result.countDocuments({status: "Reject"});
       const totalCompany = await authModel.getCompanyCount();
@@ -501,7 +501,7 @@ releaseModel.getTotalTrack = async (uId, role) => {
           totalCount += doc.step3.length;
         }
       });
-      const totalPending = await result.countDocuments({userId: uId ,status: "pending"});
+      const totalPending = await result.countDocuments({userId: uId ,status: "Pending"});
       const totalApprove = await result.countDocuments({userId: uId ,status: "Approve"});
       const totalReject = await result.countDocuments({userId: uId ,status: "Reject"});
       const totalCompany = 0;

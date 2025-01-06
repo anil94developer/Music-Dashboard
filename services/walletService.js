@@ -9,7 +9,7 @@ wallet.transactions = async (req, res, next) => {
   try {
     const data = req.body;
     data["userId"] = req.doc.userId;
-    data["status"] = 'pending';
+    data["status"] = 'Pending';
 
     // console.log(data);
     if (!data) {
@@ -18,7 +18,7 @@ wallet.transactions = async (req, res, next) => {
     const amount = await authModal.transaction(data);
 
     if (!amount) {
-      return R(res, false, "Current withdrawal request is pending, try to send next request after three month ", "", 400);
+      return R(res, false, "Current withdrawal request is Pending, try to send next request after three month ", "", 400);
     }
 
     const withdrawal = await withdrawalModel.add(data);
