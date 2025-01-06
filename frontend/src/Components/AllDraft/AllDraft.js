@@ -50,12 +50,12 @@ export const AllDraft = () => {
                     <h3 className="box-title">Draft Releasess</h3>
                   </div>
                   <div className="box-body">
-                    {/* <DataTable
+                    <DataTable
                       columns={columns}
                       rows={myReleaseDraft}
                       height="500"
                       width="100%"
-                    /> */}
+                    />
                     {/* 
                 <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                   <thead>
@@ -77,50 +77,6 @@ export const AllDraft = () => {
                   </tbody>
                 </table>
                 */}
-                <div className="box-body table-responsive">
-                      <table id="example2" className="table table-bordered table-striped">
-                        <thead>
-                          <tr role="row">
-                            <th >Title / Artist</th>
-                            <th >Type</th>
-                            <th >Status</th>
-                            <th >Label</th>
-                            <th >Release date / Hour / Time zone</th>
-                            <th ># of track</th>
-                            <th >UPC / Catalog Number</th>
-                            <th >Delivered Territories & Stores</th>
-                            <th >ACTION</th>
-                          </tr>
-                        </thead>
-                        <tbody role="alert" aria-live="polite" aria-relevant="all">
-                          {myRelease.map((item) => (
-                            item.status == "submit" &&
-                            <tr className="odd">
-                              <td className="  sorting_1">{item.title}</td>
-                              <td className="  ">{item.type}</td>
-                              <td className="  ">{item.status}</td>
-                              <td className="  ">{item?.step1?.labelName}</td>
-                              <td className="  ">{item.step1?.originalReleaseDate}</td>
-                              <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
-                              <td className="  ">{item.step1?.UPCEAN}</td>
-                              <td className="  ">{item?.step5?.MainReleaseDate}</td>
-
-                              <td>
-                                <div className="action-buttons">
-                                  <button title="Download" className="action-button">
-                                    <a  onClick={() => moreAction(item)}>
-                                      <i className="fa fa-eye"></i>
-                                    </a>
-                                  </button>
-                                   
-                                </div>
-                              </td>
-
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
                   </div>
                   {isLoading && "Loading..."}
                 </div>

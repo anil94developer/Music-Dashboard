@@ -19,8 +19,10 @@ const Step2Controller = () => {
             // mediaFiles.forEach((file) => formData.append("files", file.fileData));
             console.log("mediaFiles=======",formData)
             const result = await postDataContent(base.releaseStep2, formData);
+            
             Swal.fire("Success", result.message, "success");
             fetchReleaseDetails(releaseData._id)
+
             setMediaFiles([])
 
         } catch (error) {
