@@ -5,6 +5,7 @@ import ARTISTLIST from '../../Enums/artist.list.json';
 import GENRES from '../../Enums/genres.json';
 import { images } from '../../assets/images';
 import { base, domainUrl } from '../../Constants/Data.constant';
+import Loader from '../Common/Loader';
 export default function STEP1(props) {
   const { setStep, releaseData } = props;
   const { releaseTitle, setReleaseTitle,
@@ -23,7 +24,7 @@ export default function STEP1(props) {
     upcEan, setUpcEan,
     newLabelName, setNewLabelName,
     labelNameStatus, setLabelNameStatus,
-    producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData, setCoverImage, coverImage } = Step1Controller();
+    producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData, setCoverImage, coverImage, loader } = Step1Controller();
   useEffect(() => {
     const getData = () => {
       setReleaseData(releaseData);
@@ -359,7 +360,9 @@ export default function STEP1(props) {
           </div>
         </div>
         <div className="col-12">
-          <button onClick={() => [handleSubmit()]} className="btn btn-primary" type="submit">Save</button>
+          {loader ? <Loader /> :
+            <button onClick={() => [handleSubmit()]} className="btn btn-primary" type="Submit">Save</button>
+          }
         </div>
       </div>
       <div className="row">
@@ -388,13 +391,6 @@ export default function STEP1(props) {
       </div>
       {/* Right Column */}
       <div className="col-md-6">
-
-
-
-
-
-
-
       </div>
     </div >
   )

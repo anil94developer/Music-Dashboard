@@ -76,7 +76,7 @@ return (
             <div className="d-flex justify-content-between align-items-center">
               <div className="col-xs-4">
                 {!isLoading ? (
-                <button className="btn btn-primary" type="submit">
+                <button className="btn btn-primary" type="Submit">
                 Sign In
                 </button>
                 ) : (

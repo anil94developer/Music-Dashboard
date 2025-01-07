@@ -133,7 +133,7 @@ export default function DailyTreads() {
                 <label htmlFor="releaseDate"> .{" "}</label>
                 <input
                   value={"Search"}
-                  type="submit"
+                  type="Submit"
                   className="form-control"
                   onClick={() => {
                     let query = `startDate=${startDate}&&endDate=${endDate}`;

@@ -938,7 +938,7 @@ a:focus {
   }
 }
 
-/* Add fade animation to dropdown menus by appending
+/* Add fade animation to dropdown menus by apPending
  the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
 .open:not(.dropup)>.animated-dropdown-menu {
   backface-visibility: visible !important;
@@ -4608,4 +4608,22 @@ Gradient Background colors
 .full-opacity-hover:hover {
   opacity: 1;
   filter: alpha(opacity=100);
+}
+
+
+.progress-container {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+}
+
+.progress-bar {
+  background-color: #4caf50;
+  height: 20px;
+  border-radius: 4px;
+  text-align: center;
+  color: #fff;
+  line-height: 20px;
+  transition: width 0.2s ease-in-out;
 }

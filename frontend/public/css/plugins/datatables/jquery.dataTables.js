@@ -3099,7 +3099,7 @@
 			}
 			
 			/* Move caption elements from the body to the header, footer or leave where it is
-			 * depending on the configuration. Note that the DTD says there can be only one caption */
+			 * dePending on the configuration. Note that the DTD says there can be only one caption */
 			var nCaption = $(oSettings.nTable).children('caption');
 			if ( nCaption.length > 0 )
 			{
@@ -6040,7 +6040,7 @@
 				oSettings.aoOpenRows[i].nTr.colSpan = _fnVisbleColumns( oSettings );
 			}
 			
-			/* Do a redraw incase anything depending on the table columns needs it 
+			/* Do a redraw incase anything dePending on the table columns needs it 
 			 * (built-in: scrolling) 
 			 */
 			if ( bRedraw === undefined || bRedraw )

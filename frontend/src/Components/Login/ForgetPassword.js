@@ -133,7 +133,7 @@ export const ForgetPassword = () => {
                     </div>
                     <div className="d-flex justify-content-between align-items-center">
                       <div className="col-xs-4">
-                        <button className="btn btn-primary" type="submit">
+                        <button className="btn btn-primary" type="Submit">
                           Submit
                         </button>
                       </div>
@@ -164,7 +164,7 @@ export const ForgetPassword = () => {
                     </div>
                     <div className="row">
                       <div className="d-flex justify-content-between align-items-center">
-                        <button className="btn btn-primary" type="submit">
+                        <button className="btn btn-primary" type="Submit">
                           Verify OTP
                         </button>
                       </div>
@@ -204,7 +204,7 @@ export const ForgetPassword = () => {
                     </div>
                     <div className="row">
                       <div className="col-xs-4">
-                        <button className="btn btn-primary" type="submit">
+                        <button className="btn btn-primary" type="Submit">
                           Reset Password
                         </button>
                       </div>

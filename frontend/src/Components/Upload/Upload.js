@@ -70,7 +70,7 @@
 //                       <div className="form-group">
 //                         <button
 //                           onClick={() => handleSubmitTrack()}
-//                           type="submit"
+//                           type="Submit"
 //                           className="btn btn-primary"
 //                         >
 //                           Submit

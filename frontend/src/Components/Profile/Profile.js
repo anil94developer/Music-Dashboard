@@ -218,8 +218,8 @@ return (
                 </div>
               </div>
               {/* Submit Button */}
-              {/* <div className="submit-btn">
-                <button type="submit" className="btn btn-primary">Update Profile</button>
+              {/* <div className="Submit-btn">
+                <button type="Submit" className="btn btn-primary">Update Profile</button>
               </div> */}
             </div>
           </div>

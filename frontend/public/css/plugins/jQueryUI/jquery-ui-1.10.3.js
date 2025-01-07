@@ -2128,7 +2128,7 @@ $.ui.plugin.add("draggable", "connectToSortable", {
 
 					this.instance.isOver = 1;
 					//Now we fake the start of dragging for the sortable instance,
-					//by cloning the list group item, appending it to the sortable and using it as inst.currentItem
+					//by cloning the list group item, apPending it to the sortable and using it as inst.currentItem
 					//We can then fire the start event of the sortable with our passed browser event, and our own helper (so it doesn't create a new one)
 					this.instance.currentItem = $(that).clone().removeAttr("id").appendTo(this.instance.element).data("ui-sortable-item", true);
 					this.instance.options._helper = this.instance.options.helper; //Store helper option to later restore it
@@ -5281,7 +5281,7 @@ $.widget( "ui.autocomplete", {
 		select: null
 	},
 
-	pending: 0,
+	Pending: 0,
 
 	_create: function() {
 		// Some browsers only repeat keydown events, not keypress events,
@@ -5649,7 +5649,7 @@ $.widget( "ui.autocomplete", {
 	},
 
 	_search: function( value ) {
-		this.pending++;
+		this.Pending++;
 		this.element.addClass( "ui-autocomplete-loading" );
 		this.cancelSearch = false;
 
@@ -5665,8 +5665,8 @@ $.widget( "ui.autocomplete", {
 				that.__response( content );
 			}
 
-			that.pending--;
-			if ( !that.pending ) {
+			that.Pending--;
+			if ( !that.Pending ) {
 				that.element.removeClass( "ui-autocomplete-loading" );
 			}
 		};

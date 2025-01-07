@@ -165,11 +165,12 @@ export default function STEP3(props) {
         </div>
       </div>
       <br></br>
-      <div className="box box-primary">
-        <div className="box">
-          <div className="track-table box-body">
-            <div className="dataTables_wrapper form-inline" role="grid">
-              <table className="table" aria-describedby="example2_info">
+      <div className="dash-detail">
+        <div className="">
+          <div className="">
+            <div className="" role="grid">
+            <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+
                 <thead>
                   <tr draggable="true">
                     <th rowspan="1" colspan="1">Volume</th>
@@ -337,7 +338,7 @@ export default function STEP3(props) {
                         <select className="form-select form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
                           <option value="">- Select a year -</option>
                           {[...Array(100)].map((_, i) => (
-                            <option key={i} value={2023 - i}>{2023 - i}</option>
+                            <option key={i} value={2026 - i}>{2026 - i}</option>
                           ))}
                         </select>
                       </div>
@@ -496,7 +497,7 @@ export default function STEP3(props) {
                   <div className="form-group">
                     {/* Submit Button */}
                     {/* <div className="col-ml-12"> */}
-                    <button type="submit" className="btn btn-primary"
+                    <button type="Submit" className="btn btn-primary"
                       onClick={async () => {
                         await handleSubmit();  // Ensure handleSubmit completes first
                         closeModal();

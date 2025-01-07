@@ -218,7 +218,7 @@
         remove, isNumber, all, sum, addCSS, ensureArray, formatNumber, RangeMap,
         MouseHandler, Tooltip, barHighlightMixin,
         line, bar, tristate, discrete, bullet, pie, box, defaultStyles, initStyles,
-        VShape, VCanvas_base, VCanvas_canvas, VCanvas_vml, pending, shapeCount = 0;
+        VShape, VCanvas_base, VCanvas_canvas, VCanvas_vml, Pending, shapeCount = 0;
 
     /**
      * Default configuration settings
@@ -938,7 +938,7 @@
 
     $(initStyles);
 
-    pending = [];
+    Pending = [];
     $.fn.sparkline = function (userValues, userOptions) {
         return this.each(function () {
             var options = new $.fn.sparkline.options(this, userOptions),
@@ -1000,16 +1000,16 @@
                 }
             };
             if (($(this).html() && !options.get('disableHiddenCheck') && $(this).is(':hidden')) || !$(this).parents('body').length) {
-                if (!options.get('composite') && $.data(this, '_jqs_pending')) {
+                if (!options.get('composite') && $.data(this, '_jqs_Pending')) {
                     // remove any existing references to the element
-                    for (i = pending.length; i; i--) {
-                        if (pending[i - 1][0] == this) {
-                            pending.splice(i - 1, 1);
+                    for (i = Pending.length; i; i--) {
+                        if (Pending[i - 1][0] == this) {
+                            Pending.splice(i - 1, 1);
                         }
                     }
                 }
-                pending.push([this, render]);
-                $.data(this, '_jqs_pending', true);
+                Pending.push([this, render]);
+                $.data(this, '_jqs_Pending', true);
             } else {
                 render.call(this);
             }
@@ -1022,23 +1022,23 @@
     $.sparkline_display_visible = function () {
         var el, i, pl;
         var done = [];
-        for (i = 0, pl = pending.length; i < pl; i++) {
-            el = pending[i][0];
+        for (i = 0, pl = Pending.length; i < pl; i++) {
+            el = Pending[i][0];
             if ($(el).is(':visible') && !$(el).parents().is(':hidden')) {
-                pending[i][1].call(el);
-                $.data(pending[i][0], '_jqs_pending', false);
+                Pending[i][1].call(el);
+                $.data(Pending[i][0], '_jqs_Pending', false);
                 done.push(i);
-            } else if (!$(el).closest('html').length && !$.data(el, '_jqs_pending')) {
+            } else if (!$(el).closest('html').length && !$.data(el, '_jqs_Pending')) {
                 // element has been inserted and removed from the DOM
                 // If it was not yet inserted into the dom then the .data request
                 // will return true.
                 // removing from the dom causes the data to be removed.
-                $.data(pending[i][0], '_jqs_pending', false);
+                $.data(Pending[i][0], '_jqs_Pending', false);
                 done.push(i);
             }
         }
         for (i = done.length; i; i--) {
-            pending.splice(done[i - 1], 1);
+            Pending.splice(done[i - 1], 1);
         }
     };
 

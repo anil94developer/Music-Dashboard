@@ -50,7 +50,7 @@ return (
               required
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="Submit" className="btn btn-primary">
             Submit
             </button>
           </form>

@@ -53,7 +53,7 @@ export default function STEP6(props) {
 
     const handleSubmitClick = () => {
         if (validateFields()) {
-            navigate("/final-submit", { state: { releaseId: releaseData._id } });
+            navigate("/final-Submit", { state: { releaseId: releaseData._id } });
         }
         else {  
                 window.scrollTo({
@@ -83,7 +83,7 @@ export default function STEP6(props) {
                 <STEP5 releaseData={releaseData} />
             </div>
             <div className="text-center">
-                <button type="submit" className="btn btn-primary" onClick={handleSubmitClick}>Submit</button>
+                <button type="Submit" className="btn btn-primary" onClick={handleSubmitClick}>Submit</button>
             </div>
         </div>
     )

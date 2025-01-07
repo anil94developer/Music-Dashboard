@@ -302,8 +302,8 @@ function AddCompany(props) {
                                         </div>
                                     </div>
                                     {/* Submit Button */}
-                                    <div className="submit-btn">
-                                        <button type="submit" className="btn btn-primary">Submit</button>
+                                    <div className="Submit-btn">
+                                        <button type="Submit" className="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
                             </div>

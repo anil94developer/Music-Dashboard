@@ -66,7 +66,7 @@ const useSupportController = (props) => {
 
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error Submitting form:", error);
       Swal.fire("Error", "Something went wrong. Please try again later.", "error");
     }
   };

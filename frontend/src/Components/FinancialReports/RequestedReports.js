@@ -83,7 +83,7 @@ const AutomaticReports = (props) => {
               <label htmlFor="releaseDate"> .{" "}</label>
               <input
                 value={"Search"}
-                type="submit"
+                type="Submit"
                 className="form-control"
                 onClick={() => getReoprt()}
               />
@@ -95,7 +95,7 @@ const AutomaticReports = (props) => {
               <label htmlFor="releaseDate"> .{" "}</label>
               <input
                 value={"Download"}
-                type="submit"
+                type="Submit"
                 className="btn btn-success"
                 onClick={() => exportTableToExcel('example2', 'AutomaticReport.xlsx')}
               />

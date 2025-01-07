@@ -36,105 +36,130 @@ const OneReleaseController = (props) => {
       if (result.status === true) {
         arrRelease = Array.isArray(result.data)
           ? result.data
-          .filter((item) => item.status == 'submit' ||  item.status == 'approve' ||  item.status == 'reject') 
-          .map((item, index) => ({
-            _id: item._id,
-            id: index + 1,
-            type: item.type,
-            status: item.status,
-            title: item?.title || "Untitled",
-            label: item?.step1?.labelName || "Unknown Label",
-            releaseDate: item.step1?.originalReleaseDate || "N/A",
-            noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-            upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-            deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-            action: "",
-          }))
+            .filter((item) => item.status == 'Submit' || item.status == 'Approve' || item.status == 'Reject')
+            .map((item, index) => ({
+              _id: item._id,
+              id: index + 1,
+              type: item.type,
+              status: item.status,
+              title: item?.title || "Untitled",
+              label: item?.step1?.labelName || "Unknown Label",
+              releaseDate: item.step1?.originalReleaseDate || "N/A",
+              noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+              upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+              deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+              action: "",
+            }))
           : [];
       }
     } else if (userProfile?.role == "company") {
       setIsLoading(true)
-      let result = await getData(base.releaseList);
-      if (result.status === true) {
-        arrRelease = Array.isArray(result.data)
-          ? result.data
-            .filter((item) => item.status != 'Pending' ||  item.status == 'reject') // Filter items with status 'pending'
-            .map((item, index) => ({
-              _id: item._id,
-              id: index + 1,
-              type: item.type,
-              status: item.status,
-              title: item?.title || "Untitled",
-              label: item?.step1?.labelName || "Unknown Label",
-              releaseDate: item.step1?.originalReleaseDate || "N/A",
-              noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-              upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-              deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-              action: "",
-            }))
-          : [];
-        arrDraft = Array.isArray(result.data)
-          ? result.data
-            .filter((item) => item.status == 'Pending') // Filter items with status 'pending'
-            .map((item, index) => ({
-              _id: item._id,
-              id: index + 1,
-              type: item.type,
-              status: item.status,
-              title: item?.title || "Untitled",
-              label: item?.step1?.labelName || "Unknown Label",
-              releaseDate: item.step1?.originalReleaseDate || "N/A",
-              noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-              upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-              deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-              action: "",
-            }))
-          : [];
+      let resultSubmit = await getData(base.releaseList + `?status=Submit`);
+      if (resultSubmit.status == true) {
+        arrRelease = resultSubmit.data
       }
-      else if (userProfile?.role == "employee") {
-        setIsLoading(true)
-        let result = await getData(base.releaseList);
-        if (result.status === true) {
-          arrRelease = Array.isArray(result.data)
-            ? result.data
-              .filter((item) => item.status != 'pending') // Filter items with status 'pending'
-              .map((item, index) => ({
-                _id: item._id,
-                id: index + 1,
-                type: item.type,
-                status: item.status,
-                title: item?.title || "Untitled",
-                label: item?.step1?.labelName || "Unknown Label",
-                releaseDate: item.step1?.originalReleaseDate || "N/A",
-                noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-                upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-                deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-                action: "",
-              }))
-            : [];
-          arrDraft = Array.isArray(result.data)
-            ? result.data
-              .filter((item) => item.status == 'Pending') // Filter items with status 'pending'
-              .map((item, index) => ({
-                _id: item._id,
-                id: index + 1,
-                type: item.type,
-                status: item.status,
-                title: item?.title || "Untitled",
-                label: item?.step1?.labelName || "Unknown Label",
-                releaseDate: item.step1?.originalReleaseDate || "N/A",
-                noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-                upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-                deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-                action: "",
-              }))
-            : [];
-      }
-    }
-    }
 
-    setMyReleaseDraft(arrDraft)
-    setMyRelease(arrRelease);
+      let result = await getData(base.releaseList + `?status=Approve`);
+      if (result.status == true) {
+        console.log("result--------", result)
+        if (result.data.length > 0) {
+          arrRelease = [result.data, ...arrRelease];
+        }
+      }
+      let allDraft = await getData(base.releaseList + `?status=Pending`);
+      if (allDraft.status == true) {
+        arrDraft = allDraft.data;
+      }
+      let allReject = await getData(base.releaseList + `?status=Reject`);
+      if (allReject.status == true) {
+        if(allReject.data.length>0){ 
+        arrDraft = [allReject.data, ...arrDraft];
+        }
+      }
+      console.log("arrDraft----------", arrDraft)
+      setMyReleaseDraft(arrDraft)
+      setMyRelease(arrRelease)
+
+      // arrRelease = Array.isArray(result.data)
+      //   ? result.data
+      //     .filter((item) => item.status != 'Pending') // Filter items with status 'Pending'
+      //     .map((item, index) => ({
+      //       _id: item._id,
+      //       id: index + 1,
+      //       type: item.type,
+      //       status: item.status,
+      //       title: item?.title || "Untitled",
+      //       label: item?.step1?.labelName || "Unknown Label",
+      //       releaseDate: item.step1?.originalReleaseDate || "N/A",
+      //       noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+      //       upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+      //       deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+      //       action: "",
+      //     }))
+      //   : [];
+
+      // arrDraft = Array.isArray(result.data)
+      //   ? result.data
+      //     .filter((item) => item.status == 'Pending') // Filter items with status 'Pending'
+      //     .map((item, index) => ({
+      //       _id: item._id,
+      //       id: index + 1,
+      //       type: item.type,
+      //       status: item.status,
+      //       title: item?.title || "Untitled",
+      //       label: item?.step1?.labelName || "Unknown Label",
+      //       releaseDate: item.step1?.originalReleaseDate || "N/A",
+      //       noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+      //       upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+      //       deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+      //       action: "",
+      //     }))
+      //   : [];
+
+      // else if (userProfile?.role == "employee") {
+      //   setIsLoading(true)
+      //   let result = await getData(base.releaseList);
+      //   if (result.status === true) {
+      //     arrRelease = Array.isArray(result.data)
+      //       ? result.data
+      //         .filter((item) => item.status != 'Pending') // Filter items with status 'Pending'
+      //         .map((item, index) => ({
+      //           _id: item._id,
+      //           id: index + 1,
+      //           type: item.type,
+      //           status: item.status,
+      //           title: item?.title || "Untitled",
+      //           label: item?.step1?.labelName || "Unknown Label",
+      //           releaseDate: item.step1?.originalReleaseDate || "N/A",
+      //           noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+      //           upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+      //           deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+      //           action: "",
+      //         }))
+      //       : [];
+      //     arrDraft = Array.isArray(result.data)
+      //       ? result.data
+      //         .filter((item) => item.status == 'Pending') // Filter items with status 'Pending'
+      //         .map((item, index) => ({
+      //           _id: item._id,
+      //           id: index + 1,
+      //           type: item.type,
+      //           status: item.status,
+      //           title: item?.title || "Untitled",
+      //           label: item?.step1?.labelName || "Unknown Label",
+      //           releaseDate: item.step1?.originalReleaseDate || "N/A",
+      //           noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
+      //           upcCatalogNumber: item.step1?.UPCEAN || "N/A",
+      //           deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
+      //           action: "",
+      //         }))
+      //       : [];
+      //   }
+      // }
+
+    }
+    // setMyReleaseDraft(arrDraft)
+
     setIsLoading(false)
 
   }

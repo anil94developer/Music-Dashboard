@@ -7891,7 +7891,7 @@ function EventManager(options) { // assumed to be a calendar
 	var sources = [ stickySource ];
 	var rangeStart, rangeEnd;
 	var currentFetchID = 0;
-	var pendingSourceCnt = 0;
+	var PendingSourceCnt = 0;
 	var loadingLevel = 0;
 	var cache = []; // holds events that have already been expanded
 
@@ -7926,7 +7926,7 @@ function EventManager(options) { // assumed to be a calendar
 		cache = [];
 		var fetchID = ++currentFetchID;
 		var len = sources.length;
-		pendingSourceCnt = len;
+		PendingSourceCnt = len;
 		for (var i=0; i<len; i++) {
 			fetchEventSource(sources[i], fetchID);
 		}
@@ -7961,8 +7961,8 @@ function EventManager(options) { // assumed to be a calendar
 					}
 				}
 
-				pendingSourceCnt--;
-				if (!pendingSourceCnt) {
+				PendingSourceCnt--;
+				if (!PendingSourceCnt) {
 					reportEvents(cache);
 				}
 			}
@@ -8089,7 +8089,7 @@ function EventManager(options) { // assumed to be a calendar
 		var source = buildEventSource(sourceInput);
 		if (source) {
 			sources.push(source);
-			pendingSourceCnt++;
+			PendingSourceCnt++;
 			fetchEventSource(source, currentFetchID); // will eventually call reportEvents
 		}
 	}

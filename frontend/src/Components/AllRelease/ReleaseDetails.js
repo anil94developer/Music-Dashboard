@@ -79,10 +79,12 @@ export const ReleaseDetails = () => {
             <div className="audio-table release-inner dash-detail dash-detail-two mb-4">
               <div className="release-title">
                 <h2>Relase Information</h2>
-                <h2>{myRelease.status}</h2>
+                {/* <h2>{myRelease.status}</h2> */}
                 <div className="release-detail d-flex flex-wrap mt-3">
                   <p className="release-data"><strong>Title :</strong> {myRelease?.title}</p>
                   <p className="release-data"><strong>SubTitle :</strong> {myRelease?.step1?.subTitle}</p>
+                  <p className="release-data"><strong>Status :</strong> {myRelease?.status}</p>
+
                   <p className="release-data">
                     <strong>Artists:</strong>{" "}
                     {myRelease?.step1?.primaryArtist?.map((item, index) => (
@@ -420,13 +422,13 @@ export const ReleaseDetails = () => {
             {userProfile?.role == "admin" &&
               <div className="submit-btn text-center my-4">
                 <button type="submit" className="btn btn-success" onClick={() => {
-                  changeStatus("approve")
+                  changeStatus("Approve")
                 }}>Approve</button>
                 <button type="submit" className="btn btn-danger mx-4" onClick={() => {
-                  changeStatus("reject")
+                  changeStatus("Reject")
                 }}>Reject </button>
                 <button type="submit" className="btn btn-info mx-4" onClick={() => {
-                  changeStatus("pending")
+                  changeStatus("Pending")
                 }}>Pending </button>
               </div>
             }

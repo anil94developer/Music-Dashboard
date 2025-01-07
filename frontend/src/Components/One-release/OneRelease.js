@@ -52,8 +52,8 @@ return (
               <label for="exampleInputEmail1">Release Title *</label>
               <input type="text" className="form-control" id="releaseTitle" placeholder="Enter Release Title" onChange={(e) => setTitle(e.target.value)}/>
             </div>
-            <div className="submit-btn">
-              <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
+            <div className="Submit-btn">
+              <button type="Submit" id="btnSubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
             </div>
           </div>
         </div>

@@ -26,6 +26,8 @@ const Step1Controller = (props) => {
   const [labelNameStatus, setLabelNameStatus] = useState('');
   const [labelNameList, setLabelNameList] = useState([]);
   const [coverImage, setCoverImage] = useState({});
+  const [loader, setLoader] = useState(false);
+
 
 
   const navigate = useNavigate();
@@ -128,6 +130,7 @@ const Step1Controller = (props) => {
     // }
     // validation set end
     try{
+      setLoader(true)
     const formData = new FormData();
     formData.append("title", releaseData.title);
     formData.append("type", releaseData.type);
@@ -166,11 +169,16 @@ const Step1Controller = (props) => {
     let result = await postDataContent(base.releaseStep1, formData);
  
     if (result.status == true) {
+      setLoader(false)
       Swal.fire("Success", result.message, result.message);
     } else {
+      setLoader(false)
+
       Swal.fire("Error", result.message, result.message);
     }
   }catch(e){
+    setLoader(false)
+
    // Swal.fire("Error", e.message, e.message);
 
   }
@@ -224,7 +232,8 @@ const Step1Controller = (props) => {
     addNewLabel,
     labelNameList,
     imagePreview, setImagePreview, handleImageChange,
-    setCoverImage, coverImage
+    setCoverImage, coverImage,
+    loader
   }
 
 }

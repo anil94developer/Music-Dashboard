@@ -28,7 +28,7 @@ export default function STEP5(props) {
   return (
     <div>
       <div className="row">
-        <div className="col-md-3">
+        <div className="col-md-6">
           <div className="form-group">
             <label>Choose a main release date <span>*</span></label>
             <input
@@ -89,7 +89,7 @@ export default function STEP5(props) {
   </div>
   */}
         </div>
-        <div className="col-md-3">
+        <div className="col-md-6">
           <div className="form-group">
             <label>Add an exclusive release date</label>
             <select className="form-select form-control" onChange={(e) =>
@@ -127,8 +127,8 @@ export default function STEP5(props) {
           ))}
         </div>
       </div>
-      <div className="submit-btn mt-4">
-        <button type="submit" className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
+      <div className="Submit-btn mt-4">
+        <button type="Submit" className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
       </div>
     </div>
   );

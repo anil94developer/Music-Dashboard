@@ -87,18 +87,17 @@ export const AllRelease = () => {
                           </tr>
                         </thead>
                         <tbody role="alert" aria-live="polite" aria-relevant="all">
-                          {myRelease.map((item) => (
-                            item.status == "submit" &&
+                          {myRelease.map((item) => ( 
                             <tr className="odd">
                               <td className="  sorting_1">{item.title}</td>
                               <td className="  ">{item.type}</td>
                               <td  >
                               {
-                              item.status == "pending" ?
+                              item.status == "Pending" ?
                               <i class="fa fa-clock"></i>
-                              :  item.status == "submit" ?
+                              :  item.status == "Submit" ?
                                <i class="fa fa-upload"></i>
-                              : item.status == "approve" ?
+                              : item.status == "Approve" ?
                                <i class="fa fa-check-circle"></i>
                               : 
                                <i class="fa fa-times-circle"></i> 

@@ -1,46 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import Swal from "sweetalert2";
 import { postData, postDataContent } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
 import MainStepController from './MainStepController';
+import axios from 'axios';
 
 const Step2Controller = () => {
-    const { fetchReleaseDetails } = MainStepController();
+
     const [mediaFiles, setMediaFiles] = useState([]);
     const [releaseData, setReleaseData] = useState({});
+    const [files, setFiles] = useState([]);
+    const inputRef = useRef(null); // Use ref to access the input element
+    
+    const [uploadProgress, setUploadProgress] = useState(0);
+
+
+    
+
+
+    const fetchReleaseDetails = async (releaseId) => { 
+        let body = {
+            releaseId: releaseId
+        }
+        let result = await postData(base.releaseDetails, body);
+        if (result.data.status === true) {
+            setFiles(result.data.data.step2)
+        } else {
+
+        }
+    }
 
     const handleFileChange = async (e) => {
         try {
             const formData = new FormData();
             formData.append("id", releaseData._id);
             formData.append("files", e.target.files?.[0])
-            // releaseData.step2.forEach((file) => mediaFiles.push(file));
+            console.log("mediaFiles=======", formData)
+            let token = localStorage.getItem("token")
 
-            // mediaFiles.forEach((file) => formData.append("files", file.fileData));
-            console.log("mediaFiles=======",formData)
-            const result = await postDataContent(base.releaseStep2, formData);
-            
+            const config = {
+                headers: { Authorization: token, "content-type": 'multipart/form-data;', 'Cache-Control': 'no-cache', },
+                // headers: { "Content-Type": "multipart/form-data" },
+                onUploadProgress: (progressEvent) => {
+                    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setUploadProgress(progress); // Update progress state
+                },
+            };
+
+            const result = await axios.post(base.releaseStep2, formData, config);
+
+
+
+            // const result = await postDataContent(base.releaseStep2, formData); 
             Swal.fire("Success", result.message, "success");
             fetchReleaseDetails(releaseData._id)
-
-            setMediaFiles([])
+            // setMediaFiles([])
 
         } catch (error) {
             Swal.fire("Error", "An error occurred while uploading files.", "error");
         } finally {
-            // setIsUploading(false);
+            setUploadProgress(0);
+            if (inputRef.current) {
+                inputRef.current.value = ""; // Clear input value
+              }
         }
-        // const selectedFiles = Array.from(e.target.files);
-        // const allowedTypes = ["audio", "video"];
-        // const updatedFiles = selectedFiles
-        //     .filter((file) => allowedTypes.some((type) => file.type.startsWith(type)))
-        //     .map((file) => ({
-        //         fileName: file.name,
-        //         fileData: file,
-        //         fileType: file.type.startsWith("audio") ? "audio" : "video"
-        //     }));
-
-        // setMediaFiles((prevFiles) => [...prevFiles, ...updatedFiles]);
     };
 
     const handleRemove = (fileName) => {
@@ -74,7 +97,12 @@ const Step2Controller = () => {
         mediaFiles,
         handleSubmit,
         handleRemove,
-        setReleaseData
+        setReleaseData,
+        uploadProgress,
+        files,
+        fetchReleaseDetails,
+        inputRef
+
     };
 };
 

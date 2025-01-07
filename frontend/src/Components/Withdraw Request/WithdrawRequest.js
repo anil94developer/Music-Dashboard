@@ -29,7 +29,7 @@ const WithdrawRequest = (props) => {
     console.log("getWithdrawList list=========>", result.data)
     const resultList = Array.isArray(result.data)
       ? result.data
-        // .filter((item) => item.status === 'Pending') // Filter items with status 'pending'
+        // .filter((item) => item.status === 'Pending') // Filter items with status 'Pending'
         .map((item, index) => ({
           _id: item._doc._id,
           id: index + 1,
@@ -56,7 +56,7 @@ const WithdrawRequest = (props) => {
         Swal.fire("Error", result.data.message, "error");
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error Submitting form:", error);
       Swal.fire("Error", "Something went wrong. Please try again later.", "error");
     }
   }

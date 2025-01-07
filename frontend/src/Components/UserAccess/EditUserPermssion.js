@@ -154,7 +154,7 @@ return (
           <button
             onClick={() => [handleSubmit()]}
           className="btn btn-primary"
-          type="submit"
+          type="Submit"
           >
           Submit
           </button>

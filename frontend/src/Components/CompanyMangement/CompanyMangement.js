@@ -29,9 +29,10 @@ const CompanyManagement = (props) => {
     console.log("my user list=========>", result.data)
     const resultList = Array.isArray(result.data)
       ? result.data
-        // .filter((item) => item.status === 'Pending') // Filter items with status 'pending'
+        // .filter((item) => item.status === 'Pending') // Filter items with status 'Pending'
         .map((item, index) => ({
           _id: item._id,
+          clientNumber: item.clientNumber,
           id: index + 1,
           name: item.name,
           email: item.email,
@@ -57,7 +58,7 @@ const CompanyManagement = (props) => {
         Swal.fire("Error", result.data.message, "error");
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error Submitting form:", error);
       Swal.fire("Error", "Something went wrong. Please try again later.", "error");
     }
   }
@@ -69,7 +70,7 @@ const CompanyManagement = (props) => {
 
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header', width: 50 },
-    { field: '_id', headerName: 'Client ID', headerClassName: 'black-header', width: 250 },
+    { field: 'clientNumber', headerName: 'Client Number', headerClassName: 'black-header', width: 250 },
     { field: 'name', headerName: 'Name', headerClassName: 'black-header', width: 100 },
     { field: 'email', headerName: 'EMAIL', headerClassName: 'black-header', width: 200 },
     { field: 'wallet', headerName: 'WALLET', headerClassName: 'black-header', width: 60 },

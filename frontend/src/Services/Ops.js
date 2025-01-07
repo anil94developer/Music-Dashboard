@@ -20,7 +20,7 @@ const postData = async (url = "", data) => {
         return e.response.data
     }
 };
-const postDataContent = async (url = "", data) => {
+const postDataContent = async (url = "", data,config) => {
     try {
 
         let token = localStorage.getItem("token")

@@ -214,7 +214,7 @@ export default function CompanyDetails() {
                       <div className="form-group">
                         <button
                           onClick={() => uploadStoreExcel()}
-                          type="submit"
+                          type="Submit"
                           className="btn btn-primary"
                         >
                           Submit
@@ -256,7 +256,7 @@ export default function CompanyDetails() {
                       <div className="form-group">
                         <button
                           onClick={() => uploadMarketExcel()}
-                          type="submit"
+                          type="Submit"
                           className="btn btn-primary"
                         >
                           Submit
@@ -299,7 +299,7 @@ export default function CompanyDetails() {
                       <div className="form-group">
                         <button
                           onClick={() => uploadExcel()}
-                          type="submit"
+                          type="Submit"
                           className="btn btn-primary"
                         >
                           Submit
@@ -343,7 +343,7 @@ export default function CompanyDetails() {
                       <div className="form-group">
                         <button
                           onClick={() => uploadMarketStream()}
-                          type="submit"
+                          type="Submit"
                           className="btn btn-primary"
                         >
                           Submit
@@ -386,7 +386,7 @@ export default function CompanyDetails() {
                       <div className="form-group">
                         <button
                           onClick={() => uploadReportStream()}
-                          type="submit"
+                          type="Submit"
                           className="btn btn-primary"
                         >
                           Submit

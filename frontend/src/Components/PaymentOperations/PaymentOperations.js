@@ -101,7 +101,7 @@ export default function PaymentOperations() {
           </section> */}
           <section className="amount-request">
             <div className="row">
-              {widthdraw[widthdraw?.length - 1]?.amount > 0 && widthdraw[widthdraw?.length - 1]?.status == "pending" ?
+              {widthdraw[widthdraw?.length - 1]?.amount > 0 && widthdraw[widthdraw?.length - 1]?.status == "Pending" ?
                 <div className="col-lg-5 col-12">
                   <div className="dash-detail dash-detail-two amount-form">
                     <div className="">
@@ -116,7 +116,7 @@ export default function PaymentOperations() {
                         <div className="payment-status">
                           <h3>Your payment of € {JSON.stringify(widthdraw[widthdraw?.length - 1]?.amount)} </h3>
                           <div className="status-steps">
-                            <div className={widthdraw[widthdraw?.length - 1]?.status == 'pending' ? "step active" : "step"}>
+                            <div className={widthdraw[widthdraw?.length - 1]?.status == 'Pending' ? "step active" : "step"}>
                               <span className="circle">✔</span>
                               <span className="label">Requested</span>
                             </div>
@@ -154,8 +154,8 @@ export default function PaymentOperations() {
                         <img className="img-fluid" src={require('../../assets/images/music-wallet1.png')} />
                       </div>
 
-                      <div className="submit-btn">
-                        <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
+                      <div className="Submit-btn">
+                        <button type="Submit" id="btnSubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
                       </div>
                     </div>
                     {/* <div className="form-group">
@@ -168,8 +168,8 @@ export default function PaymentOperations() {
                       onChange={(e) => setAmount(e.target.value)}
                     />
                   </div>
-                  <div className="submit-btn">
-                    <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
+                  <div className="Submit-btn">
+                    <button type="Submit" id="btnSubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
                   </div> */}
                   </div>
                 </div>

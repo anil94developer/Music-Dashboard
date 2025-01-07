@@ -32,35 +32,35 @@ export const SideBar = (props) => {
         </div> */}
         {/* <div className="user-img"> */}
         <img className="img-fluid" src={require('../../assets/images/logo.png')} />
-          {/* <p>Gold <span className="d-block">gold@gmail.com</span></p> */}
+        {/* <p>Gold <span className="d-block">gold@gmail.com</span></p> */}
         {/* </div> */}
       </div>
-      <ul className="navbar-nav"> 
-        {userProfile.role === "admin" && (
+      <ul className="navbar-nav">
+        {userProfile.role == "Admin" && (
           <>
             <li className="nav-item">
               <a className="nav-link" href="/Dashboard">
-                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon1.png')} /> Dashboard
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon1.png')} /> Dashboard
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/CompanyManagement">
-                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon2.png')} />Master Account
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon2.png')} />Master Account
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/All releases">
-                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon3.png')} /> All Releases
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon3.png')} /> All Releases
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/All Tracks">
-                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon4.png')} />All Tracks
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon4.png')} />All Tracks
               </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/Withdraw Request">
-                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon5.png')} />Withdraw Request
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon5.png')} />Withdraw Request
               </a>
             </li>
           </>
@@ -113,8 +113,18 @@ export const SideBar = (props) => {
               </a>
             </li>
           ))}
+
+
+         <div className="user-detail d-flex flex-wrap " style={{marginTop:200}}></div>
+        <div className="user-detail d-flex flex-wrap item-align-center" >
+          Copyright ©2025 J2P Entertainment Digital Pvt Ltd 
+        </div>  
+
       </ul>
+
+
     </div>
+
 
 
 

@@ -61,7 +61,7 @@ export default function STEP4(props) {
         ))}
       </div>
       <div className="save-btn">
-        <button type="submit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Save</button>
+        <button type="Submit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Save</button>
       </div>
     </div>
   );
