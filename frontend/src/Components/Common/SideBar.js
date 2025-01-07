@@ -53,11 +53,11 @@ export const SideBar = (props) => {
                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon3.png')} /> All Releases
               </a>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <a className="nav-link" href="/All Tracks">
                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon4.png')} />All Tracks
               </a>
-            </li>
+            </li> */}
             <li className="nav-item">
               <a className="nav-link" href="/Withdraw Request">
                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon5.png')} />Withdraw Request

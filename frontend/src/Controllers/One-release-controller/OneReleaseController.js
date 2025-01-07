@@ -30,27 +30,17 @@ const OneReleaseController = (props) => {
   const fetchReleaseList = async () => {
     let arrRelease = [];
     let arrDraft = [];
-    if (userProfile?.role == "admin") {
+    if (userProfile?.role == "Admin") {
       setIsLoading(true)
       let result = await getData(base.allReleaseList);
       if (result.status === true) {
-        arrRelease = Array.isArray(result.data)
-          ? result.data
-            .filter((item) => item.status == 'Submit' || item.status == 'Approve' || item.status == 'Reject')
-            .map((item, index) => ({
-              _id: item._id,
-              id: index + 1,
-              type: item.type,
-              status: item.status,
-              title: item?.title || "Untitled",
-              label: item?.step1?.labelName || "Unknown Label",
-              releaseDate: item.step1?.originalReleaseDate || "N/A",
-              noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-              upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-              deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-              action: "",
-            }))
-          : [];
+        if (Array.isArray(result.data)) {
+          const arrRelease = result.data.filter(item =>
+            ['Submit', 'Approve', 'Reject'].includes(item.status)
+          );
+          setMyRelease(arrRelease);
+        }
+
       }
     } else if (userProfile?.role == "company") {
       setIsLoading(true)

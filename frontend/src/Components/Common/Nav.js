@@ -49,7 +49,7 @@ export const Nav = (props) => {
                       <span className="user-name hidden-xs">{userProfile?.name}</span>
                     </a>
                     
-                    {userProfile?.role == "company" && <p>{userProfile.clientNumber}</p> }
+                    {userProfile?.role == "company" && <p>Client Number:- {userProfile.clientNumber}</p> }
                     <ul className="dropdown-menu position-absolute">
 
                       <li>

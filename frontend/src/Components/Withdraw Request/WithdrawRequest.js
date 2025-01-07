@@ -72,96 +72,103 @@ const WithdrawRequest = (props) => {
     {
       field: 'action', headerName: 'ACTION', width: 300,
       renderCell: (params) => (
-        <div style={{ gap: '8px', display: 'flex',padding:10 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={() => {
-            handle_change_status("Complete", params.row._id);
-          }}
-        >
-          Complete
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary" // Corrected the color to "secondary"
-          size="small"
-          onClick={() => {
-            handle_change_status("Reject", params.row._id);
-          }}
-        >
-          Reject
-        </Button>
-      </div>
-      
+        <div style={{ gap: '8px', display: 'flex', padding: 10 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => {
+              handle_change_status("Complete", params.row._id);
+            }}
+          >
+            Complete
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary" // Corrected the color to "secondary"
+            size="small"
+            onClick={() => {
+              handle_change_status("Reject", params.row._id);
+            }}
+          >
+            Reject
+          </Button>
+        </div>
+
       )
     }
   ];
   return (
     <div>
-    <SideBar />
-    <div className="main-cotent">
-      <Nav />
-      <div className="content-wrapper">
-        <section className="content">
+      <SideBar />
+      <div className="main-cotent">
+        <Nav />
+        <div className="content-wrapper">
+          <section className="content">
 
-          <div className="content">
-            <h1>Withdraw Request Management</h1>
+            <div className="content">
+              <h1>Withdraw Request Management</h1>
 
-            
-            <DataTable
+
+              {/* <DataTable
               columns={columns}
               rows={withdrawalRequest}
               height="500"
               width="100%"
-            />
-            {/* User List */}
-            {/* <table className="user-table">
-              <thead>
-                <tr>
-                  <th>Amount</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users && users?.map((user) => {
-                  let bg = user.is_deleted == 1 ? 'red' : 'white';
-                  return (
-                    <tr   key={user._id}>
-                      <td>{user._doc.amount}</td>
-                      <td>{user.userdetails.email}</td>
-                      <td>{user.userdetails.role}</td>
-                      <td>{user._doc.status}</td>
-                      <td>
-                        <select defaultValue={user._doc.status} onChange={(e) => { handle_change_status(e.target.value, user._doc._id) }}>
-                          <option value={'Pending'}>{'Pending'}</option>
-                          <option value={'Active'}>{'Active'}</option>
-                          <option value={'Complete'}>{'Complete'}</option>
+            /> */}
+              {/* User List */}
+              <table className="user-table">
+                <thead>
+                  <tr>
+                    <th>Amount</th>
+                    <th>Email</th>
+                    {/* <th>Name</th> */}
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {withdrawalRequest && withdrawalRequest?.map((user) => {
 
-                        </select>
-                        {/* <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button> */}
-            {/* <button
-                          className="action-button delete"
-                          onClick={() => handleDelete(user.login)}
-                        >
-                          Delete
-                        </button>
-                        <button className="action-button disable">Disable</button>  
-                      {user.is_deleted == '0' && <button  onClick={() => user_delete(user._id)} className="action-button disable">Disable</button> } 
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table> */}
-          </div>
-        </section>
+                    return (
+                      <tr key={user._id}>
+                        <td>{user.amount}</td>
+                        <td>{user.email}</td>
+                        {/* <td>{user.name}</td> */}
+                        <td>{user.status}</td>
+                        <td>
+                          <div style={{ gap: '8px', display: 'flex', padding: 10 }}>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              size="small"
+                              onClick={() => {
+                                handle_change_status("Complete", user._id);
+                              }}
+                            >
+                              Complete
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="secondary" // Corrected the color to "secondary"
+                              size="small"
+                              onClick={() => {
+                                handle_change_status("Reject", user._id);
+                              }}
+                            >
+                              Reject
+                            </Button>
+                          </div>
+                          </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

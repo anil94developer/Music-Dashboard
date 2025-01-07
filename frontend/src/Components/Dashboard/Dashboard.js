@@ -14,6 +14,7 @@ export const Dashboard = () => {
   const [marketList, setMarketList] = useState([])
   useEffect(() => {
     getMarket();
+     
   }, [])
   const getMarket = async () => {
     let result = await getData(base.getMarket)
@@ -59,106 +60,136 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-               <div className="col-lg-3 col-xs-6">
-            <div className="dash-detail d-flex flex-wrap">
-              <div className="inner">
-                <p>Total Tracks</p>
-                <h3>0</h3>
-              </div>
-              <div className="icon">
-                <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')}/>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3 col-xs-6">
-            <div className="dash-detail d-flex flex-wrap">
-              <div className="inner">
-                <p>Total Pending Tracks</p>
-                <h3>{0}</h3>
-              </div>
-              <div className="icon">
-                <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')}/>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3 col-xs-6">
-            <div className="dash-detail d-flex flex-wrap">
-              <div className="inner">
-                <p>Approve Content</p>
-                <h3>{0}</h3>
-              </div>
-              <div className="icon">
-                <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')}/>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-3 col-xs-6">
-            <div className="dash-detail d-flex flex-wrap">
-              <div className="inner">
-                <p>Reject Content</p>
-                <h3>{0}</h3>
-              </div>
-              <div className="icon">
-                <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')}/>
-              </div>
-            </div>
-          </div>  
-                {/* 
-          <div className="col-lg-3 col-xs-6">
-            <div className="small-box bg-yellow">
-              <div className="inner">
-                <h3>{dashboard.}</h3>
-                <p>User Registrations</p>
-              </div>
-              <div className="icon">
-                <i className="ion ion-person-add"></i>
-              </div>
-              <a href="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          */}
-                {/* 
-          <div className="col-lg-3 col-xs-6">
-            <div className="small-box bg-red">
-              <div className="inner">
-                <h3>65</h3>
-                <p>Unique Visitors</p>
-              </div>
-              <div className="icon">
-                <i className="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          */}
-              </div>
-            }
-            {userProfile?.role == "admin" &&
-              <div className="row">
                 <div className="col-lg-3 col-xs-6">
                   <div className="dash-detail d-flex flex-wrap">
                     <div className="inner">
-                      <p>Master Account</p>
-                      <h3>{dashboardData.masterAccount}</h3>
+                      <p>Total Tracks</p>
+                      <h3>0</h3>
                     </div>
                     <div className="icon">
                       <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')} />
                     </div>
                   </div>
                 </div>
-                {/* <div className="col-lg-3 col-xs-6">
-            <div className="dash-detail d-flex flex-wrap">
-              <div className="inner">
-                <p>All Tracks</p>
-                <h3>{dashboardData.myTracksCount}</h3>
-              </div>
-              <div className="icon">
-                <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')}/>
-              </div>
-            </div>
-          </div>  */}
+                <div className="col-lg-3 col-xs-6">
+                  <div className="dash-detail d-flex flex-wrap">
+                    <div className="inner">
+                      <p>Total Pending Tracks</p>
+                      <h3>{0}</h3>
+                    </div>
+                    <div className="icon">
+                      <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')} />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-3 col-xs-6">
+                  <div className="dash-detail d-flex flex-wrap">
+                    <div className="inner">
+                      <p>Approve Content</p>
+                      <h3>{0}</h3>
+                    </div>
+                    <div className="icon">
+                      <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')} />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-3 col-xs-6">
+                  <div className="dash-detail d-flex flex-wrap">
+                    <div className="inner">
+                      <p>Reject Content</p>
+                      <h3>{0}</h3>
+                    </div>
+                    <div className="icon">
+                      <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')} />
+                    </div>
+                  </div>
+                </div>
+
               </div>
             }
+            {userProfile?.role == "Admin" &&
+
+            <div className="row">
+              <div className="col-lg-3 col-md-6">
+                <div className="dash-detail d-flex flex-wrap">
+                  <div className="inner">
+                    <p>All Release</p>
+                    <h3>{dashboardData?.myReleaseCount}</h3>
+                  </div>
+                  <div className="icon">
+                    <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')} />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-6">
+                <div className="dash-detail d-flex flex-wrap">
+                  <div className="inner">
+                    <p>All Tracks</p>
+                    <h3>{dashboardData?.myTracksCount}</h3>
+                  </div>
+                  <div className="icon">
+                    <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')} />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-xs-6">
+                <div className="dash-detail d-flex flex-wrap">
+                  <div className="inner">
+                    <p>Total Tracks</p>
+                    <h3>0</h3>
+                  </div>
+                  <div className="icon">
+                    <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')} />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-xs-6">
+                <div className="dash-detail d-flex flex-wrap">
+                  <div className="inner">
+                    <p>Total Pending Tracks</p>
+                    <h3>{0}</h3>
+                  </div>
+                  <div className="icon">
+                    <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')} />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-xs-6">
+                <div className="dash-detail d-flex flex-wrap">
+                  <div className="inner">
+                    <p>Approve Content</p>
+                    <h3>{0}</h3>
+                  </div>
+                  <div className="icon">
+                    <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')} />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-xs-6">
+                <div className="dash-detail d-flex flex-wrap">
+                  <div className="inner">
+                    <p>Reject Content</p>
+                    <h3>{0}</h3>
+                  </div>
+                  <div className="icon">
+                    <img className="img-fluid" src={require('../../assets/images/dash-icon2.png')} />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-xs-6">
+                <div className="dash-detail d-flex flex-wrap">
+                  <div className="inner">
+                    <p>Master Account</p>
+                    <h3>{dashboardData.masterAccount}</h3>
+                  </div>
+                  <div className="icon">
+                    <img className="img-fluid" src={require('../../assets/images/dash-icon1.png')} />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           }  
           </section>
           {userProfile?.role === "company" &&
             <section className="sale-graph">
@@ -166,10 +197,10 @@ export const Dashboard = () => {
                 <SimpleGraph data={marketList} title={"Market"} />
                 :
                 <>
-                <h2>Market Data</h2> 
-                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
+                  <h2>Market Data</h2>
+                  <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
                 </>
-               
+
               }
             </section>
           }
