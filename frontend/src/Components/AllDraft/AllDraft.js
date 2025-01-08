@@ -59,6 +59,7 @@ export const AllDraft = () => {
                             <th >Type</th>
                             <th >Status</th>
                             <th >Label</th>
+                            <th>Image</th>
                             <th >Release date / Hour / Time zone</th>
                             <th ># of track</th>
                             <th >UPC / Catalog Number</th>
@@ -87,6 +88,8 @@ export const AllDraft = () => {
                                 {item.status}
                               </td>
                               <td className="  ">{item?.step1?.labelName}</td>
+                              <td  > <img src={item?.step1?.coverImage} height={50} width={50} />
+                      </td> 
                               <td className="  ">{item.step1?.originalReleaseDate}</td>
                               <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
                               <td className="  ">{item.step1?.UPCEAN}</td>

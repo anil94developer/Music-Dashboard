@@ -19,30 +19,45 @@ export const ReleaseDetails = () => {
   const { myRelease, setMyRelease, fetchReleaseDetails, } = MainStepController();
   const { userProfile, getPermissoin, getProfile } = useUserProfile()
   useEffect(() => {
-    fetchReleaseDetails("67738d173b9b5f27c019ff83")
+    fetchReleaseDetails(releaseId)
   }, [])
 
   const getLogo = (name) => {
     let item = initialCountryList.find(item => item.name == name);
-    return item?.logo 
+    return item?.logo
   }
   const changeStatus = async (status) => {
-    let body = {
-      id: releaseId,
-      status: status
-    }
-    try {
-      let result = await postData(base.releaseChangeStatus, body)
-      if (result.data.status === true) {
-        Swal.fire("Success", `${status} successfully`, "success");
-        fetchReleaseDetails(releaseId)
-      } else {
-        Swal.fire("Error", result.data.message, "error");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want change Status",
+      icon: "info", // Options: 'warning', 'error', 'success', 'info', 'question'
+      showCancelButton: true, // Enables the Cancel button
+      confirmButtonText: "Yes, proceed",
+      cancelButtonText: "No, cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let body = {
+          id: releaseId,
+          status: status
+        }
+        try {
+          let result = await postData(base.releaseChangeStatus, body)
+          if (result.data.status === true) {
+            Swal.fire("Success", `${status} successfully`, "success");
+            fetchReleaseDetails(releaseId)
+          } else {
+            Swal.fire("Error", result.data.message, "error");
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+          Swal.fire("Error", "Something went wrong. Please try again later.", "error");
+        }
+
+      } else if (result.isDismissed) {
+        // User clicked the cancel button
+        Swal.fire("Cancelled", "Action was cancelled.", "info");
       }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      Swal.fire("Error", "Something went wrong. Please try again later.", "error");
-    }
+    });
 
   }
 
@@ -75,11 +90,13 @@ export const ReleaseDetails = () => {
         <Nav />
         <div className="content-main">
           <section className="content">
-
+           
+                     
             <div className="audio-table release-inner dash-detail dash-detail-two mb-4">
               <div className="release-title">
                 <h2>Relase Information</h2>
                 {/* <h2>{myRelease.status}</h2> */}
+                <img src={myRelease?.step1?.coverImage} height={200} width={200} />
                 <div className="release-detail d-flex flex-wrap mt-3">
                   <p className="release-data"><strong>Title :</strong> {myRelease?.title}</p>
                   <p className="release-data"><strong>SubTitle :</strong> {myRelease?.step1?.subTitle}</p>
@@ -126,7 +143,7 @@ export const ReleaseDetails = () => {
                         <td className="  sorting_1">{item.fileName}</td>
                         <td >{item.fileType}</td>
                         <td className=" ">
-                          <a href={domainUrl + '' + item.fileData} target="_blank">
+                          <a href={item.fileData} target="_blank">
                             <img className="img-fluid" src={require('../../assets/images/play.jpg')} alt={"logo"} style={{ width: "20px", height: "20px", borderRadius: "360px" }}
                             />
                           </a></td>
@@ -177,8 +194,8 @@ export const ReleaseDetails = () => {
                       <div key={index} className="colElement">
                         <div className="countryItem">
                           <input type="checkbox" checked={item.status === 'active'} />{item.name}
-                        {getLogo(item.name) != "" && getLogo(item.name) != undefined ? 
-                         <img className="img-fluid" src={require(`../../assets/images/store/${getLogo(item.name)}`)} alt={item.name} />:<></>}
+                          {getLogo(item.name) != "" && getLogo(item.name) != undefined ?
+                            <img className="img-fluid" src={require(`../../assets/images/store/${getLogo(item.name)}`)} alt={item.name} /> : <></>}
                         </div>
                       </div>
                     ))}
@@ -313,9 +330,9 @@ export const ReleaseDetails = () => {
                       </tr>
                     </thead>
                     <tbody role="alert" aria-live="polite" aria-relevant="all">
-                      {myRelease?.step3 && myRelease?.step3.map((item,index) => (
+                      {myRelease?.step3 && myRelease?.step3.map((item, index) => (
                         <tr className="odd">
-                          <td className="  sorting_1">{index+1}</td>
+                          <td className="  sorting_1">{index + 1}</td>
                           <td></td>
                           <td>{myRelease.title}</td>
                           <td></td>
@@ -323,7 +340,7 @@ export const ReleaseDetails = () => {
                           <td>{myRelease?.step1?.primaryArtist?.length > 0 && myRelease?.step1?.primaryArtist[0]?.linkId}</td>
                           <td>{myRelease?.step1?.primaryArtist?.length > 0 && myRelease?.step1?.primaryArtist[0]?.itunesLinkId}</td>
 
-                           <td>{myRelease?.step1?.primaryArtist?.length > 1 && myRelease?.step1?.primaryArtist[1]?.name}</td>
+                          <td>{myRelease?.step1?.primaryArtist?.length > 1 && myRelease?.step1?.primaryArtist[1]?.name}</td>
                           <td></td>
                           <td>{myRelease?.step1?.primaryArtist?.length > 1 && myRelease?.step1?.primaryArtist[1]?.linkId}</td>
                           <td>{myRelease?.step1?.primaryArtist?.length > 1 && myRelease?.step1?.primaryArtist[1]?.itunesLinkId}</td>
@@ -351,22 +368,22 @@ export const ReleaseDetails = () => {
 
                           <td>{myRelease?.step1?.genre}</td>
                           <td>{myRelease?.step1?.subGenre}</td>
-                          <td>{}</td>
-                          <td>{}</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
                           <td></td>
                           <td>{item?.Composer[0]?.name}</td>
-                          <td>{}</td>
+                          <td>{ }</td>
                           <td>{item?.Producer[0]?.name}</td>
-                          <td>{item?.Arranger[0]?.name}</td>  
-                          <td>{}</td>
-                          <td>{}</td>
-                          <td>{}</td>
-                          <td>{}</td>
-                          <td>{}</td>
+                          <td>{item?.Arranger[0]?.name}</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
 
-                          <td>{index+1}</td>
+                          <td>{index + 1}</td>
                           <td>{myRelease.title}</td>
-                          <td>{}</td>
+                          <td>{ }</td>
 
 
                           <td>{item?.PrimaryArtist?.length > 0 && item?.PrimaryArtist[0]?.name}</td>
@@ -382,33 +399,33 @@ export const ReleaseDetails = () => {
                           <td></td>
                           <td>{item?.PrimaryArtist?.length > 2 && item?.PrimaryArtist[2]?.linkId}</td>
                           <td>{item?.PrimaryArtist?.length > 2 && item?.PrimaryArtist[2]?.itunesLinkId}</td>
-                          <td>{}</td>
+                          <td>{ }</td>
 
                           <td>{item?.ISRC}</td>
-                          <td>{}</td>
-                          <td>{}</td>
-                          <td>{}</td>
-                          <td>{}</td>
-                          <td>{}</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
                           <td>{item?.Genre}</td>
                           <td>{item?.SubGenre}</td>
                           <td>{item?.SecondaryGenre}</td>
                           <td>{item?.SubSecondaryGenre}</td>
-                           <td>{}</td>
-                          <td>{}</td>
-                          <td>{}</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
                           <td>{item?.Producer[0]?.name}</td>
                           <td>{item?.Remixer[0]?.name}</td>
-                          <td>{}</td> 
-                          <td>{}</td>
-                          <td>{}</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
 
                           <td>{item?.Composer[0]?.name}</td>
                           <td>{item?.Lyrics}</td>
                           <td>{item?.Publisher}</td>
-                          <td>{}</td> 
-                          <td>{}</td>
-                          <td>{}</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
+                          <td>{ }</td>
                           <td>{item?.LyricsLanguage}</td>
                         </tr>
                       ))}
@@ -419,17 +436,17 @@ export const ReleaseDetails = () => {
             </div>
 
 
-            {userProfile?.role == "admin" &&
+            {userProfile?.role == "Admin" &&
               <div className="submit-btn text-center my-4">
                 <button type="submit" className="btn btn-success" onClick={() => {
                   changeStatus("Approve")
                 }}>Approve</button>
                 <button type="submit" className="btn btn-danger mx-4" onClick={() => {
                   changeStatus("Reject")
-                }}>Reject </button>
+                }}>Reject</button>
                 <button type="submit" className="btn btn-info mx-4" onClick={() => {
                   changeStatus("Pending")
-                }}>Pending </button>
+                }}>Pending</button>
               </div>
             }
           </section>

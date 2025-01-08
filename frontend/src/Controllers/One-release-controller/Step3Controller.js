@@ -45,6 +45,8 @@ const Step3Controller = (props) => {
     const [btnName, setBtnName] = useState("Add");
     const [rowId,setRowId]=useState("")
     const [volume,setVolume]= useState("")
+  const [selectContributory, setSelectContributory] = useState([]);
+
 
     const handleSubmit = async (e) => {
         let body = {}
@@ -84,7 +86,8 @@ const Step3Controller = (props) => {
                         "LyricsLanguage": lyricsLanguage,
                         "Lyrics": lyrics,
                         "MoreInfo": "",
-                        "Volume":volume
+                        "Volume":volume,
+                        "selectContributory":selectContributory
                     }
                 ]
             }
@@ -202,7 +205,8 @@ const Step3Controller = (props) => {
         setReleaseData,
         handleSubmit,
         btnName, setBtnName,setRowId,
-        volume,setVolume
+        volume,setVolume,
+        selectContributory, setSelectContributory
     };
 
 }

@@ -50,6 +50,7 @@ export const AllRelease = () => {
       )
     }
   ];
+  { console.log("item----------------",myRelease)}
   return (
     <div>
       <SideBar />
@@ -64,62 +65,65 @@ export const AllRelease = () => {
               <div className="col-md-12">
                 <div className="box">
                   <div className="box-body"> */}
-                    {/* <DataTable
+            {/* <DataTable
                       columns={columns}
                       rows={myRelease}
                       height="500"
                       width="100%"
                     /> */}
 
-                    <div className="box-body table-responsive">
-                      <table id="example2" className="table table-bordered table-striped">
-                        <thead>
-                          <tr role="row">
-                            <th >Title / Artist</th>
-                            <th >Type</th>
-                            <th >Status</th>
-                            <th >Label</th>
-                            <th >Release date / Hour / Time zone</th>
-                            <th ># of track</th>
-                            <th >UPC / Catalog Number</th>
-                            <th >Delivered Territories & Stores</th>
-                            <th >ACTION</th>
-                          </tr>
-                        </thead>
-                        <tbody role="alert" aria-live="polite" aria-relevant="all">
-                          {myRelease.map((item) => ( 
-                            <tr className="odd">
-                              <td className="  sorting_1">{item.title}</td>
-                              <td className="  ">{item.type}</td>
-                              <td  >
-                              {item.status}</td>
-                              <td className="  ">{item?.step1?.labelName}</td>
-                              <td className="  ">{item.step1?.originalReleaseDate}</td>
-                              <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
-                              <td className="  ">{item.step1?.UPCEAN}</td>
-                              <td className="  ">{item?.step5?.MainReleaseDate}</td>
+            <div className="box-body table-responsive">
+              <table id="example2" className="table table-bordered table-striped">
+                <thead>
+                  <tr role="row">
+                    <th >Title / Artist</th>
+                    <th >Type</th>
+                    <th >Status</th>
+                    <th >Image</th>
+                    <th >Label</th>
+                    {/* <th >Release date / Hour / Time zone</th> */}
+                    <th ># of track</th>
+                    <th >UPC / Catalog Number</th>
+                    <th >Delivered Territories & Stores</th>
+                    <th >ACTION</th>
+                  </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                  {myRelease.map((item) => (
+                  
+                    <tr className="odd">
+                      <td className="  sorting_1">{item.title}</td>
+                      <td className="  ">{item.type}</td>
+                      <td  > {item.status}</td>
+                      <td  > <img src={item?.step1?.coverImage} height={50} width={50} />
+                      </td> 
+                      <td className="  ">{item?.step1?.labelName}</td>
+                      {/* <td className="  ">{item.step1?.originalReleaseDate}</td> */}
+                      <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
+                      <td className="  ">{item.step1?.UPCEAN}</td>
+                      <td className="  ">{item?.step5?.MainReleaseDate}</td>
 
-                              <td>
-                                <div className="action-buttons">
-                                  <button title="Download" className="action-button">
-                                    <a onClick={() => {
-                                      navigate("/release-details", { state: { releaseId: item._id } });
-                                    }}>
-                                      <i className="fa fa-eye"></i>
-                                    </a>
-                                  </button>
-                                   
-                                </div>
-                              </td>
+                      <td>
+                        <div className="action-buttons">
+                          <button title="Download" className="action-button">
+                            <a onClick={() => {
+                              navigate("/release-details", { state: { releaseId: item._id } });
+                            }}>
+                              <i className="fa fa-eye"></i>
+                            </a>
+                          </button>
 
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  {/* </div> */}
-                  {isLoading && "Loading..."}
-                {/* </div>
+                        </div>
+                      </td>
+
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* </div> */}
+            {isLoading && "Loading..."}
+            {/* </div>
               </div>
             </div> */}
           </section>

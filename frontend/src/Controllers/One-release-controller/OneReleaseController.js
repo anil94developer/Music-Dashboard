@@ -61,12 +61,11 @@ const OneReleaseController = (props) => {
         arrDraft = allDraft.data;
       }
       let allReject = await getData(base.releaseList + `?status=Reject`);
-      if (allReject.status == true) {
-        if(allReject.data.length>0){ 
-        arrDraft = [allReject.data, ...arrDraft];
-        }
-      }
       console.log("arrDraft----------", arrDraft)
+      
+      if (allReject.status == true) { 
+          arrDraft = [allReject.data, ...arrDraft]; 
+      }
       setMyReleaseDraft(arrDraft)
       setMyRelease(arrRelease)
 

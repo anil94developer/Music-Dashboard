@@ -23,7 +23,7 @@ email: "",
 password: "",
 name: "",
 noOfLabel: "",
-role: userProfile.type == "admin" ? "company" : "employee",
+role: userProfile.type == "Admin" ? "company" : "employee",
 });
 const handleCheckboxChange = (e, category, index, subIndex = null) => {
 const { checked } = e.target;
@@ -62,7 +62,7 @@ setaAirtestNameList(result.data)
 }
 const getPermmissoin = () => {
 setMenuPermission(
-userProfile.role == "admin" ?
+userProfile.role == "Admin" ?
 [
 {
 "mainMenuName": "Dashboard",
@@ -269,7 +269,7 @@ return (
             </div>
           </div>
           <div className="row">
-            {userProfile.role == "admin" &&
+            {userProfile.role == "Admin" &&
             <div className="col-md-6">
               <div className="form-group">
                 <label>No Of Label: </label>

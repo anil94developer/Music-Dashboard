@@ -71,8 +71,41 @@ export default function STEP3(props) {
     handleSubmit,
     setReleaseData,
     btnName, setBtnName, setRowId,
-    volume, setVolume,
+    volume, setVolume ,
+    selectContributory, setSelectContributory
   } = Step3Controller()
+  const initialStoreList = [
+    { id: '1', name: 'Mixing Eng', value: '' },
+    { id: '2', name: 'Mastering Eng', value: '' },
+    { id: '3', name: 'Acoustic', value: '' },
+    { id: '4', name: 'Guitar', value: '' },
+    { id: '5', name: 'Keyboard', value: '' },
+    { id: '6', name: 'Bass', value: '' },
+    { id: '7', name: 'Drum', value: '' },
+    { id: '8', name: 'Flute', value: '' },
+    { id: '9', name: 'Saxophone', value: '' }, 
+
+
+  ];
+  const [contributoryName, setContributoryName] = useState(initialStoreList);
+
+  const contributorySelect = (id) => {
+    const selectedItem = contributoryName.find(item => item.id === id);
+    if (selectedItem && !selectContributory.some(item => item.id === id)) {
+      setSelectContributory([...selectContributory, selectedItem]);
+      setContributoryName(contributoryName.filter(item => item.id !== id));
+    }
+  };
+
+  const handlecontributoryChange = (id, val) => {
+    setSelectContributory((prevDates) =>
+      prevDates.map((item) =>
+        item.id === id ? { ...item, value: val } : item
+      )
+    );
+  };
+
+  
   // State to manage the modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Function to open the modal
@@ -96,6 +129,7 @@ export default function STEP3(props) {
         setPLine(releaseData.step1.line);
 
       }
+      setSelectContributory(releaseData?.step3?.selectContributory)
     }
     getData()
   }, [releaseData.step3])
@@ -169,7 +203,7 @@ export default function STEP3(props) {
         <div className="">
           <div className="">
             <div className="" role="grid">
-            <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+              <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
 
                 <thead>
                   <tr draggable="true">
@@ -294,7 +328,7 @@ export default function STEP3(props) {
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Remixer</label>
-                        <DynamicInputList inputs={remixer} setInputs={setRemixer} placeholder={"Remixer"}/>
+                        <DynamicInputList inputs={remixer} setInputs={setRemixer} placeholder={"Remixer"} />
                         {/* <SearchInput />  */}
                       </div>
                       {/* <SearchInput />  */}
@@ -302,7 +336,7 @@ export default function STEP3(props) {
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Author *</label>
-                        <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"}/>
+                        <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"} />
 
                       </div>
                     </div>
@@ -322,7 +356,7 @@ export default function STEP3(props) {
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Producer</label>
-                        <DynamicInputList inputs={producer} setInputs={setProducer} placeholder={"Producer"}/>
+                        <DynamicInputList inputs={producer} setInputs={setProducer} placeholder={"Producer"} />
 
                       </div>
                     </div>
@@ -465,10 +499,10 @@ export default function STEP3(props) {
                       <div className="form-group">
                         <label>Track title language</label>
                         <select type="text" className="form-select form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
-                        { language.map(item => (
-                          <option key={item} value={item.value}>
-                            {item.label}
-                          </option>
+                          {language.map(item => (
+                            <option key={item} value={item.value}>
+                              {item.label}
+                            </option>
                           ))
                           }
 
@@ -479,10 +513,10 @@ export default function STEP3(props) {
                       <div className="form-group">
                         <label>Lyrics language</label>
                         <select type="text" className="form-select form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >
-                         { language.map(item => (
-                          <option key={item} value={item.value}>
-                            {item.label}
-                          </option>
+                          {language.map(item => (
+                            <option key={item} value={item.value}>
+                              {item.label}
+                            </option>
                           ))}
                         </select>
                       </div>
@@ -492,6 +526,44 @@ export default function STEP3(props) {
                         <label>Lyrics</label>
                         <textarea className="form-control" rows="4" value={lyrics} onChange={(e) => setLyrics(e.target.value)} />
                       </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label>Add contributors</label>
+                        <select className="form-select form-control" onChange={(e) =>
+                          contributorySelect(e.target.value)}>
+                          <option value="">Please Select</option>
+                          {contributoryName?.map((item) => (
+                            <option key={item.id} value={item.id}>{item.name}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {selectContributory?.map((item) => (
+                        <div
+                          className="form-control"
+                          style={{
+                            display: 'flex', // Ensure the container is a flex container
+                            flexDirection: 'row', // Align items in a row
+                            gap: '10px', // Add space between items
+                            alignItems: 'center', // Align items vertically centered,
+                            marginTop: 20
+                          }}
+                        >
+                          <input
+                            className="form-control"
+                            value={item.name}
+                            disbled
+                          />
+                          <input
+                            className="form-control"
+                            type="text"
+                            placeholder='Enter Person Name'
+                            value={item.value}
+                            onChange={(e) => handlecontributoryChange(item.id, e.target.value)}
+                          />
+                          {/* <button type="button" onClick={() => removeContributoryDate(item.id)}>X</button> */}
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div className="form-group">

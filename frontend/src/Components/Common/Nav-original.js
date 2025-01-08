@@ -132,7 +132,7 @@ export const Nav = (props) => {
               <p >{userProfile?._id}</p>
             </div>
 
-            {userProfile.role == "admin"
+            {userProfile.role == "Admin"
               && <>
                 <ul className="sidebar-menu">
                   <li className="treeview">
