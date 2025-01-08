@@ -84,7 +84,96 @@ auth.addCompany = async (req, res, next) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "Welcome to Our Platform",
-      text: `Thanks for being part of us. Your email for login is ${email} and your password is ${firstName+"@123!"}.`,
+      // text: `Thanks for being part of us. Your email for login is ${email} and your password is ${firstName+"@123!"}.`,
+      html: `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+          }
+          .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          }
+          .header {
+            text-align: center;
+            padding-bottom: 20px;
+          }
+          .header img {
+            max-width: 150px;
+          }
+          .content {
+            text-align: center;
+            font-size: 16px;
+            color: #e0e0e0;
+          }
+          .login-box {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #2b2b2b;
+            border: 1px solid #444;
+            border-radius: 4px;
+            text-align: left;
+          }
+          .login-box span {
+            font-weight: bold;
+            color: #ffffff;
+          }
+          .login-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+          }
+          .login-button:hover {
+            background-color: #0056b3;
+          }
+          .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #888888;
+            margin-top: 20px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <img src="https://via.placeholder.com/150" alt="Company Logo">
+          </div>
+          <div class="content">
+            <p>Hello <strong>janumex</strong>,</p>
+            <p>Your account has been created. Please find your temporary login details below:</p>
+            <div class="login-box">
+              <p><span>Username:</span> ${email}</p>
+              <p><span>Password:</span>${firstName+"@123!"}</p>
+            </div>
+            <p>Once Logged in ,You will be able to set a prsonalized and secure password.</p>
+            <p>with these log in details , you can now connect to:</p>
+            <h3>Click to Login</h3>
+            <a href="https://backstage.believe.com" class="login-button">Log In</a>
+          </div>
+          <div class="footer">
+            <p>&copy; 2025 Believe Digital. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>`
     };
 
     try {

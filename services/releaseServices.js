@@ -205,6 +205,7 @@ release.releaseDetails = async (req, res, next) => {
     }
 };
 
+
 release.updateStatus = async (req, res, next) => {
     let body = req.body;
     try {
@@ -216,6 +217,7 @@ release.updateStatus = async (req, res, next) => {
             to: email,
             subject: "Status Update Notification",
             text: `Hello, your status has been updated to: ${body.status}`,
+            html: email
         };
         if(body.status === "Approve" || body.status === "Reject") {
            // Send email
