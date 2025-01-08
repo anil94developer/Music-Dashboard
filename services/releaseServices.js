@@ -206,52 +206,457 @@ release.releaseDetails = async (req, res, next) => {
 };
 
 
+// release.updateStatus = async (req, res, next) => {
+//     const body = req.body;
+//     const trackName = body.trackName;
+//     try {
+//         // Update status
+//         const result = await releaseModel.updateStatus(body);
+//         if (!result) {
+//             return R(res, true, "Failed to update status" , result, 400) 
+//         }
+
+//         // Get user email
+//         const email = await releaseModel.getEmail(body);
+//         if (!email) {
+//             return R(res, true, "Email not found" , result, 404) 
+ 
+//         }
+
+//         console.log(`Sending email to: ${email}`);
+        
+//         const mailOptionsForApprove = {
+//             from: process.env.EMAIL_USER,
+//             to: email,
+//             subject: `Release ${trackName} delivered successfully`,
+//             // text: `Hello, your status has been updated to: ${body.status}`,
+//             html: `<!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//   <style>
+//     body {
+//       font-family: Arial, sans-serif;
+//       background-color: #121212;
+//       margin: 0;
+//       padding: 0;
+//       color: #ffffff;
+//     }
+//     .container {
+//       max-width: 600px;
+//       margin: 20px auto;
+//       background-color: #1e1e1e;
+//       padding: 20px;
+//       border-radius: 8px;
+//       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+//     }
+//     .header {
+//       text-align: center;
+//       padding-bottom: 20px;
+//     }
+//     .header img {
+//       max-width: 150px;
+//     }
+//     .content {
+//       text-align: center;
+//       font-size: 16px;
+//       color: #e0e0e0;
+//     }
+//     .release-info {
+//       margin: 20px 0;
+//       padding: 10px;
+//       background-color: #2b2b2b;
+//       border: 1px solid #444;
+//       border-radius: 4px;
+//       text-align: left;
+//     }
+//     .release-info span {
+//       font-weight: bold;
+//       color: #ffffff;
+//     }
+//     .footer {
+//       text-align: center;
+//       font-size: 12px;
+//       color: #888888;
+//       margin-top: 20px;
+//     }
+//     .link {
+//       color: #007bff;
+//       text-decoration: none;
+//     }
+//     .link:hover {
+//       text-decoration: underline;
+//     }
+//   </style>
+// </head>
+// <body>
+//   <div class="container">
+//     <div class="header">
+//       <img src="https://via.placeholder.com/150" alt="Company Logo">
+//     </div>
+//     <div class="content">
+//       <p>Hello <strong>janumex</strong>,</p>
+//       <p>Your release  with Tuneplus at Tune Plus Distribution (ID: <strong>8472025918673</strong>) has now been sent out to stores.</p>
+//       <div class="release-info">
+//         <p>Please note that once received by the stores, they will process your release in accordance with their internal processes. We have no control over how soon stores will process your release.</p>
+//         <p>If you need any further assistance, please use the Contact Us form available on your dashboard and we will get back to you as soon as possible.</p>
+//       </div>
+//       <p>For further details on YouTube’s Content ID system, please visit the following link:</p>
+//       <p><a href="https://support.google.com/youtube/answer/2797370?hl=en-GB" class="link">YouTube Content ID System</a></p>
+//     </div>
+//     <div class="footer">
+//       <p>&copy; 2025 Believe Digital. All rights reserved.</p>
+//     </div>
+//   </div>
+// </body>
+// </html>
+// `
+//         };
+//         const mailOptionsForReject = {
+//             from: process.env.EMAIL_USER,
+//             to: email,
+//             subject: `Release ${trackName} delivered successfully`,
+//             // text: `Hello, your status has been updated to: ${body.status}`,
+//             html: `<!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//   <style>
+//     body {
+//       font-family: Arial, sans-serif;
+//       background-color: #121212;
+//       margin: 0;
+//       padding: 0;
+//       color: #ffffff;
+//     }
+//     .container {
+//       max-width: 600px;
+//       margin: 20px auto;
+//       background-color: #1e1e1e;
+//       padding: 20px;
+//       border-radius: 8px;
+//       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+//     }
+//     .header {
+//       text-align: center;
+//       padding-bottom: 20px;
+//     }
+//     .header img {
+//       max-width: 150px;
+//     }
+//     .content {
+//       text-align: center;
+//       font-size: 16px;
+//       color: #e0e0e0;
+//     }
+//     .release-info {
+//       margin: 20px 0;
+//       padding: 10px;
+//       background-color: #2b2b2b;
+//       border: 1px solid #444;
+//       border-radius: 4px;
+//       text-align: left;
+//     }
+//     .release-info span {
+//       font-weight: bold;
+//       color: #ffffff;
+//     }
+//     .footer {
+//       text-align: center;
+//       font-size: 12px;
+//       color: #888888;
+//       margin-top: 20px;
+//     }
+//     .link {
+//       color: #007bff;
+//       text-decoration: none;
+//     }
+//     .link:hover {
+//       text-decoration: underline;
+//     }
+//   </style>
+// </head>
+// <body>
+//   <div class="container">
+//     <div class="header">
+//       <img src="https://via.placeholder.com/150" alt="Company Logo">
+//     </div>
+//     <div class="content">
+//       <p>Hello <strong>janumex</strong>,</p>
+//       <p>Your release "<strong>Vaar</strong>" (ID: <strong>8920242320156</strong>) has been unsubmitted and moved back to draft status.</p>
+//       <div class="release-info">
+//         <p><strong>Profile:</strong> Tuneplus</p>
+//         <p><strong>Service:</strong> My Music Distribution Zone</p>
+//         <p><strong>Reason for Unsubmission:</strong></p>
+//         <p>Due to a policy change, this release is not suitable to be sent to Content ID platforms. We have reason to believe this release may contain non-exclusive samples/beats/loops, which cannot be sent to Facebook/Instagram, YouTube Content ID, and SoundCloud Content ID. Please update your service selection to exclude YouTube, Facebook, and SoundCloud. Your release will still be distributed to YouTube Music and SoundCloud.</p>
+//         <p>If you have exclusive rights to the samples/beats/loops used in your release or have created the music from scratch, please contact your label manager and provide proof of this. Please note that the label name cannot be the same as the artist name.</p>
+//       </div>
+//     </div>
+//     <div class="footer">
+//       <p>&copy; 2025 Believe Digital. All rights reserved.</p>
+//     </div>
+//   </div>
+// </body>
+// </html>
+// `
+//         };
+        
+//         let mailOptions;
+//         if (body.status === "Approve") {
+//             mailOptions = mailOptionsForApprove;
+//         } else if (body.status === "Reject") {
+//             mailOptions = mailOptionsForReject;
+//         } 
+    
+//         if (body.status === "Approve" || body.status === "Reject") {
+//             // Send email notification
+//             try {
+//                 const emailResponse = await transporter.mailOptionsForApprove(mailOptions);
+//                 console.log("Email sent:", emailResponse);
+//                 return R(res, true, "Status updated and email sent successfully", result, 200)
+                
+//             } catch (error) {
+//                 console.error("Error sending email:", error.message);
+//                 return R(res, true,  "Status updated but email not sent", result, 400)
+//              }
+//         }
+ 
+//         return R(res, true, "Status updated and email sent successfully", result, 200)
+
+//     } catch (error) {
+//         console.error("Error in updateStatus:", error.message);
+//         next(error);
+//     }
+// };
+
 release.updateStatus = async (req, res, next) => {
     const body = req.body;
+    const trackName = body.trackName;
+    const message = body.message;
+    const status = body.status;
     try {
         // Update status
         const result = await releaseModel.updateStatus(body);
         if (!result) {
-            return R(res, true, "Failed to update status" , result, 400) 
+            return R(res, true, "Failed to update status", result, 400);
         }
 
         // Get user email
         const email = await releaseModel.getEmail(body);
         if (!email) {
-            return R(res, true, "Email not found" , result, 404) 
- 
+            return R(res, true, "Email not found", result, 404);
         }
 
         console.log(`Sending email to: ${email}`);
 
-        const mailOptions = {
+        // Define email options
+        const mailOptionsForApprove = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: "Status Update Notification",
-            text: `Hello, your status has been updated to: ${body.status}`,
-            html: email
+            subject: `Release ${trackName} delivered successfully`,
+            // text: `Hello, your status has been updated to: ${body.status}`,
+            html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      margin: 0;
+      padding: 0;
+      color: #ffffff;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .header {
+      text-align: center;
+      padding-bottom: 20px;
+    }
+    .header img {
+      max-width: 150px;
+    }
+    .content {
+      text-align: center;
+      font-size: 16px;
+      color: #e0e0e0;
+    }
+    .release-info {
+      margin: 20px 0;
+      padding: 10px;
+      background-color: #2b2b2b;
+      border: 1px solid #444;
+      border-radius: 4px;
+      text-align: left;
+    }
+    .release-info span {
+      font-weight: bold;
+      color: #ffffff;
+    }
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #888888;
+      margin-top: 20px;
+    }
+    .link {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://via.placeholder.com/150" alt="Company Logo">
+    </div>
+    <div class="content">
+      <p>Hello <strong>janumex</strong>,</p>
+      <p>Your release  with Tuneplus at Tune Plus Distribution (ID: <strong>8472025918673</strong>) has now been sent out to stores.</p>
+      <div class="release-info">
+        <p>Please note that once received by the stores, they will process your release in accordance with their internal processes. We have no control over how soon stores will process your release.</p>
+        <p>If you need any further assistance, please use the Contact Us form available on your dashboard and we will get back to you as soon as possible.</p>
+      </div>
+      <p>For further details on YouTube’s Content ID system, please visit the following link:</p>
+      <p><a href="https://support.google.com/youtube/answer/2797370?hl=en-GB" class="link">YouTube Content ID System</a></p>
+    </div>
+    <div class="footer">
+      <p>&copy; 2025 Believe Digital. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
+`
+        };
+        const mailOptionsForReject = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: `Release ${trackName} delivered successfully`,
+            // text: `Hello, your status has been updated to: ${body.status}`,
+            html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      margin: 0;
+      padding: 0;
+      color: #ffffff;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .header {
+      text-align: center;
+      padding-bottom: 20px;
+    }
+    .header img {
+      max-width: 150px;
+    }
+    .content {
+      text-align: center;
+      font-size: 16px;
+      color: #e0e0e0;
+    }
+    .release-info {
+      margin: 20px 0;
+      padding: 10px;
+      background-color: #2b2b2b;
+      border: 1px solid #444;
+      border-radius: 4px;
+      text-align: left;
+    }
+    .release-info span {
+      font-weight: bold;
+      color: #ffffff;
+    }
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #888888;
+      margin-top: 20px;
+    }
+    .link {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://via.placeholder.com/150" alt="Company Logo">
+    </div>
+    <div class="content">
+      <p>Hello <strong>janumex</strong>,</p>
+      <p>Your release "<strong>Vaar</strong>" (ID: <strong>8920242320156</strong>) has been unsubmitted and moved back to draft status.</p>
+      <div class="release-info">
+        <p><strong>Profile:</strong> Tuneplus</p>
+        <p><strong>Service:</strong> My Music Distribution Zone</p>
+        <p><strong>Reason for Unsubmission:</strong></p>
+        <p>${message}</p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>&copy; 2025 Believe Digital. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
+`
         };
 
-        if (body.status === "Approve" || body.status === "Reject") {
-            // Send email notification
-            try {
-                const emailResponse = await transporter.sendMail(mailOptions);
-                console.log("Email sent:", emailResponse);
-                return R(res, true, "Status updated and email sent successfully", result, 200)
-                
-            } catch (error) {
-                console.error("Error sending email:", error.message);
-                return R(res, true,  "Status updated but email not sent", result, 400)
-             }
+        // Determine which email to send
+        let mailOptions;
+        if (body.status === "Approve") {
+            mailOptions = mailOptionsForApprove;
+        } else if (body.status === "Reject") {
+            mailOptions = mailOptionsForReject;
         }
- 
-        return R(res, true, "Status updated and email sent successfully", result, 200)
+
+        // Send email notification
+    if(status ==="Approve" || status === "Reject") {    {
+            try {
+            const emailResponse = await transporter.sendMail(mailOptions);
+            console.log("Email sent:", emailResponse);
+            return R(res, true, "Status updated and email sent successfully", result, 200);
+        } catch (error) {
+            console.error("Error sending email:", error.message);
+            return R(res, true, "Status updated but email not sent", result, 400);
+        }
+    }
+}
+return R(res, true, "Status updated but email not sent", result, 400);
 
     } catch (error) {
         console.error("Error in updateStatus:", error.message);
         next(error);
     }
 };
+
 
 
 
