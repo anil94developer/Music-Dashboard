@@ -8,17 +8,17 @@ const { uploadOnCloudinary } = require("../utils/cloudinary");
 const release = {};
 
 release.addOneRelease = async (req, res, next) => {
-    const { type,title } = req.body
+    const { type, title } = req.body
     // console.log("userId=======",req.doc.userId); 
-    
-    try { 
+
+    try {
         const newReq = {
             userId: req.doc.userId,
             title: title,
             type: type
         }
         // console.error(newReq)
-        const result = await releaseModel.addOneRelease(newReq) 
+        const result = await releaseModel.addOneRelease(newReq)
         return R(res, true, "Add Successfully!!", result, 200)
     } catch (err) {
         next(err)
@@ -28,14 +28,14 @@ release.addOneStepRelease = async (req, res, next) => {
     const body = req.body
     const { type, title } = req.body
     // console.log("userId=======",req.doc.userId); 
-    if(req.file?.path){
+    if (req.file?.path) {
         const coverImage = req.file?.path
-    console.log("###################",coverImage)
-    const coverImageurl = await uploadOnCloudinary(coverImage)
-    console.log("*******************",coverImageurl)
-    body["coverImage"]=coverImageurl.url
+        console.log("###################", coverImage)
+        const coverImageurl = await uploadOnCloudinary(coverImage)
+        console.log("*******************", coverImageurl)
+        body["coverImage"] = coverImageurl.url
     }
-    
+
     try {
         // console.log("bodyData====",body);
         const result = await releaseModel.addOneStepRelease(body)
@@ -129,11 +129,11 @@ release.addTwoStepRelease = async (req, res) => {
 // };
 
 const transporter = nodemailer.createTransport({
-  service: "Gmail", // Replace with your email service
-  auth: {
-    user: process.env.EMAIL_USER, // Your email from environment variables
-    pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
-  },
+    service: "Gmail", // Replace with your email service
+    auth: {
+        user: process.env.EMAIL_USER, // Your email from environment variables
+        pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
+    },
 });
 
 
@@ -177,15 +177,15 @@ release.SubmitFinalRelease = async (req, res, next) => {
 
 release.releaseList = async (req, res, next) => {
     try {
-      const statusFilter = req.query.status; // Default to all statuses if none are provided
-      console.log(">>>>>>>",statusFilter);
-      const result = await releaseModel.releaseList(req.doc.userId, statusFilter);
-      return R(res, true, "Fetch Successfully!!", result, 200);
+        const statusFilter = req.query.status; // Default to all statuses if none are provided
+        console.log(">>>>>>>", statusFilter);
+        const result = await releaseModel.releaseList(req.doc.userId, statusFilter);
+        return R(res, true, "Fetch Successfully!!", result, 200);
     } catch (err) {
-      next(err);
+        next(err);
     }
-  };
-  
+};
+
 release.allReleaseList = async (req, res, next) => {
     try {
         const result = await releaseModel.allReleaseList(req.doc.userId)
@@ -207,11 +207,23 @@ release.releaseDetails = async (req, res, next) => {
 
 
 release.updateStatus = async (req, res, next) => {
-    let body = req.body;
+    const body = req.body;
     try {
+        // Update status
         const result = await releaseModel.updateStatus(body);
+        if (!result) {
+            return R(res, true, "Failed to update status" , result, 400) 
+        }
+
+        // Get user email
         const email = await releaseModel.getEmail(body);
-        console.log(email);
+        if (!email) {
+            return R(res, true, "Email not found" , result, 404) 
+ 
+        }
+
+        console.log(`Sending email to: ${email}`);
+
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
@@ -219,22 +231,28 @@ release.updateStatus = async (req, res, next) => {
             text: `Hello, your status has been updated to: ${body.status}`,
             html: email
         };
-        if(body.status === "Approve" || body.status === "Reject") {
-           // Send email
+
+        if (body.status === "Approve" || body.status === "Reject") {
+            // Send email notification
             try {
                 const emailResponse = await transporter.sendMail(mailOptions);
                 console.log("Email sent:", emailResponse);
-                return R(res,true,"Status Updated Successfully",{},200);
+                return R(res, true, "Status updated and email sent successfully", result, 200)
+                
             } catch (error) {
-                console.error("Error sending email:", error);
-                res.status(500).json({ success: false, message: "Status updated but email not sent" });
-            }
+                console.error("Error sending email:", error.message);
+                return R(res, true,  "Status updated but email not sent", result, 400)
+             }
         }
-        return R(res, true, "Status Updated Successfully!!", result, 200)
-    } catch (err) {
-        next(err)
+ 
+        return R(res, true, "Status updated and email sent successfully", result, 200)
+
+    } catch (error) {
+        console.error("Error in updateStatus:", error.message);
+        next(error);
     }
 };
+
 
 
 
@@ -245,8 +263,8 @@ release.addLabel = async (req, res, next) => {
     };
     try {
         const result = await releaseModel.addLabel(body)
-        if(result === "Cannot add more labels. Maximum limit reached."){
-            return R(res, false,"Cannot add more labels. Maximum limit reached.", {}, 400)
+        if (result === "Cannot add more labels. Maximum limit reached.") {
+            return R(res, false, "Cannot add more labels. Maximum limit reached.", {}, 400)
         }
         return R(res, true, "Add Successfully!!", result, 200)
     } catch (err) {

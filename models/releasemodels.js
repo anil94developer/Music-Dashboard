@@ -119,8 +119,16 @@ const releaseSchema = mongoose.Schema({
       LyricsLanguage: { type: String, default: "" },
       Lyrics: { type: String, default: "" },
       MoreInfo: { type: String, default: "" },
-      Volume: { type: String, default: "" }
-    }
+      Volume: { type: String, default: "" },
+      selectContributory:[
+        {
+          id: { type: String, default: "" },
+          name: { type: String },
+          value: { type: String }
+        }
+      ]
+    },
+   
   ],
   step4: [
     {
@@ -372,18 +380,30 @@ releaseModel.releaseDetails = async (releaseId) => {
   }
 };
 releaseModel.updateStatus = async (body) => {
-  let id=body.id;
-  let status=body.status;
-  let releaseResult = await db.connectDb("release", releaseSchema); 
-  let result = await releaseResult.updateOne({ _id:id },
-    {
-      $set: {
-        status,
-        }
-    })
-  if (result.modifiedCount > 0 || result.upsertedCount > 0) {
-    return true;
-  } else {
+  try {
+    const { id, status } = body;
+    console.log(body)
+    // Ensure id is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error("Invalid ID format");
+    }
+
+    const releaseResult = await db.connectDb("release", releaseSchema);
+
+    // Perform the update operation
+    const result = await releaseResult.updateOne(
+      { _id: mongoose.Types.ObjectId(id) },
+      { $set: { status } }
+    );
+
+    // Check if the update was successful
+    if (result.modifiedCount > 0 || result.upsertedCount > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Error in updateStatus:", error.message);
     return false;
   }
 };
