@@ -50,7 +50,7 @@ export const AllRelease = () => {
       )
     }
   ];
-  { console.log("item----------------",myRelease)}
+  { console.log("item----------------", myRelease) }
   return (
     <div>
       <SideBar />
@@ -59,7 +59,7 @@ export const AllRelease = () => {
         <div className="content-main">
           <section className="content">
             <div className="page-heading">
-              <h1>Old Release</h1>
+              <h1>All Release</h1>
             </div>
             {/* <div className="row">
               <div className="col-md-12">
@@ -90,13 +90,33 @@ export const AllRelease = () => {
                 </thead>
                 <tbody role="alert" aria-live="polite" aria-relevant="all">
                   {myRelease.map((item) => (
-                  
+
                     <tr className="odd">
                       <td className="  sorting_1">{item.title}</td>
                       <td className="  ">{item.type}</td>
-                      <td  > {item.status}</td>
+                      <td  >
+                        {item.status === 'Pending' && (
+                          <img className="img-fluid" src={require('../../assets/images/pending.png')} style={{ height: 40, width: 40 }} />
+
+                        )}
+
+                        {item.status === 'Submit' && (
+                          <img className="img-fluid" src={require('../../assets/images/submit.png')} style={{ height: 40, width: 40 }} />
+
+                        )}
+
+                        {item.status === 'Approve' && (
+                          <img className="img-fluid" src={require('../../assets/images/approve.png')} style={{ height: 40, width: 40 }} />
+
+                        )}
+
+                        {item.status === 'Reject' && (
+                          <img className="img-fluid" src={require('../../assets/images/reject.png')} style={{ height: 40, width: 40 }} />
+
+                        )}
+                      </td>
                       <td  > <img src={item?.step1?.coverImage} height={50} width={50} />
-                      </td> 
+                      </td>
                       <td className="  ">{item?.step1?.labelName}</td>
                       {/* <td className="  ">{item.step1?.originalReleaseDate}</td> */}
                       <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>

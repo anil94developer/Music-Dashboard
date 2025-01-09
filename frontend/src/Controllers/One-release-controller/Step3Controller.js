@@ -20,11 +20,11 @@ const Step3Controller = (props) => {
     const [versionSubtitle, setVersionSubtitle] = useState("");
     const [primaryArtist, setPrimaryArtist] = useState("");
     const [featuring, setFeaturing] = useState("");
-    const [remixer, setRemixer] = useState([{ id: '',name:'' }]);
-    const [author, setAuthor] = useState([{ id: '',name:'' }]);
-    const [composer, setComposer] = useState([{ id: '',name:'' }]);
-    const [arranger, setArranger] = useState([{ id: '',name:'' }]);
-    const [producer, setProducer] = useState([{ id: '',name:'' }]);
+    const [remixer, setRemixer] = useState([{ id: '', name: '' }]);
+    const [author, setAuthor] = useState([{ id: '', name: '' }]);
+    const [composer, setComposer] = useState([{ id: '', name: '' }]);
+    const [arranger, setArranger] = useState([{ id: '', name: '' }]);
+    const [producer, setProducer] = useState([{ id: '', name: '' }]);
     const [pLine, setPLine] = useState("");
     const [productionYear, setProductionYear] = useState("");
     const [publisher, setPublisher] = useState("");
@@ -43,9 +43,10 @@ const Step3Controller = (props) => {
     const [lyrics, setLyrics] = useState("");
     const [step3, setStep3] = useState([]);
     const [btnName, setBtnName] = useState("Add");
-    const [rowId,setRowId]=useState("")
-    const [volume,setVolume]= useState("")
-  const [selectContributory, setSelectContributory] = useState([]);
+    const [rowId, setRowId] = useState("")
+    const [volume, setVolume] = useState("")
+    const [inprsNo, setIprsNo] = useState("")
+    const [selectContributory, setSelectContributory] = useState([]);
 
 
     const handleSubmit = async (e) => {
@@ -54,7 +55,7 @@ const Step3Controller = (props) => {
             body = {
                 "_id": releaseData._id,
                 "step3": [
-                    ...step3 ||[],
+                    ...step3 || [],
                     {
                         "ContentType": contentType,
                         "PrimaryTrackType": primaryTrackType,
@@ -86,8 +87,10 @@ const Step3Controller = (props) => {
                         "LyricsLanguage": lyricsLanguage,
                         "Lyrics": lyrics,
                         "MoreInfo": "",
-                        "Volume":volume,
-                        "selectContributory":selectContributory
+                        "Volume": volume,
+                        "selectContributory": selectContributory,
+                        "inprsNo": inprsNo
+
                     }
                 ]
             }
@@ -126,14 +129,19 @@ const Step3Controller = (props) => {
                         "LyricsLanguage": lyricsLanguage,
                         "Lyrics": lyrics,
                         "MoreInfo": "",
-                        "Volume":volume,
-                        "_id":rowId
+                        "Volume": volume,
+                        "_id": rowId,
+                        "selectContributory": selectContributory,
+                        "inprsNo": inprsNo
+
                     }
                 ]
             }
         }
-       let result = await postData(btnName == "Add" ? base.releaseStep3 : base.trackUpdate, body)
-        console.log("tracks====",body)
+
+        console.log("step3=======body====", body)
+        let result = await postData(btnName == "Add" ? base.releaseStep3 : base.trackUpdate, body)
+
         if (result.data.status === true) {
             Swal.fire("Success", result.message, result.message);
         } else {
@@ -204,9 +212,10 @@ const Step3Controller = (props) => {
         step3, setStep3,
         setReleaseData,
         handleSubmit,
-        btnName, setBtnName,setRowId,
-        volume,setVolume,
-        selectContributory, setSelectContributory
+        btnName, setBtnName, setRowId,
+        volume, setVolume,
+        selectContributory, setSelectContributory,
+        inprsNo, setIprsNo
     };
 
 }

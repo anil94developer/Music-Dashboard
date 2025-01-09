@@ -71,47 +71,95 @@ export default function STEP3(props) {
     handleSubmit,
     setReleaseData,
     btnName, setBtnName, setRowId,
-    volume, setVolume ,
-    selectContributory, setSelectContributory
+    volume, setVolume,
+    selectContributory, setSelectContributory,
+    inprsNo, setIprsNo
   } = Step3Controller()
+
+
   const initialStoreList = [
     { id: '1', name: 'Mixing Eng', value: '' },
-    { id: '2', name: 'Mastering Eng', value: '' },
-    { id: '3', name: 'Acoustic', value: '' },
-    { id: '4', name: 'Guitar', value: '' },
-    { id: '5', name: 'Keyboard', value: '' },
-    { id: '6', name: 'Bass', value: '' },
-    { id: '7', name: 'Drum', value: '' },
-    { id: '8', name: 'Flute', value: '' },
-    { id: '9', name: 'Saxophone', value: '' }, 
-
-
+    { id: '2', name: 'Mastering Eng', value: '' }, 
+    { id: '3', name: 'Acoustic Guitar', value: '' },
+    { id: '4', name: 'Keyboard', value: '' },
+    { id: '5', name: 'Bass', value: '' },
+    { id: '6', name: 'Drum', value: '' },
+    { id: '7', name: 'Flute', value: '' },
+    { id: '8', name: 'Saxophone', value: '' }
   ];
+
+
   const [contributoryName, setContributoryName] = useState(initialStoreList);
 
+  // Handle selection of a contributor
   const contributorySelect = (id) => {
-    const selectedItem = contributoryName.find(item => item.id === id);
-    if (selectedItem && !selectContributory.some(item => item.id === id)) {
+    const selectedItem = contributoryName?.find((item) => item.id === id);
+    if (selectedItem && !selectContributory?.some((item) => item.id === id)) {
       setSelectContributory([...selectContributory, selectedItem]);
-      setContributoryName(contributoryName.filter(item => item.id !== id));
+      setContributoryName(contributoryName?.filter((item) => item.id !== id));
     }
   };
 
+  // Handle changes to a specific contributor's value
   const handlecontributoryChange = (id, val) => {
-    setSelectContributory((prevDates) =>
-      prevDates.map((item) =>
+    setSelectContributory((prevContributors) =>
+      prevContributors?.map((item) =>
         item.id === id ? { ...item, value: val } : item
       )
     );
   };
 
-  
+  // Remove a contributor from the selected list
+  const removeContributory = (id) => {
+    const removedContributor = selectContributory.find((item) => item.id === id);
+    if (removedContributor) {
+      setContributoryName([...contributoryName, removedContributor]);
+      setSelectContributory(selectContributory.filter((item) => item.id !== id));
+    }
+  };
+
+
   // State to manage the modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Function to open the modal
   const openModal = () => {
     setBtnName("Add");
     setIsModalOpen(true)
+    setRowId("")
+    setIsModalOpen(true)
+    console.log("")
+    setContentType("");
+    setPrimaryTrackType("");
+    setSecondaryTrackType("");
+    setInstrumental(false);
+    setTitle("");
+    setVersionSubtitle("");
+    setPrimaryArtist("");
+    setFeaturing("");
+    setRemixer([{ value: '' }]);
+    setAuthor([{ value: '' }]);
+    setComposer([{ value: '' }]);
+    setArranger([{ value: '' }]);
+    setProducer([{ value: '' }]);
+    setPLine("");
+    setProductionYear("");
+    setPublisher("");
+    setIsrc("");
+    setGenerateISRC(false);
+    setGenre("");
+    setSubgenre("");
+    setSecondaryGenre("");
+    setSubSecondaryGenre("");
+    setPrice("");
+    setProducerCatalogueNumber("");
+    setParentalAdvisory("");
+    setPreviewStart("");
+    setTrackTitleLanguage("");
+    setLyricsLanguage("");
+    setLyrics("");
+    setVolume("");
+    // setSelectContributory([{ id:"",name:"",value: '' }]);
+    setIprsNo("")
   };
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
@@ -129,7 +177,8 @@ export default function STEP3(props) {
         setPLine(releaseData.step1.line);
 
       }
-      setSelectContributory(releaseData?.step3?.selectContributory)
+      //
+
     }
     getData()
   }, [releaseData.step3])
@@ -137,6 +186,7 @@ export default function STEP3(props) {
     fetchReleaseDetails(releaseData._id)
   }, [isModalOpen])
   const editTracks = (item) => {
+    console.log(item)
     setBtnName("Edit")
     setRowId(item._id)
     setIsModalOpen(true)
@@ -171,6 +221,9 @@ export default function STEP3(props) {
     setLyricsLanguage(item.LyricsLanguage || "");
     setLyrics(item.Lyrics || "");
     setVolume(item.Volume || "");
+    setSelectContributory(item.selectContributory || "") 
+    setIprsNo(item?.inprsNo);
+
   }
   // Function to generate ISRC code
   const generateISRCCode = () => {
@@ -198,7 +251,7 @@ export default function STEP3(props) {
           </div>
         </div>
       </div>
-      <br></br>
+      {/* <br>{releaseData?._id}</br> */}
       <div className="dash-detail">
         <div className="">
           <div className="">
@@ -527,44 +580,66 @@ export default function STEP3(props) {
                         <textarea className="form-control" rows="4" value={lyrics} onChange={(e) => setLyrics(e.target.value)} />
                       </div>
                     </div>
+
+
                     <div className="col-md-6">
                       <div className="form-group">
                         <label>Add contributors</label>
-                        <select className="form-select form-control" onChange={(e) =>
-                          contributorySelect(e.target.value)}>
+                        <select
+                          className="form-select form-control"
+                          onChange={(e) => contributorySelect(e.target.value)}
+                        >
                           <option value="">Please Select</option>
                           {contributoryName?.map((item) => (
-                            <option key={item.id} value={item.id}>{item.name}</option>
+                            <option key={item.id} value={item.id}>
+                              {item.name}
+                            </option>
                           ))}
                         </select>
                       </div>
+
                       {selectContributory?.map((item) => (
                         <div
+                          key={item.id}
                           className="form-control"
                           style={{
-                            display: 'flex', // Ensure the container is a flex container
-                            flexDirection: 'row', // Align items in a row
-                            gap: '10px', // Add space between items
-                            alignItems: 'center', // Align items vertically centered,
-                            marginTop: 20
+                            display: 'flex',
+                            flexDirection: 'row',
+                            gap: '10px',
+                            alignItems: 'center',
+                            marginTop: 20,
                           }}
                         >
                           <input
                             className="form-control"
                             value={item.name}
-                            disbled
+                            disabled
                           />
                           <input
                             className="form-control"
                             type="text"
-                            placeholder='Enter Person Name'
+                            placeholder="Enter Person Name"
                             value={item.value}
                             onChange={(e) => handlecontributoryChange(item.id, e.target.value)}
                           />
-                          {/* <button type="button" onClick={() => removeContributoryDate(item.id)}>X</button> */}
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => removeContributory(item.id)}
+                          >
+                            X
+                          </button>
                         </div>
                       ))}
                     </div>
+
+                    <div className="col-lg-3 col-md-6">
+                      <div className="form-group">
+                        <label>IPRS NO</label>
+                        <input type="text" className="form-control" value={inprsNo} onChange={(e) => setIprsNo(e.target.value)} />
+                      </div>
+                    </div>
+
                   </div>
                   <div className="form-group">
                     {/* Submit Button */}

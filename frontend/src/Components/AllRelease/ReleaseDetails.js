@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import OneReleaseController from '../../Controllers/One-release-controller/OneReleaseController';
 import { Nav } from '../Common/Nav'
@@ -10,6 +10,7 @@ import { postData } from '../../Services/Ops';
 import Swal from 'sweetalert2';
 import { useUserProfile } from '../../Context/UserProfileContext';
 import * as XLSX from 'xlsx';
+import Loader from '../Common/Loader';
 
 export const ReleaseDetails = () => {
   const location = useLocation();
@@ -82,6 +83,31 @@ export const ReleaseDetails = () => {
     XLSX.writeFile(workbook, fileName);
   }
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const downloadFile = async (urlValue, name) => {
+    setIsDownloading(true);
+    try {
+      const response = await fetch(urlValue); // Replace with your API endpoint
+      const blob = await response.blob(); // Convert the response to a Blob
+      const url = window.URL.createObjectURL(blob); // Create a Blob URL
+
+      // Create a temporary <a> element to trigger download
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', name); // Set the file name
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link); // Remove the element after download
+
+      // Revoke the Blob URL to free memory
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <div>
@@ -90,8 +116,8 @@ export const ReleaseDetails = () => {
         <Nav />
         <div className="content-main">
           <section className="content">
-           
-                     
+
+
             <div className="audio-table release-inner dash-detail dash-detail-two mb-4">
               <div className="release-title">
                 <h2>Relase Information</h2>
@@ -325,6 +351,8 @@ export const ReleaseDetails = () => {
                         <th>Custom PRO Affiliation</th>
                         <th>PRO MEMBERSHIP NUMBER</th>
                         <th>Audio Language</th>
+                        <th>Cover Image</th>
+                        <th>Media</th>
 
 
                       </tr>
@@ -427,6 +455,25 @@ export const ReleaseDetails = () => {
                           <td>{ }</td>
                           <td>{ }</td>
                           <td>{item?.LyricsLanguage}</td>
+                          <td>
+                            {isDownloading ?
+                              <Loader />
+                              :
+                              <span onClick={() => { downloadFile(myRelease?.step1?.coverImage, myRelease.title + '.jpg') }}>
+                                <img className="img-fluid" src={require('../../assets/images/imgdownload.png')} style={{ height: 40, width: 40 }} />
+                              </span>
+                            }
+                          </td>
+
+                          <td>
+                            {isDownloading ?
+                              <Loader />
+                              :
+                              <span onClick={() => { downloadFile(myRelease?.step2[index]?.fileData, myRelease?.step2[index]?.fileName) }}>
+                                <img className="img-fluid" src={require('../../assets/images/download.png')} style={{ height: 40, width: 40 }} />
+                              </span>
+                            }
+                          </td>
                         </tr>
                       ))}
                     </tbody>
