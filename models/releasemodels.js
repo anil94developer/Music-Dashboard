@@ -330,7 +330,7 @@ releaseModel.addFiveStepRelease = async (body) => {
 
 releaseModel.SubmitFinalRelease = async (body) => {
   let id=body.id;
-  let releaseDate=body.id;
+  let releaseDate=body.releaseDate;
   let youtubechannelLinkId=body.youtubechannelLinkId;
 
 
