@@ -81,13 +81,17 @@ const releaseSchema = mongoose.Schema({
       Author: [
         {
           id: { type: String, default: "" },
-          name: { type: String, default: "" }
+          name: { type: String, default: "" },
+          iprs: { type: String, default: "" }
+
         }
       ],
       Composer: [
         {
           id: { type: String, default: "" },
-          name: { type: String, default: "" }
+          name: { type: String, default: "" },
+          iprs: { type: String, default: "" }
+
         }
       ],
       Arranger: [
@@ -103,8 +107,14 @@ const releaseSchema = mongoose.Schema({
         }
       ],
       Pline: { type: String, default: "" },
-      ProductionYear: { type: Number, default: 2023 },
-      Publisher: { type: String, default: "" },
+      ProductionYear: { type: Number, default: 2025 },
+      Publisher: [
+        {
+          id: { type: String, default: "" },
+          name: { type: String, default: "" },
+          iprs: { type: String, default: "" } 
+        }
+      ],
       ISRC: { type: String, default: "" },
       GenerateISRC: { type: Boolean, default: true },
       Genre: { type: String, default: "" },
@@ -127,7 +137,13 @@ const releaseSchema = mongoose.Schema({
           value: { type: String , default: ""}
         }
       ],
-      inprsNo: { type: String, default: "" },
+      otherContributory: [
+        {
+          id: { type: String, default: "" },
+          name: { type: String, default: "" },
+          value: { type: String , default: ""}
+        }
+      ], 
     },
 
   ],

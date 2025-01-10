@@ -11,6 +11,7 @@ router.post('/forgetpassword',authService.forgetPassword)
 router.post('/setPassword',authService.setPassword)
 router.post('/verifyOtp',authService.verifyOtp)
 router.get('/user-profile',verifyToken, authService.getUsers)
+router.post('/get-user',verifyToken,authService.getSingleUser)
 router.post('/user-change-password',verifyToken,authService.passwordChange)
 router.post('/profile-update',verifyToken,authService.profileUpdate)
 router.post('/user-delete',verifyToken,authService.is_deleted);
