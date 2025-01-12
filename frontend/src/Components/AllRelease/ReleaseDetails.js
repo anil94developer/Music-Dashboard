@@ -19,6 +19,8 @@ export const ReleaseDetails = () => {
   // const { exportTableToExcel } = OneReleaseController();
   const { myRelease, setMyRelease, fetchReleaseDetails, } = MainStepController();
   const { userProfile, getPermissoin, getProfile } = useUserProfile()
+  const [showModal, setShowModal] = useState(false);  // Controls modal visibility
+  const [rejectionReason, setRejectionReason] = useState("");
   useEffect(() => {
     fetchReleaseDetails(releaseId)
   }, [])
@@ -39,7 +41,8 @@ export const ReleaseDetails = () => {
       if (result.isConfirmed) {
         let body = {
           id: releaseId,
-          status: status
+          status: status,
+          reason: rejectionReason ? rejectionReason : "",
         }
         try {
           let result = await postData(base.releaseChangeStatus, body)
@@ -62,7 +65,15 @@ export const ReleaseDetails = () => {
 
   }
 
-
+  const handleReject = () => {
+    if (rejectionReason.trim()) {
+      changeStatus("Reject", rejectionReason); // Pass rejection reason to changeStatus function
+      setShowModal(false); // Close the modal after submission
+      setRejectionReason(''); // Clear the input field after submission
+    } else {
+      alert("Please provide a reason for rejection.");
+    }
+  };
 
   function exportTableToExcel(tableId, fileName = 'TableData.xlsx') {
     // Get the table element by ID
@@ -488,14 +499,67 @@ export const ReleaseDetails = () => {
                 <button type="submit" className="btn btn-success" onClick={() => {
                   changeStatus("Approve")
                 }}>Approve</button>
-                <button type="submit" className="btn btn-danger mx-4" onClick={() => {
-                  changeStatus("Reject")
-                }}>Reject</button>
+                <button
+                  type="button"
+                  className="btn btn-danger mx-4"
+                  onClick={() => setShowModal(true)}  // Open the modal
+                >
+                  Reject
+                </button>
                 <button type="submit" className="btn btn-info mx-4" onClick={() => {
                   changeStatus("Pending")
                 }}>Pending</button>
               </div>
+
             }
+            {/* Custom Modal for Rejection */}
+            {showModal && (
+              <div  className="modal fade show"
+              style={{
+                display: "block",
+                backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent overlay
+              }}role="dialog">
+                <div className="modal-dialog">
+                  <div className="modal-content bg-dark text-light">
+                    <div className="modal-header">
+                      <h5 className="modal-title text-light">Reason for Rejection</h5>
+                      <button
+                        type="button"
+                        className="btn-close text-light"
+                        onClick={() => setShowModal(false)} // Close modal on cancel
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      <textarea
+                        className="form-control bg-dark text-light"
+                        rows="4"
+                        value={rejectionReason}
+                        onChange={(e) => setRejectionReason(e.target.value)} // Handle text input
+                        placeholder="Enter the reason for rejection..."
+                      ></textarea>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-light text-dark"
+                        onClick={() => setShowModal(false)} // Close modal on cancel
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={handleReject} // Submit rejection reason
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
           </section>
         </div>
       </div>

@@ -113,26 +113,26 @@ export default function Support() {
                     </div>
                   </div>
                   <div className="col-lg-3 col-md-6">
-                                        <div className="form-group">
-                                            <label>Default Country</label>
-                                            <select
-                                                type="text"
-                                                className="form-select form-control"
-                                                value={country}
-                                                name="country"
-                                                onChange={(e)=>{setCountry(e.target.value)}}
-                                            >
-                                                <option value="" disabled>
-                                                    Select a Country
-                                                </option>
-                                                {countryList.map((item) => (
-                                                    <option key={item.value} value={item.value}>
-                                                        {item.value}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
+                    <div className="form-group">
+                      <label>Default Country</label>
+                      <select
+                        type="text"
+                        className="form-select form-control"
+                        value={country}
+                        name="country"
+                        onChange={(e) => { setCountry(e.target.value) }}
+                      >
+                        <option value="" disabled>
+                          Select a Country
+                        </option>
+                        {countryList.map((item) => (
+                          <option key={item.value} value={item.value}>
+                            {item.value}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                   {/* <div className="col-lg-4 col-md-6 col-12">
                 
                 <div className="form-group">

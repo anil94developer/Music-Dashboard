@@ -13,7 +13,7 @@ const useSupportController = (props) => {
   const [motionLink, setMotionLink] = useState("");
   const [attachments, setAttachments] = useState([]);
   const [supportList, setSupportList] = useState([])
-  const navigate =useNavigate();
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     setAttachments(Array.from(e.target.files));
@@ -45,9 +45,9 @@ const useSupportController = (props) => {
       "country": country,
       "description": description,
       "motionType": motionType,
-      "motionLink": ""
+      "motionLink": "",
+      "attachments": attachments
     }
-
     // console.log("FormData Values:");
     // for (let [key, value] of formData.entries()) {
     //   console.log(`${key}: ${value}`);
