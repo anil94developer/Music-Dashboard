@@ -30,6 +30,7 @@ SupportModal.addSupport = async (body, userId) => {
         status: 'Pending',
         attachments: body.attachments,
     }
+    
     const result = await db.connectDb("Support", supportSchema);
     let insData = await result.insertMany(newReq);
     console.log(newReq);

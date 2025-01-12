@@ -164,6 +164,7 @@ release.addFiveStepRelease = async (req, res, next) => {
         next(err)
     }
 };
+
 release.SubmitFinalRelease = async (req, res, next) => {
 
     const body = req.body;
@@ -220,11 +221,11 @@ release.releaseDetails = async (req, res, next) => {
 //         const email = await releaseModel.getEmail(body);
 //         if (!email) {
 //             return R(res, true, "Email not found" , result, 404) 
- 
+
 //         }
 
 //         console.log(`Sending email to: ${email}`);
-        
+
 //         const mailOptionsForApprove = {
 //             from: process.env.EMAIL_USER,
 //             to: email,
@@ -402,27 +403,27 @@ release.releaseDetails = async (req, res, next) => {
 // </html>
 // `
 //         };
-        
+
 //         let mailOptions;
 //         if (body.status === "Approve") {
 //             mailOptions = mailOptionsForApprove;
 //         } else if (body.status === "Reject") {
 //             mailOptions = mailOptionsForReject;
 //         } 
-    
+
 //         if (body.status === "Approve" || body.status === "Reject") {
 //             // Send email notification
 //             try {
 //                 const emailResponse = await transporter.mailOptionsForApprove(mailOptions);
 //                 console.log("Email sent:", emailResponse);
 //                 return R(res, true, "Status updated and email sent successfully", result, 200)
-                
+
 //             } catch (error) {
 //                 console.error("Error sending email:", error.message);
 //                 return R(res, true,  "Status updated but email not sent", result, 400)
 //              }
 //         }
- 
+
 //         return R(res, true, "Status updated and email sent successfully", result, 200)
 
 //     } catch (error) {
@@ -638,18 +639,19 @@ release.updateStatus = async (req, res, next) => {
         }
 
         // Send email notification
-    if(status ==="Approve" || status === "Reject") {    {
-            try {
-            const emailResponse = await transporter.sendMail(mailOptions);
-            console.log("Email sent:", emailResponse);
-            return R(res, true, "Status updated and email sent successfully", result, 200);
-        } catch (error) {
-            console.error("Error sending email:", error.message);
-            return R(res, true, "Status updated but email not sent", result, 400);
+        if (status === "Approve" || status === "Reject") {
+            {
+                try {
+                    const emailResponse = await transporter.sendMail(mailOptions);
+                    console.log("Email sent:", emailResponse);
+                    return R(res, true, "Status updated and email sent successfully", result, 200);
+                } catch (error) {
+                    console.error("Error sending email:", error.message);
+                    return R(res, true, "Status updated but email not sent", result, 400);
+                }
+            }
         }
-    }
-}
-return R(res, true, "Status updated but email not sent", result, 400);
+        return R(res, true, "Status updated but email not sent", result, 400);
 
     } catch (error) {
         console.error("Error in updateStatus:", error.message);

@@ -8,8 +8,8 @@ const releaseSchema = mongoose.Schema({
   userId: { type: String },
   title: { type: String, required: true },
   type: { type: String, required: true },
-  status:{ type: String,default:'Pending'},
-  youtubechannelLinkId:{ type: String,default:''},
+  status: { type: String, default: 'Pending' },
+  youtubechannelLinkId: { type: String, default: '' },
   step1: {
     subTitle: { type: String, default: null },
     primaryArtist: {
@@ -17,15 +17,15 @@ const releaseSchema = mongoose.Schema({
         userId: String,
         name: String,
         linkId: String,
-        itunesLinkId:String
+        itunesLinkId: String
       }], default: []
-    },   
+    },
     featuring: {
       type: [{
         userId: String,
         name: String,
         linkId: String,
-        itunesLinkId:String
+        itunesLinkId: String
       }], default: []
     },
     isVariousArtists: { type: String, default: null },
@@ -81,13 +81,17 @@ const releaseSchema = mongoose.Schema({
       Author: [
         {
           id: { type: String, default: "" },
-          name: { type: String, default: "" }
+          name: { type: String, default: "" },
+          iprs: { type: String, default: "" }
+
         }
       ],
       Composer: [
         {
           id: { type: String, default: "" },
-          name: { type: String, default: "" }
+          name: { type: String, default: "" },
+          iprs: { type: String, default: "" }
+
         }
       ],
       Arranger: [
@@ -103,8 +107,14 @@ const releaseSchema = mongoose.Schema({
         }
       ],
       Pline: { type: String, default: "" },
-      ProductionYear: { type: Number, default: 2023 },
-      Publisher: { type: String, default: "" },
+      ProductionYear: { type: Number, default: 2025 },
+      Publisher: [
+        {
+          id: { type: String, default: "" },
+          name: { type: String, default: "" },
+          iprs: { type: String, default: "" } 
+        }
+      ],
       ISRC: { type: String, default: "" },
       GenerateISRC: { type: Boolean, default: true },
       Genre: { type: String, default: "" },
@@ -120,15 +130,22 @@ const releaseSchema = mongoose.Schema({
       Lyrics: { type: String, default: "" },
       MoreInfo: { type: String, default: "" },
       Volume: { type: String, default: "" },
-      selectContributory:[
+      selectContributory: [
         {
           id: { type: String, default: "" },
-          name: { type: String },
-          value: { type: String }
+          name: { type: String, default: "" },
+          value: { type: String , default: ""}
         }
-      ]
+      ],
+      otherContributory: [
+        {
+          id: { type: String, default: "" },
+          name: { type: String, default: "" },
+          value: { type: String , default: ""}
+        }
+      ], 
     },
-   
+
   ],
   step4: [
     {
@@ -233,11 +250,11 @@ releaseModel.addTwoStepRelease = async (id, filesData) => {
 
     const result = await releaseResult.updateOne(
       { _id: id },
-      { $push: { step2: filesData } } 
+      { $push: { step2: filesData } }
     );
 
     console.log("Database update result:", result);
-      
+
     return result.modifiedCount > 0 || result.upsertedCount > 0;
   } catch (error) {
     console.error("Database update error:", error);
@@ -329,20 +346,20 @@ releaseModel.addFiveStepRelease = async (body) => {
 };
 
 releaseModel.SubmitFinalRelease = async (body) => {
-  let id=body.id;
-  let releaseDate=body.releaseDate;
-  let youtubechannelLinkId=body.youtubechannelLinkId;
+  let id = body.id;
+  let releaseDate = body.releaseDate;
+  let youtubechannelLinkId = body.youtubechannelLinkId;
 
 
-  let releaseResult = await db.connectDb("release", releaseSchema); 
-  
-  let result = await releaseResult.updateOne({ _id:id },
+  let releaseResult = await db.connectDb("release", releaseSchema);
+
+  let result = await releaseResult.updateOne({ _id: id },
     {
       $set: {
         status: "Submit",
-        youtubechannelLinkId:youtubechannelLinkId,
-        "step1.originalReleaseDate":releaseDate,
-        }
+        youtubechannelLinkId: youtubechannelLinkId,
+        "step1.originalReleaseDate": releaseDate,
+      }
     })
   if (result.modifiedCount > 0 || result.upsertedCount > 0) {
     return true;
@@ -350,7 +367,7 @@ releaseModel.SubmitFinalRelease = async (body) => {
     return false;
   }
 };
- 
+
 releaseModel.releaseList = async (uId, statusFilter) => {
   const result = await db.connectDb("release", releaseSchema);
   let fetData = await result.find({
@@ -360,7 +377,7 @@ releaseModel.releaseList = async (uId, statusFilter) => {
   return fetData.length > 0 ? fetData : [];
 };
 
-releaseModel.allReleaseList= async (uId) => {
+releaseModel.allReleaseList = async (uId) => {
   const result = await db.connectDb("release", releaseSchema);
   let fetData = await result.find();
   if (fetData.length > 0) {
@@ -505,13 +522,13 @@ releaseModel.getTotalTrack = async (uId, role) => {
           totalCount += doc.step3.length;
         }
       });
-      
-      const totalPending = await result.countDocuments({status: "Pending"})
-      const totalApprove = await result.countDocuments({status: "Approve"});
-      const totalReject = await result.countDocuments({status: "Reject"});
+
+      const totalPending = await result.countDocuments({ status: "Pending" })
+      const totalApprove = await result.countDocuments({ status: "Approve" });
+      const totalReject = await result.countDocuments({ status: "Reject" });
       const totalCompany = await authModel.getCompanyCount();
 
-      return {totalCount,totalPending ,totalApprove,totalReject,totalCompany};
+      return { totalCount, totalPending, totalApprove, totalReject, totalCompany };
     } else {
       let fetData = await result.find({ userId: uId });
 
@@ -521,12 +538,12 @@ releaseModel.getTotalTrack = async (uId, role) => {
           totalCount += doc.step3.length;
         }
       });
-      const totalPending = await result.countDocuments({userId: uId ,status: "Pending"});
-      const totalApprove = await result.countDocuments({userId: uId ,status: "Approve"});
-      const totalReject = await result.countDocuments({userId: uId ,status: "Reject"});
+      const totalPending = await result.countDocuments({ userId: uId, status: "Pending" });
+      const totalApprove = await result.countDocuments({ userId: uId, status: "Approve" });
+      const totalReject = await result.countDocuments({ userId: uId, status: "Reject" });
       const totalCompany = 0;
 
-      return {totalCount,totalPending ,totalApprove,totalReject,totalCompany};
+      return { totalCount, totalPending, totalApprove, totalReject, totalCompany };
     }
   } catch (error) {
     console.error("Error in getTracks:", error);
