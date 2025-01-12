@@ -395,10 +395,12 @@ releaseModel.updateStatus = async (body) => {
       { _id: mongoose.Types.ObjectId(id) },
       { $set: { status } }
     );
+    
+    const trackDetails = await releaseResult.findOne( { _id: mongoose.Types.ObjectId(id) });
 
     // Check if the update was successful
     if (result.modifiedCount > 0 || result.upsertedCount > 0) {
-      return true;
+      return trackDetails;
     } else {
       return false;
     }

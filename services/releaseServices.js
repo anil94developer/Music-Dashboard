@@ -442,6 +442,8 @@ release.updateStatus = async (req, res, next) => {
         if (!result) {
             return R(res, true, "Failed to update status", result, 400);
         }
+        
+console.log("result====",result);
 
         // Get user email
         const email = await releaseModel.getEmail(body);
@@ -523,7 +525,7 @@ release.updateStatus = async (req, res, next) => {
       <img src="https://via.placeholder.com/150" alt="Company Logo">
     </div>
     <div class="content">
-      <p>Hello <strong>janumex</strong>,</p>
+      <p>Hello <strong>${trackName}</strong>,</p>
       <p>Your release  with Tuneplus at Tune Plus Distribution (ID: <strong>8472025918673</strong>) has now been sent out to stores.</p>
       <div class="release-info">
         <p>Please note that once received by the stores, they will process your release in accordance with their internal processes. We have no control over how soon stores will process your release.</p>
@@ -611,7 +613,7 @@ release.updateStatus = async (req, res, next) => {
       <img src="https://via.placeholder.com/150" alt="Company Logo">
     </div>
     <div class="content">
-      <p>Hello <strong>janumex</strong>,</p>
+      <p>Hello <strong>${trackName}</strong>,</p>
       <p>Your release "<strong>Vaar</strong>" (ID: <strong>8920242320156</strong>) has been unsubmitted and moved back to draft status.</p>
       <div class="release-info">
         <p><strong>Profile:</strong> Tuneplus</p>
