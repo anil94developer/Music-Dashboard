@@ -21,13 +21,13 @@ const Step3Controller = (props) => {
     const [primaryArtist, setPrimaryArtist] = useState("");
     const [featuring, setFeaturing] = useState("");
     const [remixer, setRemixer] = useState([{ id: '', name: '' }]);
-    const [author, setAuthor] = useState([{ id: '', name: '' }]);
-    const [composer, setComposer] = useState([{ id: '', name: '' }]);
+    const [author, setAuthor] = useState([{ id: '', name: '', iprs: '' }]);
+    const [composer, setComposer] = useState([{ id: '', name: '', iprs: '' }]);
     const [arranger, setArranger] = useState([{ id: '', name: '' }]);
     const [producer, setProducer] = useState([{ id: '', name: '' }]);
     const [pLine, setPLine] = useState("");
     const [productionYear, setProductionYear] = useState("");
-    const [publisher, setPublisher] = useState("");
+    const [publisher, setPublisher] = useState([{ id: '', name: '', iprs: '' }]);
     const [isrc, setIsrc] = useState("");
     const [generateISRC, setGenerateISRC] = useState(false);
     const [genre, setGenre] = useState("");
@@ -47,6 +47,7 @@ const Step3Controller = (props) => {
     const [volume, setVolume] = useState("")
     const [inprsNo, setIprsNo] = useState("")
     const [selectContributory, setSelectContributory] = useState([]);
+    const [otherContributory,setOtherContributory]= useState([]);
 
 
     const handleSubmit = async (e) => {
@@ -89,7 +90,7 @@ const Step3Controller = (props) => {
                         "MoreInfo": "",
                         "Volume": volume,
                         "selectContributory": selectContributory,
-                        "inprsNo": inprsNo
+                        "otherContributory": otherContributory
 
                     }
                 ]
@@ -132,7 +133,7 @@ const Step3Controller = (props) => {
                         "Volume": volume,
                         "_id": rowId,
                         "selectContributory": selectContributory,
-                        "inprsNo": inprsNo
+                        "otherContributory": otherContributory
 
                     }
                 ]
@@ -215,7 +216,7 @@ const Step3Controller = (props) => {
         btnName, setBtnName, setRowId,
         volume, setVolume,
         selectContributory, setSelectContributory,
-        inprsNo, setIprsNo
+        otherContributory,setOtherContributory
     };
 
 }

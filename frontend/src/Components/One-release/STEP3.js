@@ -73,19 +73,21 @@ export default function STEP3(props) {
     btnName, setBtnName, setRowId,
     volume, setVolume,
     selectContributory, setSelectContributory,
-    inprsNo, setIprsNo
+    otherContributory, setOtherContributory
   } = Step3Controller()
 
 
   const initialStoreList = [
     { id: '1', name: 'Mixing Eng', value: '' },
-    { id: '2', name: 'Mastering Eng', value: '' }, 
-    { id: '3', name: 'Acoustic Guitar', value: '' },
-    { id: '4', name: 'Keyboard', value: '' },
-    { id: '5', name: 'Bass', value: '' },
-    { id: '6', name: 'Drum', value: '' },
-    { id: '7', name: 'Flute', value: '' },
-    { id: '8', name: 'Saxophone', value: '' }
+    { id: '2', name: 'Mastering Eng', value: '' },
+  ];
+  const initialOtherContributoryList = [
+    { id: '1', name: 'Acoustic Guitar', value: '' },
+    { id: '2', name: 'Keyboard', value: '' },
+    { id: '3', name: 'Bass', value: '' },
+    { id: '4', name: 'Drum', value: '' },
+    { id: '5', name: 'Flute', value: '' },
+    { id: '6', name: 'Saxophone', value: '' }
   ];
 
 
@@ -119,6 +121,40 @@ export default function STEP3(props) {
   };
 
 
+
+  const [othersContributoryName, setothersContributoryName] = useState(initialOtherContributoryList);
+
+  // Handle selection of a contributor
+  const otherscontributorySelect = (id) => {
+    const selectedItem = othersContributoryName?.find((item) => item.id === id);
+    if (selectedItem && !otherContributory?.some((item) => item.id === id)) {
+      setOtherContributory([...otherContributory, selectedItem]);
+      setothersContributoryName(othersContributoryName?.filter((item) => item.id !== id));
+    }
+  };
+
+  // Handle changes to a specific contributor's value
+  const handleOthersContributoryChange = (id, val) => {
+    setOtherContributory((prevContributors) =>
+      prevContributors?.map((item) =>
+        item.id === id ? { ...item, value: val } : item
+      )
+    );
+  };
+
+  // Remove a contributor from the selected list
+  const removeOthersContributory = (id) => {
+    const removedContributor = otherContributory.find((item) => item.id === id);
+    if (removedContributor) {
+      setothersContributoryName([...othersContributoryName, removedContributor]);
+      setOtherContributory(otherContributory.filter((item) => item.id !== id));
+    }
+  };
+
+
+
+
+
   // State to manage the modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Function to open the modal
@@ -143,7 +179,7 @@ export default function STEP3(props) {
     setProducer([{ value: '' }]);
     setPLine("");
     setProductionYear("");
-    setPublisher("");
+    setPublisher([{ value: '' }]);
     setIsrc("");
     setGenerateISRC(false);
     setGenre("");
@@ -158,8 +194,10 @@ export default function STEP3(props) {
     setLyricsLanguage("");
     setLyrics("");
     setVolume("");
-    // setSelectContributory([{ id:"",name:"",value: '' }]);
-    setIprsNo("")
+    setSelectContributory([]);
+    setSelectContributory([]);
+
+
   };
   // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
@@ -206,7 +244,7 @@ export default function STEP3(props) {
     setProducer(item.Producer || [{ value: '' }]);
     setPLine(item.Pline || "");
     setProductionYear(item.ProductionYear || "");
-    setPublisher(item.Publisher || "");
+    setPublisher(item.Publisher || [{ value: '' }]);
     setIsrc(item.ISRC || "");
     setGenerateISRC(item.GenerateISRC || false);
     setGenre(item.Genre || "");
@@ -221,8 +259,9 @@ export default function STEP3(props) {
     setLyricsLanguage(item.LyricsLanguage || "");
     setLyrics(item.Lyrics || "");
     setVolume(item.Volume || "");
-    setSelectContributory(item.selectContributory || "") 
-    setIprsNo(item?.inprsNo);
+    setSelectContributory(item.selectContributory || [])
+    setOtherContributory(item.otherContributory || [])
+
 
   }
   // Function to generate ISRC code
@@ -389,14 +428,14 @@ export default function STEP3(props) {
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Author *</label>
-                        <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"} />
+                        <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"} isIPRS={true} />
 
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Composer *</label>
-                        <DynamicInputList inputs={composer} setInputs={setComposer} placeholder={"Composer"} />
+                        <DynamicInputList inputs={composer} setInputs={setComposer} placeholder={"Composer"} isIPRS={true} />
 
                       </div>
                     </div>
@@ -433,7 +472,9 @@ export default function STEP3(props) {
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Publisher</label>
-                        <input type="text" className="form-control" value={publisher} onChange={(e) => setPublisher(e.target.value)} />
+                        <DynamicInputList inputs={publisher} setInputs={setPublisher} placeholder={"Publisher"} isIPRS={true} />
+
+                        {/* <input type="text" className="form-control" value={publisher} onChange={(e) => setPublisher(e.target.value)} /> */}
                       </div>
                     </div>
                     {!generateISRC &&
@@ -630,15 +671,64 @@ export default function STEP3(props) {
                             X
                           </button>
                         </div>
+                      ))} 
+
+
+                      </div>
+                    <div className="col-md-6">
+
+                      <div className="form-group">
+                        <label>Add Others contributors</label>
+                        <select
+                          className="form-select form-control"
+                          onChange={(e) => otherscontributorySelect(e.target.value)}
+                        >
+                          <option value="">Please Select</option>
+                          {othersContributoryName?.map((item) => (
+                            <option key={item.id} value={item.id}>
+                              {item.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {otherContributory?.map((item) => (
+                        <div
+                          key={item.id}
+                          className="form-control"
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            gap: '10px',
+                            alignItems: 'center',
+                            marginTop: 20,
+                          }}
+                        >
+                          <input
+                            className="form-control"
+                            value={item.name}
+                            disabled
+                          />
+                          <input
+                            className="form-control"
+                            type="text"
+                            placeholder="Enter Person Name"
+                            value={item.value}
+                            onChange={(e) => handleOthersContributoryChange(item.id, e.target.value)}
+                          />
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => removeOthersContributory(item.id)}
+                          >
+                            X
+                          </button>
+                        </div>
                       ))}
                     </div>
 
-                    <div className="col-lg-3 col-md-6">
-                      <div className="form-group">
-                        <label>IPRS NO</label>
-                        <input type="text" className="form-control" value={inprsNo} onChange={(e) => setIprsNo(e.target.value)} />
-                      </div>
-                    </div>
+
+
 
                   </div>
                   <div className="form-group">

@@ -14,10 +14,31 @@ export default function CompanyDetails() {
   const [jsonData, setJsonData] = useState(null); // State to store parsed JSON data
   const [error, setError] = useState(''); // State for error messages
   const [trackList, setTrackList] = useState([])
+  const [userDetails, setUserDetails] = useState({})
+
 
   useEffect(() => {
     getTrack()
+    getClientNo(userId);
   }, [])
+
+
+
+
+  const getClientNo = async (userId) => {
+    try {
+      const body = { userId };
+      const result = await postData(base.getUser, body);
+      console.log("get user", result);
+      setUserDetails(result?.data?.data);
+    } catch (error) {
+      console.error("Error fetching client number:", error);
+      return null;
+    }
+  };
+
+
+
   // Handle file input change
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -53,15 +74,15 @@ export default function CompanyDetails() {
         // Remove spaces in keys with two or three words
         const json = result.data.map((row) => {
           const cleanedRow = {};
-          Object.keys(row).forEach((key) => { 
+          Object.keys(row).forEach((key) => {
             const cleanedKey = key.trim().replace(/\s+/g, ''); // Trim and remove spaces within the key
             cleanedRow[cleanedKey] = row[key]; // Assign the value to the cleaned key
           });
           return cleanedRow;
         });
 
-       console.log('JSON with cleaned keys:', json);
-       setJsonData(json); // Store JSON data in state
+        console.log('JSON with cleaned keys:', json);
+        setJsonData(json); // Store JSON data in state
       },
       header: true, // Treat first row as header
       skipEmptyLines: true, // Skip empty lines in CSV
@@ -162,7 +183,7 @@ export default function CompanyDetails() {
         userId: userId,
         data: chunk
       };
-  
+
       try {
         const result = await postData(base.sendReport, body);
         if (!result.ok) {
@@ -176,7 +197,7 @@ export default function CompanyDetails() {
       }
     }
   };
-  
+
 
 
 
@@ -188,6 +209,68 @@ export default function CompanyDetails() {
         <div className="content-wrapper">
           <br></br>
           <br></br>
+
+          <div className="audio-table release-inner dash-detail dash-detail-two mb-4">
+            <div className="release-title">
+              <h2>User Information</h2>
+              <div className="release-detail d-flex flex-wrap mt-3">
+                {Object.entries(userDetails).map(([key, value]) => (
+                  key != 'bankDetails' && key != '_id' && key != 'password' && key != 'is_active' && key != 'Is_deleted' && key != '_v' && <p className="release-data" key={key}>
+
+                    <strong>{key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase())}:
+                      <p>{value}</p>
+                    </strong>
+                  </p>
+
+                ))}
+              </div>
+            </div>
+          </div>
+
+
+          <div className="audio-table release-inner dash-detail dash-detail-two mb-4">
+            <div className="release-title">
+              <h2>Bank Information</h2>
+              <div className="release-detail d-flex flex-wrap mt-3">
+              
+                  <p className="release-data" >
+                    <strong>
+                      Bank Name
+                    </strong>{" "}
+                    <span>{userDetails?.bankDetails?.bankName}</span>
+                    </p>
+                    <p className="release-data" >
+                    
+                    <strong>
+                      Account Number
+                    </strong>{" "}
+                    <span>{userDetails?.bankDetails?.accountNumber}</span>
+                    </p>
+                    <p className="release-data" >
+                    
+                    <strong>
+                      Account Holder Name
+                    </strong>{" "}
+                    <span>{userDetails?.bankDetails?.accountHolder}</span>
+                    </p>
+                    <p className="release-data" >
+                    <strong>
+                      Account Type
+                    </strong>{" "}
+                    <span>{userDetails?.bankDetails?.accountType}</span>
+                    </p>
+                    <p className="release-data" >
+                    <strong>
+                     Ifsc Code
+                    </strong>{" "}
+                    <span>{userDetails?.bankDetails?.ifscCode}</span>
+                  </p>
+                 
+              </div>
+            </div>
+          </div>
+
+
 
           <div className="dash-detail ">
             <div className="col-md-12">
@@ -222,8 +305,6 @@ export default function CompanyDetails() {
                       </div>
                     </div>
                   </div>
-
-
 
                 </section>
               </div>
@@ -360,7 +441,7 @@ export default function CompanyDetails() {
           </div>
           <br></br>
 
-          <div className="dash-detail "> 
+          <div className="dash-detail ">
             <div className="col-md-12">
               <div className="">
                 <h3 className="mb-4">Report Upload Excel</h3>

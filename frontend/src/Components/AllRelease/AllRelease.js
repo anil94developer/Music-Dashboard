@@ -6,6 +6,8 @@ import { SideBar } from '../Common/SideBar'
 import * as XLSX from 'xlsx';
 import DataTable from '../Common/DataTable/DataTable';
 import { Box, Button, Modal, Typography } from '@mui/material';
+import { postData } from '../../Services/Ops';
+import { base } from '../../Constants/Data.constant';
 export const AllRelease = () => {
   const navigate = useNavigate();
   const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading, myTracks, setMyTracks, exportTableToExcel } = OneReleaseController();
@@ -51,6 +53,8 @@ export const AllRelease = () => {
     }
   ];
   { console.log("item----------------", myRelease) }
+
+ 
   return (
     <div>
       <SideBar />
@@ -84,7 +88,7 @@ export const AllRelease = () => {
                     {/* <th >Release date / Hour / Time zone</th> */}
                     <th ># of track</th>
                     <th >UPC / Catalog Number</th>
-                    <th >Delivered Territories & Stores</th>
+                    <th >Client Number</th>
                     <th >ACTION</th>
                   </tr>
                 </thead>
@@ -121,8 +125,7 @@ export const AllRelease = () => {
                       {/* <td className="  ">{item.step1?.originalReleaseDate}</td> */}
                       <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
                       <td className="  ">{item.step1?.UPCEAN}</td>
-                      <td className="  ">{item?.step5?.MainReleaseDate}</td>
-
+                      <td className="  ">{item.clientNumber}</td>
                       <td>
                         <div className="action-buttons">
                           <button title="Download" className="action-button">

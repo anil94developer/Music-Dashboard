@@ -27,18 +27,45 @@ const OneReleaseController = (props) => {
     fetchTracksList()
   }, [props, userProfile])
 
+  const getClientNo = async (userId) => {
+    try {
+      const body = { userId };
+      const result = await postData(base.getUser, body);
+      console.log("get user", result);
+      return result?.data?.data?.clientNumber || null;
+    } catch (error) {
+      console.error("Error fetching client number:", error);
+      return null;
+    }
+  };
+
+
   const fetchReleaseList = async () => {
     let arrRelease = [];
     let arrDraft = [];
+
     if (userProfile?.role == "Admin") {
       setIsLoading(true)
       let result = await getData(base.allReleaseList);
       if (result.status === true) {
         if (Array.isArray(result.data)) {
           const arrRelease = result.data.filter(item =>
-            ['Submit', 'Approve', 'Reject'].includes(item.status)
+            ['Submit', 'Approve', 'Reject'].includes(item.status),
+
           );
-          setMyRelease(arrRelease);
+
+          // Fetch client numbers for each release
+          const releasesWithClientNumbers = await Promise.all(
+            arrRelease.map(async (item) => {
+              const clientNumber = await getClientNo(item.userId);
+               
+              return { ...item, clientNumber };
+            })
+          );
+
+
+
+          setMyRelease(releasesWithClientNumbers);
         }
 
       }
@@ -62,89 +89,30 @@ const OneReleaseController = (props) => {
       }
       let allReject = await getData(base.releaseList + `?status=Reject`);
       console.log("arrDraft----------", arrDraft)
-      
-      if (allReject.status == true) { 
-          arrDraft = [allReject.data, ...arrDraft]; 
+
+      if (allReject.status == true) {
+        arrDraft = [allReject.data, ...arrDraft];
       }
+      // Fetch client numbers for each release
+      const releasesWithClientNumbers = await Promise.all(
+        arrRelease.map(async (item) => {
+          const clientNumber = await getClientNo(item.userId);
+          return { ...item, clientNumber};
+        })
+      );
+
+
+
+
+      console.log("releasesWithClientNumbers",releasesWithClientNumbers);
+
+
+      
+      setMyRelease(releasesWithClientNumbers);
+
+
       setMyReleaseDraft(arrDraft)
-      setMyRelease(arrRelease)
-
-      // arrRelease = Array.isArray(result.data)
-      //   ? result.data
-      //     .filter((item) => item.status != 'Pending') // Filter items with status 'Pending'
-      //     .map((item, index) => ({
-      //       _id: item._id,
-      //       id: index + 1,
-      //       type: item.type,
-      //       status: item.status,
-      //       title: item?.title || "Untitled",
-      //       label: item?.step1?.labelName || "Unknown Label",
-      //       releaseDate: item.step1?.originalReleaseDate || "N/A",
-      //       noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-      //       upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-      //       deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-      //       action: "",
-      //     }))
-      //   : [];
-
-      // arrDraft = Array.isArray(result.data)
-      //   ? result.data
-      //     .filter((item) => item.status == 'Pending') // Filter items with status 'Pending'
-      //     .map((item, index) => ({
-      //       _id: item._id,
-      //       id: index + 1,
-      //       type: item.type,
-      //       status: item.status,
-      //       title: item?.title || "Untitled",
-      //       label: item?.step1?.labelName || "Unknown Label",
-      //       releaseDate: item.step1?.originalReleaseDate || "N/A",
-      //       noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-      //       upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-      //       deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-      //       action: "",
-      //     }))
-      //   : [];
-
-      // else if (userProfile?.role == "employee") {
-      //   setIsLoading(true)
-      //   let result = await getData(base.releaseList);
-      //   if (result.status === true) {
-      //     arrRelease = Array.isArray(result.data)
-      //       ? result.data
-      //         .filter((item) => item.status != 'Pending') // Filter items with status 'Pending'
-      //         .map((item, index) => ({
-      //           _id: item._id,
-      //           id: index + 1,
-      //           type: item.type,
-      //           status: item.status,
-      //           title: item?.title || "Untitled",
-      //           label: item?.step1?.labelName || "Unknown Label",
-      //           releaseDate: item.step1?.originalReleaseDate || "N/A",
-      //           noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-      //           upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-      //           deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-      //           action: "",
-      //         }))
-      //       : [];
-      //     arrDraft = Array.isArray(result.data)
-      //       ? result.data
-      //         .filter((item) => item.status == 'Pending') // Filter items with status 'Pending'
-      //         .map((item, index) => ({
-      //           _id: item._id,
-      //           id: index + 1,
-      //           type: item.type,
-      //           status: item.status,
-      //           title: item?.title || "Untitled",
-      //           label: item?.step1?.labelName || "Unknown Label",
-      //           releaseDate: item.step1?.originalReleaseDate || "N/A",
-      //           noOfTrack: Array.isArray(item?.step3) ? item.step3.length : 0,
-      //           upcCatalogNumber: item.step1?.UPCEAN || "N/A",
-      //           deliveredTerritories: item?.step5?.MainReleaseDate || "N/A",
-      //           action: "",
-      //         }))
-      //       : [];
-      //   }
-      // }
+      // setMyRelease(arrRelease)
 
     }
     // setMyReleaseDraft(arrDraft)
