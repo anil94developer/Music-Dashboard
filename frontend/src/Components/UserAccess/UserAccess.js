@@ -49,15 +49,14 @@ return (
   <div className="main-cotent">
     <Nav />
     <div className="content-main">
-      {/* <div className="page-heading d-flex flex-wrap align-items-center justify-content-between">
+      <div className="page-heading d-flex flex-wrap align-items-center justify-content-between">
         <h1>User Management</h1>
         <a className="btn btn-primary" href="add-user">Add a new user</a>
-      </div> */}
+      </div>
       <section className="content">
         {/* Filters */} 
         {/* User List */}
-        <h1>Under Maintenance</h1>
-        {/* <table className="user-table">
+        <table className="user-table">
           <thead>
             <tr>
               <th>Name</th>
@@ -87,7 +86,7 @@ return (
             </tr>
             ))}
           </tbody>
-        </table> */}
+        </table>
       </section>
     </div>
   </div>

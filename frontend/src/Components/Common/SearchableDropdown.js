@@ -7,8 +7,11 @@ const SearchableDropdown = ({
   valueKey = "_id",
   labelKey = "name",
   extraParams = {},
+  className = "",
+  multiple = false,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null); // Ref to handle dropdown focus
 
@@ -16,12 +19,26 @@ const SearchableDropdown = ({
   const filteredOptions = options.filter((option) =>
     option[labelKey]?.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
 
   const handleOptionClick = (selectedOption) => {
-    onChange(selectedOption, extraParams);
-    setSearchTerm(selectedOption[labelKey]);
-    setShowDropdown(false); // Close dropdown after selection
+    if (multiple) {
+      const alreadySelected = selectedOptions.find(
+        (item) => item[valueKey] === selectedOption[valueKey]
+      );
+      const updatedOptions = alreadySelected
+        ? selectedOptions.filter(
+            (item) => item[valueKey] !== selectedOption[valueKey]
+          )
+        : [...selectedOptions, selectedOption];
+
+      setSelectedOptions(updatedOptions);
+      onChange(updatedOptions, extraParams); // Pass updated selection
+    } else {
+      setSelectedOptions([selectedOption]);
+      onChange(selectedOption, extraParams); // Pass single selection
+      setSearchTerm(selectedOption[labelKey]); // Update search term for single selection
+      setShowDropdown(false); // Close dropdown after selection
+    }
   };
 
   const handleBlur = (e) => {
@@ -30,8 +47,11 @@ const SearchableDropdown = ({
     }
   };
 
+  const isSelected = (option) =>
+    selectedOptions.some((item) => item[valueKey] === option[valueKey]);
+
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <div className={`dropdown ${className}`} ref={dropdownRef}>
       {/* Search input */}
       <input
         type="text"
@@ -45,13 +65,19 @@ const SearchableDropdown = ({
 
       {/* Dropdown menu */}
       {showDropdown && (
-        <ul className="dropdown-menu show w-100" style={{ maxHeight: "150px", overflowY: "auto" }}>
+        <ul
+          className="dropdown-menu show w-100"
+          style={{ maxHeight: "150px", overflowY: "auto" }}
+        >
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option) => (
               <li key={option[valueKey]}>
                 <button
                   type="button"
-                  className="dropdown-item  font-semibold"
+                  className={`dropdown-item font-semibold ${
+                    isSelected(option) ? "active" : ""
+                  }`}
+                  onMouseDown={(e) => e.preventDefault()} // Prevent closing on click
                   onClick={() => handleOptionClick(option)}
                 >
                   {option[labelKey]}
