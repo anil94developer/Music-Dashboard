@@ -39,7 +39,7 @@ getUserList();
 Swal.fire("Error", result.data.message, "error");
 }
 } catch (error) {
-console.error("Error Submitting form:", error);
+console.error("Error submitting form:", error);
 Swal.fire("Error", "Something went wrong. Please try again later.", "error");
 }
 }

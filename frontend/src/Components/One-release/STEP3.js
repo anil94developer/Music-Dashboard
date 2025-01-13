@@ -37,6 +37,12 @@ export default function STEP3(props) {
     setProducer,
     pLine,
     setPLine,
+    pYear,
+    setPYear,
+    cLine,
+    setCLine,
+    cYear,
+    setCYear,
     productionYear,
     setProductionYear,
     publisher,
@@ -73,7 +79,9 @@ export default function STEP3(props) {
     btnName, setBtnName, setRowId,
     volume, setVolume,
     selectContributory, setSelectContributory,
-    otherContributory, setOtherContributory
+    otherContributory, setOtherContributory,
+    mood,
+    setMood
   } = Step3Controller()
 
 
@@ -261,6 +269,13 @@ export default function STEP3(props) {
     setVolume(item.Volume || "");
     setSelectContributory(item.selectContributory || [])
     setOtherContributory(item.otherContributory || [])
+    setMood(item?.mood)
+    setCLine(item?.cLine)
+    setPLine(item?.pLine)
+    setCYear(item?.cYear)
+    setPYear(item?.pYear)
+
+
 
 
   }
@@ -419,6 +434,23 @@ export default function STEP3(props) {
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
+                        <label>Mood</label>
+                        <select className="form-select form-control" value={mood} onChange={(e) => setMood(e.target.value)}>
+                          <option value="">- Select a mood -</option> 
+                            <option value={'Romantic'}>Romantic</option>
+                            <option value={'Sad'}>Sad</option>
+                            <option value={'Happy'}>Happy</option>
+                            <option value={'Soulful'}>Soulful</option>
+                            <option value={'Chill'}>Chill</option>
+                            <option value={'Party'}>Party</option>
+                            <option value={'Insirational'}>Insirational</option>
+
+                           
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-6">
+                      <div className="form-group">
                         <label>Remixer</label>
                         <DynamicInputList inputs={remixer} setInputs={setRemixer} placeholder={"Remixer"} />
                         {/* <SearchInput />  */}
@@ -454,10 +486,47 @@ export default function STEP3(props) {
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
+                        <label>P Year</label>
+                        <select className="form-select form-control" value={pYear} onChange={(e) => setPYear(e.target.value)}>
+                          <option value="">- Select a (P) year -</option>
+                          {[...Array(100)].map((_, i) => (
+                            <option key={i} value={2026 - i}>{2026 - i}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-3 col-md-6">
+                      <div className="form-group">
                         <label>P Line</label>
                         <input type="text" className="form-control" value={pLine} onChange={(e) => setPLine(e.target.value)} />
                       </div>
                     </div>
+
+
+
+                    <div className="col-lg-3 col-md-6">
+                      <div className="form-group">
+                        <label>C Line</label>
+                        <input type="text" className="form-control" value={cLine} onChange={(e) => setCLine(e.target.value)} />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-3 col-md-6">
+                      <div className="form-group">
+                        <label>C Year</label>
+                        <select className="form-select form-control" value={cYear} onChange={(e) => setCYear(e.target.value)}>
+                          <option value="">- Select a (C) year -</option>
+                          {[...Array(100)].map((_, i) => (
+                            <option key={i} value={2026 - i}>{2026 - i}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                   
+
+
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Production Year</label>
@@ -469,6 +538,8 @@ export default function STEP3(props) {
                         </select>
                       </div>
                     </div>
+
+
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Publisher</label>
