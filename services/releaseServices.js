@@ -435,7 +435,7 @@ release.releaseDetails = async (req, res, next) => {
 release.updateStatus = async (req, res, next) => {
     const body = req.body;
     const trackName = body.trackName;
-    const message = body.message;
+    const message = body.reason;
     const status = body.status;
     try {
         // Update status
