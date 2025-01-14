@@ -19,6 +19,9 @@ permission.add = async (req, res, next) => {
     try {
         const data = req.body;
         const userId = req.doc.userId;
+        const email = req.body.email;
+        const Name = req.body.name;
+        
 
         if (!data) {
             return R(res, false, "Invalid data", "", 400);
@@ -118,7 +121,7 @@ permission.add = async (req, res, next) => {
                   <p>Your account has been created. Please find your temporary login details below:</p>
                   <div class="login-box">
                     <p><span>Username:</span> ${email}</p>
-                    <p><span>Password:</span>${firstName + "@123!"}</p>
+                    <p><span>Password:</span>${Name + "@123!"}</p>
                   </div>
                   <p>Once Logged in ,You will be able to set a prsonalized and secure password.</p>
                   <p>with these log in details , you can now connect to:</p>
