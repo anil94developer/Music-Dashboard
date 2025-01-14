@@ -34,7 +34,9 @@ const releaseSchema = mongoose.Schema({
     labelName: { type: String, default: "" },
     format: { type: String, default: "" },
     originalReleaseDate: { type: String, default: "" },
+    pYear: { type: String, default: "" },
     line: { type: String, default: "" },
+    cYear: { type: String, default: "" },
     cline: { type: String, default: "" },
     productionYear: { type: String, default: "" },
     UPCEAN: { type: String, default: "" },
@@ -106,7 +108,13 @@ const releaseSchema = mongoose.Schema({
           name: { type: String, default: "" }
         }
       ],
+      pYear: { type: String, default: "" },
       Pline: { type: String, default: "" },
+      cLine: { type: String, default: "" },
+      cYear: { type: String, default: "" },
+      mood: { type: String, default: "" },
+
+
       ProductionYear: { type: Number, default: 2025 },
       Publisher: [
         {
