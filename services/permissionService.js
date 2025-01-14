@@ -21,7 +21,8 @@ permission.add = async (req, res, next) => {
         const userId = req.doc.userId;
         const email = req.body.email;
         const Name = req.body.name;
-        
+        data.password = `${Name}@123`
+        console.log(data)
 
         if (!data) {
             return R(res, false, "Invalid data", "", 400);
