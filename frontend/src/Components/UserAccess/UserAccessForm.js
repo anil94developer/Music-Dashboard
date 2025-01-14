@@ -7,16 +7,17 @@ import { getData, postData } from "../../Services/Ops";
 import { Nav } from "../Common/Nav";
 import { SideBar } from '../Common/SideBar'
 import "./UserAccessForm.css";
+import SearchableDropdown from "../Common/SearchableDropdown";
 function UserAccessForm(props) {
-  const { navigate } = useNavigate()
+  const  navigate  = useNavigate()
   const { userProfile } = useUserProfile()
   const [labelNameList, setLabelNameList] = useState([])
   const [airtestNameList, setaAirtestNameList] = useState([])
   const [menuPermission, setMenuPermission] = useState([]);
   const [otherPermission, setOtherPermission] = useState([
-    { sectionName: "Airtest", status: false, list: [] },
-    { sectionName: "Label", status: false, list: [] },
-    // { sectionName: "Channel", status: false, list: [] },
+    { sectionName: "Airtest", status: true, list: [] },
+    { sectionName: "Label", status: true, list: [] },
+    // { sectionName: "Channel", status: true, list: [] },
   ]);
   const [userPermission, setUserPermission] = useState({
     email: "",
@@ -193,13 +194,14 @@ function UserAccessForm(props) {
       menuPermission,
       ...otherPermission,
     };
-    if (userPermission.email == "" || userPermission.name == "" || userPermission.password == "") {
+    if (userPermission.email == "" || userPermission.name == "" ) {
       Swal.fire("Error", "Please fill email , password and name", "error");
       return 0;
     }
     console.log("payload=======", payload)
     try {
       const result = await postData(base.addPermission, payload);
+      console.log(result.data)
       if (result?.data?.status === true) {
         Swal.fire("Success", result.data.message, "success");
         navigate("user access")
@@ -211,17 +213,19 @@ function UserAccessForm(props) {
       console.error("Submission error:", error);
     }
   };
-  const selectHandleChange = (e, index) => {
-    const value = e.target.value;
+  const selectHandleChange = (selectedItems, index) => {
     setOtherPermission((prev) => {
       const updatedPermissions = [...prev];
       updatedPermissions[index] = {
         ...updatedPermissions[index],
-        list: [...(updatedPermissions[index].list || []), value],
+        list: selectedItems.map((item) => item._id), // Extract the value key (e.g., _id) for the list
       };
       return updatedPermissions;
     });
   };
+  
+
+  
   return (
     <div>
       <SideBar />
@@ -256,7 +260,7 @@ function UserAccessForm(props) {
                     />
                   </div>
                 </div>
-                <div className="col-md-4 col-sm-6 col-12">
+                {/* <div className="col-md-4 col-sm-6 col-12">
                   <div className="form-group">
                     <label>Password: </label>
                     <input
@@ -266,7 +270,7 @@ function UserAccessForm(props) {
                       onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="row">
                 {userProfile.role == "Admin" &&
@@ -312,28 +316,18 @@ function UserAccessForm(props) {
                     <div class="form-group">
                       <label for="genre">{item.sectionName}</label>
                       {item.sectionName == "Label" &&
-                        <select class="form-control"
-                          multiple
-                          onChange={(e) =>
-                            selectHandleChange(e, index)}
-                        >
-                          {labelNameList?.map((iitt, iinn) => {
-                            return
-                            <option value={iitt?._id}>{iitt.title}</option>
-                          })}
-                        </select>
+                        <SearchableDropdown className="form-control"
+                          options={labelNameList}
+                          labelKey = "title"
+                          onChange={(selectedItems) => selectHandleChange(selectedItems, index)}
+                        />
                       }
                       {item.sectionName == "Airtest" &&
-                        <select class="form-control"
-                          multiple
-                          onChange={(e) =>
-                            selectHandleChange(e, index)}
-                        >
-                          {airtestNameList?.map((iitt, iinn) => {
-                            return
-                            <option value={iitt?._id}>{iitt.name}</option>
-                          })}
-                        </select>
+                        <SearchableDropdown className="form-control"
+                          options={airtestNameList}
+                          labelKey = "name"
+                          onChange={(selectedItems) => selectHandleChange(selectedItems, index)}
+                        />
                       }
                     </div>
                   ))}
