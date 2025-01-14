@@ -48,6 +48,12 @@ const Step3Controller = (props) => {
     const [inprsNo, setIprsNo] = useState("")
     const [selectContributory, setSelectContributory] = useState([]);
     const [otherContributory,setOtherContributory]= useState([]);
+    const [ mood, setMood] = useState("") 
+
+    const [pYear,setPYear] = useState("")
+    const [cLine,setCLine] = useState("")
+    const [cYear,setCYear] = useState("") 
+
 
 
     const handleSubmit = async (e) => {
@@ -72,6 +78,10 @@ const Step3Controller = (props) => {
                         "Arranger": arranger,
                         "Producer": producer,
                         "Pline": pLine,
+                        "pYear": pYear,
+                        "cLine": cLine,
+                        "cYear": cYear,
+
                         "ProductionYear": productionYear,
                         "Publisher": publisher,
                         "ISRC": isrc,
@@ -90,7 +100,8 @@ const Step3Controller = (props) => {
                         "MoreInfo": "",
                         "Volume": volume,
                         "selectContributory": selectContributory,
-                        "otherContributory": otherContributory
+                        "otherContributory": otherContributory,
+                        "mood":mood
 
                     }
                 ]
@@ -112,8 +123,11 @@ const Step3Controller = (props) => {
                         "Author": author,
                         "Composer": composer,
                         "Arranger": arranger,
-                        "Producer": producer,
+                        "Producer": producer, 
                         "Pline": pLine,
+                        "pYear": pYear,
+                        "cLine": cLine,
+                        "cYear": cYear,
                         "ProductionYear": productionYear,
                         "Publisher": publisher,
                         "ISRC": isrc,
@@ -133,8 +147,8 @@ const Step3Controller = (props) => {
                         "Volume": volume,
                         "_id": rowId,
                         "selectContributory": selectContributory,
-                        "otherContributory": otherContributory
-
+                        "otherContributory": otherContributory,
+                        "mood":mood 
                     }
                 ]
             }
@@ -180,6 +194,12 @@ const Step3Controller = (props) => {
         setProducer,
         pLine,
         setPLine,
+        pYear,
+        setPYear,
+        cLine,
+        setCLine,
+        cYear,
+        setCYear,
         productionYear,
         setProductionYear,
         publisher,
@@ -216,7 +236,9 @@ const Step3Controller = (props) => {
         btnName, setBtnName, setRowId,
         volume, setVolume,
         selectContributory, setSelectContributory,
-        otherContributory,setOtherContributory
+        otherContributory,setOtherContributory,
+        mood,
+        setMood
     };
 
 }
