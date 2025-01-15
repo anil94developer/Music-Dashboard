@@ -357,27 +357,27 @@ return (
                       <th>(P) HOLDER</th>
                       <th>(C) YEAR</th>
                       <th>(C) HOLDER</th> 
-                      <th>MainGenre Primary (drop-down menu)</th>
+                   <th>MainGenre Primary (drop-down menu)</th>
                       <th>MainGenre Sub</th>
                       <th>AlternateGenre Primary (drop-down menu)</th>
                       <th>AlternateGenre Sub</th>
                       <th>EXPLICIT CONTENT</th>
                       <th>COVER SONG</th>
                       <th>DO YOU HAVE A LICENSE FILE?</th>
-                      <th>PRODUCER(S)</th>
+                       <th>PRODUCER(S)</th>
                       <th>MIXER(S)</th>
                       <th>CONDUCTOR</th>
-                      <th>ARRANGER(S)</th>
-                      <th>ORCHESTRA</th>
-                      <th>COMPOSER(S)</th>
-                      <th>LYRICIST(S)</th>
+                    <th>ARRANGER(S)</th>
+                       {/* <th>ORCHESTRA</th>
+                      <th>COMPOSER(S)</th>*/}
+                      <th>LYRICIST(S)</th> 
                       <th>PUBLISHER(S)</th>
                       <th>PRO AFFILIATION (PERFORMING RIGHTS ORGANISATION)</th>
                       <th>Custom PRO Affiliation</th>
                       <th>PRO MEMBERSHIP NUMBER</th>
                       <th>Audio Language</th>
                       <th>Cover Image</th>
-                      <th>Media</th>   
+                      <th>Media</th>     
 
 
                     </tr>
@@ -459,18 +459,18 @@ return (
                           <td>{item?.ParentalAdvisory }</td>
                           <td>{item?.SecondaryTrackType }</td>
                           <td>{ }</td>
-                          <td>{item?.Producer[0]?.name}</td>
+                       <td>{item?.Producer[0]?.name}</td>
                           <td>{item?.Remixer[0]?.name}</td>
                           <td>{ }</td>
-                          <td>{ }</td>
+                              <td>{ }</td>
                           <td>{ }</td>
                           <td>{item?.Composer[0]?.name}</td>
-                          <td>{item?.Author[0].name }</td>
-                          <td>{item?.Publisher}</td>
+                           {/*<td>{item?.Author[0].name }</td>
+                         <td>{item?.Publisher}</td>*/}
                           <td>{ item?.ISRC}</td>
                           <td>{ }</td> 
                           <td>{ }</td> 
-                          <td>{item?.Lyrics}</td>
+                          <td>{item?.Lyrics}</td> 
                           <td>
                             {isDownloading ?
                               <Loader />
