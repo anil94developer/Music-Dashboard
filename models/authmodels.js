@@ -166,6 +166,7 @@ authModel.setPassword = async (key, email , newPassword) => {
 
     const result = await db.connectDb("users", usersSchema);
     const updatedUser = await result.findOneAndUpdate(
+        
         { email }, // Query by email
         { $set: { password : newPassword } }, // Update OTP and expiry time
         { new: true, projection: { __v: 0 } } // Return the updated document without the __v field

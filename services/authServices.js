@@ -286,10 +286,11 @@ auth.passwordChange = async (req, res, next) => {
 };
 
 auth.setPassword = async (req, res, next) => {
-    const { email, newPassword } = req.body
+    const { email, newpassword } = req.body
+    const Password = await bcrypt.passwordEncryption(newpassword)
 
     try {
-        const result = await authModel.setPassword("email", email, newPassword);
+        const result = await authModel.setPassword("email", email, Password);
         if (!result) {
             return R(res, false, "failed to set Password", "", 400)
         }

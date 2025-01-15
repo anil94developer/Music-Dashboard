@@ -118,7 +118,7 @@ permission.add = async (req, res, next) => {
                   <img src="https://via.placeholder.com/150" alt="Company Logo">
                 </div>
                 <div class="content">
-                  <p>Hello <strong>janumex</strong>,</p>
+                  <p>Hello <strong>${Name}</strong>,</p>
                   <p>Your account has been created. Please find your temporary login details below:</p>
                   <div class="login-box">
                     <p><span>Username:</span> ${email}</p>
@@ -127,10 +127,10 @@ permission.add = async (req, res, next) => {
                   <p>Once Logged in ,You will be able to set a prsonalized and secure password.</p>
                   <p>with these log in details , you can now connect to:</p>
                   <h3>Click to Login</h3>
-                  <a href="https://backstage.believe.com" class="login-button">Log In</a>
+                  <a href="https://workplace.tuneplus.org/" class="login-button">Log In</a>
                 </div>
                 <div class="footer">
-                  <p>&copy; 2025 Believe Digital. All rights reserved.</p>
+                  <p>&copy; 2025 Tuneplus. All rights reserved.</p>
                 </div>
               </div>
             </body>

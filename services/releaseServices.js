@@ -434,8 +434,9 @@ release.releaseDetails = async (req, res, next) => {
 
 release.updateStatus = async (req, res, next) => {
     const body = req.body;
-    const trackName = body.trackName;
-    const message = body.reason;
+    const title = body.title;
+    const UPCEAN = body.UPCEAN;
+    const reason = body.reason;
     const status = body.status;
     try {
         // Update status
@@ -456,178 +457,185 @@ release.updateStatus = async (req, res, next) => {
         const mailOptionsForApprove = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: `Release ${trackName} delivered successfully`,
+            subject: `Release ${title} delivered successfully`,
             // text: `Hello, your status has been updated to: ${body.status}`,
             html: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      margin: 0;
-      padding: 0;
-      color: #ffffff;
-    }
-    .container {
-      max-width: 600px;
-      margin: 20px auto;
-      background-color: #1e1e1e;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-    .header {
-      text-align: center;
-      padding-bottom: 20px;
-    }
-    .header img {
-      max-width: 150px;
-    }
-    .content {
-      text-align: center;
-      font-size: 16px;
-      color: #e0e0e0;
-    }
-    .release-info {
-      margin: 20px 0;
-      padding: 10px;
-      background-color: #2b2b2b;
-      border: 1px solid #444;
-      border-radius: 4px;
-      text-align: left;
-    }
-    .release-info span {
-      font-weight: bold;
-      color: #ffffff;
-    }
-    .footer {
-      text-align: center;
-      font-size: 12px;
-      color: #888888;
-      margin-top: 20px;
-    }
-    .link {
-      color: #007bff;
-      text-decoration: none;
-    }
-    .link:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <img src="https://via.placeholder.com/150" alt="Company Logo">
-    </div>
-    <div class="content">
-      <p>Hello <strong>janumex</strong>,</p>
-      <p>Your release  with Tuneplus at Tune Plus Distribution (ID: <strong>8472025918673</strong>) has now been sent out to stores.</p>
-      <div class="release-info">
-        <p>Please note that once received by the stores, they will process your release in accordance with their internal processes. We have no control over how soon stores will process your release.</p>
-        <p>If you need any further assistance, please use the Contact Us form available on your dashboard and we will get back to you as soon as possible.</p>
-      </div>
-      <p>For further details on YouTube’s Content ID system, please visit the following link:</p>
-      <p><a href="https://support.google.com/youtube/answer/2797370?hl=en-GB" class="link">YouTube Content ID System</a></p>
-    </div>
-    <div class="footer">
-      <p>&copy; 2025 Believe Digital. All rights reserved.</p>
-    </div>
-  </div>
-</body>
-</html>
-`
+            <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body {
+                  font-family: Arial, sans-serif;
+                  background-color: #121212;
+                  margin: 0;
+                  padding: 0;
+                  color: #ffffff;
+                }
+                .container {
+                  max-width: 600px;
+                  margin: 20px auto;
+                  background-color: #1e1e1e;
+                  padding: 20px;
+                  border-radius: 8px;
+                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                }
+                .header {
+                  text-align: center;
+                  padding-bottom: 20px;
+                }
+                .header img {
+                  max-width: 150px;
+                }
+                .content {
+                  text-align: center;
+                  font-size: 16px;
+                  color: #e0e0e0;
+                }
+                .release-info {
+                  margin: 20px 0;
+                  padding: 10px;
+                  background-color: #2b2b2b;
+                  border: 1px solid #444;
+                  border-radius: 4px;
+                  text-align: left;
+                }
+                .release-info span {
+                  font-weight: bold;
+                  color: #ffffff;
+                }
+                .footer {
+                  text-align: center;
+                  font-size: 12px;
+                  color: #888888;
+                  margin-top: 20px;
+                }
+                .link {
+                  color: #007bff;
+                  text-decoration: none;
+                }
+                .link:hover {
+                  text-decoration: underline;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <img src="https://via.placeholder.com/150" alt="Company Logo">
+                </div>
+                <div class="content">
+                  <p>Hello,</p>
+                  <p>Your release "<strong>${title}</strong>" UPC Code: <strong>${UPCEAN}</strong> at Tune Plus Distribution has now been sent out to stores.</p>
+                  <div class="release-info">
+                    <p>Please note that once received by the stores, they will process your release in accordance with their internal processes. We have no control over how soon stores will process your release.</p>
+                    <p>If you need any further assistance, please use the Contact Us form available on your dashboard and we will get back to you as soon as possible.</p>
+                  </div>
+                  <p>For further details on YouTube’s Content ID system, please visit the following link:</p>
+                  <p><a href="https://support.google.com/youtube/answer/2797370?hl=en-GB" class="link">YouTube Content ID System</a></p>
+                </div>
+                <div class="footer">
+                  <p>If you have questions, please contact Tune Plus Team at:</p>
+                  <p><a href="mailto:support-ind@tuneplus.org" class="link">support-ind@tuneplus.org</a></p>
+                  <p>&copy; 2025 Tune Plus. All rights reserved.</p>
+                </div>
+              </div>
+            </body>
+            </html>`
+
         };
         const mailOptionsForReject = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: `Release ${trackName} delivered successfully`,
+            subject: `Release ${title} delivered successfully`,
             // text: `Hello, your status has been updated to: ${body.status}`,
             html: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      margin: 0;
-      padding: 0;
-      color: #ffffff;
-    }
-    .container {
-      max-width: 600px;
-      margin: 20px auto;
-      background-color: #1e1e1e;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-    .header {
-      text-align: center;
-      padding-bottom: 20px;
-    }
-    .header img {
-      max-width: 150px;
-    }
-    .content {
-      text-align: center;
-      font-size: 16px;
-      color: #e0e0e0;
-    }
-    .release-info {
-      margin: 20px 0;
-      padding: 10px;
-      background-color: #2b2b2b;
-      border: 1px solid #444;
-      border-radius: 4px;
-      text-align: left;
-    }
-    .release-info span {
-      font-weight: bold;
-      color: #ffffff;
-    }
-    .footer {
-      text-align: center;
-      font-size: 12px;
-      color: #888888;
-      margin-top: 20px;
-    }
-    .link {
-      color: #007bff;
-      text-decoration: none;
-    }
-    .link:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <img src="https://via.placeholder.com/150" alt="Company Logo">
-    </div>
-    <div class="content">
-      <p>Hello <strong>janumex</strong>,</p>
-      <p>Your release "<strong>Vaar</strong>" (ID: <strong>8920242320156</strong>) has been unsubmitted and moved back to draft status.</p>
-      <div class="release-info">
-        <p><strong>Profile:</strong> Tuneplus</p>
-        <p><strong>Service:</strong> My Music Distribution Zone</p>
-        <p><strong>Reason for Unsubmission:</strong></p>
-        <p>${message}</p>
-      </div>
-    </div>
-    <div class="footer">
-      <p>&copy; 2025 Believe Digital. All rights reserved.</p>
-    </div>
-  </div>
-</body>
-</html>
-`
+            <html lang="en">
+            <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {
+                font-family: Arial, sans-serif;
+                background-color: #121212;
+                margin: 0;
+                padding: 0;
+                color: #ffffff;
+                }
+                .container {
+                max-width: 600px;
+                margin: 20px auto;
+                background-color: #1e1e1e;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                }
+                .header {
+                text-align: center;
+                padding-bottom: 20px;
+                }
+                .header img {
+                max-width: 150px;
+                }
+                .content {
+                text-align: center;
+                font-size: 16px;
+                color: #e0e0e0;
+                }
+                .release-info {
+                margin: 20px 0;
+                padding: 10px;
+                background-color: #2b2b2b;
+                border: 1px solid #444;
+                border-radius: 4px;
+                text-align: left;
+                }
+                .release-info p {
+                margin: 5px 0;
+                }
+                .release-info span {
+                font-weight: bold;
+                color: #ffffff;
+                }
+                .footer {
+                text-align: center;
+                font-size: 12px;
+                color: #888888;
+                margin-top: 20px;
+                }
+                .link {
+                color: #007bff;
+                text-decoration: none;
+                }
+                .link:hover {
+                text-decoration: underline;
+                }
+            </style>
+            </head>
+            <body>
+            <div class="container">
+                <div class="header">
+                <img src="https://via.placeholder.com/150" alt="Company Logo">
+                </div>
+                <div class="content">
+                <p>Hello,</p>
+                <p>Your release "<strong>${title} </strong>" UPC Code: <strong>${UPCEAN}</strong> has been unsubmitted and moved back to draft status.</p>
+                <div class="release-info">
+                    <p><strong>Track Name:</strong> ${title}</p>
+                    <p><strong>Service:</strong> Tune Plus Distribution</p>
+                    <p><strong>Reason for Unsubmission:</strong></p>
+                    <p>${reason}</p>
+                </div>
+                <p>If you have further questions, please email the distribution team at:</p>
+                <p><a href="mailto:support-ind@tuneplus.org" class="link">support-ind@tuneplus.org</a></p>
+                </div>
+                <div class="footer">
+                <p>&copy; 2025 Tune Plus. All rights reserved.</p>
+                </div>
+            </div>
+            </body>
+            </html>
+            `
         };
 
         // Determine which email to send
