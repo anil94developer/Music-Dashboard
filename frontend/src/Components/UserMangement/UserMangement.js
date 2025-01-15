@@ -19,7 +19,6 @@ const UserManagement = (props) => {
     setUsers(users.filter((user) => user.login !== login));
   };
 
-
   useEffect(() => {
     getUserList();
   }, [props])

@@ -9,7 +9,7 @@ import { SideBar } from '../Common/SideBar'
 import "./UserAccessForm.css";
 import SearchableDropdown from "../Common/SearchableDropdown";
 function UserAccessForm(props) {
-  const  navigate  = useNavigate()
+  const navigate = useNavigate()
   const { userProfile } = useUserProfile()
   const [labelNameList, setLabelNameList] = useState([])
   const [airtestNameList, setaAirtestNameList] = useState([])
@@ -81,20 +81,16 @@ function UserAccessForm(props) {
             "submenu": []
           },
           {
-            "mainMenuName": "Catalog",
+
+
+            "mainMenuName": "All releases",
             "status": false,
-            "submenu": [
-              {
-                "subMenuName": "All releases",
-                "status": false,
-                "submenu": []
-              },
-              {
-                "subMenuName": "All drafts",
-                "status": false,
-                "submenu": []
-              }
-            ]
+            "submenu": []
+          },
+          {
+            "mainMenuName": "All drafts",
+            "status": false,
+            "submenu": []
           },
           {
             "mainMenuName": "Daily Trends",
@@ -136,26 +132,22 @@ function UserAccessForm(props) {
               "status": false,
               "submenu": []
             },
+            // {
+            //   "mainMenuName": "Multiple Release",
+            //   "status": false,
+            //   "submenu": []
+            // },
             {
-              "mainMenuName": "Multiple Release",
+
+
+              "mainMenuName": "All releases",
               "status": false,
               "submenu": []
             },
             {
-              "mainMenuName": "Catalog",
+              "mainMenuName": "All drafts",
               "status": false,
-              "submenu": [
-                {
-                  "subMenuName": "All releases",
-                  "status": false,
-                  "submenu": []
-                },
-                {
-                  "subMenuName": "All drafts",
-                  "status": false,
-                  "submenu": []
-                }
-              ]
+              "submenu": []
             },
             {
               "mainMenuName": "Daily Trends",
@@ -194,7 +186,7 @@ function UserAccessForm(props) {
       menuPermission,
       ...otherPermission,
     };
-    if (userPermission.email == "" || userPermission.name == "" ) {
+    if (userPermission.email == "" || userPermission.name == "") {
       Swal.fire("Error", "Please fill email , password and name", "error");
       return 0;
     }
@@ -204,7 +196,7 @@ function UserAccessForm(props) {
       console.log(result.data)
       if (result?.data?.status === true) {
         Swal.fire("Success", result.data.message, "success");
-        navigate("user access")
+        navigate("/user access")
       } else {
         Swal.fire("Error", result.message, "error");
       }
@@ -223,9 +215,9 @@ function UserAccessForm(props) {
       return updatedPermissions;
     });
   };
-  
 
-  
+
+
   return (
     <div>
       <SideBar />
@@ -318,14 +310,14 @@ function UserAccessForm(props) {
                       {item.sectionName == "Label" &&
                         <SearchableDropdown className="form-control"
                           options={labelNameList}
-                          labelKey = "title"
+                          labelKey="title"
                           onChange={(selectedItems) => selectHandleChange(selectedItems, index)}
                         />
                       }
                       {item.sectionName == "Airtest" &&
                         <SearchableDropdown className="form-control"
                           options={airtestNameList}
-                          labelKey = "name"
+                          labelKey="name"
                           onChange={(selectedItems) => selectHandleChange(selectedItems, index)}
                         />
                       }

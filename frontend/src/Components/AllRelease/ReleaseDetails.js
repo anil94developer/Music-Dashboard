@@ -42,6 +42,8 @@ export const ReleaseDetails = () => {
         let body = {
           id: releaseId,
           status: status,
+          title:myRelease.title,
+          UPCEAN: myRelease.step1.UPCEAN,
           reason: rejectionReason ? rejectionReason : "",
         }
         try {

@@ -80,7 +80,7 @@ return (
                 >
                 { user?.userDetails?.is_deleted == 0 ? "DeActive" : "Active"}
                 </button>
-                <button className="btn btn-primary" onClick={() => { navigate("/edit-permission", { state: { userData: user } }); }}>Edit</button>
+                {/* <button className="btn btn-primary" onClick={() => { navigate("/edit-permission", { state: { userData: user } }); }}>Edit</button> */}
                 
               </td>
             </tr>

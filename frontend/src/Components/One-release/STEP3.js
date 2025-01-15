@@ -640,9 +640,10 @@ export default function STEP3(props) {
                           onChange={(e) => setPrice(e.target.value)}
                         >
                           <option value="">Please select...</option>
-                          <option selected="selected" value="156">Back : 15₹ / 0.99$ / 0Sg$</option>
-                          <option value="155">Mid : 20₹ / 1.49$ / 0Sg$</option>
-                          <option value="154">Front : 30₹ / 1.99$ / 0Sg$</option>
+                          <option selected="selected" value="156">Premium</option>
+                          <option value="155">Full</option>
+                          <option value="154">Mid</option>
+                          <option value="153">Budget</option>
                         </select>
                       </div>
                     </div>

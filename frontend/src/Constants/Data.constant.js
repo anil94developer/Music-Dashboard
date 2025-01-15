@@ -66,15 +66,5 @@ const base = {
   getReportbydate: mainUrl + 'excel/get-report-by-date',
   getUser: mainUrl + "auth/get-user"
 
-
-
-
-
-
-
-
-
-
-
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };
