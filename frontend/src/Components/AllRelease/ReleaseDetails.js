@@ -445,8 +445,8 @@ return (
                           <td></td>
                           <td>{item?.PrimaryArtist?.length > 2 && getLastKey(item?.PrimaryArtist[2]?.linkId)}</td>
                           <td>{item?.PrimaryArtist?.length > 2 && getLastKey(item?.PrimaryArtist[2]?.itunesLinkId)}</td>
-                          <td>{ }</td>
-                          <td>{item?.ISRC}</td>
+                          <td>{item?.ISRC }</td>
+                          <td>{}</td>
                           <td>{ }</td> 
                           <td>{item?.pYear }</td>
                           <td>{item?.Pline }</td>
