@@ -103,7 +103,24 @@ export const AllDraft = () => {
                                     </a>
                                   </button>
                                   <button title='Download'className='action-button'>
-                                    <a onClick={async () => deleteAction(item)}>
+                                    <a onClick={ async () => {
+                                            Swal.fire({
+                                              title: "Are you sure?",
+                                              text: `You want to delete ${item.title} `,
+                                              icon: "warning", // Options: 'warning', 'error', 'success', 'info', 'question'
+                                              showCancelButton: true, // Enables the Cancel button
+                                              confirmButtonText: "Yes, proceed",
+                                              cancelButtonText: "No, cancel",
+                                            }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                      // User clicked the confirm button
+                                                      deleteAction(item)
+                                                    } else if (result.isDismissed) {
+                                                      // User clicked the cancel button
+                                                      Swal.fire("Cancelled", "Action was cancelled.", "info");
+                                                    }
+                                                  });}
+                                     }>
                                     <i className='fa fa-trash'></i>
                                     </a>
                                   </button>
