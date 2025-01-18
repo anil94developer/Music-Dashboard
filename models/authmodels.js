@@ -59,6 +59,9 @@ const usersSchema = mongoose.Schema(
         country: { type: String },
         timeZone: { type: String },
         language: { type: String },
+        label:{type:Array},
+        artist:{type:Array},
+        pricePercentage:{type:Number},
         wallet: { type: Number, default: 0 },
         noOfLabel: { type: Number, default: 0 }
     },
@@ -305,6 +308,11 @@ authModel.permission = async (data) => {
             name: data.name,
             noOfLabel: data.noOfLabel,
             role: data.role,
+            label:data.label,
+            artist:data.artist,
+            pricePercentage:data.pricePercentage,
+
+
 
         });
         // console.log("permission permission permission ======>>>", user)

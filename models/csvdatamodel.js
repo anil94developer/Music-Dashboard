@@ -625,10 +625,10 @@ const insidiesSchema = new mongoose.Schema({
   Label:{
     type:String
   },
-  Stream: {
+  Streams: {
     type: Number,
   },
-  Streams_change: {
+  Streamschange: {
     type: Number,
   }
 }, {
@@ -651,15 +651,17 @@ insides.create = async (userId,data) => {
   }
 }
 
-insides.getData = async (userId, startDate, endDate) => {
+insides.getData = async (userId, startDate, endDate, filters) => {
   const result = await db.connectDb("insides", insidiesSchema);
   console.log(">>>>>>>", userId);
   let query = { userId: userId };
+
   // Function to parse date in YYYY-MM-DD format
   const parseDate = (dateStr) => {
     const [year, month, day] = dateStr.split('-').map(Number);
     return new Date(year, month - 1, day); // Month is zero-indexed in Date constructor
   };
+
   // Initialize date filters
   let dateFilter = {};
   if (startDate) {
@@ -668,17 +670,27 @@ insides.getData = async (userId, startDate, endDate) => {
   if (endDate) {
     dateFilter.$lte = parseDate(endDate);
   }
+
   // Add date filters to query if applicable
   if (Object.keys(dateFilter).length > 0) {
     query.createdAt = dateFilter; // Ensure 'createdAt' is the correct date field in your schema
   }
+
+  // Apply additional filters
+  if (filters) {
+    if (filters.Label) query.Label = filters.Label;
+    if (filters.ISRC) query.ISRC = filters.ISRC;
+    if (filters.Stream) query.Stream = filters.Stream;
+    if (filters.Artist) query.Artist = filters.Artist;
+  }
+
   let Data = await insidesModel.find(query);
   console.log(">>>>>>>>", Data);
   if (Data.length <= 0) {
     return false;
   }
   return Data;
-}
+};
 
 
 module.exports = {

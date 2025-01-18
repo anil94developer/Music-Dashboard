@@ -39,7 +39,7 @@ upload.getTrack = async (req, res, next) => {
     const track = await Track.get(userId, startDate, endDate);
 
     if (track === false) {
-      return R(res, false, "Track not found", "", 400);
+      return R(res, false, "Track not found", [], 400);
     }
 
     return R(res, true, "Track fetched successfully", track, 200);
@@ -53,7 +53,7 @@ upload.store = async (req,res,next)=>{
     const {userId,data} =req.body;
   
     if(!data){
-      return R(res,false,"Data not found","",400);
+      return R(res,false,"Data not found",[],400);
     }
   
     // console.log(data);
@@ -61,7 +61,7 @@ upload.store = async (req,res,next)=>{
     let result = data.map(async (val,ind,arr)=>{
       val = await Store.create(userId,arr[ind]);
        if(!val){
-        return R(res,false,"Excel file not found","",400);
+        return R(res,false,"Excel file not found",[],400);
        }
        return val;
     })
@@ -82,12 +82,12 @@ upload.getStore = async (req, res, next) => {
     const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
 
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
 
     const store = await Store.get(userId, startDate, endDate);
     if (store === false) {
-      return R(res, false, "Store not found", "", 400);
+      return R(res, false, "Store not found", [], 400);
     }
 
     return R(res, true, "Store fetched successfully", store, 200);
@@ -103,7 +103,7 @@ upload.store = async (req, res, next) => {
     const { userId, data } = req.body;
 
     if (!data) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
 
     console.log(data);
@@ -111,7 +111,7 @@ upload.store = async (req, res, next) => {
     let result = data.map(async (val, ind, arr) => {
       val = await Store.create(userId, arr[ind]);
       if (!val) {
-        return R(res, false, "Excel file not found", "", 400);
+        return R(res, false, "Excel file not found", [], 400);
       }
       return val;
     })
@@ -119,7 +119,7 @@ upload.store = async (req, res, next) => {
     console.log(data);
 
     // Process your data here and save it to the database or any other storage medium.
-    return R(res, true, "Store upload successful", "", 200);
+    return R(res, true, "Store upload successful", [], 200);
   }
   catch (e) {
     next();
@@ -133,12 +133,12 @@ upload.getStore = async (req, res, next) => {
     const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
 
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
 
     const store = await Store.get(userId, startDate, endDate);
     if (store === false) {
-      return R(res, false, "Store not found", "", 400);
+      return R(res, false, "Store not found", [], 400);
     }
 
     return R(res, true, "Store fetched successfully", store, 200);
@@ -154,11 +154,11 @@ upload.marketData = async (req, res, next) => {
     const { userId, data } = req.body;
 
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
 
     if (!data) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
   
     // console.log(data);
@@ -166,7 +166,7 @@ upload.marketData = async (req, res, next) => {
    let result = data.map(async (val,ind,arr)=>{
       val = await Market.create(userId,arr[ind]);
        if(!val){
-        return R(res,false,"data not insert","",400);
+        return R(res,false,"data not insert",[],400);
        }
        return val;
     })
@@ -193,7 +193,7 @@ upload.getMarketData = async (req, res, next) => {
 
     const data = await Market.getData(userId, startDate, endDate);
     if (data === false) {
-      return R(res, false, "Market Data not found", "", 400);
+      return R(res, false, "Market Data not found", [], 400);
     }
 
     return R(res, true, "Market fetched successfully", data, 200);
@@ -213,7 +213,7 @@ upload.salesYoutube = async (req, res, next) => {
     }
 
     if (!data) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
   
     // console.log(data);
@@ -228,7 +228,7 @@ upload.salesYoutube = async (req, res, next) => {
     // console.log(">>>>>>>>>>>>>>>>>>>>",result);
   
     // Process your data here and save it to the database or any other storage medium.
-    return R(res, true, " Data upload successful", "", 200);
+    return R(res, true, " Data upload successful", [], 200);
   }
   catch(e){
     // console.log(e)
@@ -247,7 +247,7 @@ upload.getSalesYoutube = async (req, res, next) => {
 
     const data = await salesYoutube.getData(userId, startDate, endDate);
     if (data === false) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
 
     return R(res, true, "Data fetched successfully", data, 200);
@@ -263,10 +263,10 @@ upload.salesAsset = async (req, res, next) => {
   try {
     const { userId, data } = req.body;
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
     if (!data) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
     // console.log(data);
     let result = await Promise.all(data.map(async (val,ind,arr)=>{
@@ -277,7 +277,7 @@ upload.salesAsset = async (req, res, next) => {
     // console.log(result);
   
     // Process your data here and save it to the database or any other storage medium.
-    return R(res,true,"Data upload successful","",200); 
+    return R(res,true,"Data upload successful",[],200); 
 }catch(err){
   // console.log(err)
   next();
@@ -290,12 +290,12 @@ upload.getSalesAssets = async (req, res, next) => {
     const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
 
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
 
     const data = await salesAssets.getData(userId, startDate, endDate);
     if (data === false) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
 
     return R(res, true, "Data fetched successfully", data, 200);
@@ -311,10 +311,10 @@ upload.salesStream = async (req, res, next) => {
     const { userId, data } = req.body;
 
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
     if (!data) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
     // console.log(data);
     let result = await Promise.all (data.map(async (val,ind,arr)=>{
@@ -338,12 +338,12 @@ upload.getStream = async (req, res, next) => {
     const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
 
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
 
     const data = await stream.getData(userId, startDate, endDate);
     if (data === false) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
 
     return R(res, true, "Data fetched successfully", data, 200);
@@ -359,10 +359,10 @@ upload.sendReport = async (req, res, next) => {
     const { userId, data } = req.body;
 
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
     if (!data) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
 
     let result = await Promise.all(data.map(async (val, ind, arr) => {
@@ -385,10 +385,10 @@ upload.insiderStream = async (req, res, next) => {
   try {
     const { userId, data } = req.body;
     if (!userId) {
-      return R(res, false, "User ID not found", "", 400);
+      return R(res, false, "User ID not found", [], 400);
     }
     if (!data) {
-      return R(res, false, "Data not found", "", 400);
+      return R(res, false, "Data not found", [], 400);
     }
     // console.log(data);
     let result = await Promise.all(data.map(async (val,ind,arr)=>{
@@ -397,7 +397,7 @@ upload.insiderStream = async (req, res, next) => {
     }))
     // console.log(result);
     // Process your data here and save it to the database or any other storage medium.
-    return R(res,true,"Data upload successful","",200);
+    return R(res,true,"Data upload successful",[],200);
   }catch(err){
     // console.log(err)
     next();
@@ -407,13 +407,18 @@ upload.insiderStream = async (req, res, next) => {
 upload.insiderReport = async (req, res, next) => {
   try {
     const userId = req.doc.userId;
-    const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
+    const { startDate, endDate, Label, ISRC, Stream, Artist } = req.query; // Extract filters from query parameters
 
     if (!userId) {
       return R(res, false, "User ID not found", "", 400);
     }
 
-    const data = await insides.getData(userId, startDate, endDate);
+    // Construct filters object
+    const filters = { Label, ISRC, Stream, Artist };
+
+    // Call getData with additional filters
+    const data = await insides.getData(userId, startDate, endDate, filters);
+
     if (data === false) {
       return R(res, false, "Data not found", "", 400);
     }
@@ -423,7 +428,7 @@ upload.insiderReport = async (req, res, next) => {
     console.log(err);
     next(err);
   }
-}
+};
 
 
 
