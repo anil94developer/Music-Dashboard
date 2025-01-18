@@ -395,6 +395,18 @@ releaseModel.allReleaseList = async (uId) => {
   }
 };
 
+releaseModel.releaseDelete = async (id) => {
+  const result = await db.connectDb("release", releaseSchema);
+  const fetData = await result.find({ _id: id }); // Ensure you're using the correct query syntax
+  if (fetData.length > 0) {
+    await result.deleteOne({ _id: id }); // Deletes the record
+    return { success: true, message: "Record deleted successfully." };
+  } else {
+    return { success: false, message: "Record not found." };
+  }
+};
+
+
 releaseModel.releaseDetails = async (releaseId) => {
   const result = await db.connectDb("release", releaseSchema);
   let fetData = await result.find({ _id: releaseId });

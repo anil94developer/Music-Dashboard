@@ -186,6 +186,16 @@ release.releaseList = async (req, res, next) => {
         next(err);
     }
 };
+release.releaseDelete = async (req, res, next) => {
+    try {
+        const id = req.body.id; 
+        
+        const result = await releaseModel.releaseDelete(id);
+        return R(res, true, "Delete Successfully!!", result, 200);
+    } catch (err) {
+        next(err);
+    }
+};
 
 release.allReleaseList = async (req, res, next) => {
     try {
