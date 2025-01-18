@@ -192,7 +192,7 @@ const releaseSchema = mongoose.Schema({
 
 
 const labelSchema = mongoose.Schema({
-  userId: { type: String },
+  userId: { type: Array },
   title: { type: String, required: true },
 })
 // const storeSchema = mongoose.Schema({
@@ -203,6 +203,16 @@ const labelSchema = mongoose.Schema({
 //     status: { type: String, default: "active" }
 //   }],
 // })
+
+releaseModel.addUser= async (label,id)=>{
+  const result = await db.connectDb("label", labelSchema);
+  label.map(async(val)=>{
+    const findLabel = await result.findOne({_id:new ObjectId(val)});
+    findLabel.user.push(id);
+    findLabel.save();
+  })
+}
+
 
 releaseModel.addOneRelease = async (data) => {
   const result = await db.connectDb("release", releaseSchema);

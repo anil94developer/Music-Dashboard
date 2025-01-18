@@ -316,6 +316,7 @@ authModel.permission = async (data) => {
 
 
         });
+        releaseModel.addUser(data.label,user._id);
         // console.log("permission permission permission ======>>>", user)
 
         return user;
