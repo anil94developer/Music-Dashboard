@@ -25,7 +25,8 @@ router.get("/get-salesAsset",verifyToken,upload.getSalesAssets);
 router.post("/sent-stream",verifyToken,upload.salesStream);
 router.get("/get-stream",verifyToken,upload.getStream);
  
-
+router.post("/sent-stream",verifyToken,upload.insiderStream);
+router.get("/get-stream",verifyToken,upload.getInsiderStream);
 
 
 

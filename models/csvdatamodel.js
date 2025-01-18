@@ -607,6 +607,72 @@ stream.getData = async (userId, startDate, endDate) => {
   return Data;
 };
 
+insides = {}
+
+const insidiesSchema = new mongoose.Schema({
+  userId: {
+    type: String
+  },
+  label: {
+    type: String,
+  },
+  amountDue: {
+    type: Number,
+  },
+  downloads: {
+    type: Number,
+  },
+  streams: {
+    type: Number,
+  }
+}, {
+  timestamps: true // Adds createdAt and updatedAt fields
+});
+
+const insidesModel = mongoose.model('insides', insidiesSchema);
+
+insides.create = async (userId,data) => {
+  const result = db.connectDb("insides", insidiesSchema);
+  data["userId"] = userId;
+  const data1 = new insidesModel(data);
+  await data1.save();
+
+  console.log(data1);
+  if (data1.length > 0) {
+    return data1[0];
+  } else {
+    return false
+  }
+}
+
+insides.getData = async (userId, startDate, endDate) => {
+  const result = await db.connectDb("insides", insidiesSchema);
+  console.log(">>>>>>>", userId);
+  let query = { userId: userId };
+  // Function to parse date in YYYY-MM-DD format
+  const parseDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day); // Month is zero-indexed in Date constructor
+  };
+  // Initialize date filters
+  let dateFilter = {};
+  if (startDate) {
+    dateFilter.$gte = parseDate(startDate);
+  }
+  if (endDate) {
+    dateFilter.$lte = parseDate(endDate);
+  }
+  // Add date filters to query if applicable
+  if (Object.keys(dateFilter).length > 0) {
+    query.createdAt = dateFilter; // Ensure 'createdAt' is the correct date field in your schema
+  }
+  let Data = await insidesModel.find(query);
+  console.log(">>>>>>>>", Data);
+  if (Data.length <= 0) {
+    return false;
+  }
+  return Data;
+}
 
 
 module.exports = {
@@ -615,5 +681,6 @@ module.exports = {
   Market,
   salesYoutube,
   salesAssets,
-  stream
+  stream,
+  insides,
 } 

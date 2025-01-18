@@ -381,7 +381,51 @@ upload.sendReport = async (req, res, next) => {
 }
 
 
+upload.insiderStream = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
+    }
+    if (!data) {
+      return R(res, false, "Data not found", "", 400);
+    }
+    // console.log(data);
+    let result = await Promise.all(data.map(async (val,ind,arr)=>{
+      val = await stream.create(String(userId),arr[ind]);
+       return val;
+    }))
+    // console.log(result);
+    // Process your data here and save it to the database or any other storage medium.
+    return R(res,true,"Data upload successful","",200);
+  }catch(err){
+    // console.log(err)
+    next();
+  }
+}
 
+upload.insiderReport = async (req, res, next) => {
+  try {
+    const { userId, data } = req.body;
+    if (!userId) {
+      return R(res, false, "User ID not found", "", 400);
+    }
+    if (!data) {
+      return R(res, false, "Data not found", "", 400);
+    }
+    // console.log(data);
+    let result = await Promise.all(data.map(async (val,ind,arr)=>{
+      val = await stream.create(String(userId),arr[ind]);
+       return val;
+    }))
+    // console.log(result);
+    // Process your data here and save it to the database or any other storage medium.
+    return R(res,true,"Data upload successful","",200);
+  }catch(err){
+    // console.log(err)
+    next();
+  }
+}
 
 
 
