@@ -232,9 +232,11 @@ release.releaseDetails = async (req, res, next) => {
 //         if (!email) {
 //             return R(res, true, "Email not found" , result, 404) 
 
+
 //         }
 
 //         console.log(`Sending email to: ${email}`);
+
 
 //         const mailOptionsForApprove = {
 //             from: process.env.EMAIL_USER,
@@ -414,12 +416,14 @@ release.releaseDetails = async (req, res, next) => {
 // `
 //         };
 
+
 //         let mailOptions;
 //         if (body.status === "Approve") {
 //             mailOptions = mailOptionsForApprove;
 //         } else if (body.status === "Reject") {
 //             mailOptions = mailOptionsForReject;
 //         } 
+
 
 //         if (body.status === "Approve" || body.status === "Reject") {
 //             // Send email notification
@@ -428,11 +432,13 @@ release.releaseDetails = async (req, res, next) => {
 //                 console.log("Email sent:", emailResponse);
 //                 return R(res, true, "Status updated and email sent successfully", result, 200)
 
+
 //             } catch (error) {
 //                 console.error("Error sending email:", error.message);
 //                 return R(res, true,  "Status updated but email not sent", result, 400)
 //              }
 //         }
+
 
 //         return R(res, true, "Status updated and email sent successfully", result, 200)
 
@@ -454,6 +460,8 @@ release.updateStatus = async (req, res, next) => {
         if (!result) {
             return R(res, true, "Failed to update status", result, 400);
         }
+        
+console.log("result====",result);
 
         // Get user email
         const email = await releaseModel.getEmail(body);
@@ -657,6 +665,19 @@ release.updateStatus = async (req, res, next) => {
         }
 
         // Send email notification
+        if (status === "Approve" || status === "Reject") {
+            {
+                try {
+                    const emailResponse = await transporter.sendMail(mailOptions);
+                    console.log("Email sent:", emailResponse);
+                    return R(res, true, "Status updated and email sent successfully", result, 200);
+                } catch (error) {
+                    console.error("Error sending email:", error.message);
+                    return R(res, true, "Status updated but email not sent", result, 400);
+                }
+            }
+        }
+        return R(res, true, "Status updated but email not sent", result, 400);
         if (status === "Approve" || status === "Reject") {
             {
                 try {

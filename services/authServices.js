@@ -9,10 +9,17 @@ const IP = require('ip');
 const authModel = require("../models/authmodels");
 const bankModel = require("../models/bankmodels");
 
+const bankModel = require("../models/bankmodels");
+
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
 const transporter = nodemailer.createTransport({
+    service: "Gmail", // Replace with your email service
+    auth: {
+        user: process.env.EMAIL_USER, // Your email from environment variables
+        pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
+    },
     service: "Gmail", // Replace with your email service
     auth: {
         user: process.env.EMAIL_USER, // Your email from environment variables
@@ -190,6 +197,7 @@ auth.signUp = async (req, res, next) => {
             create_at: futureTimeInMillis,
             is_active: 1,
             clientNumber: Math.floor(10000000 + Math.random() * 90000000)
+            
         }
         const register = await authModel.signUp(newUser)
         const userData = {
@@ -270,6 +278,53 @@ auth.getSingleUser = async (req, res, next) => {
 
 
 
+auth.getSingleUser = async (req, res, next) => {
+    try {
+        const user = await authModel.getUser(req.body.userId);
+        const bank = await bankModel.bankDetails(req.body.userId);
+
+        if (!user) {
+            return R(res, false, "No data found!!", {}, 200);
+        }
+
+        // Merge the responses
+        const formattedData = {
+            // userId: user._doc._id.toString(),
+            name: user._doc.name,
+            email: user._doc.email,
+            role: user._doc.role, 
+            clientNumber: user._doc.clientNumber,
+            city: user._doc.city,
+            companyName: user._doc.companyName,
+            country: user._doc.country,
+            firstName: user._doc.firstName,
+            language: user._doc.language,
+            lastName: user._doc.lastName,
+            phoneNumber: user._doc.phoneNumber,
+            postalAddress: user._doc.postalAddress,
+            postalCode: user._doc.postalCode,
+
+            bankDetails: {
+                bankName: bank?.bankName || null,
+                accountNumber: bank?.accountNumber || null,
+                ifscCode: bank?.ifscCode || null,
+                panNumber: bank?.panNumber || null,
+                accountHolder: bank?.accountHolder || null,
+                bankName: bank?.bankName || null,
+                accountType: bank?.accountType || null,
+
+            },
+        };
+
+        return R(res, true, "Data retrieved successfully!", formattedData, 200);
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+
 auth.passwordChange = async (req, res, next) => {
     const { newPassword, oldPassword } = req.body
 
@@ -295,6 +350,7 @@ auth.setPassword = async (req, res, next) => {
             return R(res, false, "failed to set Password", "", 400)
         }
         return R(res, true, "Update successfully!!", "", 200)
+        return R(res, true, "Update successfully!!", "", 200)
     } catch (error) {
         next(error)
     }
@@ -305,15 +361,25 @@ auth.setPassword = async (req, res, next) => {
 auth.forgetPassword = async (req, res, next) => {
     try {
         const { email } = req.body;
+    try {
+        const { email } = req.body;
 
         // Validate email
         if (!email || !/\S+@\S+\.\S+/.test(email)) {
             return res.status(400).json({ success: false, message: "Invalid email address." });
         }
+        // Validate email
+        if (!email || !/\S+@\S+\.\S+/.test(email)) {
+            return res.status(400).json({ success: false, message: "Invalid email address." });
+        }
 
+       
         // Check user existence
         const user = await authModel.forgetPassword("email", email);
 
+        if (!user || Object.values(user).length === 0) {
+            return res.status(404).json({ success: false, message: "Email not found!" });
+        }
         if (!user || Object.values(user).length === 0) {
             return res.status(404).json({ success: false, message: "Email not found!" });
         }
@@ -321,22 +387,34 @@ auth.forgetPassword = async (req, res, next) => {
         if (!user.is_active) {
             return res.status(400).json({ success: false, message: "User not active! Contact admin." });
         }
+        if (!user.is_active) {
+            return res.status(400).json({ success: false, message: "User not active! Contact admin." });
+        }
 
         if (user.is_deleted) {
             return res.status(400).json({ success: false, message: "User is deleted!" });
         }
+        if (user.is_deleted) {
+            return res.status(400).json({ success: false, message: "User is deleted!" });
+        }
 
+        
         // Generate OTP
         const otp = crypto.randomInt(100000, 999999).toString();
         const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // Valid for 10 minutes
 
+        
         // Update OTP in the database
         const otpUpdated = await authModel.updateOtp("email", email, otp, expiresAt);
 
         if (!otpUpdated) {
             return res.status(500).json({ success: false, message: "Failed to update OTP." });
         }
+        if (!otpUpdated) {
+            return res.status(500).json({ success: false, message: "Failed to update OTP." });
+        }
 
+     
         // Email options
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -345,6 +423,19 @@ auth.forgetPassword = async (req, res, next) => {
             text: `Your OTP for password reset is: ${otp}. It is valid for 10 minutes.`,
         };
 
+        // Send email
+        try {
+            const emailResponse = await transporter.sendMail(mailOptions);
+            console.log("Email sent:", emailResponse);
+            res.status(200).json({ success: true, message: "OTP sent to your email." });
+        } catch (error) {
+            console.error("Error sending email:", error);
+            res.status(500).json({ success: false, message: "Failed to send OTP. Please try again." });
+        }
+    } catch (error) {
+        console.error("Error in forgetPassword:", error);
+        next(error);
+    }
         // Send email
         try {
             const emailResponse = await transporter.sendMail(mailOptions);
@@ -373,7 +464,23 @@ auth.verifyOtp = async (req, res, next) => {
         else {
             return res.status(200).json({ success: true, message: "OTP is valid." })
         }
+    try {
+        const { email, Otp } = req.body;
+        if (!email || !/\S+@\S+\.\S+/.test(email)) {
+            return res.status(400).json({ success: false, message: "Invalid email address." });
+        }
+        const user = await authModel.verifyOtp("email", email, Otp);
+        if (!user.success) {
+            return res.status(400).json({ success: false, message: "Invalid OTP." });
+        }
+        else {
+            return res.status(200).json({ success: true, message: "OTP is valid." })
+        }
 
+    } catch (error) {
+        console.error("failed to verify otp", error);
+        next(error);
+    }
     } catch (error) {
         console.error("failed to verify otp", error);
         next(error);
