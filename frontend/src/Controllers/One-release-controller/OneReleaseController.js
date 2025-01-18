@@ -173,6 +173,24 @@ const OneReleaseController = (props) => {
   const moreAction = (e) => {
     navigate("/main-step", { state: { releaseId: e._id } });
   }
+
+  const deleteAction = async (e) => {
+    let body={
+      id:e._id
+    }
+    console.log(body)
+    let result = await postData(base.deleteOneRelease, body);
+    if (result.data.status === true) {
+      Swal.fire("Succees", result.message , result.message) 
+
+      let updateArr= myReleaseDraft.filter(item=> item._id !== e.id)
+      setMyReleaseDraft(updateArr)
+
+    } else {
+      Swal.fire("Error", result.message, result.message);
+    }
+    
+  }
   return {
     isLoading,
     setIsLoading,
@@ -183,6 +201,7 @@ const OneReleaseController = (props) => {
     myRelease,
     handleSubmit,
     moreAction,
+    deleteAction,
     myTracks, setMyTracks, myReleaseDraft,
     exportTableToExcel
   }

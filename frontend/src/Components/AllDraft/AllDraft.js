@@ -8,7 +8,7 @@ import { Box, Button, Modal, Typography } from '@mui/material';
 import DataTable from '../Common/DataTable/DataTable';
 export const AllDraft = () => {
   const navigate = useNavigate();
-  const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading, myReleaseDraft, setMyTracks } = OneReleaseController();
+  const { setType, setTitle, handleSubmit, myRelease, moreAction,deleteAction, isLoading, myReleaseDraft, setMyTracks } = OneReleaseController();
   console.log(myReleaseDraft)
   return (
     <div>
@@ -96,15 +96,19 @@ export const AllDraft = () => {
                               <td className="  ">{item?.step5?.MainReleaseDate}</td>
 
                               <td>
-                                <div className="action-buttons">
+                                <div className="action-buttons d-flex">
                                   <button title="Download" className="action-button">
                                     <a onClick={() => moreAction(item)}>
                                       <i className="fa fa-eye"></i>
                                     </a>
                                   </button>
+                                  <button title='Download'className='action-button'>
+                                    <a onClick={async () => deleteAction(item)}>
+                                    <i className='fa fa-trash'></i>
+                                    </a>
+                                  </button>
                                 </div>
                               </td>
-
                             </tr>
                           ))}
                         </tbody>

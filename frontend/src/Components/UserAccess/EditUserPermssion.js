@@ -101,12 +101,12 @@ return (
                 <input type="email" value={userPermission.email} onChange={(e) => setUserPermission((prev) => ({ ...prev, email: e.target.value }))}/>
               </div>
             </div>
-            <div className="col-md-4 col-sm-6 col-12">
+            {/* <div className="col-md-4 col-sm-6 col-12">
               <div className="form-group">
                 <label>Password:</label>
                 <input type="text" value={userPermission.password} onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}/>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="menu-permission">
             <h2>Menu Permissions</h2>
