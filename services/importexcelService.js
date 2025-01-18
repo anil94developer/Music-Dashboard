@@ -392,7 +392,7 @@ upload.insiderStream = async (req, res, next) => {
     }
     // console.log(data);
     let result = await Promise.all(data.map(async (val,ind,arr)=>{
-      val = await stream.create(String(userId),arr[ind]);
+      val = await insides.create(String(userId),arr[ind]);
        return val;
     }))
     // console.log(result);
@@ -406,24 +406,22 @@ upload.insiderStream = async (req, res, next) => {
 
 upload.insiderReport = async (req, res, next) => {
   try {
-    const { userId, data } = req.body;
+    const userId = req.doc.userId;
+    const { startDate, endDate } = req.query; // Assume dates are passed as query parameters
+
     if (!userId) {
       return R(res, false, "User ID not found", "", 400);
     }
-    if (!data) {
+
+    const data = await insides.getData(userId, startDate, endDate);
+    if (data === false) {
       return R(res, false, "Data not found", "", 400);
     }
-    // console.log(data);
-    let result = await Promise.all(data.map(async (val,ind,arr)=>{
-      val = await stream.create(String(userId),arr[ind]);
-       return val;
-    }))
-    // console.log(result);
-    // Process your data here and save it to the database or any other storage medium.
-    return R(res,true,"Data upload successful","",200);
-  }catch(err){
-    // console.log(err)
-    next();
+
+    return R(res, true, "Data fetched successfully", data, 200);
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 }
 

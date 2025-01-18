@@ -613,16 +613,22 @@ const insidiesSchema = new mongoose.Schema({
   userId: {
     type: String
   },
-  label: {
+  Title: {
     type: String,
   },
-  amountDue: {
+  Artist: {
+    type: String,
+  },
+  ISRC :{
+    type: String,
+  },
+  Label:{
+    type:String
+  },
+  Stream: {
     type: Number,
   },
-  downloads: {
-    type: Number,
-  },
-  streams: {
+  Streams_change: {
     type: Number,
   }
 }, {
