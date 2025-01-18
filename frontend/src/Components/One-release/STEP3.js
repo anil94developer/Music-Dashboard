@@ -81,7 +81,8 @@ export default function STEP3(props) {
     selectContributory, setSelectContributory,
     otherContributory, setOtherContributory,
     mood,
-    setMood
+    setMood,
+    isModalOpen, setIsModalOpen
   } = Step3Controller()
 
 
@@ -164,13 +165,11 @@ export default function STEP3(props) {
 
 
   // State to manage the modal visibility
-  const [isModalOpen, setIsModalOpen] = useState(false);
   // Function to open the modal
   const openModal = () => {
     setBtnName("Add");
     setIsModalOpen(true)
-    setRowId("")
-    setIsModalOpen(true)
+    setRowId("") 
     console.log("")
     setContentType("");
     setPrimaryTrackType("");
@@ -809,7 +808,7 @@ export default function STEP3(props) {
                     <button type="Submit" className="btn btn-primary"
                       onClick={async () => {
                         await handleSubmit();  // Ensure handleSubmit completes first
-                        closeModal();
+         
                         // Then close the modal
                       }}
                     >Save</button>
