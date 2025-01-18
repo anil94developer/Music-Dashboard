@@ -47,12 +47,13 @@ const Step3Controller = (props) => {
     const [volume, setVolume] = useState("")
     const [inprsNo, setIprsNo] = useState("")
     const [selectContributory, setSelectContributory] = useState([]);
-    const [otherContributory,setOtherContributory]= useState([]);
-    const [ mood, setMood] = useState("") 
+    const [otherContributory, setOtherContributory] = useState([]);
+    const [mood, setMood] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [pYear,setPYear] = useState("")
-    const [cLine,setCLine] = useState("")
-    const [cYear,setCYear] = useState("") 
+    const [pYear, setPYear] = useState("")
+    const [cLine, setCLine] = useState("")
+    const [cYear, setCYear] = useState("")
 
 
 
@@ -81,7 +82,6 @@ const Step3Controller = (props) => {
                         "pYear": pYear,
                         "cLine": cLine,
                         "cYear": cYear,
-
                         "ProductionYear": productionYear,
                         "Publisher": publisher,
                         "ISRC": isrc,
@@ -101,7 +101,7 @@ const Step3Controller = (props) => {
                         "Volume": volume,
                         "selectContributory": selectContributory,
                         "otherContributory": otherContributory,
-                        "mood":mood
+                        "mood": mood
 
                     }
                 ]
@@ -123,7 +123,7 @@ const Step3Controller = (props) => {
                         "Author": author,
                         "Composer": composer,
                         "Arranger": arranger,
-                        "Producer": producer, 
+                        "Producer": producer,
                         "Pline": pLine,
                         "pYear": pYear,
                         "cLine": cLine,
@@ -148,19 +148,28 @@ const Step3Controller = (props) => {
                         "_id": rowId,
                         "selectContributory": selectContributory,
                         "otherContributory": otherContributory,
-                        "mood":mood 
+                        "mood": mood
                     }
                 ]
             }
         }
+        if (selectContributory.length == 0) {
+            Swal.fire("Error", "Error Contributory", "Please Select Contributory");
+            return false;
+        } else if (otherContributory.length == 0) {
+            Swal.fire("Error", "Error Other Contributory", "Please Select Other Contributory");
+            return false;
+        }
+        else {
+            console.log("step3=======body====", body)
+            let result = await postData(btnName == "Add" ? base.releaseStep3 : base.trackUpdate, body)
 
-        console.log("step3=======body====", body)
-        let result = await postData(btnName == "Add" ? base.releaseStep3 : base.trackUpdate, body)
-
-        if (result.data.status === true) {
-            Swal.fire("Success", result.message, result.message);
-        } else {
-            Swal.fire("Error", result.message, result.message);
+            if (result.data.status === true) {
+                Swal.fire("Success", result.message, result.message);
+                setIsModalOpen(false);
+            } else {
+                Swal.fire("Error", result.message, result.message);
+            }
         }
 
     }
@@ -236,9 +245,11 @@ const Step3Controller = (props) => {
         btnName, setBtnName, setRowId,
         volume, setVolume,
         selectContributory, setSelectContributory,
-        otherContributory,setOtherContributory,
+        otherContributory, setOtherContributory,
         mood,
-        setMood
+        setMood,
+        isModalOpen, 
+        setIsModalOpen
     };
 
 }
