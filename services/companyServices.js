@@ -154,7 +154,7 @@ auth.addCompany = async (req, res, next) => {
       <body>
         <div class="container">
           <div class="header">
-            <img src="https://via.placeholder.com/150" alt="Company Logo">
+            <img src="https://ibb.co/frP3bq5" alt="Company Logo">
           </div>
           <div class="content">
             <p>Hello <strong>${firstName}</strong>,</p>
@@ -169,7 +169,7 @@ auth.addCompany = async (req, res, next) => {
             <a href="https://workplace.tuneplus.org/" class="login-button">Log In</a>
           </div>
           <div class="footer">
-            <p>&copy; 2025 Tuneplus. All rights reserved.</p>
+            <p>&copy; 2025 J2P Entertainment Digital. All rights reserved.</p>
           </div>
         </div>
       </body>

@@ -532,7 +532,7 @@ release.updateStatus = async (req, res, next) => {
             <body>
               <div class="container">
                 <div class="header">
-                  <img src="https://via.placeholder.com/150" alt="Company Logo">
+                  <img src="https://ibb.co/frP3bq5" alt="Company Logo">
                 </div>
                 <div class="content">
                   <p>Hello,</p>
@@ -547,7 +547,7 @@ release.updateStatus = async (req, res, next) => {
                 <div class="footer">
                   <p>If you have questions, please contact Tune Plus Team at:</p>
                   <p><a href="mailto:support-ind@tuneplus.org" class="link">support-ind@tuneplus.org</a></p>
-                  <p>&copy; 2025 Tune Plus. All rights reserved.</p>
+                  <p>&copy; 2025 J2P Entertainment Digital. All rights reserved.</p>
                 </div>
               </div>
             </body>
@@ -557,7 +557,7 @@ release.updateStatus = async (req, res, next) => {
         const mailOptionsForReject = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: `Release ${title} delivered successfully`,
+            subject: `Release ${title} has been unsubmitted`,
             // text: `Hello, your status has been updated to: ${body.status}`,
             html: `<!DOCTYPE html>
             <html lang="en">
@@ -625,7 +625,7 @@ release.updateStatus = async (req, res, next) => {
             <body>
             <div class="container">
                 <div class="header">
-                <img src="https://via.placeholder.com/150" alt="Company Logo">
+                <img src="https://ibb.co/frP3bq5" alt="Company Logo">
                 </div>
                 <div class="content">
                 <p>Hello,</p>
@@ -640,7 +640,7 @@ release.updateStatus = async (req, res, next) => {
                 <p><a href="mailto:support-ind@tuneplus.org" class="link">support-ind@tuneplus.org</a></p>
                 </div>
                 <div class="footer">
-                <p>&copy; 2025 Tune Plus. All rights reserved.</p>
+                <p>&copy; 2025 J2P Entertainment Digital. All rights reserved.</p>
                 </div>
             </div>
             </body>
