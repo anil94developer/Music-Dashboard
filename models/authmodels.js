@@ -312,10 +312,8 @@ authModel.permission = async (data) => {
             label:data.label,
             artist:data.artist,
             pricePercentage:data.pricePercentage,
-
-
-
         });
+        console.log("user>>>>>>>>>>>>",user);
         releaseModel.addUser(data.label,user._id);
         // console.log("permission permission permission ======>>>", user)
 
