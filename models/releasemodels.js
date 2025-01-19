@@ -1,6 +1,6 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
-
+const {ObjectId} = require("mongodb");
 releaseModel = {}
 
 
@@ -199,8 +199,9 @@ const labelSchema = mongoose.Schema({
 releaseModel.addUser= async (label,id)=>{
   const result = await db.connectDb("label", labelSchema);
   label.map(async(val)=>{
+    console.log("val>>>>>>>>>",val);
     const findLabel = await result.findOne({_id:new ObjectId(val)});
-    findLabel.user.push(id);
+    findLabel.userId.push(String(id));
     findLabel.save();
   })
 }
