@@ -7,7 +7,6 @@ const validateInput = require("../helper/emailmobileVal")
 const sendOtpEmail = require("../utils/Sendgrid")
 const IP = require('ip');
 const authModel = require("../models/authmodels");
-const bankModel = require("../models/bankmodels");
 
 const bankModel = require("../models/bankmodels");
 

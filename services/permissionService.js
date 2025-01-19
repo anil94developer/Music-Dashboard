@@ -18,6 +18,7 @@ permission = {};
 permission.add = async (req, res, next) => {
     try {
         const data = req.body;
+        console.log(data)
         const userId = req.doc.userId;
         const email = req.body.email;
         const Name = req.body.name;
@@ -28,7 +29,6 @@ permission.add = async (req, res, next) => {
             return R(res, false, "Invalid data", "", 400);
         }
         const user = await authModel.permission(data);
-
 
         if (!user) {
             return R(res, false, "User alreaedy registered", "", 404);
