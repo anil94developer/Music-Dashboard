@@ -8,13 +8,13 @@ import SimpleGraph from '../Common/Chart/SimpleGraph';
 import { Nav } from '../Common/Nav'
 import { SideBar } from '../Common/SideBar'
 export const Dashboard = () => {
-  const { dashboardData } = useDashboardController();
+  const { dashboardData } = useDashboardController(); 
   const { userProfile } = useUserProfile();
 
   const [marketList, setMarketList] = useState([])
   useEffect(() => {
     getMarket();
-     
+     console.log(dashboardData,">>>>>>");
   }, [])
   const getMarket = async () => {
     let result = await getData(base.getMarket)

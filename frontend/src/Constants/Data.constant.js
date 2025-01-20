@@ -55,6 +55,8 @@ const base = {
   getStore: mainUrl + 'excel/get-store',
   sendReport: mainUrl + 'excel/sent-salesAsset',
   getReport: mainUrl + 'excel/get-salesAsset',
+  sendInside:mainUrl+'excel/sent-insides',
+  getInside:mainUrl+'excel/get-insides',
   getFilterReport: mainUrl + 'excel/getFilterReport',
   sendReport: mainUrl + 'excel/sent-salesAsset',
   getReport: mainUrl + 'excel/get-salesAsset',
@@ -66,7 +68,8 @@ const base = {
   addCompany: mainUrl + 'company/addCompany',
   releaseChangeStatus: mainUrl + 'release/release-update-status',
   getReportbydate: mainUrl + 'excel/get-report-by-date',
-  getUser: mainUrl + "auth/get-user"
+  getUser: mainUrl + "auth/get-user",
+  dashboardCount: mainUrl+"dashboard/get-dashboard-list"
 
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };

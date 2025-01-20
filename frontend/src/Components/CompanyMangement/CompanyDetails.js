@@ -176,6 +176,22 @@ export default function CompanyDetails() {
     }
   }
 
+  const uploadInside = async () => {
+    let body = {
+      userId: userId,
+      data: jsonData
+    }
+    // uploadDataInChunks(jsonData, 100)
+    // console.log(jsonData)
+    let result = await postData(base.sendInside, body)
+    console.log(result)
+    if (result.data.status === true) {
+      Swal.fire("Success", result.message, result.message);
+    } else {
+      Swal.fire("Error", result.message, result.message);
+    }
+  }
+
   const uploadDataInChunks = async (data, chunkSize) => {
     for (let i = 0; i < data.length; i += chunkSize) {
       const chunk = data.slice(i, i + chunkSize);
@@ -467,6 +483,51 @@ export default function CompanyDetails() {
                       <div className="form-group">
                         <button
                           onClick={() => uploadReportStream()}
+                          type="Submit"
+                          className="btn btn-primary"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                </section>
+              </div>
+            </div>
+          </div>
+          <br></br>
+
+
+
+          <div className="dash-detail ">
+            <div className="col-md-12">
+              <div className="">
+                <h3 className="mb-4">Inside Upload Excel</h3>
+                <section className="content-header">
+
+                  {/* Upload Input */}
+                  <div className="row">
+                    {/* Left Column */}
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        {/* <label className="form-label">Select Media Files:</label> */}
+                        <input
+                          type="file"
+                          accept=".csv"
+                          onChange={handleFileChange}
+                          className="form-control"
+                        // onChange={handleFileChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <button
+                          onClick={() => uploadInside()}
                           type="Submit"
                           className="btn btn-primary"
                         >
