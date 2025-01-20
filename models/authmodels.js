@@ -59,9 +59,9 @@ const usersSchema = mongoose.Schema(
         country: { type: String },
         timeZone: { type: String },
         language: { type: String },
-        label:{type:Array},
-        artist:{type:Array},
-        pricePercentage:{type:Number},
+        label: { type: Array },
+        artist: { type: Array },
+        pricePercentage: { type: Number },
         wallet: { type: Number, default: 0 },
         noOfLabel: { type: Number, default: 0 }
     },
@@ -129,57 +129,67 @@ authModel.forgetPassword = async (key, email) => {
 
 authModel.verifyOtp = async (key, email, otp) => {
     try {
-      let query = {};
-      query[key] = email;
-      const result = await db.connectDb("users", usersSchema);
-      const user = await result.findOne(query, { __v: 0 });
-      if (!user) {
-        return { success: false, message: "User not found." };
-      }
-      if (user.otp !== otp) {
-        return { success: false, message: "Invalid OTP." };
-      }
-      const currentTime = new Date();
-      if (currentTime > user.otpExpiresAt) {
-        return { success: false, message: "OTP has expired." };
-      }
-      return { success: true, message: "OTP verified successfully." };
+        let query = {};
+        query[key] = email;
+        const result = await db.connectDb("users", usersSchema);
+        const user = await result.findOne(query, { __v: 0 });
+        if (!user) {
+            return { success: false, message: "User not found." };
+        }
+        if (user.otp !== otp) {
+            return { success: false, message: "Invalid OTP." };
+        }
+        const currentTime = new Date();
+        if (currentTime > user.otpExpiresAt) {
+            return { success: false, message: "OTP has expired." };
+        }
+        return { success: true, message: "OTP verified successfully." };
     } catch (error) {
-      return { success: false, message: "An error occurred while verifying OTP." };
+        return { success: false, message: "An error occurred while verifying OTP." };
     }
 };
-  
 
-authModel.updateOtp = async (key, email , otp ,expiresAt) => {
+
+authModel.updateOtp = async (key, email, otp, expiresAt) => {
     const result = await db.connectDb("users", usersSchema);
     const updatedUser = await result.findOneAndUpdate(
         { email }, // Query by email
         { $set: { otp, otpExpiresAt: expiresAt } }, // Update OTP and expiry time
         { new: true, projection: { __v: 0 } } // Return the updated document without the __v field
-      );
-  
-      // Check if the user was found and updated
-      if (!updatedUser) {
+    );
+
+    // Check if the user was found and updated
+    if (!updatedUser) {
         return false
-      }
-      return true;
+    }
+    return true;
 };
 
-authModel.setPassword = async (key, email , newPassword) => {
+// auth.findparentId = async (userid) =>{
+//     const result = await db.connectDb("users", usersSchema);
+//     const user = await result.findOne({ _id: userid }, { __v: 0 });
+//     if (!user) {
+//         return false
+//     }
+//     return user.parentId;
+
+// }
+
+authModel.setPassword = async (key, email, newPassword) => {
 
     const result = await db.connectDb("users", usersSchema);
     const updatedUser = await result.findOneAndUpdate(
-        
+
         { email }, // Query by email
-        { $set: { password : newPassword } }, // Update OTP and expiry time
+        { $set: { password: newPassword } }, // Update OTP and expiry time
         { new: true, projection: { __v: 0 } } // Return the updated document without the __v field
-      );
-  
-      // Check if the user was found and updated
-      if (!updatedUser) {
+    );
+
+    // Check if the user was found and updated
+    if (!updatedUser) {
         return false
-      }
-      return true;
+    }
+    return true;
 };
 
 authModel.addCompany = async (data) => {
@@ -301,20 +311,21 @@ authModel.permission = async (data) => {
         if (val) {
             return false;
         }
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+
         const user = await result.create({
             email: data.email,
-            password: hashedPassword,
+            password: data.password,
             name: data.name,
             noOfLabel: data.noOfLabel,
             role: data.role,
-            label:data.label,
-            artist:data.artist,
-            pricePercentage:data.pricePercentage,
+            label: data.label,
+            artist: data.artist,
+            pricePercentage: data.pricePercentage,
         });
-        console.log("user>>>>>>>>>>>>",user);
-        releaseModel.addUser(data.label,user._id);
+        console.log("user>>>>>>>>>>>>", user);
+        releaseModel.addUserlabel(data.label, user._id);
+        artistModel.addUserartist(data.artist, user._id);
+
         // console.log("permission permission permission ======>>>", user)
 
         return user;
@@ -323,6 +334,26 @@ authModel.permission = async (data) => {
         return false; // Return false on error
     }
 }
+
+
+authModel.checkrole = async (userId) => {
+    const result = await db.connectDb("users", usersSchema); // Connect to the users collection
+    try {
+        // Find the user by ID
+        const user = await result.findOne({ _id: userId });
+
+        // Check if the user's role is "employee"
+        if (user && user.role === "employee") {
+            return true; // User is an employee
+        } else {
+            return false; // User is not an employee
+        }
+    } catch (err) {
+        console.error("Error in checking role:", err.message);
+        return false; // Return false on error
+    }
+};
+
 
 authModel.is_deleted = async (userId, status) => {
     const result = await db.connectDb("users", usersSchema);
@@ -338,6 +369,22 @@ authModel.is_deleted = async (userId, status) => {
         return false; // Return false on error
     }
 }
+
+authModel.userDelete = async (id) => {
+    const result = await db.connectDb("user", usersSchema);
+    try {
+        const fetData = await result.find({ _id: id }); // Ensure you're using the correct query syntax
+
+        if (fetData.length > 0) {
+            await result.deleteOne({ _id: id }); // Deletes the record
+        }
+        const result2 = permission.userDelete(id);
+        console.log(result2)
+        return { success: true, message: "Record deleted successfully." };
+    } catch (err) {
+        return { success: false, message: "Record not found." };
+    }
+};
 
 authModel.userList = async () => {
     const users = await db.connectDb("users", usersSchema)
@@ -356,17 +403,17 @@ authModel.checkAvailablity = async (email) => {
 
 authModel.getNoOfLabels = async (userId) => {
     const result = await db.connectDb("users", usersSchema);
-    let val = await result.findOne({_id:new ObjectId(userId)});
+    let val = await result.findOne({ _id: new ObjectId(userId) });
     return val.noOfLabel;
 }
 
 authModel.getRole = async (userId) => {
     const result = await db.connectDb("users", usersSchema);
-    let val = await result.findOne({_id:new ObjectId(userId)});
+    let val = await result.findOne({ _id: new ObjectId(userId) });
     return val.role;
 }
 
-authModel.getCompanyCount = async () =>{
+authModel.getCompanyCount = async () => {
     const result = await db.connectDb("users", usersSchema);
     let val = await result.countDocuments({ role: "company" });
     return val;
@@ -374,7 +421,7 @@ authModel.getCompanyCount = async () =>{
 
 authModel.getEmail = async (id) => {
     const result = await db.connectDb("users", usersSchema);
-    let val = await result.findOne({_id:new ObjectId(id)});
+    let val = await result.findOne({ _id: new ObjectId(id) });
     return val.email;
 }
 

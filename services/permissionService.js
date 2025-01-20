@@ -2,13 +2,15 @@ const permissionmodel = require("../models/permissionmodel");
 const R = require("../utils/responseHelper");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+const bcrypt = require("../utils/bcrypt");
 
 const transporter = nodemailer.createTransport({
-    service: "Gmail", // Replace with your email service
+  service: "Gmail", // Replace with your email service
     auth: {
         user: process.env.EMAIL_USER, // Your email from environment variables
         pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
     },
+
 });
 
 
@@ -22,7 +24,8 @@ permission.add = async (req, res, next) => {
         const userId = req.doc.userId;
         const email = req.body.email;
         const Name = req.body.name;
-        data.password = `${Name}@123`
+        const newpassword = await bcrypt.passwordEncryption(Name+"@123!", 12);
+        data.password = newpassword
         console.log(data)
 
         if (!data) {

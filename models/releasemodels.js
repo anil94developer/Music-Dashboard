@@ -1,11 +1,11 @@
 const db = require("../utils/dbConn");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); 
 const {ObjectId} = require("mongodb");
 releaseModel = {}
 
 
 const releaseSchema = mongoose.Schema({
-  userId: { type: String },
+  userId: { type: [String] },
   title: { type: String, required: true },
   type: { type: String, required: true },
   status: { type: String, default: 'Pending' },
@@ -204,7 +204,7 @@ const labelSchema = mongoose.Schema({
 //   }],
 // })
 
-releaseModel.addUser= async (label,id)=>{
+releaseModel.addUserlabel= async (label,id)=>{
   const result = await db.connectDb("label", labelSchema);
   label.map(async(val)=>{
     console.log("val>>>>>>>>>",val);
@@ -214,6 +214,16 @@ releaseModel.addUser= async (label,id)=>{
   })
 }
 
+releaseModel.releaseDelete = async (id) => {
+  const result = await db.connectDb("release", releaseSchema);
+  const fetData = await result.find({ _id: id }); // Ensure you're using the correct query syntax
+  if (fetData.length > 0) {
+    await result.deleteOne({ _id: id }); // Deletes the record
+    return { success: true, message: "Record deleted successfully." };
+  } else {
+    return { success: false, message: "Record not found." };
+  }
+};
 
 releaseModel.addOneRelease = async (data) => {
   const result = await db.connectDb("release", releaseSchema);
@@ -368,6 +378,8 @@ releaseModel.SubmitFinalRelease = async (body) => {
   let id = body.id;
   let releaseDate = body.releaseDate;
   let youtubechannelLinkId = body.youtubechannelLinkId;
+  const userid = body.userId
+  const parentId = await auth.findparentId(userid)
 
 
   let releaseResult = await db.connectDb("release", releaseSchema);

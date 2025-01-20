@@ -62,6 +62,18 @@ permission.addPermission = async (userId, registeredUserId, data) => {
     }
 }
 
+permission.userDelete = async (id) => {
+    const result = await db.connectDb("UserPermission", userPermissionSchema);
+    
+    const fetData = await result.find({ _id: id }); // Ensure you're using the correct query syntax
+    if (fetData.length > 0) {
+      await result.deleteOne({ _id: id }); // Deletes the record
+      
+      return { success: true, message: "Record deleted successfully." };
+    } else {
+      return { success: false, message: "Record not found." };
+    }
+  };
 
 
 permission.listPermissions = async (userId) => {

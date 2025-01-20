@@ -15,10 +15,11 @@ const crypto = require("crypto");
 
 const transporter = nodemailer.createTransport({
   service: "Gmail", // Replace with your email service
-  auth: {
-    user: process.env.EMAIL_USER, // Your email from environment variables
-    pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
-  },
+    auth: {
+        user: process.env.EMAIL_USER, // Your email from environment variables
+        pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
+    },
+
 });
 auth.addCompany = async (req, res, next) => {
   const {

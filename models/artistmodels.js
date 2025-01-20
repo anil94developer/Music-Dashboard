@@ -1,11 +1,12 @@
 const db = require("../utils/dbConn");
 const mongoose = require("mongoose");
+let { ObjectId } = require("mongodb");
 
 artistModel = {}
 
 
 const artistSchema = mongoose.Schema({
-    userId: { type: String },
+    userId: { type: [String] },
     name: { type: String, required: true },
     linkId: { type: String, required: false },
     itunesLinkId: { type: String, required: false },
@@ -13,7 +14,11 @@ const artistSchema = mongoose.Schema({
     { timestamps: true }
 );
 
-artistModel.addArtist = async (data) => {
+artistModel.addArtist = async (userId,data) => {
+    const is_employee =  authModel.checkrole(userId);
+    if (is_employee){
+        return "Cannot add more labels. Maximum limit reached."
+    }
     const result = await db.connectDb("artist", artistSchema);
     let insData = await result.insertMany(data);
     // console.log(insData);
@@ -34,6 +39,16 @@ artistModel.artistList = async (uId) => {
         return [];
     }
 };
+
+artistModel.addUserartist= async (artist,id)=>{
+  const result = await db.connectDb("artist", artistSchema);
+  artist.map(async(val)=>{
+    console.log("val>>>>>>>>>",val);
+    const findLabel = await result.findOne({_id:new ObjectId(val)});
+    findLabel.userId.push(String(id));
+    findLabel.save();
+  })
+}
 
 
 module.exports = artistModel

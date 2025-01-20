@@ -83,19 +83,8 @@ router.get('/tracks-list', verifyToken, releaseService.tracksList)
 router.post('/add-label', verifyToken, releaseService.addLabel)
 router.get('/label-list', verifyToken, releaseService.labelList)
 router.get('/all-release-list', verifyToken, releaseService.allReleaseList)
-
-
 // router.post('/add-store',verifyToken, releaseService.addStore)
 // router.get('/list-store',verifyToken, releaseService.storeList)
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router 

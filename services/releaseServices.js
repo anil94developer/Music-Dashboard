@@ -5,6 +5,7 @@ const multer = require('multer');
 const nodemailer = require("nodemailer");
 const path = require('path');
 const { uploadOnCloudinary } = require("../utils/cloudinary");
+const auth = require("./authServices");
 const release = {};
 
 release.addOneRelease = async (req, res, next) => {
@@ -134,6 +135,7 @@ const transporter = nodemailer.createTransport({
         user: process.env.EMAIL_USER, // Your email from environment variables
         pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
     },
+
 });
 
 
@@ -168,6 +170,8 @@ release.addFiveStepRelease = async (req, res, next) => {
 release.SubmitFinalRelease = async (req, res, next) => {
 
     const body = req.body;
+    
+
     try {
         const result = await releaseModel.SubmitFinalRelease(body)
         return R(res, true, "Final Update Successfully!!", result, 200)

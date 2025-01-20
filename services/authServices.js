@@ -14,11 +14,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
 const transporter = nodemailer.createTransport({
-    service: "Gmail", // Replace with your email service
-    auth: {
-        user: process.env.EMAIL_USER, // Your email from environment variables
-        pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
-    },
+   
     service: "Gmail", // Replace with your email service
     auth: {
         user: process.env.EMAIL_USER, // Your email from environment variables
@@ -173,6 +169,18 @@ auth.login = async (req, res, next) => {
 
 };
 
+auth.userDelete = async (req, res, next) => {
+    try {
+        const id = req.body.id; 
+        
+        const result = await authModel.userDelete(id)
+        return R(res, true, "Delete Successfully!!", result, 200);
+    } catch (err) {
+        console.log(err)
+        next(err);
+    }
+};
+
 auth.signUp = async (req, res, next) => {
     const { email, phone, name, password, role, dob } = req.body
     const now = new Date();
@@ -229,6 +237,8 @@ auth.getUsers = async (req, res, next) => {
         next(error)
     }
 };
+
+
 
 auth.getSingleUser = async (req, res, next) => {
     try {

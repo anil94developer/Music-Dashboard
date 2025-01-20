@@ -1,4 +1,4 @@
- 
+
 const authModal = require("../models/authmodels");
 const validators = require("../utils/validator");
 const AppErr = require("../utils/error")
