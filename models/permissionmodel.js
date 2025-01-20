@@ -38,6 +38,7 @@ const userPermissionSchema = new mongoose.Schema({
     },
     menuPermission: [menuPermissionSchema], // Array of menu permissions
     otherPermission: [otherPermissionSchema], // Array of other permissions
+    
 });
 
 const permissionModel = mongoose.model("UserPermission", userPermissionSchema);
@@ -60,6 +61,15 @@ permission.addPermission = async (userId, registeredUserId, data) => {
         // console.log("Error connecting to DB", err);
         return false;
     }
+}
+
+permission.findparentId = async (userid) =>{
+    const result = await db.connectDb("UserPermission", userPermissionSchema);
+    const user = await result.findOne({ registeredUserId: userid }, { __v: 0 });
+    if (!user) {
+        return false
+    }
+    return user.userId;
 }
 
 permission.userDelete = async (id) => {

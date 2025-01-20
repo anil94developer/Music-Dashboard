@@ -168,12 +168,13 @@ release.addFiveStepRelease = async (req, res, next) => {
 };
 
 release.SubmitFinalRelease = async (req, res, next) => {
+  const body = req.body;
+  const userid = body.userId
 
-    const body = req.body;
-    
+  const parentId = await permission.findparentId(userid);
 
     try {
-        const result = await releaseModel.SubmitFinalRelease(body)
+        const result = await releaseModel.SubmitFinalRelease(body ,parentId)
         return R(res, true, "Final Update Successfully!!", result, 200)
     } catch (err) {
         next(err)

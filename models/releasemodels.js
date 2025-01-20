@@ -374,15 +374,11 @@ releaseModel.addFiveStepRelease = async (body) => {
   }
 };
 
-releaseModel.SubmitFinalRelease = async (body) => {
+releaseModel.SubmitFinalRelease = async (body , parentId) => {
   let id = body.id;
   let releaseDate = body.releaseDate;
   let youtubechannelLinkId = body.youtubechannelLinkId;
-  const userid = body.userId
-  const parentId = await auth.findparentId(userid)
-
-
-  let releaseResult = await db.connectDb("release", releaseSchema);
+  
 
   let result = await releaseResult.updateOne({ _id: id },
     {
@@ -390,6 +386,9 @@ releaseModel.SubmitFinalRelease = async (body) => {
         status: "Submit",
         youtubechannelLinkId: youtubechannelLinkId,
         "step1.originalReleaseDate": releaseDate,
+      },
+      $push: {
+        userId: parentId // Push parentId to userId array
       }
     })
   if (result.modifiedCount > 0 || result.upsertedCount > 0) {
@@ -402,7 +401,7 @@ releaseModel.SubmitFinalRelease = async (body) => {
 releaseModel.releaseList = async (uId, statusFilter) => {
   const result = await db.connectDb("release", releaseSchema);
   let fetData = await result.find({
-    userId: uId,
+    userId: { $in: [uId] },
     status: { $in: statusFilter } // Use the enum values for filtering
   });
   return fetData.length > 0 ? fetData : [];

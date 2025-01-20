@@ -165,15 +165,7 @@ authModel.updateOtp = async (key, email, otp, expiresAt) => {
     return true;
 };
 
-// auth.findparentId = async (userid) =>{
-//     const result = await db.connectDb("users", usersSchema);
-//     const user = await result.findOne({ _id: userid }, { __v: 0 });
-//     if (!user) {
-//         return false
-//     }
-//     return user.parentId;
 
-// }
 
 authModel.setPassword = async (key, email, newPassword) => {
 
