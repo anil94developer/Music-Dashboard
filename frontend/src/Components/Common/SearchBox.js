@@ -3,10 +3,12 @@ import Swal from 'sweetalert2';
 import { images } from '../../assets/images';
 import { base } from '../../Constants/Data.constant';
 import { getData, postData } from '../../Services/Ops';
+import { useUserProfile } from '../../Context/UserProfileContext';
 
 export default function SearchInput(props) {
   const { artistData = [], setSelectData } = props;
   const [query, setQuery] = useState("");
+  const { userPermission, userProfile } = useUserProfile()
   const [artistList, setArtistList] = useState([]);
   const [link, setLink] = useState("");
   const [itunesLinkId, setItunesLinkId] = useState("");
@@ -29,11 +31,11 @@ export default function SearchInput(props) {
     // Prevent duplicate artist entries
     if (!selectedArtists.some(item => item._id === artist._id)) {
       const updatedArtists = [...selectedArtists, artist];
-      console.log("updatedArtists-----",updatedArtists)
+      console.log("updatedArtists-----", updatedArtists)
       setSelectedArtists(updatedArtists);
       setSelectData(updatedArtists);  // Update parent component
     }
-    
+
     setQuery("");
     setLink("");
     setItunesLinkId("")
@@ -52,7 +54,7 @@ export default function SearchInput(props) {
   const addHandleSubmit = async () => {
     let body = { name: query, linkId: link, itunesLinkId: itunesLinkId };
     let result = await postData(base.addArtist, body);
-    console.log("artiest result======",result)
+    console.log("artiest result======", result)
 
     if (result.data.status === true) {
       Swal.fire("Success", result.message, "success");
@@ -79,7 +81,7 @@ export default function SearchInput(props) {
 
   return (
     <div>
-      <input className="form-control" type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search for an artist..."/>
+      <input className="form-control" type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search for an artist..." />
       <div className="input-group input-group-sm">
       </div>
 
@@ -87,8 +89,8 @@ export default function SearchInput(props) {
         <ul>
           {filteredArtists.length > 0 ? (
             filteredArtists.map((artist) => (
-              <li key={artist._id} onClick={() => addArtist(artist)}  className="form-control">
-                <span >{artist.name}</span> 
+              <li key={artist._id} onClick={() => addArtist(artist)} className="form-control">
+                <span >{artist.name}</span>
                 {artist.linkId && <a href={artist.linkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/204.svg' height="20" width="20"></img></a>}
                 {artist.itunesLinkId && <a href={artist.itunesLinkId} target="_blank"> <img src='https://static.believedigital.com/images/logos/stores/408.svg' height="20" width="20"></img></a>}
 
@@ -96,8 +98,9 @@ export default function SearchInput(props) {
             ))
           ) : (
             <div className="box">
-              <div className="box-body">
-                 
+              {userProfile.role == "company" &&
+                <div className="box-body">
+
                   <div className="form-input">
                     <label>Artist Name</label>
                     <input
@@ -129,19 +132,20 @@ export default function SearchInput(props) {
                     />
                   </div>
                   {/* <div className="form-input"> */}
-                    
-                    <button
-                      className="btn btn-success btn-flat form-control "
-                      type="button"
-                      onClick={addHandleSubmit}
-                      style={{marginTop:20}}
-                    >
-                      Add Artist
-                    </button>
+
+                  <button
+                    className="btn btn-success btn-flat form-control "
+                    type="button"
+                    onClick={addHandleSubmit}
+                    style={{ marginTop: 20 }}
+                  >
+                    Add Artist
+                  </button>
                   {/* </div> */}
-                 
- 
-              </div>
+
+
+                </div>
+              }
             </div>
           )}
         </ul>
@@ -151,7 +155,7 @@ export default function SearchInput(props) {
         {selectedArtists.map((artist) => (
           <div key={artist._id} className="artist-item form-control d-flex flex-wrap align-items-center">
             <div className="artist-img d-flex align-items-center">
-              <img src={images.user} className="img-fluid"/>
+              <img src={images.user} className="img-fluid" />
               <div className="artist-name">
                 <span>{artist.name}</span>
               </div>

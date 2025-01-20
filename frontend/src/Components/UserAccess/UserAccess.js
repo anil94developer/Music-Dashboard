@@ -99,7 +99,7 @@ const UserAccess = (props) => {
                         {user?.userDetails?.is_deleted == 0 ? "DeActive" : "Active"}
                       </button>
                       <button className="btn btn-primary" onClick={() => { navigate("/edit-permission", { state: { userData: user } }); }}>Edit</button>
-                      <button title='Download' className='action-button'>
+                      {/* <button title='Download' className='action-button'>
                         <a onClick={async () => {
                           Swal.fire({
                             title: "Are you sure?",
@@ -121,7 +121,7 @@ const UserAccess = (props) => {
                         }>
                           <i className='fa fa-trash'></i>
                         </a>
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 ))}

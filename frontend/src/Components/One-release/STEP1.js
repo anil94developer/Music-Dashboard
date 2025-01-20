@@ -6,8 +6,10 @@ import GENRES from '../../Enums/genres.json';
 import { images } from '../../assets/images';
 import { base, domainUrl } from '../../Constants/Data.constant';
 import Loader from '../Common/Loader';
+import { useUserProfile } from '../../Context/UserProfileContext';
 export default function STEP1(props) {
   const { setStep, releaseData } = props;
+  const { userPermission, userProfile } = useUserProfile()
   const { releaseTitle, setReleaseTitle,
     versionSubtitle, setVersionSubtitle,
     primaryArtist, setPrimaryArtist,
@@ -212,6 +214,7 @@ export default function STEP1(props) {
                   ))}
               </select>
               {/* Button */}
+              { userProfile.role == "company" && 
               <button
                 className="btn btn-primary add-label"
                 type="button"
@@ -219,6 +222,7 @@ export default function STEP1(props) {
               >
                 +
               </button>
+              }
             </div>
             {props.errors?.['step1.labelName'] && (
               <span className="text-danger">{props.errors['step1.labelName']}</span>

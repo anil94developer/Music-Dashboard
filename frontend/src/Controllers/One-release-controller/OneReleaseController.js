@@ -69,7 +69,7 @@ const OneReleaseController = (props) => {
         }
 
       }
-    } else if (userProfile?.role == "company") {
+    } else if (userProfile?.role == "company" || userProfile.role == "employee") {
       setIsLoading(true)
       let resultSubmit = await getData(base.releaseList + `?status=Submit`);
       if (resultSubmit.status == true) {
@@ -79,9 +79,9 @@ const OneReleaseController = (props) => {
       let result = await getData(base.releaseList + `?status=Approve`);
       if (result.status == true) {
         console.log("result--------", result)
-        if (result.data.length > 0) {
+        // if (result.data.length > 0) {
           arrRelease = [result.data, ...arrRelease];
-        }
+        // }
       }
       let allDraft = await getData(base.releaseList + `?status=Pending`);
       if (allDraft.status == true) {
