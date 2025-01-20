@@ -36,7 +36,7 @@ export const Dashboard = () => {
         <Nav />
         <div className="content-main">
           <section className="dash-main content">
-            {userProfile?.role === "company" &&
+            {userProfile?.role === "company" || userProfile?.role === "employee" && 
               <div className="row">
                 <div className="col-lg-3 col-md-6">
                   <div className="dash-detail d-flex flex-wrap">

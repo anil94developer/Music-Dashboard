@@ -10,7 +10,7 @@ import { postData } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
 export const AllRelease = () => {
   const navigate = useNavigate();
-  const { setType, setTitle, handleSubmit, myRelease, moreAction, isLoading, myTracks, setMyTracks, exportTableToExcel } = OneReleaseController();
+  const { setType, setTitle, handleSubmit, myRelease, moreAction,deleteAction, isLoading, myTracks, setMyTracks, exportTableToExcel } = OneReleaseController();
 
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header' },
@@ -54,7 +54,7 @@ export const AllRelease = () => {
   ];
   { console.log("item----------------", myRelease) }
 
- 
+
   return (
     <div>
       <SideBar />
@@ -135,7 +135,29 @@ export const AllRelease = () => {
                               <i className="fa fa-eye"></i>
                             </a>
                           </button>
-
+                          <button title='Download' className='action-button'>
+                            <a onClick={async () => {
+                              Swal.fire({
+                                title: "Are you sure?",
+                                text: `You want to delete ${item.title} `,
+                                icon: "warning", // Options: 'warning', 'error', 'success', 'info', 'question'
+                                showCancelButton: true, // Enables the Cancel button
+                                confirmButtonText: "Yes, proceed",
+                                cancelButtonText: "No, cancel",
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                  // User clicked the confirm button
+                                  deleteAction(item)
+                                } else if (result.isDismissed) {
+                                  // User clicked the cancel button
+                                  Swal.fire("Cancelled", "Action was cancelled.", "info");
+                                }
+                              });
+                            }
+                            }>
+                              <i className='fa fa-trash'></i>
+                            </a>
+                          </button>
                         </div>
                       </td>
 

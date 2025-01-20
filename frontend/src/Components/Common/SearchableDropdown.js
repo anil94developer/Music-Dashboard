@@ -43,9 +43,9 @@ const SearchableDropdown = ({
   };
 
   return (
-    <div className={`dropdown ${className}`} ref={dropdownRef}>
+   <>
       {/* Input and Selected Items */}
-      <div className="form-control d-flex align-items-center flex-wrap gap-2">
+      <div className={`dropdown ${className} form-control d-flex align-items-center flex-wrap gap-2`} ref={dropdownRef}>
         {selectedOptions.map((option) => (
           <span
             key={option[valueKey]}
@@ -76,14 +76,15 @@ const SearchableDropdown = ({
       {/* Dropdown menu */}
       {showDropdown && filteredOptions.length > 0 && (
         <ul
-          className="dropdown-menu show w-100"
+          className="dropdown-menu show w-100 "
           style={{ maxHeight: "150px", overflowY: "auto" }}
         >
           {filteredOptions.map((option) => (
-            <li key={option[valueKey]}>
+            <li key={option[valueKey]} >
               <button
                 type="button"
-                className="dropdown-item"
+                className="dropdown-item "
+                style={{ color: 'white', backgroundColor: 'black' }}
                 onMouseDown={(e) => e.preventDefault()} // Prevent closing on click
                 onClick={() => handleOptionClick(option)}
               >
@@ -112,7 +113,7 @@ const SearchableDropdown = ({
           {selectedOptions.map((item) => item[labelKey]).join(", ")}
         </p>
       )} */}
-    </div>
+    </>
   );
 };
 

@@ -153,10 +153,12 @@ export default function PaymentOperations() {
                       <div className="icon">
                         <img className="img-fluid" src={require('../../assets/images/music-wallet1.png')} />
                       </div>
-
-                      <div className="Submit-btn">
-                        <button type="Submit" id="btnSubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Submit</button>
-                      </div>
+                      {userData?.wallet >=100 &&
+                          <div className="Submit-btn">
+                          <button type="Submit" id="btnSubmit" className="btn btn-primary" onClick={() => { handleSubmit() }}>Request</button>
+                        </div>
+                      }
+                      
                     </div>
                     {/* <div className="form-group">
                     <label for="exampleInputEmail1">Amount *</label>

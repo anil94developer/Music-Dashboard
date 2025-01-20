@@ -57,6 +57,14 @@ export const Nav = (props) => {
                           <i className="fa fa-user"></i> Profile
                         </a>
                       </li>
+                      {
+                        userProfile?.role == "employee" &&
+                        <li>
+                        <a href="/bank information" className="dropdown-item">
+                          <i className="fa fa-bank"></i> Bank Information
+                        </a>
+                      </li>
+                      }
                       {userProfile.role === "company" && (
                         <>
                           <li>

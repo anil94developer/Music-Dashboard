@@ -113,8 +113,6 @@ export const SideBar = (props) => {
               </a>
             </li>
           ))}
-
-
          <div className="user-detail d-flex flex-wrap " style={{marginTop:200}}></div>
         <div className="user-detail d-flex flex-wrap item-align-center" >
           Copyright ©2025 J2P Entertainment Digital Pvt Ltd 

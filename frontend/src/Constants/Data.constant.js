@@ -24,6 +24,7 @@ const base = {
   allReleaseList: mainUrl + 'release/all-release-list',
   releaseDetails: mainUrl + 'release/release-details',
   deleteOneRelease:  mainUrl + 'release/release-delete',
+  deleteUserparmanent:  mainUrl + 'auth/user-permanentdelete',
   addArtist: mainUrl + 'artist/add-artist',
   fetchArtistList: mainUrl + 'artist/artist-list',
   userProfile: mainUrl + 'auth/user-profile',

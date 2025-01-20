@@ -98,6 +98,30 @@ export const Nav = (props) => {
 
                               </>
                             }
+                              {
+                              // userProfile?.role == "employee" &&
+                              <>
+                              <ul className="sidebar-menu">
+                                  <li className="treeview">
+                                    <a href="bank information">
+                                      <i className="fa fa-bank"></i> <span>Bank Information</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </>
+                            }
+                            {
+                              userProfile?.role == "company" &&
+                              <>
+                              <ul className="sidebar-menu">
+                                  <li className="treeview">
+                                    <a href="bank information">
+                                      <i className="fa fa-bank"></i> <span>Bank Information</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </>
+                            }
                             <ul className="sidebar-menu">
                               <li className="treeview">
                                 <a href="" onClick={() => handleLogout()}>

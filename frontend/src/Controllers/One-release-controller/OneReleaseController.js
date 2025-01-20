@@ -181,7 +181,7 @@ const OneReleaseController = (props) => {
     console.log(body)
     let result = await postData(base.deleteOneRelease, body);
     if (result.data.status === true) {
-      Swal.fire("Succees", result.message , result.message) 
+      Swal.fire("Success", result.message , result.message) 
 
       let updateArr= myReleaseDraft.filter(item=> item._id !== e.id)
       setMyReleaseDraft(updateArr)

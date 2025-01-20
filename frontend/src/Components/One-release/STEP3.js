@@ -169,7 +169,7 @@ export default function STEP3(props) {
   const openModal = () => {
     setBtnName("Add");
     setIsModalOpen(true)
-    setRowId("") 
+    setRowId("")
     console.log("")
     setContentType("");
     setPrimaryTrackType("");
@@ -435,16 +435,16 @@ export default function STEP3(props) {
                       <div className="form-group">
                         <label>Mood</label>
                         <select className="form-select form-control" value={mood} onChange={(e) => setMood(e.target.value)}>
-                          <option value="">- Select a mood -</option> 
-                            <option value={'Romantic'}>Romantic</option>
-                            <option value={'Sad'}>Sad</option>
-                            <option value={'Happy'}>Happy</option>
-                            <option value={'Soulful'}>Soulful</option>
-                            <option value={'Chill'}>Chill</option>
-                            <option value={'Party'}>Party</option>
-                            <option value={'Insirational'}>Insirational</option>
+                          <option value="">- Select a mood -</option>
+                          <option value={'Romantic'}>Romantic</option>
+                          <option value={'Sad'}>Sad</option>
+                          <option value={'Happy'}>Happy</option>
+                          <option value={'Soulful'}>Soulful</option>
+                          <option value={'Chill'}>Chill</option>
+                          <option value={'Party'}>Party</option>
+                          <option value={'Insirational'}>Insirational</option>
 
-                           
+
                         </select>
                       </div>
                     </div>
@@ -523,7 +523,7 @@ export default function STEP3(props) {
                       </div>
                     </div>
 
-                   
+
 
 
                     <div className="col-lg-3 col-md-6">
@@ -547,7 +547,7 @@ export default function STEP3(props) {
                         {/* <input type="text" className="form-control" value={publisher} onChange={(e) => setPublisher(e.target.value)} /> */}
                       </div>
                     </div>
-                    {!generateISRC &&
+                    {/* {!generateISRC &&
                       <div className="col-lg-3 col-md-6">
                         <div className="form-group">
                           <label>ISRC</label>
@@ -561,7 +561,48 @@ export default function STEP3(props) {
                         <input type="radio" value={true} checked={generateISRC === true} onChange={() => setGenerateISRC(true)} /> Yes
                         <input type="radio" value={false} checked={generateISRC === false} onChange={() => setGenerateISRC(false)} style={{ marginLeft: "10px" }} /> No
                       </div>
+                    </div> */}
+
+                    {!generateISRC && 
+                      <div className="col-lg-3 col-md-6">   
+                      <div className="form-group">
+                        <label>ISRC</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          disabled={generateISRC} // Disabled when "Auto Generate ISRC" is Yes
+                          value={generateISRC ? "" : isrc} // Clear input when auto-generate is selected
+                          onChange={(e) => setIsrc(e.target.value)}
+                        />
+                      </div>
+                      </div>
+                    }
+                    <div className="col-lg-3 col-md-6">
+                      <div className="form-group">
+                        <label>Generate ISRC</label>
+                        <input
+                          type="radio"
+                          value={true}
+                          checked={generateISRC === true}
+                          onChange={() => {
+                            setGenerateISRC(true); // Enable auto-generate
+                             // Clear manual input when auto-generate is selected
+                          }}
+                        />{" "}
+                        Yes
+                        <input
+                          type="radio"
+                          value={false}
+                          checked={generateISRC === false}
+                          onChange={() =>{ setGenerateISRC(false)
+                            setIsrc(""); }
+                          } // Allow manual input
+                          style={{ marginLeft: "10px" }}
+                        />{" "}
+                        No
+                      </div>
                     </div>
+
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label htmlFor="genre">Genre *</label>
@@ -742,10 +783,10 @@ export default function STEP3(props) {
                             X
                           </button>
                         </div>
-                      ))} 
+                      ))}
 
 
-                      </div>
+                    </div>
                     <div className="col-md-6">
 
                       <div className="form-group">
@@ -808,7 +849,7 @@ export default function STEP3(props) {
                     <button type="Submit" className="btn btn-primary"
                       onClick={async () => {
                         await handleSubmit();  // Ensure handleSubmit completes first
-         
+
                         // Then close the modal
                       }}
                     >Save</button>

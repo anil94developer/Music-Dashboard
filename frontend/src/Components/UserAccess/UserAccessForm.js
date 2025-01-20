@@ -15,8 +15,8 @@ function UserAccessForm(props) {
   const [airtestNameList, setaAirtestNameList] = useState([])
   const [menuPermission, setMenuPermission] = useState([]);
   const [otherPermission, setOtherPermission] = useState([
-    { sectionName: "Airtest", status: true, list: [] },
-    { sectionName: "Label", status: true, list: [] },
+    { sectionName: "artist", status: true, list: [] },
+    { sectionName: "label", status: true, list: [] },
     // { sectionName: "Channel", status: true, list: [] },
   ]);
   const [userPermission, setUserPermission] = useState({
@@ -25,6 +25,7 @@ function UserAccessForm(props) {
     name: "",
     noOfLabel: "",
     role: userProfile.type == "Admin" ? "company" : "employee",
+    pricePercentage: 0
   });
   const handleCheckboxChange = (e, category, index, subIndex = null) => {
     const { checked } = e.target;
@@ -184,7 +185,8 @@ function UserAccessForm(props) {
     const payload = {
       ...userPermission,
       menuPermission,
-      ...otherPermission,
+      artist : otherPermission?.[0].list,
+      label : otherPermission?.[1].list,
     };
     if (userPermission.email == "" || userPermission.name == "") {
       Swal.fire("Error", "Please fill email , password and name", "error");
@@ -252,6 +254,19 @@ function UserAccessForm(props) {
                     />
                   </div>
                 </div>
+                <div className="col-md-4 col-sm-6 col-12">
+                  <div className="form-group">
+                    <label>Percent Value: </label>
+                    <input
+                      type="number"
+                      min={1} 
+                      max={100}
+                      className="form-control"
+                      value={userPermission.pricePercentage}
+                      onChange={(e) => setUserPermission((prev) => ({ ...prev, pricePercentage: e.target.value }))}
+                    />
+                  </div>
+                </div>
                 {/* <div className="col-md-4 col-sm-6 col-12">
                   <div className="form-group">
                     <label>Password: </label>
@@ -307,20 +322,21 @@ function UserAccessForm(props) {
                   {otherPermission?.map((item, index) => (
                     <div class="form-group">
                       <label for="genre">{item.sectionName}</label>
-                      {item.sectionName == "Label" &&
+                      {item.sectionName == "label" &&
                         <SearchableDropdown className="form-control"
                           options={labelNameList}
                           labelKey="title"
                           onChange={(selectedItems) => selectHandleChange(selectedItems, index)}
                         />
                       }
-                      {item.sectionName == "Airtest" &&
+                      {item.sectionName == "artist" &&
                         <SearchableDropdown className="form-control"
                           options={airtestNameList}
                           labelKey="name"
                           onChange={(selectedItems) => selectHandleChange(selectedItems, index)}
                         />
                       }
+                      
                     </div>
                   ))}
                 </div>
