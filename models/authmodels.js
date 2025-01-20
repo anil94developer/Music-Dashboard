@@ -328,23 +328,7 @@ authModel.permission = async (data) => {
 }
 
 
-authModel.checkrole = async (userId) => {
-    const result = await db.connectDb("users", usersSchema); // Connect to the users collection
-    try {
-        // Find the user by ID
-        const user = await result.findOne({ _id: userId });
 
-        // Check if the user's role is "employee"
-        if (user && user.role === "employee") {
-            return true; // User is an employee
-        } else {
-            return false; // User is not an employee
-        }
-    } catch (err) {
-        console.error("Error in checking role:", err.message);
-        return false; // Return false on error
-    }
-};
 
 
 authModel.is_deleted = async (userId, status) => {
@@ -413,7 +397,7 @@ authModel.getCompanyCount = async () => {
 
 authModel.getEmail = async (id) => {
     const result = await db.connectDb("users", usersSchema);
-    let val = await result.findOne({ _id: new ObjectId(id) });
+    let val = await result.findOne({ _id: mongoose.Types.ObjectId(id) });
     return val.email;
 }
 

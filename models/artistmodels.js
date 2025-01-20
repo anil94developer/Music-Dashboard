@@ -14,11 +14,7 @@ const artistSchema = mongoose.Schema({
     { timestamps: true }
 );
 
-artistModel.addArtist = async (userId,data) => {
-    const is_employee =  authModel.checkrole(userId);
-    if (is_employee){
-        return "Cannot add more labels. Maximum limit reached."
-    }
+artistModel.addArtist = async (data) => {
     const result = await db.connectDb("artist", artistSchema);
     let insData = await result.insertMany(data);
     // console.log(insData);

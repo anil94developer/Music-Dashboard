@@ -378,12 +378,12 @@ releaseModel.SubmitFinalRelease = async (body , parentId) => {
   let id = body.id;
   let releaseDate = body.releaseDate;
   let youtubechannelLinkId = body.youtubechannelLinkId;
-  
+  let releaseResult = await db.connectDb("release", releaseSchema);
 
   let result = await releaseResult.updateOne({ _id: id },
     {
       $set: {
-        status: "Submit",
+        status: parentId ? "Pending" :"Submit",
         youtubechannelLinkId: youtubechannelLinkId,
         "step1.originalReleaseDate": releaseDate,
       },
@@ -459,9 +459,9 @@ releaseModel.updateStatus = async (body) => {
 releaseModel.getEmail = async (body) => {
   let id = body.id;
   let releaseResult = await db.connectDb("release", releaseSchema);
-  let fetData = await releaseResult.findOne({ _id: id });
-  console.log(fetData);
-  let email = await authModel.getEmail(fetData.userId);
+  let fetData = await releaseResult.findOne({ _id: mongoose.Types.ObjectId(id)});
+  console.log(">>>>>>>>>>>>>>>",fetData);
+  let email = await authModel.getEmail(fetData.userId[0]);
   return email;
 }
 
