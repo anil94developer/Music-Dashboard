@@ -8,9 +8,10 @@ import DataTable from '../Common/DataTable/DataTable';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import { postData } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
+import Swal from 'sweetalert2';
 export const AllRelease = () => {
   const navigate = useNavigate();
-  const { setType, setTitle, handleSubmit, myRelease, moreAction,deleteAction, isLoading, myTracks, setMyTracks, exportTableToExcel } = OneReleaseController();
+  const { setType, setTitle, handleSubmit, myRelease, moreAction,deleteAction, isLoading, myTracks, setMyTracks, exportTableToExcel ,} = OneReleaseController();
 
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header' },
