@@ -68,7 +68,7 @@ permission.findparentId = async (userid) => {
     console.log(userid)
     const user = await result.findOne({ registeredUserId: userid });
     console.log(">>>>>>>>>>>>>>>>" ,user)
-    return user.userId;
+    return user?.userId  ? user.userId : userid;
 }
 
 permission.userDelete = async (id) => {
