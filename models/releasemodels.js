@@ -461,7 +461,7 @@ releaseModel.getEmail = async (body) => {
   let releaseResult = await db.connectDb("release", releaseSchema);
   let fetData = await releaseResult.findOne({ _id: id });
   console.log(fetData);
-  let email = await authModel.getEmail(fetData.userId);
+  let email = await authModel.getEmail(fetData.userId[0]);
   return email;
 }
 
