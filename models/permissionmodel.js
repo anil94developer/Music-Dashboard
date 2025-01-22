@@ -38,7 +38,6 @@ const userPermissionSchema = new mongoose.Schema({
     },
     menuPermission: [menuPermissionSchema], // Array of menu permissions
     otherPermission: [otherPermissionSchema], // Array of other permissions
-    
 });
 
 const permissionModel = mongoose.model("UserPermission", userPermissionSchema);
@@ -63,12 +62,12 @@ permission.addPermission = async (userId, registeredUserId, data) => {
     }
 }
 
-permission.findparentId = async (userid) =>{
+
+permission.findparentId = async (userid) => {
     const result = await db.connectDb("UserPermission", userPermissionSchema);
-    const user = await result.findOne({ registeredUserId: userid }, { __v: 0 });
-    if (!user) {
-        return false
-    }
+    console.log(userid)
+    const user = await result.findOne({ registeredUserId: userid });
+    console.log(">>>>>>>>>>>>>>>>" ,user)
     return user.userId;
 }
 

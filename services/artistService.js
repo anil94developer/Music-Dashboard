@@ -10,9 +10,9 @@ artist.addArtist = async (req, res, next) => {
         userId: req.doc.userId // Add a new key `userId` from req.doc
     };  
 
-    const user = req.doc.userId;
+
     try { 
-        const result = await artistModel.addArtist(user ,body) 
+        const result = await artistModel.addArtist(body) 
         if(result =="Cannot add more labels. Maximum limit reached.")
         {
             return R(res, false, "Cannot add more labels. Maximum limit reached." ,result ,400);

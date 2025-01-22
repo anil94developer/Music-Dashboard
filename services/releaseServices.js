@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const path = require('path');
 const { uploadOnCloudinary } = require("../utils/cloudinary");
 const auth = require("./authServices");
+const permission = require('../models/permissionmodel')
 const release = {};
 
 release.addOneRelease = async (req, res, next) => {
@@ -171,7 +172,7 @@ release.addFiveStepRelease = async (req, res, next) => {
 
 release.SubmitFinalRelease = async (req, res, next) => {
   const body = req.body;
-  const userid = body.userId
+  const userid = req.doc.userId
 
   const parentId = await permission.findparentId(userid);
 
