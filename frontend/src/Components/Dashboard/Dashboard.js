@@ -8,13 +8,13 @@ import SimpleGraph from '../Common/Chart/SimpleGraph';
 import { Nav } from '../Common/Nav'
 import { SideBar } from '../Common/SideBar'
 export const Dashboard = () => {
-  const { dashboardData } = useDashboardController();
+  const { dashboardData } = useDashboardController(); 
   const { userProfile } = useUserProfile();
 
   const [marketList, setMarketList] = useState([])
   useEffect(() => {
     getMarket();
-     
+     console.log(dashboardData,">>>>>>");
   }, [])
   const getMarket = async () => {
     let result = await getData(base.getMarket)
@@ -36,7 +36,7 @@ export const Dashboard = () => {
         <Nav />
         <div className="content-main">
           <section className="dash-main content">
-            {userProfile?.role === "company" || userProfile?.role === "employee" && 
+            {(userProfile?.role == "company" || userProfile?.role === "employee") && 
               <div className="row">
                 <div className="col-lg-3 col-md-6">
                   <div className="dash-detail d-flex flex-wrap">

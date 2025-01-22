@@ -278,13 +278,28 @@ export default function STEP3(props) {
 
 
   }
+  const [incrementalValue, setIncrementalValue] = useState(1); 
   // Function to generate ISRC code
   const generateISRCCode = () => {
-    const countryCode = "IN";         // Country code
-    const registrantCode = "R2";      // Registrant code
-    const yearCode = "24";            // Year code (for 2024)
-    const designationCode = Math.floor(100000 + Math.random() * 900000); // Random 6-digit number
-    return `${countryCode}${registrantCode}${yearCode}${designationCode}`;
+    // const countryCode = "IN";         // Country code
+    // const registrantCode = "R2";      // Registrant code
+    // const yearCode = "24";            // Year code (for 2024)
+    // const designationCode = Math.floor(100000 + Math.random() * 900000); // Random 6-digit number
+    // return `${countryCode}${registrantCode}${yearCode}${designationCode}`;
+
+    // Fixed prefix
+    const fixedPart = "INR2P";
+    // Extract last two digits of the current year
+    const year = new Date().getFullYear().toString().slice(-2);
+    // Incremental value padded with leading zeroes (up to 5 digits)
+    const paddedIncremental = String(incrementalValue).padStart(5, '0');
+    // Combine all parts
+    const finalString = `${fixedPart}${year}${paddedIncremental}`;
+    // setGeneratedString(finalString);
+    // Increment the incremental value for the next generation
+     setIncrementalValue((prevValue) => prevValue + 1);
+    return finalString;
+
   };
   // useEffect to set ISRC when generateISRC is true
   useEffect(() => {
@@ -563,18 +578,18 @@ export default function STEP3(props) {
                       </div>
                     </div> */}
 
-                    {!generateISRC && 
-                      <div className="col-lg-3 col-md-6">   
-                      <div className="form-group">
-                        <label>ISRC</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          disabled={generateISRC} // Disabled when "Auto Generate ISRC" is Yes
-                          value={generateISRC ? "" : isrc} // Clear input when auto-generate is selected
-                          onChange={(e) => setIsrc(e.target.value)}
-                        />
-                      </div>
+                    {!generateISRC &&
+                      <div className="col-lg-3 col-md-6">
+                        <div className="form-group">
+                          <label>ISRC</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            disabled={generateISRC} // Disabled when "Auto Generate ISRC" is Yes
+                            value={generateISRC ? "" : isrc} // Clear input when auto-generate is selected
+                            onChange={(e) => setIsrc(e.target.value)}
+                          />
+                        </div>
                       </div>
                     }
                     <div className="col-lg-3 col-md-6">
@@ -586,7 +601,7 @@ export default function STEP3(props) {
                           checked={generateISRC === true}
                           onChange={() => {
                             setGenerateISRC(true); // Enable auto-generate
-                             // Clear manual input when auto-generate is selected
+                            // Clear manual input when auto-generate is selected
                           }}
                         />{" "}
                         Yes
@@ -594,8 +609,10 @@ export default function STEP3(props) {
                           type="radio"
                           value={false}
                           checked={generateISRC === false}
-                          onChange={() =>{ setGenerateISRC(false)
-                            setIsrc(""); }
+                          onChange={() => {
+                            setGenerateISRC(false)
+                            setIsrc("");
+                          }
                           } // Allow manual input
                           style={{ marginLeft: "10px" }}
                         />{" "}

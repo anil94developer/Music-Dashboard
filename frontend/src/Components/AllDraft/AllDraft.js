@@ -6,6 +6,7 @@ import { SideBar } from '../Common/SideBar'
 import * as XLSX from 'xlsx';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import DataTable from '../Common/DataTable/DataTable';
+import Swal from 'sweetalert2';
 export const AllDraft = () => {
   const navigate = useNavigate();
   const { setType, setTitle, handleSubmit, myRelease, moreAction,deleteAction, isLoading, myReleaseDraft, setMyTracks } = OneReleaseController();

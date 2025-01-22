@@ -18,6 +18,8 @@ export default function DailyTreads() {
   const [marketListTab, setMarketListTab] = useState("graph");
   const [streamListTab, setStreamListTab] = useState("graph");
   const [trackListTab, setTrackListTab] = useState("graph");
+  const [insideTab, setInsideTab] = useState("graph");
+
 
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
@@ -26,12 +28,16 @@ export default function DailyTreads() {
   const [marketList, setMarketList] = useState([])
   const [streamList, setStreamList] = useState([])
   const [trackList, setTrackList] = useState([])
+  const [insideList, setInsideList] = useState([])
+
+
   useEffect(() => {
     let query = ``;
     getStore(query);
     getMarket(query);
     getStream(query);
     getTracks(query)
+    getInside(query)
   }, [])
   const getStore = async (query) => {
     let result = await getData(base.getStore + `?${query}`)
@@ -42,6 +48,8 @@ export default function DailyTreads() {
         arr.push({ name: item.Store, y: item.Quantity })
       })
       setTopStores(arr)
+    }else{
+      setTopStores([])
     }
   }
   const getMarket = async (query) => {
@@ -53,6 +61,9 @@ export default function DailyTreads() {
         arr.push({ x: index, label: item.Market, y: item.Quantity })
       })
       setMarketList(arr);
+    }else{
+      setMarketList([]);
+      
     }
   }
   const getStream = async (query) => {
@@ -64,6 +75,9 @@ export default function DailyTreads() {
         arr.push({ x: index, label: item.dsp, y: item.streams })
       })
       setStreamList(arr);
+    }else{
+      setStreamList([]);
+
     }
   }
   const getTracks = async (query) => {
@@ -75,8 +89,23 @@ export default function DailyTreads() {
         arr.push({ x: index, label: item.Track, y: item.Quantity })
       })
       setTrackList(arr);
+    }else{
+      setTrackList([]);
+
     }
   }
+
+  const getInside = async (query) => {
+    let result = await getData(base.getInside + `?${query}`)
+    console.log("result getTracks-------", result)
+    if (result?.status) { 
+      setInsideList(result?.data);
+    }else{
+      setInsideList([]);
+    }
+  }
+
+
   function exportTableToExcel(tableId, fileName = 'TableData.xlsx') {
     // Get the table element by ID
     const table = document.getElementById(tableId);
@@ -111,7 +140,7 @@ export default function DailyTreads() {
                 <label htmlFor="releaseDate">Start Date</label>
                 <input
                   value={startDate}
-                  type="date"
+                  type="date" 
                   className="form-control"
                   onChange={(e) => setStartDate(e.target.value)}
                 />
@@ -140,7 +169,9 @@ export default function DailyTreads() {
                     getStore(query);
                     getMarket(query);
                     getStream(query);
-                    getTracks(query)
+                    getTracks(query);
+                    getInside(query)
+
                   }
                   }
                 />
@@ -363,33 +394,77 @@ export default function DailyTreads() {
                   </>
                 }
               </div>
-              {/* <section className="top-store">
-  <div className="store-main">
-  <div className="store-heading">
-  <h3 className="title">TRACKS</h3>
-  </div>
-  <div className="store-table">
-  <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
-  <thead>
-  <tr role="row">
-  <th >#</th>
-  <th >NAME</th>
-  <th >Quantity</th>  
-  </tr>
-  </thead>
-  <tbody role="alert" aria-live="polite" aria-relevant="all">
-  {trackList.length > 0 && trackList.map((item, index) => (
-  <tr className="odd">
-  <td className="  sorting_1">{index + 1}</td> 
-  <td className="  ">{item.Track}</td>
-  <td className="  ">{item.Quantity}</td> 
-  </tr>
-  ))}
-  </tbody>
-  </table>
-  </div>  
-  </div>
-  </section> */}
+
+            </div>
+
+
+            <div className="top-store dash-detail dash-detail-two">
+
+              <div className="track-heading d-flex flex-wrap align-items-center justify-content-between">
+
+                <div class="track-heading d-flex flex-wrap align-items-center justify-content-between">
+                  {/* <div className="add-track-btn">
+                    <button onClick={() => { setInsideTab("graph") }} className={insideTab == "graph" ? "btn btn-primary" : "btn btn"}>Graph</button>
+                  </div>
+                  <div className="add-track-btn">
+                    <button onClick={() => { setInsideTab("table") }} className={insideTab == "table" ? "btn btn-primary" : "btn btn"}>Table</button>
+                  </div> */}
+                </div>
+                {/* {insideTab == "table" && */}
+                  <button className="btn btn-primary "
+                    onClick={() => {
+                      exportTableToExcel('tracks', 'tracksData.xlsx')
+                    }}>Download</button>
+                {/* } */}
+              </div>
+
+              <div className="dash-detail" style={{ marginTop: 20 }}>
+                <h2>Inside Data</h2>
+                {insideList.length > 0 ?
+                  // insideTab == "graph" ?
+                  //   <SimpleGraph data={insideList} title={"Inside"} type={'pyramid'} />
+                  //   :
+                    <table id="tracks" className="table table-bordered table-hover dataTable" aria-describedby="example2_info" style={{ height: "420px", overflowY: "auto", display: "block", border: 0 }} >
+                      <thead>
+                        <tr role="row">
+                          <th >#</th>
+                          <th >Title</th>
+                          <th >Label</th>
+                          <th >Artist</th>
+                          <th >IRSC</th>
+                          <th >STREAM</th>
+                          <th >STREAM %</th>
+                          <th >STREAMS CHANGE</th>
+                          <th >STREAM CHANGE %</th>
+
+
+
+                        </tr>
+                      </thead>
+                      <tbody role="alert" aria-live="polite" aria-relevant="all">
+                        {insideList.length > 0 && insideList.map((item, index) => (
+                          <tr className="odd">
+                            <td className="  sorting_1">{index + 1}</td>
+                            <td className="  sorting_1">{item.Title}</td>
+                            <td className="  sorting_1">{item.Label}</td> 
+                            <td className="  sorting_1">{item.Artist}</td>  
+                            <td className="  sorting_1">{item.ISRC}</td>
+                            <td className="  sorting_1">{item.Streams}</td>
+                            <td className="  ">{item.Streams * 100 / 100000}</td>
+                            <td className="  ">{item.Streamschange}</td>
+                            <td className="  ">{item.Streams * 100 / 100000 }</td>
+
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  :
+                  <>
+                    <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
+                  </>
+                }
+              </div>
+
             </div>
           </section>
         </div>
