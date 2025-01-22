@@ -63,8 +63,6 @@ const OneReleaseController = (props) => {
             })
           );
 
-
-
           setMyRelease(releasesWithClientNumbers);
         }
 
