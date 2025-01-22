@@ -1,4 +1,5 @@
 const db = require("../utils/dbConn");
+const permission = require('../models/permissionmodel')
 const mongoose = require("mongoose"); 
 const {ObjectId} = require("mongodb");
 releaseModel = {}
@@ -374,29 +375,37 @@ releaseModel.addFiveStepRelease = async (body) => {
   }
 };
 
-releaseModel.SubmitFinalRelease = async (body , parentId) => {
-  let id = body.id;
-  let releaseDate = body.releaseDate;
-  let youtubechannelLinkId = body.youtubechannelLinkId;
-  let releaseResult = await db.connectDb("release", releaseSchema);
+releaseModel.SubmitFinalRelease = async (body, userid) => {
+  try {
+      const { id, releaseDate, youtubechannelLinkId } = body;
+      let releaseResult = await db.connectDb("release", releaseSchema);
 
-  let result = await releaseResult.updateOne({ _id: id },
-    {
-      $set: {
-        status: parentId ? "Pending" :"Submit",
-        youtubechannelLinkId: youtubechannelLinkId,
-        "step1.originalReleaseDate": releaseDate,
-      },
-      $push: {
-        userId: parentId // Push parentId to userId array
+      const parentId = await permission.findparentId(userid);
+      console.log("parentId>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", parentId);
+
+      // Prepare the update object dynamically
+      let updateFields = {
+          $set: {
+              status: parentId ? "Pending" : "Submit",
+              youtubechannelLinkId: youtubechannelLinkId,
+              "step1.originalReleaseDate": releaseDate,
+          }
+      };
+
+      // Only push userId if parentId is valid
+      if (parentId) {
+          updateFields.$push = { userId: parentId };
       }
-    })
-  if (result.modifiedCount > 0 || result.upsertedCount > 0) {
-    return true;
-  } else {
-    return false;
+
+      let result = await releaseResult.updateOne({ _id: id }, updateFields);
+
+      return result.modifiedCount > 0 || result.upsertedCount > 0;
+  } catch (error) {
+      console.error("Error in SubmitFinalRelease:", error);
+      return false;
   }
 };
+
 
 releaseModel.releaseList = async (uId, statusFilter) => {
   const result = await db.connectDb("release", releaseSchema);

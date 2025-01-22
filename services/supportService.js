@@ -23,7 +23,7 @@ support.addData = async (req, res, next) => {
       const localFilePath = file.path; // Ensure `path` is set in your file object
       try {
         const cloudinaryUrl = await uploadOnCloudinary(localFilePath); // Upload to Cloudinary
-        console.log("Cloudinary URL:", cloudinaryUrl);
+        console.log("Cloudinary URL:", cloudinaryUrl); 
         uploadedUrls.push(cloudinaryUrl.url);
 
       } catch (uploadError) {
