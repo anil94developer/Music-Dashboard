@@ -15,7 +15,9 @@ const crypto = require("crypto");
 
 const transporter = nodemailer.createTransport({
    
-    service: "Gmail", // Replace with your email service
+    host: 'smtp.hostinger.com', // Hostinger's SMTP server
+  port: 465, // Use 465 for SSL or 587 for STARTTLS
+  secure: true, // Use true for SSL and false for STARTTLS, // Replace with your email service
     auth: {
         user: process.env.EMAIL_USER, // Your email from environment variables
         pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
@@ -368,8 +370,8 @@ auth.setPassword = async (req, res, next) => {
 
 
 auth.forgetPassword = async (req, res, next) => {
-    try {
-        const { email } = req.body;
+   try{
+    const { email } = req.body;
     try {
         const { email } = req.body;
 
@@ -377,35 +379,24 @@ auth.forgetPassword = async (req, res, next) => {
         if (!email || !/\S+@\S+\.\S+/.test(email)) {
             return res.status(400).json({ success: false, message: "Invalid email address." });
         }
-        // Validate email
-        if (!email || !/\S+@\S+\.\S+/.test(email)) {
-            return res.status(400).json({ success: false, message: "Invalid email address." });
-        }
-
+       
        
         // Check user existence
         const user = await authModel.forgetPassword("email", email);
+        console.log(user);
 
         if (!user || Object.values(user).length === 0) {
             return res.status(404).json({ success: false, message: "Email not found!" });
         }
-        if (!user || Object.values(user).length === 0) {
-            return res.status(404).json({ success: false, message: "Email not found!" });
-        }
-
+        
         if (!user.is_active) {
             return res.status(400).json({ success: false, message: "User not active! Contact admin." });
         }
-        if (!user.is_active) {
-            return res.status(400).json({ success: false, message: "User not active! Contact admin." });
-        }
-
+       
         if (user.is_deleted) {
             return res.status(400).json({ success: false, message: "User is deleted!" });
         }
-        if (user.is_deleted) {
-            return res.status(400).json({ success: false, message: "User is deleted!" });
-        }
+       
 
         
         // Generate OTP

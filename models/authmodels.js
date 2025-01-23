@@ -119,7 +119,8 @@ authModel.forgetPassword = async (key, email) => {
     let check = {};
     check[key] = email;
     const result = await db.connectDb("users", usersSchema);
-    let val = await result.findOne(check, { __v: 0 });
+    let val = await result.findOne({email: email});
+    console.log('>>>>>>',val);
     if (!val) {
         return false
     }
