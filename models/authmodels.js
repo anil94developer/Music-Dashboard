@@ -314,6 +314,8 @@ authModel.permission = async (data) => {
             label: data.label,
             artist: data.artist,
             pricePercentage: data.pricePercentage,
+            clientNumber: Math.floor(10000000 + Math.random() * 90000000)
+            
         });
         console.log("user>>>>>>>>>>>>", user);
         releaseModel.addUserlabel(data.label, user._id);
