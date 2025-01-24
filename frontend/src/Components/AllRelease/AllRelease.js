@@ -11,7 +11,7 @@ import { base } from '../../Constants/Data.constant';
 import Swal from 'sweetalert2';
 export const AllRelease = () => {
   const navigate = useNavigate();
-  const { setType, setTitle, handleSubmit, myRelease, moreAction,deleteAction, isLoading, myTracks, setMyTracks, exportTableToExcel ,} = OneReleaseController();
+  const { setType, setTitle, handleSubmit, myRelease, moreAction, deleteAction, isLoading, myTracks, setMyTracks, exportTableToExcel, } = OneReleaseController();
 
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header' },
@@ -90,14 +90,23 @@ export const AllRelease = () => {
                     <th ># of track</th>
                     <th >UPC / Catalog Number</th>
                     <th >Client Number</th>
-                    <th >ACTION</th>
+                    {/* <th >ACTION</th> */}
                   </tr>
                 </thead>
                 <tbody role="alert" aria-live="polite" aria-relevant="all">
                   {myRelease.map((item) => (
 
                     <tr className="odd">
-                      <td className="  sorting_1">{item.title}</td>
+                      <td className="  sorting_1">
+                        <a onClick={() => {
+                          navigate("/release-details", { state: { releaseId: item._id } });
+                        }}>
+                          <div>
+                            <span style={{ color: '#0080ff' }}>{item.title}</span>
+                          </div>
+                        </a>
+                        {item.step1.primaryArtist[0].name}
+                      </td>
                       <td className="  ">{item.type}</td>
                       <td  >
                         {item.status === 'Pending' && (
@@ -120,25 +129,15 @@ export const AllRelease = () => {
 
                         )}
                       </td>
-                      <td  > <img src={item?.step1?.coverImage} height={50} width={50} />
+                      <td  ><a href={item?.step1?.coverImage} target={'_blank'}><img src={item?.step1?.coverImage} height={50} width={50} /></a> 
+
                       </td>
                       <td className="  ">{item?.step1?.labelName}</td>
                       {/* <td className="  ">{item.step1?.originalReleaseDate}</td> */}
                       <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
                       <td className="  ">{item.step1?.UPCEAN}</td>
                       <td className="  ">{item.clientNumber}</td>
-                      <td>
-                        <div className="action-buttons">
-                          <button title="Download" className="action-button">
-                            <a onClick={() => {
-                              navigate("/release-details", { state: { releaseId: item._id } });
-                            }}>
-                              <i className="fa fa-eye"></i>
-                            </a>
-                          </button>
-                        </div>
-                      </td>
-
+                      
                     </tr>
                   ))}
                 </tbody>

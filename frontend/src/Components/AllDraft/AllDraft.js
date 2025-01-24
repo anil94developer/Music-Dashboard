@@ -9,7 +9,7 @@ import DataTable from '../Common/DataTable/DataTable';
 import Swal from 'sweetalert2';
 export const AllDraft = () => {
   const navigate = useNavigate();
-  const { setType, setTitle, handleSubmit, myRelease, moreAction,deleteAction, isLoading, myReleaseDraft, setMyTracks } = OneReleaseController();
+  const { setType, setTitle, handleSubmit, myRelease, moreAction, deleteAction, isLoading, myReleaseDraft, setMyTracks } = OneReleaseController();
   console.log(myReleaseDraft)
   return (
     <div>
@@ -64,7 +64,7 @@ export const AllDraft = () => {
                             <th >Release date / Hour / Time zone</th>
                             <th ># of track</th>
                             <th >UPC / Catalog Number</th>
-                            <th >Delivered Territories & Stores</th>
+                            {/* <th >Delivered Territories & Stores</th> */}
                             <th >ACTION</th>
                           </tr>
                         </thead>
@@ -72,29 +72,45 @@ export const AllDraft = () => {
                           {myReleaseDraft?.map((item) => (
 
                             <tr className="odd">
-                              <td className="  sorting_1">{item.title}</td>
-                              <td className="  ">{item.type}</td>
-                              <td className="  ">
-                                {/* <i
-                                  className={
-                                    item.status === "Pending"
-                                      ? "fa fa-eye"
-                                      : item.status === "Submit"
-                                        ? "fa fa-upload"
-                                        : item.status === "Approve"
-                                          ? "fa fa-check-circle"
-                                          : "fa fa-close"
-                                  }
-                                ></i> */}
-                                {item.status}
+                              <td className="  sorting_1">
+                                <a onClick={() => {
+                                  navigate("/release-details", { state: { releaseId: item._id } });
+                                }}>
+                                  <div>
+                                    <span style={{ color: '#0080ff' }}>{item?.title}</span>
+                                  </div>
+                                </a>
+                                {item?.step1?.primaryArtist[0]?.name}
+                              </td>
+                              <td className="  ">{item?.type}</td>
+                              <td  >
+                                {item.status === 'Pending' && (
+                                  <img className="img-fluid" src={require('../../assets/images/pending.png')} style={{ height: 40, width: 40 }} />
+
+                                )}
+
+                                {item.status === 'Submit' && (
+                                  <img className="img-fluid" src={require('../../assets/images/submit.png')} style={{ height: 40, width: 40 }} />
+
+                                )}
+
+                                {item.status === 'Approve' && (
+                                  <img className="img-fluid" src={require('../../assets/images/approve.png')} style={{ height: 40, width: 40 }} />
+
+                                )}
+
+                                {item.status === 'Reject' && (
+                                  <img className="img-fluid" src={require('../../assets/images/reject.png')} style={{ height: 40, width: 40 }} />
+
+                                )}
                               </td>
                               <td className="  ">{item?.step1?.labelName}</td>
-                              <td  > <img src={item?.step1?.coverImage} height={50} width={50} />
-                      </td> 
+                              <td  ><a href={item?.step1?.coverImage} target={'_top'}><img src={item?.step1?.coverImage} height={50} width={50} /></a> 
+                              </td>
                               <td className="  ">{item.step1?.originalReleaseDate}</td>
                               <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
                               <td className="  ">{item.step1?.UPCEAN}</td>
-                              <td className="  ">{item?.step5?.MainReleaseDate}</td>
+                              {/* <td className="  ">{item?.step5?.MainReleaseDate}</td> */}
 
                               <td>
                                 <div className="action-buttons d-flex">
@@ -103,26 +119,27 @@ export const AllDraft = () => {
                                       <i className="fa fa-eye"></i>
                                     </a>
                                   </button>
-                                  <button title='Download'className='action-button'>
-                                    <a onClick={ async () => {
-                                            Swal.fire({
-                                              title: "Are you sure?",
-                                              text: `You want to delete ${item.title} `,
-                                              icon: "warning", // Options: 'warning', 'error', 'success', 'info', 'question'
-                                              showCancelButton: true, // Enables the Cancel button
-                                              confirmButtonText: "Yes, proceed",
-                                              cancelButtonText: "No, cancel",
-                                            }).then((result) => {
-                                                    if (result.isConfirmed) {
-                                                      // User clicked the confirm button
-                                                      deleteAction(item)
-                                                    } else if (result.isDismissed) {
-                                                      // User clicked the cancel button
-                                                      Swal.fire("Cancelled", "Action was cancelled.", "info");
-                                                    }
-                                                  });}
-                                     }>
-                                    <i className='fa fa-trash'></i>
+                                  <button title='Download' className='action-button'>
+                                    <a onClick={async () => {
+                                      Swal.fire({
+                                        title: "Are you sure?",
+                                        text: `You want to delete ${item.title} `,
+                                        icon: "warning", // Options: 'warning', 'error', 'success', 'info', 'question'
+                                        showCancelButton: true, // Enables the Cancel button
+                                        confirmButtonText: "Yes, proceed",
+                                        cancelButtonText: "No, cancel",
+                                      }).then((result) => {
+                                        if (result.isConfirmed) {
+                                          // User clicked the confirm button
+                                          deleteAction(item)
+                                        } else if (result.isDismissed) {
+                                          // User clicked the cancel button
+                                          Swal.fire("Cancelled", "Action was cancelled.", "info");
+                                        }
+                                      });
+                                    }
+                                    }>
+                                      <i className='fa fa-trash'></i>
                                     </a>
                                   </button>
                                 </div>

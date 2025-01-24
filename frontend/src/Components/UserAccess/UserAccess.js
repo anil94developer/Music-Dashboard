@@ -78,6 +78,7 @@ const UserAccess = (props) => {
               <thead>
                 <tr>
                   <th>Name</th>
+                  <th>Client Number</th>
                   <th>Email</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -87,6 +88,8 @@ const UserAccess = (props) => {
                 {users && users?.map((user) => (
                   <tr key={user?.userDetails?._id}>
                     <td>{user?.userDetails?.name}</td>
+                    <td>{user?.userDetails?.clientNumber}</td>
+
                     <td>{user?.userDetails?.email}</td>
                     <td>{user?.userDetails?.is_deleted == 1 ? "DeActive" : "Active"}</td>
                     <td>

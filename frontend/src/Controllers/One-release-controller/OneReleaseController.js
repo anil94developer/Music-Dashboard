@@ -58,7 +58,7 @@ const OneReleaseController = (props) => {
           const releasesWithClientNumbers = await Promise.all(
             arrRelease.map(async (item) => {
               const clientNumber = await getClientNo(item.userId);
-               
+
               return { ...item, clientNumber };
             })
           );
@@ -95,48 +95,46 @@ const OneReleaseController = (props) => {
       // console.log("releasesWithClientNumbers",releasesWithClientNumbers);
 
 
-      
+
       // setMyRelease(releasesWithClientNumbers);
-// Fetch Submitted Releases
-let resultSubmit = await getData(base.releaseList + `?status=Submit`);
-// if (resultSubmit.status === true) {
-//   arrRelease = arrRelease.push(resultSubmit.data); // Flatten the data into arrRelease
-// }
+      // Fetch Submitted Releases
+      let resultSubmit = await getData(base.releaseList + `?status=Submit`);
+      // if (resultSubmit.status === true) {
+      //   arrRelease = arrRelease.push(resultSubmit.data); // Flatten the data into arrRelease
+      // }
 
-// Fetch Approved Releases
-let result = await getData(base.releaseList + `?status=Approve`);
-// if (result.status === true) {
-//   arrRelease = arrRelease.push(result.data); // Flatten the data into arrRelease
-// }
-arrRelease = [...resultSubmit.data,...result.data]; 
+      // Fetch Approved Releases
+      let result = await getData(base.releaseList + `?status=Approve`);
+      // if (result.status === true) {
+      //   arrRelease = arrRelease.push(result.data); // Flatten the data into arrRelease
+      // }
+      arrRelease = [...resultSubmit.data, ...result.data];
 
-// Generate Releases with Client Numbers
-const releasesWithClientNumbers = await Promise.all(
-  arrRelease.map(async (item) => {
-    const clientNumber = await getClientNo(item.userId[0]);
-    return { ...item, clientNumber }; // Add clientNumber to each release
-  })
-);
+      // Generate Releases with Client Numbers
+      const releasesWithClientNumbers = await Promise.all(
+        arrRelease.map(async (item) => {
+          const clientNumber = await getClientNo(item.userId[0]);
+          return { ...item, clientNumber }; // Add clientNumber to each release
+        })
+      );
 
-// Set the result to state
-console.log("releasesWithClientNumbers", arrRelease);
-setMyRelease(releasesWithClientNumbers);
+      // Set the result to state
+      console.log("releasesWithClientNumbers", arrRelease);
+      setMyRelease(releasesWithClientNumbers);
 
 
 
       let allDraft = await getData(base.releaseList + `?status=Pending`);
-      if (allDraft.status == true) {
-        arrDraft = allDraft.data;
-      }
+
+      arrDraft = allDraft.data;
+
       let allReject = await getData(base.releaseList + `?status=Reject`);
-      console.log("arrDraft----------", arrDraft)
 
-      if (allReject.status == true) {
-        arrDraft = [allReject.data, ...arrDraft];
-      }
+      arrDraft = [...allReject.data, ...arrDraft];
+
       // Fetch client numbers for each release
-    
 
+      console.log("arrDraft----------", arrDraft)
 
       setMyReleaseDraft(arrDraft)
       // setMyRelease(arrRelease)
@@ -202,13 +200,13 @@ setMyRelease(releasesWithClientNumbers);
   }
 
   const deleteAction = async (e) => {
-    let body={
-      id:e._id
+    let body = {
+      id: e._id
     }
     console.log(body)
     let result = await postData(base.deleteOneRelease, body);
     if (result.data.status === true) {
-      Swal.fire("Success", result.message , result.message) 
+      Swal.fire("Success", result.message, result.message)
 
       // let updateArr= myReleaseDraft.filter(item=> item._id !== e.id)
       // setMyReleaseDraft(updateArr)
@@ -217,7 +215,7 @@ setMyRelease(releasesWithClientNumbers);
     } else {
       Swal.fire("Error", result.message, result.message);
     }
-    
+
   }
   return {
     isLoading,

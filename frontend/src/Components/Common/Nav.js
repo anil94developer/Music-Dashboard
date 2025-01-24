@@ -48,8 +48,8 @@ export const Nav = (props) => {
                       <img src={images?.user} className="img-fluid" alt="User Image" />
                       <span className="user-name hidden-xs">{userProfile?.name}</span>
                     </a>
-                    
-                    {userProfile?.role == "company" && <p>Client Number:- {userProfile.clientNumber}</p> }
+
+                    {userProfile?.role != "admin" && <p>Client Number:- {userProfile.clientNumber}</p>}
                     <ul className="dropdown-menu position-absolute">
 
                       <li>
@@ -60,10 +60,10 @@ export const Nav = (props) => {
                       {
                         userProfile?.role == "employee" &&
                         <li>
-                        <a href="/bank information" className="dropdown-item">
-                          <i className="fa fa-bank"></i> Bank Information
-                        </a>
-                      </li>
+                          <a href="/bank information" className="dropdown-item">
+                            <i className="fa fa-bank"></i> Bank Information
+                          </a>
+                        </li>
                       }
                       {userProfile.role === "company" && (
                         <>
