@@ -7,6 +7,7 @@ const validateInput = require("../helper/emailmobileVal")
 const sendOtpEmail = require("../utils/Sendgrid")
 const IP = require('ip');
 const authModel = require("../models/authmodels");
+const permission = require("../models/permissionmodel");
 
 const bankModel = require("../models/bankmodels");
 
@@ -14,12 +15,14 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
 const transporter = nodemailer.createTransport({
-   
-    service: "Gmail", // Replace with your email service
+  host: 'smtp.hostinger.com', // Hostinger's SMTP server
+  port: 465, // Use 465 for SSL or 587 for STARTTLS
+  secure: true, // Use true for SSL and false for STARTTLS
     auth: {
         user: process.env.EMAIL_USER, // Your email from environment variables
         pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
     },
+
 });
 
 // auth.addUsers = async (req, res, next) => {
@@ -172,7 +175,7 @@ auth.login = async (req, res, next) => {
 auth.userDelete = async (req, res, next) => {
     try {
         const id = req.body.id; 
-        
+        const deletepermission = await permission.deleteByUserId(id);
         const result = await authModel.userDelete(id)
         return R(res, true, "Delete Successfully!!", result, 200);
     } catch (err) {

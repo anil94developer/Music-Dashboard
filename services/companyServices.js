@@ -14,7 +14,9 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
 const transporter = nodemailer.createTransport({
-  service: "Gmail", // Replace with your email service
+  host: 'smtp.hostinger.com', // Hostinger's SMTP server
+  port: 465, // Use 465 for SSL or 587 for STARTTLS
+  secure: true, // Use true for SSL and false for STARTTLS
     auth: {
         user: process.env.EMAIL_USER, // Your email from environment variables
         pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables

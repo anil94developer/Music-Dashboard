@@ -74,6 +74,22 @@ permission.findparentId = async (userid) => {
     return user.userId; 
 }
 
+permission.deleteByUserId = async (userid) => {
+    try {
+        const result = await db.connectDb("UserPermission", userPermissionSchema);
+        console.log("Deleting user permission for ID:", userid);
+        const deleteResult = await result.deleteOne({ registeredUserId: userid });
+        if (deleteResult.deletedCount === 0) {
+            console.log("No matching user found to delete.");
+            return false;  // Return false if no document was deleted
+        }
+        return true;  // Return true if deletion was successful
+    } catch (error) {
+        throw new Error("Database operation failed");
+    }
+};
+
+
 permission.userDelete = async (id) => {
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     
