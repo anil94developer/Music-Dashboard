@@ -1,108 +1,94 @@
-import React, { useState,useEffect,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Swal from "sweetalert2";
-import { postData, postDataContent } from '../../Services/Ops';
+import { postData } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
-import MainStepController from './MainStepController';
 import axios from 'axios';
 
 const Step2Controller = () => {
-
     const [mediaFiles, setMediaFiles] = useState([]);
     const [releaseData, setReleaseData] = useState({});
     const [files, setFiles] = useState([]);
-    const inputRef = useRef(null); // Use ref to access the input element
-    
     const [uploadProgress, setUploadProgress] = useState(0);
+    const inputRef = useRef(null);
 
-
-    
-
-
-    const fetchReleaseDetails = async (releaseId) => { 
-        let body = {
-            releaseId: releaseId
-        }
-        let result = await postData(base.releaseDetails, body);
-        if (result.data.status === true) {
-            setFiles(result.data.data.step2)
-        } else {
-
-        }
-    }
-
-    const handleFileChange = async (e) => {
+    // Fetch release details
+    const fetchReleaseDetails = async (releaseId) => {
         try {
-            const formData = new FormData();
-            formData.append("id", releaseData._id);
-            formData.append("files", e.target.files?.[0])
-            console.log("mediaFiles=======", formData)
-            let token = localStorage.getItem("token")
+            const body = { releaseId };
+            const result = await postData(base.releaseDetails, body);
+            if (result.data.status) {
+                setFiles(result.data.data.step2);
+            } else {
+                Swal.fire("Error", "Failed to fetch release details", "error");
+            }
+        } catch (error) {
+            console.error("Error fetching release details:", error);
+        }
+    };
 
+    // Handle file upload
+    const handleFileChange = async (e) => {
+        if (!e.target.files.length) return;
+    
+        const formData = new FormData();
+        formData.append("id", releaseData._id);
+    
+        Array.from(e.target.files).forEach(file => {
+            formData.append("files", file);
+        });
+    
+        let token = localStorage.getItem("token");
+    
+        try {
             const config = {
-                headers: { Authorization: token, "content-type": 'multipart/form-data;', 'Cache-Control': 'no-cache', },
-                // headers: { "Content-Type": "multipart/form-data" },
+                headers: { 
+                    Authorization: token, 
+                    "Content-Type": "multipart/form-data", 
+                    "Cache-Control": "no-cache" 
+                },
                 onUploadProgress: (progressEvent) => {
                     const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    setUploadProgress(progress); // Update progress state
+                    setUploadProgress(progress);
                 },
             };
-
-            const result = await axios.post(base.releaseStep2, formData, config);
-
-
-
-            // const result = await postDataContent(base.releaseStep2, formData); 
-            Swal.fire("Success", result.message, "success");
-            fetchReleaseDetails(releaseData._id)
-            // setMediaFiles([])
-
+    
+            await axios.post(base.releaseStep2, formData, config);
+            
+            // Ensure the progress reaches 100% before verifying
+            setUploadProgress(100);
+    
+            // Simulate verification delay
+            setTimeout(() => {
+                Swal.fire("Success", "File uploaded and verified successfully.", "success");
+                fetchReleaseDetails(releaseData._id);
+                setUploadProgress(0);
+            }, 2000);
+    
         } catch (error) {
+            console.error("Upload error:", error);
             Swal.fire("Error", "An error occurred while uploading files.", "error");
         } finally {
-            setUploadProgress(0);
             if (inputRef.current) {
-                inputRef.current.value = ""; // Clear input value
-              }
+                inputRef.current.value = "";  // Clear input field
+            }
         }
     };
+    
 
+    // Remove selected file
     const handleRemove = (fileName) => {
         setMediaFiles((prevFiles) => prevFiles.filter((file) => file.fileName !== fileName));
-    };
-
-    const handleSubmit = async () => {
-        // setIsUploading(true);
-        // try {
-        //     const formData = new FormData();
-        //     formData.append("id", releaseData._id);
-        //     // formData.append("files", file.e.target.files?.[0])
-        //     // releaseData.step2.forEach((file) => mediaFiles.push(file));
-
-        //     // mediaFiles.forEach((file) => formData.append("files", file.fileData));
-        //     console.log("mediaFiles=======", mediaFiles)
-        //     const result = await postDataContent(base.releaseStep2, formData);
-        //     Swal.fire("Success", result.message, "success");
-        //     fetchReleaseDetails(releaseData._id)
-        //     setMediaFiles([])
-
-        // } catch (error) {
-        //     Swal.fire("Error", "An error occurred while uploading files.", "error");
-        // } finally {
-        //     // setIsUploading(false);
-        // }
     };
 
     return {
         handleFileChange,
         mediaFiles,
-        handleSubmit,
         handleRemove,
         setReleaseData,
         uploadProgress,
         files,
         fetchReleaseDetails,
         inputRef
-
     };
 };
 

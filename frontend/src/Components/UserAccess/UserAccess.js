@@ -34,7 +34,7 @@ const UserAccess = (props) => {
       let result = await postData(base. deleteUserparmanent, body);
       if (result.data.status === true) {
         Swal.fire("Success", result.message , result.message) 
-  
+        getUserList();
         let updateArr= users.filter(item=> item._id !== userid)
         setUsers(updateArr)
   

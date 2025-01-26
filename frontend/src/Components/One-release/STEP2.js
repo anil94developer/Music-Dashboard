@@ -1,73 +1,79 @@
-import React, { useEffect } from 'react'
-import { domainUrl } from '../../Constants/Data.constant';
+import React, { useEffect } from 'react';
 import Step2Controller from '../../Controllers/One-release-controller/Step2Controller';
 import Loader from '../Common/Loader';
+
 export default function STEP2(props) {
   const { setStep, releaseData } = props;
-  const { handleFileChange, inputRef, files, setReleaseData, uploadProgress,fetchReleaseDetails,
-    mediaFiles } = Step2Controller()
-   
+  const {
+    handleFileChange,
+    inputRef,
+    files,
+    setReleaseData,
+    uploadProgress,
+    fetchReleaseDetails
+  } = Step2Controller();
+
   useEffect(() => {
-    const getData = () => {
-      setReleaseData(releaseData)
-      fetchReleaseDetails(releaseData._id)
-    };
-    getData();
+    setReleaseData(releaseData);
+    fetchReleaseDetails(releaseData._id);
   }, [releaseData]);
 
-  
   return (
     <div className="media-uploader">
+      <h2>Upload Media Files</h2>
       <div className="row">
-        {/* <div className="dash-detail dash-detail-two media-heading"> */}
-        <h2>Upload Media Files</h2>
         <div className="col-lg-5 col-12">
           <div className="form-group">
-            <input 
+            <input
               type="file"
               multiple
               accept="audio/*,video/*"
               className="form-control"
               onChange={handleFileChange}
-              ref={inputRef} // Attach ref to the input
-              key={uploadProgress}
+              ref={inputRef}
+              disabled={uploadProgress > 0 && uploadProgress < 100} // Disable during upload
             />
           </div>
         </div>
 
         {uploadProgress > 0 && (
-          <div className="progress-container">
+          <div className="progress mt-3">
             <div
-              className="progress-bar"
+              className="progress-bar progress-bar-striped progress-bar-animated bg-success"
+              role="progressbar"
               style={{ width: `${uploadProgress}%` }}
+              aria-valuenow={uploadProgress}
+              aria-valuemin="0"
+              aria-valuemax="100"
             >
-              <Loader/>
+              {uploadProgress < 100 ? `${uploadProgress}% uploaded` : "100% uploaded. Now verifying..."}
             </div>
           </div>
         )}
-        {/* </div> */}
+
 
       </div>
+
       <div className="col-lg-12 col-12">
         <div className="dash-detail">
           <div className="old-heading">
             <h3 className="title">Old Files</h3>
           </div>
           <div className="file-table">
-            <table id="example2" className="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+            <table className="table table-bordered table-hover">
               <thead>
-                <tr role="row">
+                <tr>
                   <th>Name</th>
-                  <th>TYPE</th>
-                  <th>FILE URL</th>
+                  <th>Type</th>
+                  <th>File URL</th>
                 </tr>
               </thead>
-              <tbody role="alert" aria-live="polite" aria-relevant="all">
-                {files && files.map((item) => (
-                  <tr className="odd">
-                    <td className="  sorting_1">{item.fileName}</td>
-                    <td className="  ">{item.fileType}</td>
-                    <td className="">
+              <tbody>
+                {files?.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.fileName}</td>
+                    <td>{item.fileType}</td>
+                    <td>
                       <a href={item.fileData} target="_blank" rel="noopener noreferrer">
                         <i className="fa fa-play"></i> Play
                       </a>
@@ -77,9 +83,9 @@ export default function STEP2(props) {
               </tbody>
             </table>
           </div>
-          {/* {isLoading && "Loading..."} */}
+          {/* {isLoading && <p>Loading...</p>} */}
         </div>
       </div>
     </div>
-  )
+  );
 }

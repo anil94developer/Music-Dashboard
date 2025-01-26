@@ -267,17 +267,7 @@ function UserAccessForm(props) {
                     />
                   </div>
                 </div>
-                {/* <div className="col-md-4 col-sm-6 col-12">
-                  <div className="form-group">
-                    <label>Password: </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      value={userPermission.password}
-                      onChange={(e) => setUserPermission((prev) => ({ ...prev, password: e.target.value }))}
-                    />
-                  </div>
-                </div> */}
+               
               </div>
               <div className="row">
                 {userProfile.role == "Admin" &&

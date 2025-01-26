@@ -115,7 +115,7 @@ export const SideBar = (props) => {
           ))}
          <div className="user-detail d-flex flex-wrap " style={{marginTop:200}}></div>
         <div className="user-detail d-flex flex-wrap item-align-center" >
-          Copyright ©2025  Tune Plus  Pvt Ltd 
+          Copyright ©2025 J2P ENTERTAINMENT DIGITAL PRIVATE LIMITED
         </div>  
 
       </ul>
