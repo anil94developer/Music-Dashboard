@@ -172,7 +172,7 @@ auth.addCompany = async (req, res, next) => {
             <a href="https://workplace.tuneplus.org/" class="login-button">Log In</a>
           </div>
           <div class="footer">
-            <p>&copy; 2025 J2P Entertainment Digital. All rights reserved.</p>
+            <p>&copy; 2025  Tune Plus . All rights reserved.</p>
           </div>
         </div>
       </body>

@@ -1,7 +1,6 @@
 const db = require("../utils/dbConn");
-const permission = require('../models/permissionmodel')
-const mongoose = require("mongoose"); 
-const {ObjectId} = require("mongodb");
+const mongoose = require("mongoose");
+const { ObjectId } = require("mongodb");
 releaseModel = {}
 
 
@@ -121,7 +120,7 @@ const releaseSchema = mongoose.Schema({
         {
           id: { type: String, default: "" },
           name: { type: String, default: "" },
-          iprs: { type: String, default: "" } 
+          iprs: { type: String, default: "" }
         }
       ],
       ISRC: { type: String, default: "" },
@@ -143,16 +142,16 @@ const releaseSchema = mongoose.Schema({
         {
           id: { type: String, default: "" },
           name: { type: String, default: "" },
-          value: { type: String , default: ""}
+          value: { type: String, default: "" }
         }
       ],
       otherContributory: [
         {
           id: { type: String, default: "" },
           name: { type: String, default: "" },
-          value: { type: String , default: ""}
+          value: { type: String, default: "" }
         }
-      ], 
+      ],
     },
 
   ],
@@ -205,11 +204,11 @@ const labelSchema = mongoose.Schema({
 //   }],
 // })
 
-releaseModel.addUserlabel= async (label,id)=>{
+releaseModel.addUserlabel = async (label, id) => {
   const result = await db.connectDb("label", labelSchema);
-  label.map(async(val)=>{
-    console.log("val>>>>>>>>>",val);
-    const findLabel = await result.findOne({_id:new ObjectId(val)});
+  label.map(async (val) => {
+    console.log("val>>>>>>>>>", val);
+    const findLabel = await result.findOne({ _id: new ObjectId(val) });
     findLabel.userId.push(String(id));
     findLabel.save();
   })
@@ -375,34 +374,36 @@ releaseModel.addFiveStepRelease = async (body) => {
   }
 };
 
-releaseModel.SubmitFinalRelease = async (body, userid) => {
-  try {
-      const { id, releaseDate, youtubechannelLinkId } = body;
-      let releaseResult = await db.connectDb("release", releaseSchema);
+releaseModel.SubmitFinalRelease = async (body, parentId, status) => {
+  let id = body.id;
+  let releaseDate = body.releaseDate;
+  let youtubechannelLinkId = body.youtubechannelLinkId;
+  let releaseResult = await db.connectDb("release", releaseSchema);
 
-      const parentId = await permission.findparentId(userid);
-      console.log("parentId>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", parentId);
-
-      // Prepare the update object dynamically
-      let updateFields = {
-          $set: {
-              status: parentId ? "Pending" : "Submit",
-              youtubechannelLinkId: youtubechannelLinkId,
-              "step1.originalReleaseDate": releaseDate,
-          }
-      };
-
-      // Only push userId if parentId is valid
-      if (parentId) {
-          updateFields.$push = { userId: parentId };
+  let query = status == "Pending" ?
+    {
+      $set: {
+        status: status,
+        youtubechannelLinkId: youtubechannelLinkId,
+        "step1.originalReleaseDate": releaseDate,
+      },
+      $push: {
+        userId: parentId // Push parentId to userId array
       }
-
-      let result = await releaseResult.updateOne({ _id: id }, updateFields);
-
-      return result.modifiedCount > 0 || result.upsertedCount > 0;
-  } catch (error) {
-      console.error("Error in SubmitFinalRelease:", error);
-      return false;
+    } :
+    {
+      $set: {
+        status: status,
+        youtubechannelLinkId: youtubechannelLinkId,
+        "step1.originalReleaseDate": releaseDate,
+      }
+    }
+console.log("my query----------",query)
+  let result = await releaseResult.updateOne({ _id: id }, query)
+  if (result.modifiedCount > 0 || result.upsertedCount > 0) {
+    return true;
+  } else {
+    return false;
   }
 };
 
@@ -468,8 +469,8 @@ releaseModel.updateStatus = async (body) => {
 releaseModel.getEmail = async (body) => {
   let id = body.id;
   let releaseResult = await db.connectDb("release", releaseSchema);
-  let fetData = await releaseResult.findOne({ _id: mongoose.Types.ObjectId(id)});
-  console.log(">>>>>>>>>>>>>>>",fetData);
+  let fetData = await releaseResult.findOne({ _id: mongoose.Types.ObjectId(id) });
+  console.log(">>>>>>>>>>>>>>>", fetData);
   let email = await authModel.getEmail(fetData.userId[0]);
   return email;
 }

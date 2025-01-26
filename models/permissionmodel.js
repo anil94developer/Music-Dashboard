@@ -67,11 +67,12 @@ permission.findparentId = async (userid) => {
     const result = await db.connectDb("UserPermission", userPermissionSchema);
     console.log(userid)
     const user = await result.findOne({ registeredUserId: userid });
-    console.log(">>>>>>>>>>>>>>>>" ,user)
-    if (!user) {
-        return null;  
+    console.log(">>>>>>>>>>>>>>>>", user)
+    if (user) {
+        return user.userId;
+    } else {
+        return false
     }
-    return user.userId; 
 }
 
 permission.deleteByUserId = async (userid) => {
@@ -92,16 +93,16 @@ permission.deleteByUserId = async (userid) => {
 
 permission.userDelete = async (id) => {
     const result = await db.connectDb("UserPermission", userPermissionSchema);
-    
+
     const fetData = await result.find({ _id: id }); // Ensure you're using the correct query syntax
     if (fetData.length > 0) {
-      await result.deleteOne({ _id: id }); // Deletes the record
-      
-      return { success: true, message: "Record deleted successfully." };
+        await result.deleteOne({ _id: id }); // Deletes the record
+
+        return { success: true, message: "Record deleted successfully." };
     } else {
-      return { success: false, message: "Record not found." };
+        return { success: false, message: "Record not found." };
     }
-  };
+};
 
 
 permission.listPermissions = async (userId) => {

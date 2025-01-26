@@ -131,9 +131,9 @@ release.addTwoStepRelease = async (req, res) => {
 // };
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.hostinger.com', // Hostinger's SMTP server
-  port: 465, // Use 465 for SSL or 587 for STARTTLS
-  secure: true, // Use true for SSL and false for STARTTLS
+    host: 'smtp.hostinger.com', // Hostinger's SMTP server
+    port: 465, // Use 465 for SSL or 587 for STARTTLS
+    secure: true, // Use true for SSL and false for STARTTLS
     auth: {
         user: process.env.EMAIL_USER, // Your email from environment variables
         pass: process.env.EMAIL_PASSWORD, // Your email password from environment variables
@@ -171,10 +171,18 @@ release.addFiveStepRelease = async (req, res, next) => {
 };
 
 release.SubmitFinalRelease = async (req, res, next) => {
-  const body = req.body;
-  const userid = req.doc.userId
+    const body = req.body;
+    const userid = req.doc.userId
+    let status="Submit";
+    const parentId = await permission.findparentId(userid);
+    if(parentId != false){
+        status="Pending";
+    }else{
+        status="Submit";
+    }
+   
     try {
-        const result = await releaseModel.SubmitFinalRelease(body,userid)
+        const result = await releaseModel.SubmitFinalRelease(body, parentId,status)
         return R(res, true, "Final Update Successfully!!", result, 200)
     } catch (err) {
         next(err)
@@ -184,7 +192,7 @@ release.SubmitFinalRelease = async (req, res, next) => {
 release.releaseList = async (req, res, next) => {
     try {
         const statusFilter = req.query.status; // Default to all statuses if none are provided
-        console.log(">>>>>>>", statusFilter);
+        // console.log(">>>>>>>", statusFilter);
         const result = await releaseModel.releaseList(req.doc.userId, statusFilter);
         return R(res, true, "Fetch Successfully!!", result, 200);
     } catch (err) {
@@ -193,8 +201,8 @@ release.releaseList = async (req, res, next) => {
 };
 release.releaseDelete = async (req, res, next) => {
     try {
-        const id = req.body.id; 
-        
+        const id = req.body.id;
+
         const result = await releaseModel.releaseDelete(id);
         return R(res, true, "Delete Successfully!!", result, 200);
     } catch (err) {
@@ -464,16 +472,14 @@ release.updateStatus = async (req, res, next) => {
         const result = await releaseModel.updateStatus(body);
         if (!result) {
             return R(res, true, "Failed to update status", result, 400);
-        }
-        
-console.log("result====",result);
+        } 
+        console.log("result====", result);
 
         // Get user email
         const email = await releaseModel.getEmail(body);
         if (!email) {
             return R(res, true, "Email not found", result, 404);
-        }
-
+        } 
         console.log(`Sending email to: ${email}`);
 
         // Define email options
@@ -560,7 +566,7 @@ console.log("result====",result);
                 <div class="footer">
                   <p>If you have questions, please contact Tune Plus Team at:</p>
                   <p><a href="mailto:support-ind@tuneplus.org" class="link">support-ind@tuneplus.org</a></p>
-                  <p>&copy; 2025 J2P Entertainment Digital. All rights reserved.</p>
+                  <p>&copy; 2025  Tune Plus . All rights reserved.</p>
                 </div>
               </div>
             </body>
@@ -653,13 +659,13 @@ console.log("result====",result);
                 <p><a href="mailto:support-ind@tuneplus.org" class="link">support-ind@tuneplus.org</a></p>
                 </div>
                 <div class="footer">
-                <p>&copy; 2025 J2P Entertainment Digital. All rights reserved.</p>
+                <p>&copy; 2025  Tune Plus . All rights reserved.</p>
                 </div>
             </div>
             </body>
             </html>
             `
-        };
+        }; 
 
         // Determine which email to send
         let mailOptions;
@@ -682,6 +688,7 @@ console.log("result====",result);
                 }
             }
         }
+
         return R(res, true, "Status updated but email not sent", result, 400);
         if (status === "Approve" || status === "Reject") {
             {

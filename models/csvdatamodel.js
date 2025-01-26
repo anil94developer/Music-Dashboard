@@ -49,7 +49,7 @@ Track.get = async (userId, startDate, endDate) => {
   }
 
   let trackData = await result.find(query);
-  console.log(">>>>>>>>", trackData);
+  // console.log(">>>>>>>>", trackData);
 
   if (trackData.length <= 0) {
     return false;
