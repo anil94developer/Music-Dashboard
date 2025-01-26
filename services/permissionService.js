@@ -170,12 +170,6 @@ permission.update = async (req, res, next) => {
             return R(res, false, "Failed to update", "", 500);
         }
         return R(res, true, "Permissions Update successfully", permissions, 200);
-
-
-        if (!permissions) {
-            return R(res, false, "Failed to update permission", "", 500);
-        }
-        return R(res, true, "Permission updated successfully", data, 200);
     } catch (err) {
         // console.log("Error in permission.updateeeee", err);
         return R(res, false, "Failed to update permission", "", 500);
