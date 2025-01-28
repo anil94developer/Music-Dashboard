@@ -19,6 +19,8 @@ const Step1Controller = (props) => {
   const [releaseDate, setReleaseDate] = useState('');
   const [pLine, setPLine] = useState('');
   const [cLine, setCLine] = useState('');
+  const [cYear, setCYear] = useState('');
+  const [pYear, setPYear] = useState('');
   const [productionYear, setProductionYear] = useState('');
   const [upcEan, setUpcEan] = useState('');
   const [producerCatalogueNumber, setProducerCatalogueNumber] = useState('');
@@ -160,6 +162,8 @@ const Step1Controller = (props) => {
     formData.append("step1[originalReleaseDate]", releaseDate);
     formData.append("step1[line]", pLine);
     formData.append("step1[cline]", cLine);
+    formData.append("step1[pYear]", pYear);
+    formData.append("step1[cYear]", cYear);
     formData.append("step1[productionYear]", productionYear);
     formData.append("step1[UPCEAN]", upcEan == "" || upcEan ?generateNumber():upcEan );
     formData.append("step1[producerCatalogueNumber]", producerCatalogueNumber);
@@ -222,6 +226,8 @@ const Step1Controller = (props) => {
     releaseDate, setReleaseDate,
     pLine, setPLine,
     cLine, setCLine,
+    pYear, setPYear,
+    cYear, setCYear,
     productionYear, setProductionYear,
     upcEan, setUpcEan,
     producerCatalogueNumber, setProducerCatalogueNumber,

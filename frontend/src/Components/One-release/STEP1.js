@@ -24,6 +24,8 @@ export default function STEP1(props) {
     cLine, setCLine,
     productionYear, setProductionYear,
     upcEan, setUpcEan,
+    cYear, setCYear,
+    pYear, setPYear,
     newLabelName, setNewLabelName,
     labelNameStatus, setLabelNameStatus,
     producerCatalogueNumber, setProducerCatalogueNumber, handleSubmit, imagePreview, setImagePreview, handleImageChange, setStepNext, addNewLabel, labelNameList, setReleaseData, setCoverImage, coverImage, loader } = Step1Controller();
@@ -45,6 +47,8 @@ export default function STEP1(props) {
         setReleaseDate(jsonData.originalReleaseDate);
         setPLine(jsonData.line);
         setCLine(jsonData.cline);
+        setPYear(jsonData.pYear);
+        setCYear(jsonData.cYear);
         setProductionYear(jsonData.productionYear);
         setUpcEan(jsonData.UPCEAN);
         setProducerCatalogueNumber(jsonData.producerCatalogueNumber);
@@ -214,14 +218,14 @@ export default function STEP1(props) {
                   ))}
               </select>
               {/* Button */}
-              { userProfile.role == "company" && 
-              <button
-                className="btn btn-primary add-label"
-                type="button"
-                onClick={() => setLabelNameStatus(!labelNameStatus)}
-              >
-                +
-              </button>
+              {userProfile.role == "company" &&
+                <button
+                  className="btn btn-primary add-label"
+                  type="button"
+                  onClick={() => setLabelNameStatus(!labelNameStatus)}
+                >
+                  +
+                </button>
               }
             </div>
             {props.errors?.['step1.labelName'] && (
@@ -312,6 +316,30 @@ export default function STEP1(props) {
             {props.errors?.['step1.cline'] && (
               <span className="text-danger">{props.errors['step1.cline']}</span>
             )}
+          </div>
+        </div>
+
+        <div className="col-lg-3 col-md-6">
+          <div className="form-group">
+            <label>C Year</label>
+            <select className="form-select form-control" value={cYear} onChange={(e) => setCYear(e.target.value)}>
+              <option value="">- Select a (C) year -</option>
+              {[...Array(100)].map((_, i) => (
+                <option key={i} value={2026 - i}>{2026 - i}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="col-lg-3 col-md-6">
+          <div className="form-group">
+            <label>P Year</label>
+            <select className="form-select form-control" value={pYear} onChange={(e) => setPYear(e.target.value)}>
+              <option value="">- Select a (P) year -</option>
+              {[...Array(100)].map((_, i) => (
+                <option key={i} value={2026 - i}>{2026 - i}</option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12">

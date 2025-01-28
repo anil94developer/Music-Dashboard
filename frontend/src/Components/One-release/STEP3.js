@@ -279,32 +279,12 @@ export default function STEP3(props) {
 
   }
   const [incrementalValue, setIncrementalValue] = useState(1); 
-  // Function to generate ISRC code
-  const generateISRCCode = () => {
-    // const countryCode = "IN";         // Country code
-    // const registrantCode = "R2";      // Registrant code
-    // const yearCode = "24";            // Year code (for 2024)
-    // const designationCode = Math.floor(100000 + Math.random() * 900000); // Random 6-digit number
-    // return `${countryCode}${registrantCode}${yearCode}${designationCode}`;
 
-    // Fixed prefix
-    const fixedPart = "INR2P";
-    // Extract last two digits of the current year
-    const year = new Date().getFullYear().toString().slice(-2);
-    // Incremental value padded with leading zeroes (up to 5 digits)
-    const paddedIncremental = String(incrementalValue).padStart(5, '0');
-    // Combine all parts
-    const finalString = `${fixedPart}${year}${paddedIncremental}`;
-    // setGeneratedString(finalString);
-    // Increment the incremental value for the next generation
-     setIncrementalValue((prevValue) => prevValue + 1);
-    return finalString;
-
-  };
+  
   // useEffect to set ISRC when generateISRC is true
   useEffect(() => {
     if (generateISRC) {
-      setIsrc(generateISRCCode());
+      setIsrc("");
     }
   }, [generateISRC]);
   const selectedGenre = GENRES.find((g) => g.name === genre);
@@ -697,10 +677,10 @@ export default function STEP3(props) {
                           onChange={(e) => setPrice(e.target.value)}
                         >
                           <option value="">Please select...</option>
-                          <option selected="selected" value="156">Premium</option>
-                          <option value="155">Full</option>
-                          <option value="154">Mid</option>
-                          <option value="153">Budget</option>
+                          <option selected="selected" value="Premium">Premium</option>
+                          <option value="Full">Full</option>
+                          <option value="Mid">Mid</option>
+                          <option value="Budget">Budget</option>
                         </select>
                       </div>
                     </div>
