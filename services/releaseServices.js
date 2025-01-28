@@ -7,6 +7,7 @@ const path = require('path');
 const { uploadOnCloudinary } = require("../utils/cloudinary");
 const auth = require("./authServices");
 const permission = require('../models/permissionmodel')
+const generateGlobalISRCCode = require("../utils/generateISRCCode");
 const release = {};
 
 release.addOneRelease = async (req, res, next) => {
@@ -144,6 +145,14 @@ const transporter = nodemailer.createTransport({
 
 release.addThreeStepRelease = async (req, res, next) => {
     const body = req.body
+    
+   
+    for (let i = 0; i < body.step3.length; i++) {
+        if (!body.step3[i].ISRC || body.step3[i].ISRC.trim() === "") {
+            body.step3[i].ISRC = await generateGlobalISRCCode();
+        }
+    }
+    
     try {
         const result = await releaseModel.addThreeStepRelease(body)
         return R(res, true, "Update Successfully!!", result, 200)
