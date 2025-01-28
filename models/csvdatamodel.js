@@ -49,7 +49,7 @@ Track.get = async (userId, startDate, endDate) => {
   }
 
   let trackData = await result.find(query);
-  // console.log(">>>>>>>>", trackData);
+  console.log(">>>>>>>>", trackData);
 
   if (trackData.length <= 0) {
     return false;
@@ -59,6 +59,24 @@ Track.get = async (userId, startDate, endDate) => {
 };
 
 
+Track.delete = async (userId) => {
+  try {
+    const result = await db.connectDb("Track", TrackSchema);
+    console.log(">>>>>>>", userId);
+
+    let query = { userId: userId }; 
+    let storeData = await result.deleteMany(query); 
+
+    if (storeData.deletedCount <= 0) {
+      return false; // Nothing was deleted
+    }
+
+    return storeData; // Return the result object (e.g., number of deleted documents)
+  } catch (error) {
+    console.error("Error deleting store:", error);
+    return false; // Return false in case of an error
+  }
+};
 
 const Store = {}
 
@@ -126,6 +144,25 @@ Store.get = async (userId, startDate, endDate) => {
   return storeData;
 };
 
+
+Store.delete = async (userId) => {
+  try {
+    const result = await db.connectDb("Store", StoreSchema);
+    console.log(">>>>>>>", userId);
+
+    let query = { userId: userId }; 
+    let storeData = await result.deleteMany(query); 
+
+    if (storeData.deletedCount <= 0) {
+      return false; // Nothing was deleted
+    }
+
+    return storeData; // Return the result object (e.g., number of deleted documents)
+  } catch (error) {
+    console.error("Error deleting store:", error);
+    return false; // Return false in case of an error
+  }
+};
 
 
 
@@ -217,6 +254,24 @@ Market.getData = async (userId, startDate, endDate) => {
   return Data;
 };
 
+Market.delete = async (userId) => {
+  try {
+    const result = await db.connectDb("Market", MarketSchema);
+    console.log(">>>>>>>", userId);
+
+    let query = { userId: userId }; 
+    let storeData = await result.deleteMany(query); 
+
+    if (storeData.deletedCount <= 0) {
+      return false; // Nothing was deleted
+    }
+
+    return storeData; // Return the result object (e.g., number of deleted documents)
+  } catch (error) {
+    console.error("Error deleting store:", error);
+    return false; // Return false in case of an error
+  }
+};
 
 
 const salesYoutube = {}
@@ -368,6 +423,27 @@ salesYoutube.getData = async (userId, startDate, endDate) => {
 
   return Data;
 };
+
+
+salesYoutube.delete = async (userId) => {
+  try {
+    const result = await db.connectDb("SalesYoutube", salesModel);
+    console.log(">>>>>>>", userId);
+
+    let query = { userId: userId }; 
+    let storeData = await result.deleteMany(query); 
+
+    if (storeData.deletedCount <= 0) {
+      return false; // Nothing was deleted
+    }
+
+    return storeData; // Return the result object (e.g., number of deleted documents)
+  } catch (error) {
+    console.error("Error deleting store:", error);
+    return false; // Return false in case of an error
+  }
+};
+
 
 
 const salesAssets = {};
@@ -532,6 +608,28 @@ salesAssets.getData = async (userId, startDate, endDate) => {
 };
 
 
+salesAssets.delete = async (userId) => {
+  try {
+    const result = await db.connectDb("SalesAssets", salesSchemaAssets);
+    console.log(">>>>>>>", userId);
+
+    let query = { userId: userId }; 
+    let storeData = await result.deleteMany(query); 
+
+    if (storeData.deletedCount <= 0) {
+      return false; // Nothing was deleted
+    }
+
+    return storeData; // Return the result object (e.g., number of deleted documents)
+  } catch (error) {
+    console.error("Error deleting store:", error);
+    return false; // Return false in case of an error
+  }
+};
+
+
+
+
 const stream = {};
 
 const dataStream = new mongoose.Schema({
@@ -606,6 +704,28 @@ stream.getData = async (userId, startDate, endDate) => {
 
   return Data;
 };
+
+
+stream.delete = async (userId) => {
+  try {
+    const result = await db.connectDb("stream", dataStream);
+    console.log(">>>>>>>", userId);
+
+    let query = { userId: userId }; 
+    let storeData = await result.deleteMany(query); 
+
+    if (storeData.deletedCount <= 0) {
+      return false; // Nothing was deleted
+    }
+
+    return storeData; // Return the result object (e.g., number of deleted documents)
+  } catch (error) {
+    console.error("Error deleting store:", error);
+    return false; // Return false in case of an error
+  }
+};
+
+
 
 insides = {}
 
@@ -692,6 +812,24 @@ insides.getData = async (userId, startDate, endDate, filters) => {
   return Data;
 };
 
+insides.delete = async (userId) => {
+  try {
+    const result = await db.connectDb("insides", insidiesSchema);
+    console.log(">>>>>>>", userId);
+
+    let query = { userId: userId }; 
+    let storeData = await result.deleteMany(query); 
+
+    if (storeData.deletedCount <= 0) {
+      return false; // Nothing was deleted
+    }
+
+    return storeData; // Return the result object (e.g., number of deleted documents)
+  } catch (error) {
+    console.error("Error deleting store:", error);
+    return false; // Return false in case of an error
+  }
+};
 
 module.exports = {
   Track,

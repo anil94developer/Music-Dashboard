@@ -30,6 +30,8 @@ router.get("/get-insides",verifyToken,upload.insiderReport);
 
 
 
+router.post("/get-all-report",verifyToken,upload.getAllReport);
 
+router.post("/delete-report",verifyToken,upload.deleteReport);
 
 module.exports = router;

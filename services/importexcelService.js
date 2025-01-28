@@ -434,6 +434,86 @@ upload.insiderReport = async (req, res, next) => {
 
 
 
+upload.getAllReport = async (req, res, next) => {
+  try {
+    const userId = req.body.userId;
+    const startDate = "";
+    const endDate = "";
+    const Label = "";
+    const ISRC = "";
+    const Stream = "";
+    const Artist = "";
+    const filters = { Label, ISRC, Stream, Artist };
+
+     
+
+    const trackData = await Track.get(userId, startDate, endDate); 
+    // Call getData with additional filters
+    const insidesData = await insides.getData(userId, startDate, endDate, filters);
+    const storeData = await Store.get(userId, startDate, endDate);
+    const marketData = await Market.getData(userId, startDate, endDate);
+    const salesYoutubeData = await salesYoutube.getData(userId, startDate, endDate);
+    const salesAssetsData = await salesAssets.getData(userId, startDate, endDate);
+    const streamData = await stream.getData(userId, startDate, endDate);
+
+
+    let data={
+      trackData:trackData,
+      insidesData:insidesData,
+      storeData:storeData,
+      marketData:marketData,
+      salesYoutubeData:salesYoutubeData,
+      salesAssetsData:salesAssetsData,
+      streamData:streamData
+    } 
+
+    return R(res, true, "Data fetched successfully", data, 200);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
+upload.deleteReport = async  (req, res, next) => {
+  try {
+    const userId = req.body.userId;
+    const type = req.body.type;
+    console.log(req.body)
+     
+    if(type == "store"){
+      const result = await Store.delete(userId); 
+      return R(res, true, "Delete successfully", result, 200);
+    }
+    if(type == "stream"){
+      const result = await stream.delete(userId); 
+      return R(res, true, "Delete successfully", result, 200);
+    }
+    if(type == "track"){
+      const result = await Track.delete(userId); 
+      return R(res, true, "Delete successfully", result, 200);
+    }
+     if(type == "salesAssets"){
+      const result = await salesAssets.delete(userId); 
+      return R(res, true, "Delete successfully", result, 200);
+    }
+    if(type == "salesYoutube"){
+      const result = await salesYoutube.delete(userId); 
+      return R(res, true, "Delete successfully", result, 200);
+    } 
+    if(type == "market"){
+      const result = await Market.delete(userId); 
+      return R(res, true, "Delete successfully", result, 200);
+    }
+    if(type == "inside"){
+      const result = await insides.delete(userId); 
+      return R(res, true, "Delete successfully", result, 200);
+    }
+    
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
 
 
 
