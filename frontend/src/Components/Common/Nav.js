@@ -48,8 +48,8 @@ export const Nav = (props) => {
                       <img src={images?.user} className="img-fluid" alt="User Image" />
                       <span className="user-name hidden-xs">{userProfile?.name}</span>
                     </a>
-
-                    {userProfile?.role != "admin" && <p>Client Number:- {userProfile.clientNumber}</p>}
+ 
+                    {userProfile?.role != "Admin" && <p>Client Number:- {userProfile.clientNumber}</p>}
                     <ul className="dropdown-menu position-absolute">
 
                       <li>

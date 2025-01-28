@@ -69,7 +69,8 @@ const base = {
   releaseChangeStatus: mainUrl + 'release/release-update-status',
   getReportbydate: mainUrl + 'excel/get-report-by-date',
   getUser: mainUrl + "auth/get-user",
-  dashboardCount: mainUrl+"dashboard/get-dashboard-list"
-
+  dashboardCount: mainUrl+"dashboard/get-dashboard-list",
+  getAllReport: mainUrl + "excel/get-all-report",
+  deleteStore: mainUrl + "excel/delete-report"
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };
