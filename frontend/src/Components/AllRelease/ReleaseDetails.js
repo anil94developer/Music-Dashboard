@@ -171,7 +171,7 @@ export const ReleaseDetails = () => {
                   <p className="release-data"><strong>Sub Genre :</strong> {myRelease?.step1?.subGenre}</p>
                   <p className="release-data"><strong>Label Name :</strong> {myRelease?.step1?.labelName}</p>
                   <p className="release-data"><strong>Format :</strong> {myRelease?.step1?.format}</p>
-                  <p className="release-data"><strong>P Line :</strong> {myRelease?.step1?.line}</p>
+                  <p className="release-data"><strong>P Line :</strong> {myRelease?.step1?.pline}</p>
                   <p className="release-data"><strong>C Line :</strong> {myRelease?.step1?.cline}</p>
                   <p className="release-data"><strong>P Year :</strong> {myRelease?.step1?.pYear}</p>
                   <p className="release-data"><strong>C Year :</strong> {myRelease?.step1?.cYear}</p>

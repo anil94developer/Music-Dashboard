@@ -116,7 +116,7 @@ export const AllDraft = () => {
                                 <div className="action-buttons d-flex">
                                   <button title="Download" className="action-button">
                                     <a onClick={() => moreAction(item)}>
-                                      <i className="fa fa-eye"></i>
+                                      <i className="fa fa-pencil"></i>
                                     </a>
                                   </button>
                                   <button title='Download' className='action-button'>

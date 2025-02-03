@@ -98,7 +98,7 @@ export default function SearchInput(props) {
             ))
           ) : (
             <div className="box">
-              {userProfile.role == "company" &&
+             
                 <div className="box-body">
 
                   <div className="form-input">
@@ -145,7 +145,7 @@ export default function SearchInput(props) {
 
 
                 </div>
-              }
+              
             </div>
           )}
         </ul>

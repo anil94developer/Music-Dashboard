@@ -7,7 +7,7 @@ import GENRES from '../../Enums/genres.json';
 import language from '../../Enums/language.json'
 
 export default function STEP3(props) {
-  const { releaseData, fetchReleaseDetails } = props
+  const { releaseData, fetchReleaseDetails , setErrors} = props
   const {
     contentType,
     setContentType,
@@ -845,6 +845,7 @@ export default function STEP3(props) {
                     {/* <div className="col-ml-12"> */}
                     <button type="Submit" className="btn btn-primary"
                       onClick={async () => {
+                        setErrors([]),
                         await handleSubmit();  // Ensure handleSubmit completes first
 
                         // Then close the modal

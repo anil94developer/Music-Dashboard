@@ -3,7 +3,7 @@ import Step2Controller from '../../Controllers/One-release-controller/Step2Contr
 import Loader from '../Common/Loader';
 
 export default function STEP2(props) {
-  const { setStep, releaseData } = props;
+  const { setStep, releaseData , setErrors} = props;
   const {
     handleFileChange,
     inputRef,
@@ -15,6 +15,7 @@ export default function STEP2(props) {
 
   useEffect(() => {
     setReleaseData(releaseData);
+    setErrors([]),
     fetchReleaseDetails(releaseData._id);
   }, [releaseData]);
 

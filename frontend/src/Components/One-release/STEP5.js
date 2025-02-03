@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Step5Controller from '../../Controllers/One-release-controller/Step5Controller';
 export default function STEP5(props) {
-  const { releaseData, fetchReleaseDetails } = props
+  const { releaseData, fetchReleaseDetails , setErrors} = props
   const { handleSubmit,
     removeExclusiveDate,
     removePreOrder,
@@ -39,7 +39,7 @@ export default function STEP5(props) {
             />
           </div>
           <div className="form-group">
-            <label>Add a pre-order date</label>
+            <label>Add a pre-order date *</label>
             <select className="form-select form-control" onChange={(e) =>
               preOrderSelect(e.target.value)}>
               <option value="">Select Music</option>
@@ -47,6 +47,9 @@ export default function STEP5(props) {
                 <option key={item.id} value={item.id}>{item.name}</option>
               ))}
             </select>
+            {props.errors?.['step5.PreOrder'] && (
+              <span className="text-danger">{props.errors['step5.PreOrder']}</span>
+            )}
           </div>
           {selectPreOrderDate.map((item) => (
             <div
@@ -91,7 +94,7 @@ export default function STEP5(props) {
         </div>
         <div className="col-md-6">
           <div className="form-group">
-            <label>Add an exclusive release date</label>
+            <label>Add an exclusive release date *</label>
             <select className="form-select form-control" onChange={(e) =>
               exclusiveOrderSelect(e.target.value)}>
               <option value="">Please Select</option>
@@ -99,6 +102,9 @@ export default function STEP5(props) {
                 <option key={item.id} value={item.id}>{item.name}</option>
               ))}
             </select>
+            {props.errors?.['step5.ExclusiveReleaseDates'] && (
+              <span className="text-danger">{props.errors['step5.ExclusiveReleaseDates']}</span>
+            )}
           </div>
           {selectexclusiveDate?.map((item) => (
             <div
@@ -128,7 +134,7 @@ export default function STEP5(props) {
         </div>
       </div>
       <div className="Submit-btn mt-4">
-        <button type="Submit" className="btn btn-primary" onClick={() => handleSubmit()}>Save</button>
+        <button type="Submit" className="btn btn-primary" onClick={() => {setErrors([]); handleSubmit()}}>Save</button>
       </div>
     </div>
   );

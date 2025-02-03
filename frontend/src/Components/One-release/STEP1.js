@@ -8,7 +8,7 @@ import { base, domainUrl } from '../../Constants/Data.constant';
 import Loader from '../Common/Loader';
 import { useUserProfile } from '../../Context/UserProfileContext';
 export default function STEP1(props) {
-  const { setStep, releaseData } = props;
+  const { setStep, releaseData , validateFields , setErrors } = props;
   const { userPermission, userProfile } = useUserProfile()
   const { releaseTitle, setReleaseTitle,
     versionSubtitle, setVersionSubtitle,
@@ -45,7 +45,7 @@ export default function STEP1(props) {
         setLabelName(jsonData.labelName);
         setFormat(jsonData.format);
         setReleaseDate(jsonData.originalReleaseDate);
-        setPLine(jsonData.line);
+        setPLine(jsonData.pline);
         setCLine(jsonData.cline);
         setPYear(jsonData.pYear);
         setCYear(jsonData.cYear);
@@ -121,7 +121,7 @@ export default function STEP1(props) {
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group" >
-            <label htmlFor="versionSubtitle">Version/Subtitle</label>
+            <label htmlFor="versionSubtitle">Version/Subtitle *</label>
             <input
               value={versionSubtitle}
               type="text"
@@ -130,21 +130,29 @@ export default function STEP1(props) {
               placeholder="Enter version or subtitle"
               onChange={(e) => setVersionSubtitle(e.target.value)}
             />
+            {props.errors?.['step1.subTitle'] && (
+              <span className="text-danger">{props.errors['step1.subTitle']}</span>
+            )}
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="primaryArtist">Primary artist *</label>
             <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
-            {props.errors?.['step1.primaryArtist'] && (
+            {props.errors?.['step1.primaryArtist'] ? (
               <span className="text-danger">{props.errors['step1.primaryArtist']}</span>
-            )}
+              ):
+              <></>
+              }
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group" key={primaryArtist}>
-            <label htmlFor="featuring">Featuring</label>
+            <label htmlFor="featuring">Featuring *</label>
             <SearchInput artistData={featuring} setSelectData={setFeaturing} />
+            {props.errors?.['step1.featuring'] && (
+              <span className="text-danger">{props.errors['step1.featuring']}</span>
+            )}
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12">
@@ -185,8 +193,8 @@ export default function STEP1(props) {
                 <option key={sub.id} value={sub.name}>{sub.name}</option>
               ))}
             </select>
-            {props.errors?.['step1.subgenre'] && (
-              <span className="text-danger">{props.errors['step1.subgenre']}</span>
+            {props.errors?.['step1.subGenre'] && (
+              <span className="text-danger">{props.errors['step1.subGenre']}</span>
             )}
           </div>
         </div>
@@ -228,14 +236,14 @@ export default function STEP1(props) {
                 </button>
               }
             </div>
-            {props.errors?.['step1.labelName'] && (
+            {props.errors?.['step1.labelName'] ? (
               <span className="text-danger">{props.errors['step1.labelName']}</span>
-            )}
+            ): <></>}
             {labelNameStatus &&
               <div className="box">
                 <div className="box-body">
                   <div className="form-group">
-                    <label htmlFor="primaryArtist">Label Name</label>
+                    <label htmlFor="primaryArtist">Label Name *</label>
                     <div className="input-group input-group-sm">
                       <input
                         className="form-control"
@@ -276,7 +284,7 @@ export default function STEP1(props) {
           onClick={() => document.querySelector('#releaseDate').click()}
         >
           <div className="form-group">
-            <label htmlFor="releaseDate">Physical/Original release date</label>
+            <label htmlFor="releaseDate">Physical/Original release date *</label>
             <input
               value={releaseDate}
               type="date"
@@ -284,6 +292,9 @@ export default function STEP1(props) {
               id="releaseDate"
               onChange={(e) => setReleaseDate(e.target.value)}
             />
+            {props.errors?.['step1.originalReleaseDate'] && (
+              <span className="text-danger">{props.errors['step1.originalReleaseDate']}</span>
+            )}
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12">
@@ -297,8 +308,8 @@ export default function STEP1(props) {
               placeholder="Enter ℗ line"
               onChange={(e) => setPLine(e.target.value)}
             />
-            {props.errors?.['step1.line'] && (
-              <span className="text-danger">{props.errors['step1.line']}</span>
+            {props.errors?.['step1.pline'] && (
+              <span className="text-danger">{props.errors['step1.pline']}</span>
             )}
           </div>
         </div>
@@ -321,25 +332,31 @@ export default function STEP1(props) {
 
         <div className="col-lg-3 col-md-6">
           <div className="form-group">
-            <label>C Year</label>
+            <label>C Year *</label>
             <select className="form-select form-control" value={cYear} onChange={(e) => setCYear(e.target.value)}>
               <option value="">- Select a (C) year -</option>
               {[...Array(100)].map((_, i) => (
                 <option key={i} value={2026 - i}>{2026 - i}</option>
               ))}
             </select>
+            {props.errors?.['step1.cYear'] && (
+              <span className="text-danger">{props.errors['step1.cYear']}</span>
+            )}
           </div>
         </div>
 
         <div className="col-lg-3 col-md-6">
           <div className="form-group">
-            <label>P Year</label>
+            <label>P Year *</label>
             <select className="form-select form-control" value={pYear} onChange={(e) => setPYear(e.target.value)}>
               <option value="">- Select a (P) year -</option>
               {[...Array(100)].map((_, i) => (
                 <option key={i} value={2026 - i}>{2026 - i}</option>
               ))}
             </select>
+            {props.errors?.['step1.pYear'] && (
+              <span className="text-danger">{props.errors['step1.pYear']}</span>
+            )}
           </div>
         </div>
         <div className="col-lg-3 col-md-6 col-12">
@@ -367,7 +384,7 @@ export default function STEP1(props) {
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
-            <label htmlFor="upcEan">UPC/EAN</label>
+            <label htmlFor="upcEan">UPC/EAN *</label>
             <input
               value={upcEan}
               type="text"
@@ -377,10 +394,13 @@ export default function STEP1(props) {
               onChange={(e) => setUpcEan(e.target.value)}
             />
           </div>
+          {props.errors?.['step1.UPCEAN'] && (
+              <span className="text-danger">{props.errors['step1.UPCEAN']}</span>
+            )}
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
-            <label htmlFor="producerCatalogueNumber">Producer catalogue number</label>
+            <label htmlFor="producerCatalogueNumber">Producer catalogue number *</label>
             <input
               value={producerCatalogueNumber}
               type="text"
@@ -389,11 +409,15 @@ export default function STEP1(props) {
               placeholder="Enter catalogue number"
               onChange={(e) => setProducerCatalogueNumber(e.target.value)}
             />
+            {props.errors?.['step1.producerCatalogueNumber'] && (
+              <span className="text-danger">{props.errors['step1.producerCatalogueNumber']}</span>
+            )}
           </div>
+
         </div>
         <div className="col-12">
           {loader ? <Loader /> :
-            <button onClick={() => [handleSubmit()]} className="btn btn-primary" type="Submit">Save</button>
+            <button onClick={() => [setErrors([]),handleSubmit()]} className="btn btn-primary" type="Submit">Save</button>
           }
         </div>
       </div>

@@ -33,7 +33,7 @@ export const AllRelease = () => {
             color="primary"
             size="small"
             onClick={() => {
-              navigate("/release-details", { state: { releaseId: params.row._id } });
+             navigate("/release-details", { state: { releaseId: params.row._id } });
             }}
           >
             More
