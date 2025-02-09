@@ -256,7 +256,7 @@ releaseModel.addOneStepRelease = async (body) => {
           labelName: body.step1.labelName,
           format: body.step1.format,
           originalReleaseDate: body.step1.originalReleaseDate,
-          line: body.step1.line,
+          pline: body.step1.line,
           cline: body.step1.cline,
           cYear: body.step1.cYear,
           pYear: body.step1.pYear,
