@@ -28,10 +28,10 @@ export default function STEP6(props) {
             "step1.originalReleaseDate",
             "step1.cYear",
             "step1.pYear",
+            "step1.coverImage",
             "step2",
             "step3",
-            "step5.PreOrder",
-            "step5.ExclusiveReleaseDates",
+            
         ];
 
         const newErrors = {};

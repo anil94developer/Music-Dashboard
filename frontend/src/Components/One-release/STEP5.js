@@ -39,7 +39,7 @@ export default function STEP5(props) {
             />
           </div>
           <div className="form-group">
-            <label>Add a pre-order date *</label>
+            <label>Add a pre-order date </label>
             <select className="form-select form-control" onChange={(e) =>
               preOrderSelect(e.target.value)}>
               <option value="">Select Music</option>
@@ -94,7 +94,7 @@ export default function STEP5(props) {
         </div>
         <div className="col-md-6">
           <div className="form-group">
-            <label>Add an exclusive release date *</label>
+            <label>Add an exclusive release date </label>
             <select className="form-select form-control" onChange={(e) =>
               exclusiveOrderSelect(e.target.value)}>
               <option value="">Please Select</option>
@@ -134,7 +134,7 @@ export default function STEP5(props) {
         </div>
       </div>
       <div className="Submit-btn mt-4">
-        <button type="Submit" className="btn btn-primary" onClick={() => {setErrors([]); handleSubmit()}}>Save</button>
+        <button type="Submit" className="btn btn-primary" onClick={() => {setErrors?.([]); handleSubmit()}}>Save</button>
       </div>
     </div>
   );

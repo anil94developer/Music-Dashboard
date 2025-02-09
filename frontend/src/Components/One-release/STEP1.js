@@ -103,6 +103,9 @@ export default function STEP1(props) {
               <strong>Warning:</strong> your cover must not contain Internet address, e-mail address, barcode, price, any info related to a physical or digital support, any info limited in time, any info that could mislead a client, or contains outrageous or explicit material.
             </p>
           </div>
+          {props.errors?.['step1.coverImage'] && (
+              <span className="text-danger">{props.errors['step1.coverImage']}</span>
+            )}
         </div>
       </div>
       <div className="row">
@@ -121,7 +124,7 @@ export default function STEP1(props) {
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group" >
-            <label htmlFor="versionSubtitle">Version/Subtitle *</label>
+            <label htmlFor="versionSubtitle">Version/Subtitle </label>
             <input
               value={versionSubtitle}
               type="text"
@@ -148,7 +151,7 @@ export default function STEP1(props) {
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group" key={primaryArtist}>
-            <label htmlFor="featuring">Featuring *</label>
+            <label htmlFor="featuring">Featuring </label>
             <SearchInput artistData={featuring} setSelectData={setFeaturing} />
             {props.errors?.['step1.featuring'] && (
               <span className="text-danger">{props.errors['step1.featuring']}</span>
@@ -384,7 +387,7 @@ export default function STEP1(props) {
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
-            <label htmlFor="upcEan">UPC/EAN *</label>
+            <label htmlFor="upcEan">UPC/EAN </label>
             <input
               value={upcEan}
               type="text"
@@ -400,7 +403,7 @@ export default function STEP1(props) {
         </div>
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
-            <label htmlFor="producerCatalogueNumber">Producer catalogue number *</label>
+            <label htmlFor="producerCatalogueNumber">Producer catalogue number </label>
             <input
               value={producerCatalogueNumber}
               type="text"
@@ -417,7 +420,7 @@ export default function STEP1(props) {
         </div>
         <div className="col-12">
           {loader ? <Loader /> :
-            <button onClick={() => [setErrors([]),handleSubmit()]} className="btn btn-primary" type="Submit">Save</button>
+            <button onClick={() =>{ setErrors?.([]); handleSubmit();}} className="btn btn-primary" type="Submit">Save</button>
           }
         </div>
       </div>

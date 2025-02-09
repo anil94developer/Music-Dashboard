@@ -3,7 +3,7 @@ import Step2Controller from '../../Controllers/One-release-controller/Step2Contr
 import Loader from '../Common/Loader';
 
 export default function STEP2(props) {
-  const { setStep, releaseData , setErrors} = props;
+  const { setStep, releaseData, setErrors } = props;
   const {
     handleFileChange,
     inputRef,
@@ -15,7 +15,7 @@ export default function STEP2(props) {
 
   useEffect(() => {
     setReleaseData(releaseData);
-    setErrors([]),
+    setErrors?.([]);
     fetchReleaseDetails(releaseData._id);
   }, [releaseData]);
 
@@ -28,12 +28,22 @@ export default function STEP2(props) {
             <input
               type="file"
               multiple
-              accept="audio/*,video/*"
+              accept=".flac,.wav"
               className="form-control"
               onChange={handleFileChange}
               ref={inputRef}
               disabled={uploadProgress > 0 && uploadProgress < 100} // Disable during upload
             />
+          </div>
+          <div style={{ marginBottom: "10px" }}>
+            <strong>Accepted Audio File Formats:</strong>
+            <ul>
+              <li>WAV (PCM only)</li>
+              <li>FLAC</li>
+            </ul>
+
+            <strong>File Naming Guidelines:</strong>
+            <p>Avoid using special characters such as: &, /, %, # , etc.</p>
           </div>
         </div>
 

@@ -845,7 +845,7 @@ export default function STEP3(props) {
                     {/* <div className="col-ml-12"> */}
                     <button type="Submit" className="btn btn-primary"
                       onClick={async () => {
-                        setErrors([]),
+                        setErrors?.([]);
                         await handleSubmit();  // Ensure handleSubmit completes first
 
                         // Then close the modal

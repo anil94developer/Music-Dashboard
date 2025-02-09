@@ -71,6 +71,12 @@ const UserAccess = (props) => {
             <h1>User Management</h1>
             <a className="btn btn-primary" href="add-user">Add a new user</a>
           </div>
+          <p className="content" style={{ fontSize: "16px", color: "#333", lineHeight: "1.5", marginTop: "10px" }}>
+              ** As an administrator, you're in control of your team's TunePlus access. Easily create new user
+              accounts, tailoring their experience by specifying their catalog scope, permission level, and
+              access to specific TunePlus sections. Once you've configured their settings, they'll automatically
+              receive an email with their login details and be ready to go. **
+            </p>
           <section className="content">
             {/* Filters */}
             {/* User List */}

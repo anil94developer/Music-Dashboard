@@ -34,19 +34,19 @@ const UserManagement = (props) => {
           name: item.name,
           email: item.email,
           wallet: item.wallet,
-          status: item.is_deleted == 1 ? "DeActive" : "Active", 
+          status: item.is_deleted == 1 ? "DeActive" : "Active",
           action: "",
         }))
       : [];
     setUsers(resultList)
   }
- 
+
 
   const onDetails = (id) => {
     navigate("/UserDetails", { state: { userId: id } });
   }
 
-  const user_delete = async (userId , status) => {
+  const user_delete = async (userId, status) => {
 
     try {
       let body = {
@@ -68,26 +68,26 @@ const UserManagement = (props) => {
 
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header', width: 50 },
-    { field: '_id', headerName: 'Id', headerClassName: 'black-header', width: 250 }, 
+    { field: '_id', headerName: 'Id', headerClassName: 'black-header', width: 250 },
     { field: 'name', headerName: 'Name', headerClassName: 'black-header', width: 100 },
     { field: 'email', headerName: 'EMAIL', headerClassName: 'black-header', width: 100 },
-    { field: 'wallet', headerName: 'WALLET', headerClassName: 'black-header', width: 150 }, 
+    { field: 'wallet', headerName: 'WALLET', headerClassName: 'black-header', width: 150 },
     { field: 'status', headerName: 'STATUS', headerClassName: 'black-header', width: 150 },
     {
       field: 'action', headerName: 'ACTION', width: 300,
       renderCell: (params) => (
-        <div style={{ gap: '8px', display: 'flex',padding:10 }}>
-        <Button
-          variant="contained"
-          color="info"
-          size="small"
-          onClick={() => {
-            user_delete(params.row._id, params.row.status);
-          }}
-        >
-          Disable
-        </Button>
-        {/* <Button
+        <div style={{ gap: '8px', display: 'flex', padding: 10 }}>
+          <Button
+            variant="contained"
+            color="info"
+            size="small"
+            onClick={() => {
+              user_delete(params.row._id, params.row.status);
+            }}
+          >
+            Disable
+          </Button>
+          {/* <Button
           variant="contained"
           color="secondary" // Corrected the color to "secondary"
           size="small"
@@ -97,8 +97,8 @@ const UserManagement = (props) => {
         >
           Reject
         </Button> */}
-      </div>
-      
+        </div>
+
       )
     }
   ];
@@ -112,10 +112,10 @@ const UserManagement = (props) => {
             <h1>User Management</h1>
 
             {/* Filters */}
-            <div className="filters"> 
+            <div className="filters">
               <a href="add-user"> <button className="add-user-button">Add Master Account</button></a>
             </div>
- 
+
             <DataTable
               columns={columns}
               rows={users}
@@ -144,7 +144,7 @@ const UserManagement = (props) => {
                       <td>{user.is_active}</td>
                       <td>
                         {/* <button className="action-button edit" onClick={()=>{navigate("/edit-permission",{ state: { userData: user} });}}>Edit</button> */}
-                        {/* <button
+            {/* <button
                           className="action-button delete"
                           onClick={() => handleDelete(user.login)}
                         >

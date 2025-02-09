@@ -282,16 +282,10 @@ export const ReleaseDetails = () => {
             <div className="track-table release-inner dash-detail dash-detail-two">
               <div className="track-heading d-flex flex-wrap align-items-center justify-content-between">
                 <h2>Tracks</h2>
-                <div className="add-track-btn">
-                  <button className="btn btn-primary "
-                    onClick={() => {
-                      exportTableToExcel('example2', 'release.xlsx')
-                    }}>Download</button>
-                </div>
               </div>
               <div className="release-table">
                 <div className="box-body table-responsive">
-                  <table id="example2" className="table table-bordered table-striped">
+                  <table className="table table-bordered table-striped">
                     <thead>
                       <tr role="row">
                         <th>CHECK NO.</th>
@@ -374,6 +368,10 @@ export const ReleaseDetails = () => {
                         <th>COMPOSER(S)</th>
                         <th>LYRICIST(S)</th>
                         <th>PUBLISHER(S)</th>
+                        {/* Mapping over selectContributory and otherContributory */}
+                        {[...(myRelease?.step3?.[0]?.selectContributory || []), ...(myRelease?.step3?.[0]?.otherContributory || [])].map((item) => (
+                          <th key={item._id}>{item.name}</th>
+                        ))}
                         <th>PRO AFFILIATION (PERFORMING RIGHTS ORGANISATION)</th>
                         <th>Custom PRO Affiliation</th>
                         <th>PRO MEMBERSHIP NUMBER</th>
@@ -469,6 +467,10 @@ export const ReleaseDetails = () => {
                               <td>{item?.Composer[0]?.name}</td>
                               <td>{item?.Author[0].name}</td>
                               <td>{item?.Publisher[0].name}</td>
+                              {/* Mapping over selectContributory and otherContributory */}
+                              {[...(myRelease?.step3?.[0]?.selectContributory || []), ...(myRelease?.step3?.[0]?.otherContributory || [])].map((contributor) => (
+                                <td key={contributor._id}>{contributor.value}</td>
+                              ))}
                               <td>{item?.ISRC}</td>
                               <td>{ }</td>
                               <td>{ }</td>
@@ -500,7 +502,208 @@ export const ReleaseDetails = () => {
                 </div>
               </div>
             </div>
+            {userProfile?.role == 'Admin' &&
+              <div className="track-table release-inner dash-detail dash-detail-two">
+                <div className="track-heading d-flex flex-wrap align-items-center justify-content-between">
+                  <h2>Tracks Details for Download</h2>
+                  <div className="add-track-btn">
+                    <button className="btn btn-primary "
+                      onClick={() => {
+                        exportTableToExcel('example2', 'release.xlsx')
+                      }}>Download</button>
+                  </div>
+                </div>
+                <div className="release-table">
+                  <div className="box-body table-responsive">
+                    <table id="example2" className="table table-bordered table-striped">
+                      <thead>
+                        <tr role="row">
+                          <th>CHECK NO.</th>
+                          <th>GROUPING ID</th>
+                          <th>PRODUCT TITLE</th>
+                          <th>VERSION DESCRIPTION</th>
+                          <th>PRIMARY ARTIST</th>
+                          <th>PRIMARY ARTIST SPOTIFY ID</th>
+                          <th>PRIMARY ARTIST APPLE ID</th>
+                          <th>ARTIST 2</th>
+                          <th>ARTIST 2 ROLE</th>
+                          <th>ARTIST 2 SPOTIFY ID</th>
+                          <th>ARTIST 2 APPLE ID</th>
+                          <th>ARTIST 3</th>
+                          <th>ARTIST 3 ROLE</th>
+                          <th>ARTIST 3 SPOTIFY ID</th>
+                          <th>ARTIST 3 APPLE ID</th>
+                          <th>BARCODE</th>
+                          <th>CATALOGUE NO.</th>
+                          <th>RELEASE FORMAT TYPE</th>
+                          <th>Text Language</th>
+                          <th>PRICE BAND</th>
+                          <th>LICENSED TERRITORIES to INCLUDE</th>
+                          <th>LICENSED TERRITORIES to EXCLUDE</th>
+                          <th>RELEASE START DATE</th>
+                          <th>RELEASE END DATE</th>
+                          <th>GRid</th>
+                          <th>(P) YEAR</th>
+                          <th>(P) HOLDER</th>
+                          <th>(C) YEAR</th>
+                          <th>(C) HOLDER</th>
+                          <th>LABEL</th>
+                          <th>MainGenre Primary (drop-down menu)</th>
+                          <th>MainGenre Sub</th>
+                          <th>AlternateGenre Primary (drop-down menu)</th>
+                          <th>AlternateGenre Sub</th>
+                          <th>Mood (drop-down menu)</th>
+                          <th>COMPOSER(S)</th>
+                          <th>CONDUCTOR(S)</th>
+                          <th>PRODUCER(S)</th>
+                          <th>ARRANGER(S)</th>
+                          <th>ORCHESTRA</th>
+                          <th>EXPLICIT CONTENT</th>
+                          <th>VOLUME NO.</th>
+                          <th>VOLUME TOTAL</th>
+                          <th>SERVICES</th>
+                          <th>TRACK NO.</th>
+                          <th>TRACK TITLE</th>
+                          <th>MIX / VERSION</th>
+                          <th>PRIMARY ARTIST</th>
+                          <th>PRIMARY ARTIST SPOTIFY ID</th>
+                          <th>PRIMARY ARTIST APPLE ID</th>
+                          <th>ARTIST 2</th>
+                          <th>ARTIST 2 ROLE</th>
+                          <th>ARTIST 2 SPOTIFY ID</th>
+                          <th>ARTIST 2 APPLE ID</th>
+                          <th>ARTIST 3</th>
+                          <th>ARTIST 3 ROLE</th>
+                          <th>ARTIST 3 SPOTIFY ID</th>
+                          <th>ARTIST 3 APPLE ID</th>
+                          <th>ISRC</th>
+                          <th>GRid</th>
+                          <th>AVAILABLE SEPARATELY</th>
+                          <th>(P) YEAR</th>
+                          <th>(P) HOLDER</th>
+                          <th>(C) YEAR</th>
+                          <th>(C) HOLDER</th>
+                          <th>MainGenre Primary (drop-down menu)</th>
+                          <th>MainGenre Sub</th>
+                          <th>AlternateGenre Primary (drop-down menu)</th>
+                          <th>AlternateGenre Sub</th>
+                          <th>EXPLICIT CONTENT</th>
+                          <th>COVER SONG</th>
+                          <th>DO YOU HAVE A LICENSE FILE?</th>
+                          <th>PRODUCER(S)</th>
+                          <th>MIXER(S)</th>
+                          <th>CONDUCTOR</th>
+                          <th>ARRANGER(S)</th>
+                          <th>ORCHESTRA</th>
+                          <th>COMPOSER(S)</th>
+                          <th>LYRICIST(S)</th>
+                          <th>PUBLISHER(S)</th>
+                          <th>PRO AFFILIATION (PERFORMING RIGHTS ORGANISATION)</th>
+                          <th>Custom PRO Affiliation</th>
+                          <th>PRO MEMBERSHIP NUMBER</th>
+                          <th>Audio Language</th>
 
+                        </tr>
+                      </thead>
+                      <tbody role="alert" aria-live="polite" aria-relevant="all">
+                        {
+                          myRelease?.step3 && myRelease?.step3.map((item, index) => {
+                            return (
+                              <tr className="odd">
+                                <td className="  sorting_1">{index + 1}</td>
+                                <td></td>
+                                <td>{myRelease.title}</td>
+                                <td>{ }</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 0 && myRelease?.step1?.primaryArtist[0]?.name}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.linkId)}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.itunesLinkId)}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 && myRelease?.step1?.primaryArtist[1]?.name}</td>
+                                <td></td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 && getLastKey(myRelease?.step1?.primaryArtist[1]?.linkId)}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 && getLastKey(myRelease?.step1?.primaryArtist[1]?.itunesLinkId)}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 2 && myRelease?.step1?.primaryArtist[2]?.name}</td>
+                                <td></td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 2 && getLastKey(myRelease?.step1?.primaryArtist[2]?.linkId)}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 2 && getLastKey(myRelease?.step1?.primaryArtist[2]?.itunesLinkId)}</td>
+                                <td>{myRelease?.step1?.UPCEAN}</td>
+                                <td>{myRelease?.step1?.producerCatalogueNumber}</td>
+                                <td>{myRelease?.step1?.format}</td>
+                                <td>{item?.TrackTitleLanguage}</td>
+                                <td>{item?.Price}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{myRelease.step1?.originalReleaseDate}</td>
+                                <td>{myRelease.step1?.originalReleaseDate}</td>
+                                <td></td>
+                                <td>{myRelease?.step1?.pyear}</td>
+                                <td>{myRelease?.step1?.line}</td>
+                                <td>{myRelease?.step1?.cyear}</td>
+                                <td>{myRelease?.step1?.cline}</td>
+                                <td>{myRelease?.step1?.labelName}</td>
+                                <td>{myRelease?.step1?.genre}</td>
+                                <td>{myRelease?.step1?.subGenre}</td>
+                                <td>{item?.SecondaryGenre}</td>
+                                <td>{item?.SubSecondaryGenre}</td>
+                                <td>{myRelease?.step1?.mood}</td>
+                                <td>{item?.Composer[0]?.name}</td>
+                                <td>{ }</td>
+                                <td>{item?.Producer[0]?.name}</td>
+                                <td>{item?.Arranger[0]?.name}</td>
+                                <td>{ }</td>
+                                <td>{item?.ParentalAdvisory}</td>
+                                <td>{item?.Volume}</td>
+                                <td>{ }</td>
+                                <td>{ }</td>
+                                <td>{index + 1}</td>
+                                <td>{item?.title}</td>
+                                <td>{item?.VersionSubtitle}</td>
+                                <td>{item?.PrimaryArtist?.length > 0 && item?.PrimaryArtist[0]?.name}</td>
+                                <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.linkId)}</td>
+                                <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.itunesLinkId)}</td>
+                                <td>{item?.Featuring?.length > 1 && item?.Featuring[1]?.name}</td>
+                                <td>Featuring</td>
+                                <td>{item?.Featuring?.length > 1 && getLastKey(item?.Featuring[1]?.linkId)}</td>
+                                <td>{item?.Featuring?.length > 1 && getLastKey(item?.Featuring[1]?.itunesLinkId)}</td>
+                                <td>{item?.PrimaryArtist?.length > 2 && item?.PrimaryArtist[2]?.name}</td>
+                                <td></td>
+                                <td>{item?.PrimaryArtist?.length > 2 && getLastKey(item?.PrimaryArtist[2]?.linkId)}</td>
+                                <td>{item?.PrimaryArtist?.length > 2 && getLastKey(item?.PrimaryArtist[2]?.itunesLinkId)}</td>
+                                <td>{item?.ISRC}</td>
+                                <td>{ }</td>
+                                <td>{ }</td>
+                                <td>{item?.pYear}</td>
+                                <td>{item?.Pline}</td>
+                                <td>{item?.cYear}</td>
+                                <td>{item?.cLine}</td>
+                                <td>{item?.Genre}</td>
+                                <td>{item?.SubGenre}</td>
+                                <td>{item?.SecondaryGenre}</td>
+                                <td>{item?.SubSecondaryGenre}</td>
+                                <td>{item?.ParentalAdvisory}</td>
+                                <td>{item?.SecondaryTrackType}</td>
+                                <td>{ }</td>
+                                <td>{item?.Producer[0]?.name}</td>
+                                <td>{item?.Remixer[0]?.name}</td>
+                                <td>{ }</td>
+                                <td>{ }</td>
+                                <td>{ }</td>
+                                <td>{item?.Composer[0]?.name}</td>
+                                <td>{item?.Author[0].name}</td>
+                                <td>{item?.Publisher[0].name != "None" ? item?.Publisher[0].name : ""}</td>
+                                <td>{item?.ISRC}</td>
+                                <td>{ }</td>
+                                <td>{ }</td>
+                                <td>{item?.Lyrics}</td>
+                              </tr>
+                            )
+                          })
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            }
 
             {userProfile?.role == "Admin" &&
               <div className="submit-btn text-center my-4">
