@@ -400,7 +400,7 @@ releaseModel.SubmitFinalRelease = async (body, parentId, status) => {
         "step1.originalReleaseDate": releaseDate,
       }
     }
-console.log("my query----------",query)
+  console.log("my query----------", query)
   let result = await releaseResult.updateOne({ _id: id }, query)
   if (result.modifiedCount > 0 || result.upsertedCount > 0) {
     return true;
@@ -419,15 +419,139 @@ releaseModel.releaseList = async (uId, statusFilter) => {
   return fetData.length > 0 ? fetData : [];
 };
 
-releaseModel.allReleaseList = async (uId) => {
+// releaseModel.allReleaseList = async (uId) => {
+//   const result = await db.connectDb("release", releaseSchema);
+//   let fetData = await result.find();
+//   if (fetData.length > 0) {
+//     return fetData;
+//   } else {
+//     return [];
+//   }
+// };
+
+releaseModel.allDraftList = async (uId, page, limit, search) => {
   const result = await db.connectDb("release", releaseSchema);
-  let fetData = await result.find();
-  if (fetData.length > 0) {
-    return fetData;
-  } else {
-    return [];
+
+
+  // Base filter with status and userId
+  let filter = {
+    $and: [
+      { status: { $in: ["Reject", "Pending"] } },
+      { userId: uId } // No need for `$in` if it's a single userId
+    ],
+  };
+
+  // Apply search filter if search term exists
+  if (search) {
+    filter.$and.push({
+      $or: [
+        { UPCEAN: { $regex: search, $options: "i" } },
+        { label: { $regex: search, $options: "i" } },
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } }
+      ]
+    });
   }
+ // **Fix: Count total documents before fetching paginated data**
+ const totalCount = await result.countDocuments(filter);
+
+  // Paginate data
+  const fetData = await result
+    .find(filter)
+    .skip((page - 1) * limit) // Skip previous pages
+    .limit(limit) // Limit results per page
+    .exec();
+
+  
+
+  return {
+    totalCount,
+    totalPages: Math.ceil(totalCount / limit),
+    currentPage: page,
+    perPage: limit,
+    data: fetData
+  };
 };
+
+releaseModel.allReleaseList = async (uId, page = 1, limit = 10, search) => {
+  const result = await db.connectDb("release", releaseSchema);
+
+  // Base filter with status and userId
+  let filter = {
+    $and: [
+      { status: { $in: ["Submit"] } },
+      { userId: uId } // No need for `$in` if it's a single userId
+    ],
+  };
+
+  
+  // Apply search filter if search term exists
+  if (search) {
+    filter.$and.push({
+      $or: [
+        { UPCEAN: { $regex: search, $options: "i" } },
+        { label: { $regex: search, $options: "i" } },
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } }
+      ]
+    });
+  }
+
+// **Fix: Count total documents before fetching paginated data**
+const totalCount = await result.countDocuments(filter);
+
+  // Fetch paginated results
+  const fetData = await result
+    .find(filter)
+    .skip((page - 1) * limit) // Skip previous pages
+    .limit(limit) // Limit results per page
+    .exec();
+ 
+  return {
+    totalCount,
+    totalPages: Math.ceil(totalCount / limit),
+    currentPage: page,
+    perPage: limit,
+    data: fetData
+  };
+};
+
+
+releaseModel.adminAllReleaseList = async (uId, page, limit, search) => {
+  const result = await db.connectDb("release", releaseSchema);
+
+  // Base filter for status
+  let filter = { status: { $in: ["Approve", "Reject", "Submit"] } };
+
+  // Apply search filter if search term exists
+  if (search) {
+    filter.$or = [
+      // Case-insensitive search on description
+      { UPCEAN: { $regex: search, $options: "i" } }, // Case-insensitive search on description
+      { label: { $regex: search, $options: "i" } }, // Case-insensitive search on description
+      { title: { $regex: search, $options: "i" } }, // Case-insensitive search on title
+      { description: { $regex: search, $options: "i" } }, // Case-insensitive search on description
+    ];
+  }
+  // Count total documents for pagination
+  const totalCount = await result.countDocuments();
+
+  // Paginate data
+  const fetData = await result
+    .find(filter)
+    .skip((page - 1) * limit) // Skip previous pages
+    .limit(limit) // Limit results per page
+    .exec();
+
+  return {
+    totalCount,
+    totalPages: Math.ceil(totalCount / limit),
+    currentPage: page,
+    perPage: limit,
+    data: fetData
+  };
+};
+
 
 releaseModel.releaseDetails = async (releaseId) => {
   const result = await db.connectDb("release", releaseSchema);

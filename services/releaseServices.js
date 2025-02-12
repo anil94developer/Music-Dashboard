@@ -208,6 +208,7 @@ release.releaseList = async (req, res, next) => {
         next(err);
     }
 };
+
 release.releaseDelete = async (req, res, next) => {
     try {
         const id = req.body.id;
@@ -219,14 +220,52 @@ release.releaseDelete = async (req, res, next) => {
     }
 };
 
-release.allReleaseList = async (req, res, next) => {
+// release.allReleaseList = async (req, res, next) => {
+//     try {
+//         const result = await releaseModel.allReleaseList(req.doc.userId)
+//         return R(res, true, "Fetch Successfully!!", result, 200)
+//     } catch (err) {
+//         next(err)
+//     }
+// };
+
+release.allDraftList = async (req, res, next) => {
     try {
-        const result = await releaseModel.allReleaseList(req.doc.userId)
-        return R(res, true, "Fetch Successfully!!", result, 200)
+        let { page, limit,search } = req.query;
+        page = parseInt(page) || 1;  // Default to page 1
+        limit = parseInt(limit) || 10; // Default to 10 results per page 
+        const result = await releaseModel.allDraftList(req.doc.userId, page, limit,search);
+        return R(res, true, "Fetch Successfully!!", result, 200);
     } catch (err) {
-        next(err)
+        next(err);
     }
 };
+
+release.allReleaseList = async (req, res, next) => {
+    try {
+        let { page, limit,search } = req.query;
+        page = parseInt(page) || 1;  // Default to page 1
+        limit = parseInt(limit) || 10; // Default to 10 results per page 
+        const result = await releaseModel.allReleaseList(req.doc.userId, page, limit,search);
+        return R(res, true, "Fetch Successfully!!", result, 200);
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+release.adminAllReleaseList = async (req, res, next) => {
+    try {
+        let { page, limit,search } = req.query;
+        page = parseInt(page) || 1;  // Default to page 1
+        limit = parseInt(limit) || 10; // Default to 10 results per page 
+        const result = await releaseModel.adminAllReleaseList(req.doc.userId, page, limit,search);
+        return R(res, true, "Fetch Successfully!!", result, 200);
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 release.releaseDetails = async (req, res, next) => {
     let { releaseId } = req.body;

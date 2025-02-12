@@ -82,7 +82,11 @@ router.post('/tracks-update', verifyToken, releaseService.trackUpdate)
 router.get('/tracks-list', verifyToken, releaseService.tracksList)
 router.post('/add-label', verifyToken, releaseService.addLabel)
 router.get('/label-list', verifyToken, releaseService.labelList)
+router.get('/all-draft-list', verifyToken, releaseService.allDraftList)
 router.get('/all-release-list', verifyToken, releaseService.allReleaseList)
+router.get('/admin-all-release-list', verifyToken, releaseService.adminAllReleaseList)
+
+
 // router.post('/add-store',verifyToken, releaseService.addStore)
 // router.get('/list-store',verifyToken, releaseService.storeList)
 
