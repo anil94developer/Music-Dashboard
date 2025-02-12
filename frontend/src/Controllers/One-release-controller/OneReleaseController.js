@@ -17,15 +17,23 @@ const OneReleaseController = (props) => {
   const [type, setType] = useState("Audio");
   const [myRelease, setMyRelease] = useState([]);
   const [myReleaseDraft, setMyReleaseDraft] = useState([]);
-
+  const [totalPages, setTotalPages] = useState(0)
   const [myTracks, setMyTracks] = useState([]);
-
+  const [search, setSearch] = useState("")
+  const [limit, setLimit] = useState(10)
+ 
 
 
   useEffect(() => {
-    fetchReleaseList()
+    fetchReleaseList(1, limit)
     fetchTracksList()
   }, [props, userProfile])
+
+  useEffect(() => {
+    fetchReleaseList(1, limit)
+  }, [search,limit])
+
+
 
   const getClientNo = async (userId) => {
     try {
@@ -40,35 +48,126 @@ const OneReleaseController = (props) => {
   };
 
 
-  const fetchReleaseList = async () => {
+  const fetchReleaseList = async (page, limit) => {
     let arrRelease = [];
     let arrDraft = [];
 
-    if (userProfile?.role == "Admin") {
-      setIsLoading(true)
-      let result = await getData(base.allReleaseList);
-      if (result.status === true) {
-        if (Array.isArray(result.data)) {
-          const arrRelease = result.data.filter(item =>
-            ['Submit', 'Approve', 'Reject'].includes(item.status),
+    // if (userProfile?.role == "Admin") {
+    //   setIsLoading(true)
+    //   let result = await getData(base.allReleaseList);
+    //   if (result.status === true) {
+    //     if (Array.isArray(result.data)) {
+    //       const arrRelease = result.data.data.filter(item =>
+    //         ['Submit', 'Approve', 'Reject'].includes(item.status),
 
-          );
+    //       );
 
-          // Fetch client numbers for each release
-          const releasesWithClientNumbers = await Promise.all(
-            arrRelease.map(async (item) => {
-              const clientNumber = await getClientNo(item.userId);
+    //       // Fetch client numbers for each release
+    //       const releasesWithClientNumbers = await Promise.all(
+    //         arrRelease.data.map(async (item) => {
+    //           const clientNumber = await getClientNo(item.userId);
 
-              return { ...item, clientNumber };
-            })
-          );
+    //           return { ...item, clientNumber };
+    //         })
+    //       );
 
-          setMyRelease(releasesWithClientNumbers);
+    //       setMyRelease(releasesWithClientNumbers);
+    //     }
+
+    //   }
+    // } 
+    if (userProfile?.role === "Admin") {
+      setIsLoading(true);
+      try {
+        let result = await getData(base.adminAllReleaseList + `?page=${page}&limit=${limit}&search=${search}`);
+        setTotalPages(result.data.totalCount)
+        console.log("result-----", result)
+        if (result.status === true) {
+          // if (Array.isArray(result.data.data)) {
+          //   arrRelease = result.data.data.filter(item =>
+          //     ['Submit', 'Approve', 'Reject'].includes(item.status)
+          //   );
+
+            // Fetch client numbers for each release
+            const releasesWithClientNumbers = await Promise.all(
+              result.data.data.map(async (item) => {
+                try {
+                  const clientNumber = await getClientNo(item.userId);
+                  return { ...item, clientNumber };
+                } catch (error) {
+                  console.error("Error fetching client number:", error);
+                  return { ...item, clientNumber: "N/A" }; // Handle failure case
+                }
+              })
+            );
+
+            setMyRelease(releasesWithClientNumbers);
+          // }
         }
-
+      } catch (error) {
+        console.error("Error fetching release list:", error);
+      } finally {
+        setIsLoading(false); // Ensure loading is stopped
       }
-    } else if (userProfile?.role == "company" || userProfile.role == "employee") {
-      setIsLoading(true)
+    }
+    else if (userProfile?.role == "company" || userProfile.role == "employee") {
+      setIsLoading(true);
+      try {
+        let result = await getData(base.allReleaseList + `?page=${page}&limit=${limit}&search=${search}`);
+        setTotalPages(result.data.totalCount)
+        console.log("result-----", result)
+        if (result.status === true) { 
+            // Fetch client numbers for each release
+            const releasesWithClientNumbers = await Promise.all(
+              result.data.data.map(async (item) => {
+                try {
+                  const clientNumber = await getClientNo(item.userId);
+                  return { ...item, clientNumber };
+                } catch (error) {
+                  console.error("Error fetching client number:", error);
+                  return { ...item, clientNumber: "N/A" }; // Handle failure case
+                }
+              })
+            );
+
+            setMyRelease(releasesWithClientNumbers);
+          // }
+        }
+      } catch (error) {
+        console.error("Error fetching release list:", error);
+      } finally {
+        setIsLoading(false); // Ensure loading is stopped
+      }
+
+
+      try {
+        let resultDraft = await getData(base.allDraftList + `?page=${page}&limit=${limit}&search=${search}`);
+        setTotalPages(resultDraft.data.totalCount)
+        console.log("resultDraft-----", resultDraft)
+        if (resultDraft.status === true) { 
+            // Fetch client numbers for each release
+            const releasesWithClientNumbers = await Promise.all(
+              resultDraft.data.data.map(async (item) => {
+                try {
+                  const clientNumber = await getClientNo(item.userId);
+                  return { ...item, clientNumber };
+                } catch (error) {
+                  console.error("Error fetching client number:", error);
+                  return { ...item, clientNumber: "N/A" }; // Handle failure case
+                }
+              })
+            );
+
+            setMyReleaseDraft(releasesWithClientNumbers);
+          // }
+        }
+      } catch (error) {
+        console.error("Error fetching release list:", error);
+      } finally {
+        setIsLoading(false); // Ensure loading is stopped
+      }
+
+
       // let resultSubmit = await getData(base.releaseList + `?status=Submit`);
       // if (resultSubmit.status == true) {
       //   arrRelease.push(resultSubmit.data)
@@ -96,48 +195,48 @@ const OneReleaseController = (props) => {
 
 
 
+      // // setMyRelease(releasesWithClientNumbers);
+      // // Fetch Submitted Releases
+      // let resultSubmit = await getData(base.releaseList + `?status=Submit`);
+      // // if (resultSubmit.status === true) {
+      // //   arrRelease = arrRelease.push(resultSubmit.data); // Flatten the data into arrRelease
+      // // }
+
+      // // Fetch Approved Releases
+      // let result = await getData(base.releaseList + `?status=Approve`);
+      // // if (result.status === true) {
+      // //   arrRelease = arrRelease.push(result.data); // Flatten the data into arrRelease
+      // // }
+      // arrRelease = [...resultSubmit.data, ...result.data];
+
+      // // Generate Releases with Client Numbers
+      // const releasesWithClientNumbers = await Promise.all(
+      //   arrRelease.map(async (item) => {
+      //     const clientNumber = await getClientNo(item.userId[0]);
+      //     return { ...item, clientNumber }; // Add clientNumber to each release
+      //   })
+      // );
+
+      // // Set the result to state
+      // console.log("releasesWithClientNumbers", arrRelease);
       // setMyRelease(releasesWithClientNumbers);
-      // Fetch Submitted Releases
-      let resultSubmit = await getData(base.releaseList + `?status=Submit`);
-      // if (resultSubmit.status === true) {
-      //   arrRelease = arrRelease.push(resultSubmit.data); // Flatten the data into arrRelease
-      // }
-
-      // Fetch Approved Releases
-      let result = await getData(base.releaseList + `?status=Approve`);
-      // if (result.status === true) {
-      //   arrRelease = arrRelease.push(result.data); // Flatten the data into arrRelease
-      // }
-      arrRelease = [...resultSubmit.data, ...result.data];
-
-      // Generate Releases with Client Numbers
-      const releasesWithClientNumbers = await Promise.all(
-        arrRelease.map(async (item) => {
-          const clientNumber = await getClientNo(item.userId[0]);
-          return { ...item, clientNumber }; // Add clientNumber to each release
-        })
-      );
-
-      // Set the result to state
-      console.log("releasesWithClientNumbers", arrRelease);
-      setMyRelease(releasesWithClientNumbers);
 
 
 
-      let allDraft = await getData(base.releaseList + `?status=Pending`);
+      // let allDraft = await getData(base.releaseList + `?status=Pending`);
 
-      arrDraft = allDraft.data;
+      // arrDraft = allDraft.data;
 
-      let allReject = await getData(base.releaseList + `?status=Reject`);
+      // let allReject = await getData(base.releaseList + `?status=Reject`);
 
-      arrDraft = [...allReject.data, ...arrDraft];
+      // arrDraft = [...allReject.data, ...arrDraft];
 
-      // Fetch client numbers for each release
+      // // Fetch client numbers for each release
 
-      console.log("arrDraft----------", arrDraft)
+      // console.log("arrDraft----------", arrDraft)
 
-      setMyReleaseDraft(arrDraft)
-      // setMyRelease(arrRelease)
+      // setMyReleaseDraft(arrDraft)
+      // // setMyRelease(arrRelease)
 
     }
     // setMyReleaseDraft(arrDraft)
@@ -210,12 +309,32 @@ const OneReleaseController = (props) => {
 
       // let updateArr= myReleaseDraft.filter(item=> item._id !== e.id)
       // setMyReleaseDraft(updateArr)
-      fetchReleaseList()
+      fetchReleaseList(1, limit)
 
     } else {
       Swal.fire("Error", result.message, result.message);
     }
 
+  }
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = limit; // Set items per page
+
+  // Calculate total pages
+  const totalRow = Math.ceil(totalPages);
+
+  // Get current items for the page
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedData = myRelease.slice(startIndex, startIndex + itemsPerPage);
+
+
+  const nextPage = () => {
+    fetchReleaseList(currentPage, itemsPerPage)
+    setCurrentPage((prev) => Math.min(prev + 1, totalRow))
+  }
+  const previusPage = () => {
+    fetchReleaseList(currentPage, itemsPerPage)
+    setCurrentPage((prev) => Math.max(prev - 1, 1))
   }
   return {
     isLoading,
@@ -230,7 +349,14 @@ const OneReleaseController = (props) => {
     deleteAction,
     myTracks, setMyTracks, myReleaseDraft,
     exportTableToExcel,
-    fetchReleaseList
+    fetchReleaseList,
+    totalPages,
+    nextPage,
+    startIndex,
+    currentPage,
+    previusPage,
+    search, setSearch,
+    limit, setLimit
   }
 
 }

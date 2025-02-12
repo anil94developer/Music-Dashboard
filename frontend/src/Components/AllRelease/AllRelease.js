@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import OneReleaseController from '../../Controllers/One-release-controller/OneReleaseController';
 import { Nav } from '../Common/Nav'
@@ -6,12 +6,15 @@ import { SideBar } from '../Common/SideBar'
 import * as XLSX from 'xlsx';
 import DataTable from '../Common/DataTable/DataTable';
 import { Box, Button, Modal, Typography } from '@mui/material';
-import { postData } from '../../Services/Ops';
-import { base } from '../../Constants/Data.constant';
-import Swal from 'sweetalert2';
+import Loader from '../Common/Loader';
+import { useUserProfile } from '../../Context/UserProfileContext';
+
 export const AllRelease = () => {
   const navigate = useNavigate();
-  const { setType, setTitle, handleSubmit, myRelease, moreAction, deleteAction, isLoading, myTracks, setMyTracks, exportTableToExcel, } = OneReleaseController();
+  const { userProfile } = useUserProfile()
+
+  const { previusPage, startIndex, search, setSearch, limit, setLimit,
+    currentPage, nextPage, totalPages, setType, setTitle, handleSubmit, myRelease, moreAction, deleteAction, isLoading, myTracks, setMyTracks, exportTableToExcel, } = OneReleaseController();
 
   const columns = [
     { field: 'id', headerName: '#', headerClassName: 'black-header' },
@@ -33,7 +36,7 @@ export const AllRelease = () => {
             color="primary"
             size="small"
             onClick={() => {
-             navigate("/release-details", { state: { releaseId: params.row._id } });
+              navigate("/release-details", { state: { releaseId: params.row._id } });
             }}
           >
             More
@@ -56,6 +59,9 @@ export const AllRelease = () => {
   { console.log("item----------------", myRelease) }
 
 
+
+
+
   return (
     <div>
       <SideBar />
@@ -76,7 +82,46 @@ export const AllRelease = () => {
                       height="500"
                       width="100%"
                     /> */}
+            <div className="row status-steps">
+              <div className="col-lg-1 col-md-6 col-12">
+                <div className="form-group">
+                  <div
+                    style={{
+                      display: 'flex', // Ensure the container is a flex container
+                      flexDirection: 'row', // Align items in a row
+                      gap: '10px', // Add space between items
+                      alignItems: 'center', // Align items vertically centered
+                    }}
+                  >
+                    {/* Dropdown */}
+                    <select
+                      value={limit}
+                      id="limit"
+                      className="form-select form-control"
+                      style={{ flex: '1' }} // Ensure the dropdown takes most of the space
+                      onChange={(e) => setLimit(e.target.value)}
+                    >
+                      <option value={10}>10</option>
+                      <option value={50}>50</option>
+                      <option value={100}>100</option>
 
+
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-2 col-md-6 col-12">
+                <div className="form-group" >
+                  <input
+                    value={search}
+                    type="text"
+                    className="form-control"
+                    placeholder="Search any name"
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
             <div className="box-body table-responsive">
               <table id="example2" className="table table-bordered table-striped">
                 <thead>
@@ -86,71 +131,102 @@ export const AllRelease = () => {
                     <th >Status</th>
                     <th >Image</th>
                     <th >Label</th>
-                    {/* <th >Release date / Hour / Time zone</th> */}
                     <th ># of track</th>
                     <th >UPC / Catalog Number</th>
                     <th >Client Number</th>
-                    {/* <th >ACTION</th> */}
+                    {userProfile?.role === "Admin" && <th >ACTION</th> }
                   </tr>
                 </thead>
-                <tbody role="alert" aria-live="polite" aria-relevant="all">
-                  {myRelease.map((item) => (
+                {
+                  isLoading ?
+                    <div style={{ position: 'absolute', top: '50%', left: '50%', flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Loader />
+                    </div>
+                    :
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                      {myRelease.map((item, index) => (
+                        <tr className="odd">
+                          <td className="  sorting_1">
+                            <a onClick={() => {
+                              navigate("/release-details", { state: { releaseId: item._id } });
+                            }}>
+                              <div>
+                                <span style={{ color: '#0080ff' }}>{item.title}</span>
+                              </div>
+                            </a>
+                            {item.step1.primaryArtist[0].name}
+                          </td>
+                          <td className="  ">{item.type}</td>
+                          <td  >
+                            {item.status === 'Pending' && (
+                              <img className="img-fluid" src={require('../../assets/images/pending.png')} style={{ height: 40, width: 40 }} />
+                            )}
 
-                    <tr className="odd">
-                      <td className="  sorting_1">
-                        <a onClick={() => {
-                          navigate("/release-details", { state: { releaseId: item._id } });
-                        }}>
-                          <div>
-                            <span style={{ color: '#0080ff' }}>{item.title}</span>
-                          </div>
-                        </a>
-                        {item.step1.primaryArtist[0].name}
-                      </td>
-                      <td className="  ">{item.type}</td>
-                      <td  >
-                        {item.status === 'Pending' && (
-                          <img className="img-fluid" src={require('../../assets/images/pending.png')} style={{ height: 40, width: 40 }} />
+                            {item.status === 'Submit' && (
+                              <img className="img-fluid" src={require('../../assets/images/submit.png')} style={{ height: 40, width: 40 }} />
+                            )}
 
-                        )}
+                            {item.status === 'Approve' && (
+                              <img className="img-fluid" src={require('../../assets/images/approve.png')} style={{ height: 40, width: 40 }} />
+                            )}
 
-                        {item.status === 'Submit' && (
-                          <img className="img-fluid" src={require('../../assets/images/submit.png')} style={{ height: 40, width: 40 }} />
+                            {item.status === 'Reject' && (
+                              <img className="img-fluid" src={require('../../assets/images/reject.png')} style={{ height: 40, width: 40 }} />
+                            )}
+                          </td>
+                          <td  ><a href={item?.step1?.coverImage} target={'_blank'}><img src={item?.step1?.coverImage} height={50} width={50} /></a>
 
-                        )}
-
-                        {item.status === 'Approve' && (
-                          <img className="img-fluid" src={require('../../assets/images/approve.png')} style={{ height: 40, width: 40 }} />
-
-                        )}
-
-                        {item.status === 'Reject' && (
-                          <img className="img-fluid" src={require('../../assets/images/reject.png')} style={{ height: 40, width: 40 }} />
-
-                        )}
-                      </td>
-                      <td  ><a href={item?.step1?.coverImage} target={'_blank'}><img src={item?.step1?.coverImage} height={50} width={50} /></a> 
-
-                      </td>
-                      <td className="  ">{item?.step1?.labelName}</td>
-                      {/* <td className="  ">{item.step1?.originalReleaseDate}</td> */}
-                      <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
-                      <td className="  ">{item.step1?.UPCEAN}</td>
-                      <td className="  ">{item.clientNumber}</td>
-                      
-                    </tr>
-                  ))}
-                </tbody>
+                          </td>
+                          <td className="  ">{item?.step1?.labelName}</td>
+                          {/* <td className="  ">{item.step1?.originalReleaseDate}</td> */}
+                          <td className="  ">{Array.isArray(item?.step3) ? item.step3.length : 0}</td>
+                          <td className="  ">{item.step1?.UPCEAN}</td>
+                          <td className="  ">{item.clientNumber}</td>
+                          {userProfile?.role === "Admin" && 
+                          <td className="  ">
+                            
+                              <button className="action-button">
+                                <a onClick={() => moreAction(item)}>
+                                  <i className="fa fa-pencil"></i>
+                                </a>
+                              </button>
+                            
+                          </td>}
+                        </tr>
+                      ))}
+                    </tbody>
+                }
               </table>
             </div>
+            {/* Pagination Controls */}
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+              <button
+                onClick={() => previusPage()}
+                disabled={currentPage === 1}
+                style={{ marginRight: "10px", padding: "5px 10px" }}
+              >
+                Previous
+              </button>
+              <span>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => nextPage()}
+                disabled={currentPage === totalPages}
+                style={{ marginLeft: "10px", padding: "5px 10px" }}
+              >
+                Next
+              </button>
+            </div>
+
             {/* </div> */}
-            {isLoading && "Loading..."}
+
             {/* </div>
               </div>
             </div> */}
           </section>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };

@@ -183,7 +183,15 @@ export default function STEP1(props) {
         <div className="col-lg-3 col-md-6 col-12">
           <div className="form-group">
             <label htmlFor="subgenre">SubGenre * </label>
-            <select
+            <input
+              value={subGenre}
+              type="text"
+              className="form-control"
+              id="subgenre"
+              placeholder="Enter version or subtitle"
+              onChange={(e) => setSubGenre(e.target.value)}
+            />
+            {/* <select
               value={subGenre}
               className="form-select form-control"
               id="subgenre"
@@ -195,7 +203,7 @@ export default function STEP1(props) {
               {subgenres.map((sub) => (
                 <option key={sub.id} value={sub.name}>{sub.name}</option>
               ))}
-            </select>
+            </select> */}
             {props.errors?.['step1.subGenre'] && (
               <span className="text-danger">{props.errors['step1.subGenre']}</span>
             )}

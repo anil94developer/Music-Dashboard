@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { useUserProfile } from '../../Context/UserProfileContext';
 import * as XLSX from 'xlsx';
 import Loader from '../Common/Loader';
+import moment  from 'moment';
 
 export const ReleaseDetails = () => {
   const location = useLocation();
@@ -390,7 +391,7 @@ export const ReleaseDetails = () => {
                               <td className="  sorting_1">{index + 1}</td>
                               <td></td>
                               <td>{myRelease.title}</td>
-                              <td>{myRelease?.step1?.subTitle}</td>
+                              <td>{myRelease?.step1?.subTitle == "null" ? "" : myRelease?.step1?.subTitle}</td>
                               <td>{myRelease?.step1?.primaryArtist?.length > 0 && myRelease?.step1?.primaryArtist[0]?.name}</td>
                               <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.linkId)}</td>
                               <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.itunesLinkId)}</td>
@@ -407,7 +408,7 @@ export const ReleaseDetails = () => {
                               <td>{myRelease?.step1?.format}</td>
                               <td>{item?.TrackTitleLanguage}</td>
                               <td>{item?.Price}</td>
-                              <td></td>
+                              <td>World</td>
                               <td></td>
                               <td>{myRelease.step1?.originalReleaseDate}</td>
                               <td>{myRelease.step1?.originalReleaseDate}</td>
@@ -613,51 +614,70 @@ export const ReleaseDetails = () => {
                                 <td className="  sorting_1">{index + 1}</td>
                                 <td></td>
                                 <td>{myRelease.title}</td>
-                                <td>{ }</td>
+                                <td>{myRelease?.step1?.subTitle == "null" ? "" :myRelease?.step1?.subTitle}</td>
+
                                 <td>{myRelease?.step1?.primaryArtist?.length > 0 && myRelease?.step1?.primaryArtist[0]?.name}</td>
                                 <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.linkId)}</td>
                                 <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.itunesLinkId)}</td>
-                                <td>{myRelease?.step1?.primaryArtist?.length > 1 && myRelease?.step1?.primaryArtist[1]?.name}</td>
-                                <td></td>
-                                <td>{myRelease?.step1?.primaryArtist?.length > 1 && getLastKey(myRelease?.step1?.primaryArtist[1]?.linkId)}</td>
-                                <td>{myRelease?.step1?.primaryArtist?.length > 1 && getLastKey(myRelease?.step1?.primaryArtist[1]?.itunesLinkId)}</td>
-                                <td>{myRelease?.step1?.primaryArtist?.length > 2 && myRelease?.step1?.primaryArtist[2]?.name}</td>
-                                <td></td>
-                                <td>{myRelease?.step1?.primaryArtist?.length > 2 && getLastKey(myRelease?.step1?.primaryArtist[2]?.linkId)}</td>
-                                <td>{myRelease?.step1?.primaryArtist?.length > 2 && getLastKey(myRelease?.step1?.primaryArtist[2]?.itunesLinkId)}</td>
+                                
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? myRelease?.step1?.primaryArtist[1]?.name : myRelease?.step1?.Featuring?.length > 0 ? myRelease?.step1?.Featuring[0]?.name : ""}</td>
+                                <td> {myRelease?.step1?.primaryArtist?.length > 1 ? "Performer" : "Featuring"}</td> 
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.primaryArtist[1]?.linkId ): myRelease?.step1?.Featuring?.length > 0 ? getLastKey(myRelease?.step1?.Featuring[0]?.linkId):""}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.primaryArtist[1]?.itunesLinkId) : myRelease?.step1?.Featuring?.length > 0 ? getLastKey(myRelease?.step1?.Featuring[0]?.itunesLinkId):""}</td>
+
+                                <td>{myRelease?.step1?.Featuring?.length > 0 && myRelease?.step1?.primaryArtist?.length > 1 ? myRelease?.step1?.Featuring[0]?.name:""}</td>
+                                <td>{myRelease?.step1?.Featuring?.length > 0 && myRelease?.step1?.primaryArtist?.length > 1 && "Featuring"}</td>
+                                <td>{myRelease?.step1?.Featuring?.length > 0 && myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.Featuring[0]?.linkId) : ""}</td>
+                                <td>{myRelease?.step1?.Featuring?.length > 0 && myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.Featuring[0]?.itunesLinkId) : ""}</td>
+                                
                                 <td>{myRelease?.step1?.UPCEAN}</td>
                                 <td>{myRelease?.step1?.producerCatalogueNumber}</td>
-                                <td>{myRelease?.step1?.format}</td>
+                                <td>{myRelease?.step1?.format?.toLowerCase().replace(/^./, str => str.toUpperCase())}</td>
                                 <td>{item?.TrackTitleLanguage}</td>
                                 <td>{item?.Price}</td>
+                                <td>World</td>
                                 <td></td>
+                                <td>{moment(myRelease.step1?.originalReleaseDate).format("DD/MM/YYYY")}</td>
+                                <td>{moment(myRelease.step1?.originalReleaseDate).format("DD/MM/YYYY")}</td>
                                 <td></td>
-                                <td>{myRelease.step1?.originalReleaseDate}</td>
-                                <td>{myRelease.step1?.originalReleaseDate}</td>
-                                <td></td>
-                                <td>{myRelease?.step1?.pyear}</td>
-                                <td>{myRelease?.step1?.line}</td>
-                                <td>{myRelease?.step1?.cyear}</td>
+                                <td>{myRelease?.step1?.pYear}</td>
+                                <td>{myRelease?.step1?.pline}</td>
+                                <td>{myRelease?.step1?.cYear}</td>
                                 <td>{myRelease?.step1?.cline}</td>
                                 <td>{myRelease?.step1?.labelName}</td>
                                 <td>{myRelease?.step1?.genre}</td>
                                 <td>{myRelease?.step1?.subGenre}</td>
                                 <td>{item?.SecondaryGenre}</td>
                                 <td>{item?.SubSecondaryGenre}</td>
-                                <td>{myRelease?.step1?.mood}</td>
+                                <td>{item?.mood}</td>
                                 <td>{item?.Composer[0]?.name}</td>
                                 <td>{ }</td>
                                 <td>{item?.Producer[0]?.name}</td>
                                 <td>{item?.Arranger[0]?.name}</td>
                                 <td>{ }</td>
-                                <td>{item?.ParentalAdvisory}</td>
-                                <td>{item?.Volume}</td>
-                                <td>{ }</td>
-                                <td>{ }</td>
+                                <td>{item?.ParentalAdvisory == 'yes'? 'Y' :item?.ParentalAdvisory == 'no'? 'N' : 'C'}</td>
+                                <td>N</td>
+                                <td>N</td>
+                                <td>Jeet Music Services</td>
                                 <td>{index + 1}</td>
-                                <td>{item?.title}</td>
+                                <td>{item?.Title}</td>
                                 <td>{item?.VersionSubtitle}</td>
                                 <td>{item?.PrimaryArtist?.length > 0 && item?.PrimaryArtist[0]?.name}</td>
+                                <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.linkId)}</td>
+                                <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.itunesLinkId)}</td>
+                                
+                                <td>{item?.PrimaryArtist?.length > 1 ? item?.PrimaryArtist[1]?.name : item?.Featuring?.length > 0 ? item?.Featuring[0]?.name : ""}</td>
+                                <td> {item?.PrimaryArtist?.length > 1 ? "Performer" : "Featuring"}</td> 
+                                <td>{item?.PrimaryArtist?.length > 1 ? getLastKey(item?.PrimaryArtist[1]?.linkId ): item?.Featuring?.length > 0 ? getLastKey(item?.Featuring[0]?.linkId):""}</td>
+                                <td>{item?.PrimaryArtist?.length > 1 ? getLastKey(item?.PrimaryArtist[1]?.itunesLinkId) : item?.Featuring?.length > 0 ? getLastKey(item?.Featuring[0]?.itunesLinkId):""}</td>
+
+                                <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 ? item?.Featuring[0]?.name:""}</td>
+                                <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 && "Featuring"}</td>
+                                <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 ? getLastKey(item?.Featuring[0]?.linkId) : ""}</td>
+                                <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 ? getLastKey(item?.Featuring[0]?.itunesLinkId) : ""}</td>
+                                
+
+                                {/* <td>{item?.PrimaryArtist?.length > 0 && item?.PrimaryArtist[0]?.name}</td>
                                 <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.linkId)}</td>
                                 <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.itunesLinkId)}</td>
                                 <td>{item?.Featuring?.length > 1 && item?.Featuring[1]?.name}</td>
@@ -667,20 +687,20 @@ export const ReleaseDetails = () => {
                                 <td>{item?.PrimaryArtist?.length > 2 && item?.PrimaryArtist[2]?.name}</td>
                                 <td></td>
                                 <td>{item?.PrimaryArtist?.length > 2 && getLastKey(item?.PrimaryArtist[2]?.linkId)}</td>
-                                <td>{item?.PrimaryArtist?.length > 2 && getLastKey(item?.PrimaryArtist[2]?.itunesLinkId)}</td>
+                                <td>{item?.PrimaryArtist?.length > 2 && getLastKey(item?.PrimaryArtist[2]?.itunesLinkId)}</td> */}
                                 <td>{item?.ISRC}</td>
                                 <td>{ }</td>
-                                <td>{ }</td>
+                                <td>Y</td>
                                 <td>{item?.pYear}</td>
                                 <td>{item?.Pline}</td>
                                 <td>{item?.cYear}</td>
                                 <td>{item?.cLine}</td>
                                 <td>{item?.Genre}</td>
-                                <td>{item?.SubGenre}</td>
+                                <td>{item?.Subgenre}</td>
                                 <td>{item?.SecondaryGenre}</td>
                                 <td>{item?.SubSecondaryGenre}</td>
-                                <td>{item?.ParentalAdvisory}</td>
-                                <td>{item?.SecondaryTrackType}</td>
+                                <td>{item?.ParentalAdvisory == 'yes'? 'Y' :item?.ParentalAdvisory == 'no'? 'N' : 'C'}</td>
+                                <td>{item?.SecondaryTrackType == 'original' ? "N" : 'Y'}</td>
                                 <td>{ }</td>
                                 <td>{item?.Producer[0]?.name}</td>
                                 <td>{item?.Remixer[0]?.name}</td>
@@ -690,7 +710,7 @@ export const ReleaseDetails = () => {
                                 <td>{item?.Composer[0]?.name}</td>
                                 <td>{item?.Author[0].name}</td>
                                 <td>{item?.Publisher[0].name != "None" ? item?.Publisher[0].name : ""}</td>
-                                <td>{item?.ISRC}</td>
+                                <td>None</td>
                                 <td>{ }</td>
                                 <td>{ }</td>
                                 <td>{item?.Lyrics}</td>

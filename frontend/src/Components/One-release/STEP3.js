@@ -7,7 +7,7 @@ import GENRES from '../../Enums/genres.json';
 import language from '../../Enums/language.json'
 
 export default function STEP3(props) {
-  const { releaseData, fetchReleaseDetails , setErrors} = props
+  const { releaseData, fetchReleaseDetails, setErrors } = props
   const {
     contentType,
     setContentType,
@@ -278,9 +278,9 @@ export default function STEP3(props) {
 
 
   }
-  const [incrementalValue, setIncrementalValue] = useState(1); 
+  const [incrementalValue, setIncrementalValue] = useState(1);
 
-  
+
   // useEffect to set ISRC when generateISRC is true
   useEffect(() => {
     if (generateISRC) {
@@ -619,7 +619,15 @@ export default function STEP3(props) {
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label htmlFor="subgenre">SubGenre * </label>
-                        <select
+                        <input
+                          value={subgenre}
+                          type="text"
+                          className="form-control"
+                          id="subgenre"
+                          placeholder="Enter version or subtitle"
+                          onChange={(e) => setSubgenre(e.target.value)}
+                        />
+                        {/* <select
                           value={subgenre}
                           className="form-select form-control"
                           id="subgenre"
@@ -630,7 +638,7 @@ export default function STEP3(props) {
                           {subgenres.map((sub) => (
                             <option key={sub.id} value={sub.name}>{sub.name}</option>
                           ))}
-                        </select>
+                        </select> */}
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-6">
@@ -652,7 +660,15 @@ export default function STEP3(props) {
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label htmlFor="subgenre">Secondary SubGenre * </label>
-                        <select
+                        <input
+                          value={subSecondaryGenre}
+                          type="text"
+                          className="form-control"
+                          id="subgenre"
+                          placeholder="Enter SubGenre"
+                          onChange={(e) => setSubSecondaryGenre(e.target.value)}
+                        />
+                        {/* <select
                           value={subSecondaryGenre}
                           className="form-select form-control"
                           id="subgenre"
@@ -663,7 +679,7 @@ export default function STEP3(props) {
                           {subgenres.map((sub) => (
                             <option key={sub.id} value={sub.name}>{sub.name}</option>
                           ))}
-                        </select>
+                        </select> */}
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-6">

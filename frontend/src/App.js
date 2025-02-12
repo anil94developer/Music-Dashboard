@@ -51,6 +51,8 @@ function App() {
       <Route path="/CompanyDetails" element={<CompanyDetails />}></Route>
       <Route path="All releases" element={<AllRelease />}></Route>
       <Route path="/all tracks" element={<AllTracks />}></Route>
+      <Route path="/main-step" element={<MainStep />}></Route>
+
       {/* <Route path="/final-submit" element={<FinalSubmit />}></Route>
       <Route path="/All drafts" element={<AllDraft />}></Route>
      
