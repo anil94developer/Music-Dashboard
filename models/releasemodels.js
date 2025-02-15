@@ -445,8 +445,9 @@ releaseModel.allDraftList = async (uId, page, limit, search) => {
   if (search) {
     filter.$and.push({
       $or: [
-        { UPCEAN: { $regex: search, $options: "i" } },
-        { label: { $regex: search, $options: "i" } },
+        { "step1.UPCEAN": { $regex: search, $options: "i" } },
+        { "step1.labelName": { $regex: search, $options: "i" } },
+        { "step1.primaryArtist.name": { $regex: search, $options: "i" } },
         { title: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } }
       ]
@@ -458,6 +459,7 @@ releaseModel.allDraftList = async (uId, page, limit, search) => {
   // Paginate data
   const fetData = await result
     .find(filter)
+    .sort({ updatedAt: -1 })
     .skip((page - 1) * limit) // Skip previous pages
     .limit(limit) // Limit results per page
     .exec();
@@ -479,7 +481,7 @@ releaseModel.allReleaseList = async (uId, page = 1, limit = 10, search) => {
   // Base filter with status and userId
   let filter = {
     $and: [
-      { status: { $in: ["Submit"] } },
+      { status: { $in: ["Submit" , "Approve"] } },
       { userId: uId } // No need for `$in` if it's a single userId
     ],
   };
@@ -489,8 +491,9 @@ releaseModel.allReleaseList = async (uId, page = 1, limit = 10, search) => {
   if (search) {
     filter.$and.push({
       $or: [
-        { UPCEAN: { $regex: search, $options: "i" } },
-        { label: { $regex: search, $options: "i" } },
+        { "step1.UPCEAN": { $regex: search, $options: "i" } },
+        { "step1.labelName": { $regex: search, $options: "i" } },
+        { "step1.primaryArtist.name": { $regex: search, $options: "i" } },
         { title: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } }
       ]
@@ -503,6 +506,7 @@ const totalCount = await result.countDocuments(filter);
   // Fetch paginated results
   const fetData = await result
     .find(filter)
+    .sort({ updatedAt: -1 })
     .skip((page - 1) * limit) // Skip previous pages
     .limit(limit) // Limit results per page
     .exec();
@@ -525,13 +529,15 @@ releaseModel.adminAllReleaseList = async (uId, page, limit, search) => {
 
   // Apply search filter if search term exists
   if (search) {
-    filter.$or = [
-      // Case-insensitive search on description
-      { UPCEAN: { $regex: search, $options: "i" } }, // Case-insensitive search on description
-      { label: { $regex: search, $options: "i" } }, // Case-insensitive search on description
-      { title: { $regex: search, $options: "i" } }, // Case-insensitive search on title
-      { description: { $regex: search, $options: "i" } }, // Case-insensitive search on description
-    ];
+    filter.$and.push({
+      $or: [
+        { "step1.UPCEAN": { $regex: search, $options: "i" } },
+        { "step1.labelName": { $regex: search, $options: "i" } },
+        { "step1.primaryArtist.name": { $regex: search, $options: "i" } },
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } }
+      ]
+    });
   }
   // Count total documents for pagination
   const totalCount = await result.countDocuments();
@@ -539,6 +545,7 @@ releaseModel.adminAllReleaseList = async (uId, page, limit, search) => {
   // Paginate data
   const fetData = await result
     .find(filter)
+    .sort({ updatedAt: -1 })
     .skip((page - 1) * limit) // Skip previous pages
     .limit(limit) // Limit results per page
     .exec();
