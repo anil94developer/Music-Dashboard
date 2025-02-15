@@ -428,9 +428,9 @@ export const ReleaseDetails = () => {
                               <td>{item?.Producer[0]?.name}</td>
                               <td>{item?.Arranger[0]?.name}</td>
                               <td>None</td>
-                              <td>{item?.ParentalAdvisory}</td>
-                              <td>{item?.Volume}</td>
-                              <td>None</td>
+                              <td>{item?.ParentalAdvisory == 'yes'? 'Y' :item?.ParentalAdvisory == 'no'? 'N' : 'C'}</td>
+                              <td>{item?.Volume?.match(/\d+/)}</td>
+                              <td>1</td>
                               <td>None</td>
                               <td>{index + 1}</td>
                               <td>{item?.title}</td>
@@ -475,7 +475,7 @@ export const ReleaseDetails = () => {
                               <td>{item?.ISRC}</td>
                               <td>{ }</td>
                               <td>{ }</td>
-                              <td>{item?.Lyrics}</td>
+                              <td>{item?.LyricsLanguage}</td>
                               <td>
                                 {isDownloading ?
                                   <Loader />
@@ -656,8 +656,8 @@ export const ReleaseDetails = () => {
                                 <td>{item?.Arranger[0]?.name}</td>
                                 <td>{ }</td>
                                 <td>{item?.ParentalAdvisory == 'yes'? 'Y' :item?.ParentalAdvisory == 'no'? 'N' : 'C'}</td>
-                                <td>N</td>
-                                <td>N</td>
+                                <td>{item?.Volume?.match(/\d+/)}</td>
+                                <td>1</td>
                                 <td>Jeet Music Services</td>
                                 <td>{index + 1}</td>
                                 <td>{item?.Title}</td>
@@ -713,7 +713,7 @@ export const ReleaseDetails = () => {
                                 <td>None</td>
                                 <td>{ }</td>
                                 <td>{ }</td>
-                                <td>{item?.Lyrics}</td>
+                                <td>{item?.LyricsLanguage}</td>
                               </tr>
                             )
                           })

@@ -80,7 +80,7 @@ const OneReleaseController = (props) => {
       setIsLoading(true);
       try {
         let result = await getData(base.adminAllReleaseList + `?page=${page}&limit=${limit}&search=${search}`);
-        setTotalPages(result.data.totalCount)
+        setTotalPages(result.data.totalPages)
         console.log("result-----", result)
         if (result.status === true) {
           // if (Array.isArray(result.data.data)) {
@@ -114,7 +114,7 @@ const OneReleaseController = (props) => {
       setIsLoading(true);
       try {
         let result = await getData(base.allReleaseList + `?page=${page}&limit=${limit}&search=${search}`);
-        setTotalPages(result.data.totalCount)
+        setTotalPages(result.data.totalPages)
         console.log("result-----", result)
         if (result.status === true) { 
             // Fetch client numbers for each release
@@ -142,7 +142,7 @@ const OneReleaseController = (props) => {
 
       try {
         let resultDraft = await getData(base.allDraftList + `?page=${page}&limit=${limit}&search=${search}`);
-        setTotalPages(resultDraft.data.totalCount)
+        setTotalPages(resultDraft.data.totalPages)
         console.log("resultDraft-----", resultDraft)
         if (resultDraft.status === true) { 
             // Fetch client numbers for each release

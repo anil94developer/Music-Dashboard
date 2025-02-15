@@ -220,9 +220,7 @@ export default function STEP3(props) {
         setPrimaryArtist(releaseData.step1.primaryArtist)
         setFeaturing(releaseData.step1.featuring);
         setPLine(releaseData.step1.line);
-
       }
-      //
 
     }
     getData()
