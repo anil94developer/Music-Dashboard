@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 import { useUserProfile } from '../../Context/UserProfileContext';
 import * as XLSX from 'xlsx';
 import Loader from '../Common/Loader';
-import moment  from 'moment';
+import moment from 'moment';
 
 export const ReleaseDetails = () => {
   const location = useLocation();
@@ -155,7 +155,7 @@ export const ReleaseDetails = () => {
                 <div className="release-detail d-flex flex-wrap mt-3">
 
                   <p className="release-data"><strong>Title :</strong> {myRelease?.title}</p>
-                  <p className="release-data"><strong>SubTitle :</strong> {myRelease?.step1?.subTitle}</p>
+                  <p className="release-data"><strong>SubTitle :</strong> {myRelease?.step1?.subTitle == "null" ? "" : myRelease?.step1?.subTitle}</p>
                   <p className="release-data"><strong>Status :</strong> {myRelease?.status}</p>
 
                   <p className="release-data">
@@ -179,6 +179,7 @@ export const ReleaseDetails = () => {
                   <p className="release-data"><strong>Production Year :</strong> {myRelease?.step1?.productionYear}</p>
                   <p className="release-data"><strong>UPCEAN :</strong> {myRelease?.step1?.UPCEAN}</p>
                   <p className="release-data"><strong>Producer Catalogue Number :</strong> {myRelease?.step1?.producerCatalogueNumber}</p>
+                  <p className="release-data"><strong>OAC Certified by YouTube Link :</strong> {myRelease?.youtubechannelLinkId}</p>
                 </div>
               </div>
             </div>
@@ -396,7 +397,7 @@ export const ReleaseDetails = () => {
                               <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.linkId)}</td>
                               <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.itunesLinkId)}</td>
                               <td>{myRelease?.step1?.primaryArtist?.length > 1 && myRelease?.step1?.primaryArtist[1]?.name}</td>
-                              <td></td>
+                              <td> {myRelease?.step1?.primaryArtist?.length > 1 ? "Performer" : "Featuring"}</td>
                               <td>{myRelease?.step1?.primaryArtist?.length > 1 && getLastKey(myRelease?.step1?.primaryArtist[1]?.linkId)}</td>
                               <td>{myRelease?.step1?.primaryArtist?.length > 1 && getLastKey(myRelease?.step1?.primaryArtist[1]?.itunesLinkId)}</td>
                               <td>{myRelease?.step1?.primaryArtist?.length > 2 && myRelease?.step1?.primaryArtist[2]?.name}</td>
@@ -413,9 +414,9 @@ export const ReleaseDetails = () => {
                               <td>{myRelease.step1?.originalReleaseDate}</td>
                               <td>{myRelease.step1?.originalReleaseDate}</td>
                               <td></td>
-                              <td>{myRelease?.step1?.pyear}</td>
-                              <td>{myRelease?.step1?.line}</td>
-                              <td>{myRelease?.step1?.cyear}</td>
+                              <td>{myRelease?.step1?.pYear}</td>
+                              <td>{myRelease?.step1?.pline}</td>
+                              <td>{myRelease?.step1?.cYear}</td>
                               <td>{myRelease?.step1?.cline}</td>
                               <td>{myRelease?.step1?.labelName}</td>
                               <td>{myRelease?.step1?.genre}</td>
@@ -428,7 +429,7 @@ export const ReleaseDetails = () => {
                               <td>{item?.Producer[0]?.name}</td>
                               <td>{item?.Arranger[0]?.name}</td>
                               <td>None</td>
-                              <td>{item?.ParentalAdvisory == 'yes'? 'Y' :item?.ParentalAdvisory == 'no'? 'N' : 'C'}</td>
+                              <td>{item?.ParentalAdvisory == 'yes' ? 'Y' : item?.ParentalAdvisory == 'no' ? 'N' : 'C'}</td>
                               <td>{item?.Volume?.match(/\d+/)}</td>
                               <td>1</td>
                               <td>None</td>
@@ -614,22 +615,22 @@ export const ReleaseDetails = () => {
                                 <td className="  sorting_1">{index + 1}</td>
                                 <td></td>
                                 <td>{myRelease.title}</td>
-                                <td>{myRelease?.step1?.subTitle == "null" ? "" :myRelease?.step1?.subTitle}</td>
+                                <td>{myRelease?.step1?.subTitle == "null" ? "" : myRelease?.step1?.subTitle}</td>
 
                                 <td>{myRelease?.step1?.primaryArtist?.length > 0 && myRelease?.step1?.primaryArtist[0]?.name}</td>
                                 <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.linkId)}</td>
                                 <td>{myRelease?.step1?.primaryArtist?.length > 0 && getLastKey(myRelease?.step1?.primaryArtist[0]?.itunesLinkId)}</td>
-                                
-                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? myRelease?.step1?.primaryArtist[1]?.name : myRelease?.step1?.Featuring?.length > 0 ? myRelease?.step1?.Featuring[0]?.name : ""}</td>
-                                <td> {myRelease?.step1?.primaryArtist?.length > 1 ? "Performer" : "Featuring"}</td> 
-                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.primaryArtist[1]?.linkId ): myRelease?.step1?.Featuring?.length > 0 ? getLastKey(myRelease?.step1?.Featuring[0]?.linkId):""}</td>
-                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.primaryArtist[1]?.itunesLinkId) : myRelease?.step1?.Featuring?.length > 0 ? getLastKey(myRelease?.step1?.Featuring[0]?.itunesLinkId):""}</td>
 
-                                <td>{myRelease?.step1?.Featuring?.length > 0 && myRelease?.step1?.primaryArtist?.length > 1 ? myRelease?.step1?.Featuring[0]?.name:""}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? myRelease?.step1?.primaryArtist[1]?.name : myRelease?.step1?.Featuring?.length > 0 ? myRelease?.step1?.Featuring[0]?.name : ""}</td>
+                                <td> {myRelease?.step1?.primaryArtist?.length > 1 ? "Performer" : "Featuring"}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.primaryArtist[1]?.linkId) : myRelease?.step1?.Featuring?.length > 0 ? getLastKey(myRelease?.step1?.Featuring[0]?.linkId) : ""}</td>
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.primaryArtist[1]?.itunesLinkId) : myRelease?.step1?.Featuring?.length > 0 ? getLastKey(myRelease?.step1?.Featuring[0]?.itunesLinkId) : ""}</td>
+
+                                <td>{myRelease?.step1?.primaryArtist?.length > 1 ? myRelease?.step1?.primaryArtist[2]?.name : myRelease?.step1?.Featuring?.length > 0 ? myRelease?.step1?.Featuring[0]?.name : ""}</td>
                                 <td>{myRelease?.step1?.Featuring?.length > 0 && myRelease?.step1?.primaryArtist?.length > 1 && "Featuring"}</td>
                                 <td>{myRelease?.step1?.Featuring?.length > 0 && myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.Featuring[0]?.linkId) : ""}</td>
                                 <td>{myRelease?.step1?.Featuring?.length > 0 && myRelease?.step1?.primaryArtist?.length > 1 ? getLastKey(myRelease?.step1?.Featuring[0]?.itunesLinkId) : ""}</td>
-                                
+
                                 <td>{myRelease?.step1?.UPCEAN}</td>
                                 <td>{myRelease?.step1?.producerCatalogueNumber}</td>
                                 <td>{myRelease?.step1?.format?.toLowerCase().replace(/^./, str => str.toUpperCase())}</td>
@@ -655,7 +656,7 @@ export const ReleaseDetails = () => {
                                 <td>{item?.Producer[0]?.name}</td>
                                 <td>{item?.Arranger[0]?.name}</td>
                                 <td>{ }</td>
-                                <td>{item?.ParentalAdvisory == 'yes'? 'Y' :item?.ParentalAdvisory == 'no'? 'N' : 'C'}</td>
+                                <td>{item?.ParentalAdvisory == 'yes' ? 'Y' : item?.ParentalAdvisory == 'no' ? 'N' : 'C'}</td>
                                 <td>{item?.Volume?.match(/\d+/)}</td>
                                 <td>1</td>
                                 <td>Jeet Music Services</td>
@@ -665,17 +666,17 @@ export const ReleaseDetails = () => {
                                 <td>{item?.PrimaryArtist?.length > 0 && item?.PrimaryArtist[0]?.name}</td>
                                 <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.linkId)}</td>
                                 <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.itunesLinkId)}</td>
-                                
-                                <td>{item?.PrimaryArtist?.length > 1 ? item?.PrimaryArtist[1]?.name : item?.Featuring?.length > 0 ? item?.Featuring[0]?.name : ""}</td>
-                                <td> {item?.PrimaryArtist?.length > 1 ? "Performer" : "Featuring"}</td> 
-                                <td>{item?.PrimaryArtist?.length > 1 ? getLastKey(item?.PrimaryArtist[1]?.linkId ): item?.Featuring?.length > 0 ? getLastKey(item?.Featuring[0]?.linkId):""}</td>
-                                <td>{item?.PrimaryArtist?.length > 1 ? getLastKey(item?.PrimaryArtist[1]?.itunesLinkId) : item?.Featuring?.length > 0 ? getLastKey(item?.Featuring[0]?.itunesLinkId):""}</td>
 
-                                <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 ? item?.Featuring[0]?.name:""}</td>
+                                <td>{item?.PrimaryArtist?.length > 1 ? item?.PrimaryArtist[1]?.name : item?.Featuring?.length > 0 ? item?.Featuring[0]?.name : ""}</td>
+                                <td> {item?.PrimaryArtist?.length > 1 ? "Performer" : "Featuring"}</td>
+                                <td>{item?.PrimaryArtist?.length > 1 ? getLastKey(item?.PrimaryArtist[1]?.linkId) : item?.Featuring?.length > 0 ? getLastKey(item?.Featuring[0]?.linkId) : ""}</td>
+                                <td>{item?.PrimaryArtist?.length > 1 ? getLastKey(item?.PrimaryArtist[1]?.itunesLinkId) : item?.Featuring?.length > 0 ? getLastKey(item?.Featuring[0]?.itunesLinkId) : ""}</td>
+
+                                <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 ? item?.Featuring[0]?.name : ""}</td>
                                 <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 && "Featuring"}</td>
                                 <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 ? getLastKey(item?.Featuring[0]?.linkId) : ""}</td>
                                 <td>{item?.Featuring?.length > 0 && item?.PrimaryArtist?.length > 1 ? getLastKey(item?.Featuring[0]?.itunesLinkId) : ""}</td>
-                                
+
 
                                 {/* <td>{item?.PrimaryArtist?.length > 0 && item?.PrimaryArtist[0]?.name}</td>
                                 <td>{item?.PrimaryArtist?.length > 0 && getLastKey(item?.PrimaryArtist[0]?.linkId)}</td>
@@ -699,7 +700,7 @@ export const ReleaseDetails = () => {
                                 <td>{item?.Subgenre}</td>
                                 <td>{item?.SecondaryGenre}</td>
                                 <td>{item?.SubSecondaryGenre}</td>
-                                <td>{item?.ParentalAdvisory == 'yes'? 'Y' :item?.ParentalAdvisory == 'no'? 'N' : 'C'}</td>
+                                <td>{item?.ParentalAdvisory == 'yes' ? 'Y' : item?.ParentalAdvisory == 'no' ? 'N' : 'C'}</td>
                                 <td>{item?.SecondaryTrackType == 'original' ? "N" : 'Y'}</td>
                                 <td>{ }</td>
                                 <td>{item?.Producer[0]?.name}</td>

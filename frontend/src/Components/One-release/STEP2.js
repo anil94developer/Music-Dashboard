@@ -10,7 +10,8 @@ export default function STEP2(props) {
     files,
     setReleaseData,
     uploadProgress,
-    fetchReleaseDetails
+    fetchReleaseDetails,
+    handleDeleteFile
   } = Step2Controller();
 
   useEffect(() => {
@@ -77,6 +78,7 @@ export default function STEP2(props) {
                   <th>Name</th>
                   <th>Type</th>
                   <th>File URL</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -88,6 +90,11 @@ export default function STEP2(props) {
                       <a href={item.fileData} target="_blank" rel="noopener noreferrer">
                         <i className="fa fa-play"></i> Play
                       </a>
+                    </td>
+                    <td>
+                      <button className="btn btn-danger" onClick={() => handleDeleteFile(item._id)}>
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}

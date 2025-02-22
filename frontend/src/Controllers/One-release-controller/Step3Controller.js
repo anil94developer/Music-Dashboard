@@ -9,8 +9,6 @@ import useLocalStorage from 'use-local-storage';
 import { base } from '../../Constants/Data.constant';
 import { postData, postDataContent } from '../../Services/Ops';
 const Step3Controller = (props) => {
-
-
     const [releaseData, setReleaseData] = useState({})
     const [contentType, setContentType] = useState("Audio");
     const [primaryTrackType, setPrimaryTrackType] = useState("music");
@@ -20,11 +18,11 @@ const Step3Controller = (props) => {
     const [versionSubtitle, setVersionSubtitle] = useState("");
     const [primaryArtist, setPrimaryArtist] = useState("");
     const [featuring, setFeaturing] = useState("");
-    const [remixer, setRemixer] = useState([{ id: '', name: '' }]);
+    const [remixer, setRemixer] = useState([{ id: '', name: '', iprs: '' }]);
     const [author, setAuthor] = useState([{ id: '', name: '', iprs: '' }]);
     const [composer, setComposer] = useState([{ id: '', name: '', iprs: '' }]);
-    const [arranger, setArranger] = useState([{ id: '', name: '' }]);
-    const [producer, setProducer] = useState([{ id: '', name: '' }]);
+    const [arranger, setArranger] = useState([{ id: '', name: '', iprs: '' }]);
+    const [producer, setProducer] = useState([{ id: '', name: '', iprs: '' }]);
     const [pLine, setPLine] = useState("");
     const [productionYear, setProductionYear] = useState("");
     const [publisher, setPublisher] = useState([{ id: '', name: '', iprs: '' }]);
@@ -50,14 +48,101 @@ const Step3Controller = (props) => {
     const [otherContributory, setOtherContributory] = useState([]);
     const [mood, setMood] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [localErrors, setLocalErrors] = useState([]);
     const [pYear, setPYear] = useState("")
     const [cLine, setCLine] = useState("")
     const [cYear, setCYear] = useState("")
 
 
 
+    const handleDeleteFile = async (trackId) => {
+        try {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to recover this file!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            });
+
+            if (result.isConfirmed) {
+                let body = {
+                    trackId: trackId,
+                    releaseId: releaseData._id
+                }
+
+                await postData(base.deleteTrack, body);
+                setStep3(prevStep3 => prevStep3.filter(step => step._id !== trackId));
+
+                Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+                
+            }
+        } catch (error) {
+            console.error("Error deleting file:", error);
+            Swal.fire("Error", "Failed to delete the file.", "error");
+        }
+    };
+
+    const validateFields = () => {
+        setLocalErrors([]);
+
+        const requiredFields = {
+            contentType,
+            primaryTrackType,
+            secondaryTrackType,
+            instrumental,
+            volume,
+            title,
+            cYear,           
+            pYear,
+            previewStart,
+            trackTitleLanguage,
+            productionYear,
+            primaryArtist,
+            author,
+            composer,
+            mood,
+            genre,
+            previewStart,
+            trackTitleLanguage,
+            cLine,
+            pLine,
+            subgenre,
+            secondaryGenre,
+            subSecondaryGenre,
+            price,
+            parentalAdvisory,
+            lyricsLanguage
+        };
+
+        const newErrors = {};
+
+        Object.keys(requiredFields).forEach(field => {
+            if (
+                requiredFields[field] === undefined ||
+                requiredFields[field] === "" ||
+                (Array.isArray(requiredFields[field]) && requiredFields[field].length === 0) ||
+                (Array.isArray(requiredFields[field]) && requiredFields[field].every(item => Object.values(item).every(value => value === "")))
+            ) {
+                newErrors[field] = "Required";
+            }
+        });
+
+        setLocalErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e) => {
+        console.log(localErrors)
+        if (!validateFields()) {
+            console.log(localErrors)
+            Swal.fire("Error", "Please fill all mandatory fields", "error");
+            return;
+        }
+
         let body = {}
         if (btnName == "Add") {
             body = {
@@ -175,6 +260,7 @@ const Step3Controller = (props) => {
     }
 
     return {
+        localErrors,
         contentType,
         setContentType,
         primaryTrackType,
@@ -248,7 +334,8 @@ const Step3Controller = (props) => {
         otherContributory, setOtherContributory,
         mood,
         setMood,
-        isModalOpen, 
+        isModalOpen,
+        handleDeleteFile,
         setIsModalOpen
     };
 

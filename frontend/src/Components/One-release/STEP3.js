@@ -9,6 +9,8 @@ import language from '../../Enums/language.json'
 export default function STEP3(props) {
   const { releaseData, fetchReleaseDetails, setErrors } = props
   const {
+    localErrors,
+    handleDeleteFile,
     contentType,
     setContentType,
     primaryTrackType,
@@ -247,7 +249,7 @@ export default function STEP3(props) {
     setComposer(item.Composer || [{ value: '' }]);
     setArranger(item.Arranger || [{ value: '' }]);
     setProducer(item.Producer || [{ value: '' }]);
-    setPLine(item.Pline || "");
+    setPLine(item.pLine || "");
     setProductionYear(item.ProductionYear || "");
     setPublisher(item.Publisher || [{ value: '' }]);
     setIsrc(item.ISRC || "");
@@ -268,7 +270,6 @@ export default function STEP3(props) {
     setOtherContributory(item.otherContributory || [])
     setMood(item?.mood)
     setCLine(item?.cLine)
-    setPLine(item?.pLine)
     setCYear(item?.cYear)
     setPYear(item?.pYear)
 
@@ -324,7 +325,11 @@ export default function STEP3(props) {
                       <td className=" ">
                         <a className="btn btn-app" onClick={() => { editTracks(item) }}>
                           <i className="fa fa-edit"></i> Edit
-                        </a></td>
+                        </a>
+                        <button className="btn btn-danger" onClick={() => handleDeleteFile(item._id)}>
+                        Delete
+                      </button>
+                        </td>
                     </tr>
                   ))}
                 </tbody></table>
@@ -367,6 +372,9 @@ export default function STEP3(props) {
                         <input type="radio" value="Audio" checked={contentType == "Audio"} onChange={() => setContentType("Audio")} /> Audio
                         {/* <input type="radio" value="Video" checked={contentType == "Video"} onChange={() => setContentType("Video")} style={{ marginLeft: "10px" }} /> Video */}
                       </div>
+                      {localErrors?.['contentType'] && (
+                      <span className="text-danger">{localErrors['contentType']}</span>
+                       )}
                     </div>
                     {/* Primary Track Type */}
                     <div className="col-lg-3 col-md-6">
@@ -374,30 +382,48 @@ export default function STEP3(props) {
                         <label>Primary Track Type *</label>
                         <input type="radio" value="music" checked={primaryTrackType === "music"} onChange={() => setPrimaryTrackType("music")} /> Music
                       </div>
+                      {localErrors?.['primaryTrackType'] && (
+                      <span className="text-danger">{localErrors['primaryTrackType']}</span>
+                       )}
                     </div>
                     {/* Secondary Track Type */}
+                    
                     <div className="col-lg-4 col-md-6">
-                      <label>Secondary Track Type *</label>
-                      <input type="radio" value="original" checked={secondaryTrackType === "original"} onChange={() => setSecondaryTrackType("original")} /> Original
-                      <input type="radio" value="karaoke" checked={secondaryTrackType === "karaoke"} onChange={() => setSecondaryTrackType("karaoke")} style={{ marginLeft: "10px" }} /> Karaoke
-                      <input type="radio" value="medley" checked={secondaryTrackType === "medley"} onChange={() => setSecondaryTrackType("medley")} style={{ marginLeft: "10px" }} /> Medley
-                      <input type="radio" value="cover" checked={secondaryTrackType === "cover"} onChange={() => setSecondaryTrackType("cover")} style={{ marginLeft: "10px" }} /> Cover
+                      <div className="form-group">
+                        <label>Secondary Track Type *</label>
+                        <input type="radio" value="original" checked={secondaryTrackType === "original"} onChange={() => setSecondaryTrackType("original")} /> Original
+                        <input type="radio" value="karaoke" checked={secondaryTrackType === "karaoke"} onChange={() => setSecondaryTrackType("karaoke")} style={{ marginLeft: "10px" }} /> Karaoke
+                        <input type="radio" value="medley" checked={secondaryTrackType === "medley"} onChange={() => setSecondaryTrackType("medley")} style={{ marginLeft: "10px" }} /> Medley
+                        <input type="radio" value="cover" checked={secondaryTrackType === "cover"} onChange={() => setSecondaryTrackType("cover")} style={{ marginLeft: "10px" }} /> Cover
+                      </div>
+                      {localErrors?.['secondaryTrackType'] && (
+                      <span className="text-danger">{localErrors['secondaryTrackType']}</span>
+                       )}
                     </div>
+
                     {/* Instrumental */}
                     <div className="col-lg-2 col-md-6">
-                      <label>Instrumental *</label>
-                      <input type="radio" value={true} checked={instrumental === true} onChange={() => setInstrumental(true)} /> Yes
-                      <input type="radio" value={false} checked={instrumental === false} onChange={() => setInstrumental(false)} style={{ marginLeft: "10px" }} /> No
+                      <div className="form-group">
+                        <label>Instrumental *</label>
+                        <input type="radio" value={true} checked={instrumental === true} onChange={() => setInstrumental(true)} /> Yes
+                        <input type="radio" value={false} checked={instrumental === false} onChange={() => setInstrumental(false)} style={{ marginLeft: "10px" }} /> No
+                      </div>
+                      {localErrors?.['instrumental'] && (
+                      <span className="text-danger">{localErrors['instrumental']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>Volume Year</label>
+                        <label>Volume Year *</label>
                         <select className="form-select form-control" value={volume} onChange={(e) => setVolume(e.target.value)}>
                           <option value="">- Select a Volume -</option>
                           {[...Array(20)].map((_, i) => (
                             <option key={i} value={`Volume` + (i + 1)}>{`Volume` + (i + 1)}</option>
                           ))}
                         </select>
+                        {localErrors?.['volume'] && (
+                      <span className="text-danger">{localErrors['volume']}</span>
+                       )}
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-6">
@@ -405,6 +431,9 @@ export default function STEP3(props) {
                         <label>Title *</label>
                         <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} />
                       </div>
+                      {localErrors?.['title'] && (
+                      <span className="text-danger">{localErrors['title']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -417,6 +446,9 @@ export default function STEP3(props) {
                         <label>Primary Artist *</label>
                         <SearchInput artistData={primaryArtist} setSelectData={setPrimaryArtist} />
                       </div>
+                      {localErrors?.['primaryArtist'] && (
+                      <span className="text-danger">{localErrors['primaryArtist']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -426,7 +458,7 @@ export default function STEP3(props) {
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>Mood</label>
+                        <label>Mood *</label>
                         <select className="form-select form-control" value={mood} onChange={(e) => setMood(e.target.value)}>
                           <option value="">- Select a mood -</option>
                           <option value={'Romantic'}>Romantic</option>
@@ -440,6 +472,9 @@ export default function STEP3(props) {
 
                         </select>
                       </div>
+                      {localErrors?.['mood'] && (
+                      <span className="text-danger">{localErrors['mood']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -455,6 +490,9 @@ export default function STEP3(props) {
                         <DynamicInputList inputs={author} setInputs={setAuthor} placeholder={"Author"} isIPRS={true} />
 
                       </div>
+                      {localErrors?.['author'] && (
+                      <span className="text-danger">{localErrors['author']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -462,23 +500,26 @@ export default function STEP3(props) {
                         <DynamicInputList inputs={composer} setInputs={setComposer} placeholder={"Composer"} isIPRS={true} />
 
                       </div>
+                      {localErrors?.['composer'] && (
+                      <span className="text-danger">{localErrors['composer']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Arranger</label>
-                        <DynamicInputList inputs={arranger} setInputs={setArranger} placeholder={"Arranger"} />
+                        <DynamicInputList inputs={arranger} setInputs={setArranger} placeholder={"Arranger"} isIPRS={true} />
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
                         <label>Producer</label>
-                        <DynamicInputList inputs={producer} setInputs={setProducer} placeholder={"Producer"} />
+                        <DynamicInputList inputs={producer} setInputs={setProducer} placeholder={"Producer"} isIPRS={true} />
 
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>P Year</label>
+                        <label>P Year *</label>
                         <select className="form-select form-control" value={pYear} onChange={(e) => setPYear(e.target.value)}>
                           <option value="">- Select a (P) year -</option>
                           {[...Array(100)].map((_, i) => (
@@ -486,27 +527,36 @@ export default function STEP3(props) {
                           ))}
                         </select>
                       </div>
+                      {localErrors?.['pYear'] && (
+                      <span className="text-danger">{localErrors['pYear']}</span>
+                       )}
                     </div>
 
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>P Line</label>
+                        <label>P Line *</label>
                         <input type="text" className="form-control" value={pLine} onChange={(e) => setPLine(e.target.value)} />
                       </div>
+                      {localErrors?.['pLine'] && (
+                      <span className="text-danger">{localErrors['pLine']}</span>
+                       )}
                     </div>
 
 
 
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>C Line</label>
+                        <label>C Line *</label>
                         <input type="text" className="form-control" value={cLine} onChange={(e) => setCLine(e.target.value)} />
                       </div>
+                      {localErrors?.['cLine'] && (
+                      <span className="text-danger">{localErrors['cLine']}</span>
+                       )}
                     </div>
 
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>C Year</label>
+                        <label>C Year *</label>
                         <select className="form-select form-control" value={cYear} onChange={(e) => setCYear(e.target.value)}>
                           <option value="">- Select a (C) year -</option>
                           {[...Array(100)].map((_, i) => (
@@ -514,6 +564,9 @@ export default function STEP3(props) {
                           ))}
                         </select>
                       </div>
+                      {localErrors?.['cYear'] && (
+                      <span className="text-danger">{localErrors['cYear']}</span>
+                       )}
                     </div>
 
 
@@ -521,7 +574,7 @@ export default function STEP3(props) {
 
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>Production Year</label>
+                        <label>Production Year *</label>
                         <select className="form-select form-control" value={productionYear} onChange={(e) => setProductionYear(e.target.value)}>
                           <option value="">- Select a year -</option>
                           {[...Array(100)].map((_, i) => (
@@ -529,6 +582,9 @@ export default function STEP3(props) {
                           ))}
                         </select>
                       </div>
+                      {localErrors?.['productionYear'] && (
+                      <span className="text-danger">{localErrors['productionYear']}</span>
+                       )}
                     </div>
 
 
@@ -559,7 +615,7 @@ export default function STEP3(props) {
                     {!generateISRC &&
                       <div className="col-lg-3 col-md-6">
                         <div className="form-group">
-                          <label>ISRC</label>
+                          <label>ISRC *</label>
                           <input
                             type="text"
                             className="form-control"
@@ -613,6 +669,9 @@ export default function STEP3(props) {
                           )}
                         </select>
                       </div>
+                      {localErrors?.['genre'] && (
+                      <span className="text-danger">{localErrors['genre']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -638,6 +697,9 @@ export default function STEP3(props) {
                           ))}
                         </select> */}
                       </div>
+                      {localErrors?.['subgenre'] && (
+                      <span className="text-danger">{localErrors['subgenre']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -654,6 +716,9 @@ export default function STEP3(props) {
                           )}
                         </select>
                       </div>
+                      {localErrors?.['secondaryGenre'] && (
+                      <span className="text-danger">{localErrors['secondaryGenre']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -679,6 +744,9 @@ export default function STEP3(props) {
                           ))}
                         </select> */}
                       </div>
+                      {localErrors?.['subSecondaryGenre'] && (
+                      <span className="text-danger">{localErrors['subSecondaryGenre']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -697,6 +765,9 @@ export default function STEP3(props) {
                           <option value="Budget">Budget</option>
                         </select>
                       </div>
+                      {localErrors?.['price'] && (
+                      <span className="text-danger">{localErrors['price']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
@@ -705,16 +776,22 @@ export default function STEP3(props) {
                         <input type="radio" value="no" checked={parentalAdvisory === "no"} onChange={() => setParentalAdvisory("no")} style={{ marginLeft: "10px" }} /> No
                         <input type="radio" value="no" checked={parentalAdvisory === "Cleaned"} onChange={() => setParentalAdvisory("Cleaned")} style={{ marginLeft: "10px" }} /> Cleaned
                       </div>
+                      {localErrors?.['parentalAdvisory'] && (
+                      <span className="text-danger">{localErrors['parentalAdvisory']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>Preview start</label>
+                        <label>Preview start *</label>
                         <input type="text" className="form-control" value={previewStart} onChange={(e) => setPreviewStart(e.target.value)} />
                       </div>
+                      {localErrors?.['previewStart'] && (
+                      <span className="text-danger">{localErrors['previewStart']}</span>
+                       )}
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>Track title language</label>
+                        <label>Track title language *</label>
                         <select type="text" className="form-select form-control" value={trackTitleLanguage} onChange={(e) => setTrackTitleLanguage(e.target.value)} >
                           {language.map(item => (
                             <option key={item} value={item.value}>
@@ -724,11 +801,14 @@ export default function STEP3(props) {
                           }
 
                         </select>
+                        {localErrors?.['trackTitleLanguage'] && (
+                      <span className="text-danger">{localErrors['trackTitleLanguage']}</span>
+                       )}
                       </div>
                     </div>
                     <div className="col-lg-3 col-md-6">
                       <div className="form-group">
-                        <label>Lyrics language</label>
+                        <label>Lyrics language *</label>
                         <select type="text" className="form-select form-control" value={lyricsLanguage} onChange={(e) => setLyricsLanguage(e.target.value)} >
                           {language.map(item => (
                             <option key={item} value={item.value}>
@@ -737,6 +817,9 @@ export default function STEP3(props) {
                           ))}
                         </select>
                       </div>
+                      {localErrors?.['lyricsLanguage'] && (
+                      <span className="text-danger">{localErrors['lyricsLanguage']}</span>
+                       )}
                     </div>
                     <div className="col-12">
                       <div className="form-group">

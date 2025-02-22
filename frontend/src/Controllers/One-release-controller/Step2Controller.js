@@ -26,6 +26,36 @@ const Step2Controller = () => {
         }
     };
 
+    // delete file 
+    const handleDeleteFile = async (fileId) => {
+        try {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to recover this file!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            });
+    
+            if (result.isConfirmed) {
+                let body={
+                    fileId : fileId ,
+                    releaseId : releaseData._id
+                }
+                
+                await postData(base.deleteFile, body );
+    
+                Swal.fire("Deleted!", "Your file has been deleted.", "success");
+                setFiles(prevFiles => prevFiles.filter(file => file._id !== fileId));
+            }
+        } catch (error) {
+            console.error("Error deleting file:", error);
+            Swal.fire("Error", "Failed to delete the file.", "error");
+        }
+    };
+
     // Handle file upload
     const handleFileChange = async (e) => {
         if (!e.target.files.length) return;
@@ -81,6 +111,7 @@ const Step2Controller = () => {
     };
 
     return {
+        handleDeleteFile,
         handleFileChange,
         mediaFiles,
         handleRemove,

@@ -16,6 +16,8 @@ function EditUserPermission() {
   const [airtestNameList, setaAirtestNameList] = useState([])
   const [menuPermission, setMenuPermission] = useState([]);
   const [otherPermission, setOtherPermission] = useState([]);
+  const [newLabelName, setNewLabelName] = useState("");
+  const [showLabelInput, setShowLabelInput] = useState(false);
   const [userPermission, setUserPermission] = useState({
     email: userData.userDetails?.email,
     pricePercentage: userData.userDetails?.pricePercentage,
@@ -70,6 +72,24 @@ function EditUserPermission() {
       });
     }
   };
+
+  const addNewLabel = async () => {
+    if (newLabelName.trim() === "") return;
+    let payload = { title: newLabelName };
+    let result = await postData(base.addLabel, payload);
+    if (result.status === true) {
+      setLabelNameList([...labelNameList, { _id: result.data._id, title: newLabelName }]);
+      setNewLabelName("");
+      fetchLabel();
+      setShowLabelInput(false);
+      Swal.fire("Success", "New label added successfully", "success");
+    } else {
+      setShowLabelInput(false);
+      setNewLabelName("");
+      Swal.fire("Error", result.message, "error");
+    }
+  };
+
   const handleSubmit = async () => {
     const payload = {
       name: userPermission.name,
@@ -163,13 +183,33 @@ function EditUserPermission() {
                 {otherPermission?.map((item, index) => (
                   <div class="form-group">
                     <label for="genre">{item.sectionName}</label>
-                    {item.sectionName == "label" &&
-                      <SearchableDropdown className="form-control"
-                        options={labelNameList}
-                        labelKey="title"
-                        onChange={(selectedItems) => selectHandleChange(selectedItems, index)}
-                      />
-                    }
+                    {item.sectionName === "label" && (
+                      <>
+                        
+                        <SearchableDropdown
+                          className="form-control"
+                          options={labelNameList}
+                          labelKey="title"
+                          onChange={(selectedItems) => selectHandleChange(selectedItems, index)}
+                        />
+
+<button className="btn btn-success" onClick={() => setShowLabelInput(true)} style={{ marginLeft: "10px" }}>
+                          Add New Label
+                        </button>
+                        {showLabelInput && (
+                          <div className="mt-2">
+                            <input
+                              className="form-control"
+                              type="text"
+                              value={newLabelName}
+                              onChange={(e) => setNewLabelName(e.target.value)}
+                              placeholder="Enter New Label"
+                            />
+                            <button className="btn btn-primary mt-1" onClick={addNewLabel}>Submit Label</button>
+                          </div>
+                        )}
+                      </>
+                    )}
                     {item.sectionName == "artist" &&
                       <SearchableDropdown className="form-control"
                         options={airtestNameList}

@@ -1,5 +1,5 @@
-// const domainUrl = 'https://api.tuneplus.org/';
- const domainUrl = 'http://localhost:8002/';
+const domainUrl = 'https://api.tuneplus.org/';
+//  const domainUrl = 'http://localhost:8002/';
 // const domainUrl = 'http://192.168.1.18:8001/';
 // const endpoint = "https://api.ridd.in/api/"
 
@@ -17,7 +17,9 @@ const base = {
   addOneRelease: mainUrl + "release/add-one-release",
   releaseStep1: mainUrl + 'release/step-one-release',
   releaseStep2: mainUrl + 'release/step-two-release',
+  deleteFile: mainUrl + 'release/deletefile',
   releaseStep3: mainUrl + 'release/step-three-release',
+  deleteTrack: mainUrl + 'release/deleteTrack',
   releaseStep5: mainUrl + 'release/step-five-release',
   finalReleaseSubmit: mainUrl + 'release/SubmitFinalRelease',
   releaseList: mainUrl + 'release/release-list',
