@@ -1,47 +1,59 @@
 import React from "react";
-import CanvasJSReact from "@canvasjs/react-charts";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-const MarketGraph = (props) => {
-  const { charDdata } = props;
-  console.log(charDdata);
+const MarketGraph = ({ charDdata }) => {
+  // Extract labels and values from charDdata
+  const labels = charDdata.map((data) => data.label);
+  const values = charDdata.map((data) => data.y);
 
-  const options = {
-    animationEnabled: true,
-    backgroundColor: "#000000", // Set background to black
-    title: {
-      text: "Market",
-      fontColor: "#FFFFFF", // Set title text color to white
-    },
-    axisX: { 
-      valueFormatString: "",
-      labelFontColor: "#FFFFFF", // Set X-axis label color to white
-      lineColor: "#FFFFFF", // Set X-axis line color to white
-      tickColor: "#FFFFFF", // Set tick marks to white
-      labelAngle: -45, // Rotate labels if necessary
-    },
-    axisY: {
-      title: "",
-      titleFontColor: "#FFFFFF", // Set Y-axis title color to white
-      labelFontColor: "#FFFFFF", // Set Y-axis label color to white
-      lineColor: "#FFFFFF", // Set Y-axis line color to white
-      tickColor: "#FFFFFF", // Set tick marks to white
-      gridColor: "#444444", // Set grid lines to dark gray
-    },
-    data: [
+  const data = {
+    labels: labels,
+    datasets: [
       {
-        type: "column", // Use "column" for category-based X-axis
-        lineColor: "#FF4500", // Set line color to orange
-        markerColor: "#FF4500", // Set data point color to orange
-        dataPoints: charDdata,
+        label: "Market Data",
+        data: values,
+        backgroundColor: "#FF4500", // Set bar color to orange
+        borderColor: "#FF4500",
+        borderWidth: 1,
       },
     ],
   };
 
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+    },
+    scales: {
+      x: {
+        ticks: { color: "#FFFFFF" }, // X-axis labels in white
+        grid: { color: "#444444" }, // Grid color
+      },
+      y: {
+        ticks: { color: "#FFFFFF" }, // Y-axis labels in white
+        grid: { color: "#444444" },
+      },
+    },
+  };
+
   return (
-    <div>
-      <CanvasJSChart options={options} />
+    <div style={{ backgroundColor: "#000", padding: "20px", borderRadius: "8px" }}>
+      <h2 style={{ color: "#FFF", textAlign: "center" }}>Market</h2>
+      <div style={{ height: "400px" }}>
+        <Bar data={data} options={options} />
+      </div>
     </div>
   );
 };

@@ -1,39 +1,43 @@
-import React, { Component } from 'react';
-import CanvasJSReact from '@canvasjs/react-charts';
-//var CanvasJSReact = require('@canvasjs/react-charts');
- 
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
- 
-const  PaiChart =(props)=> {
-   const {data}= props;
-        const options = {
-            exportEnabled: true,
-            animationEnabled: true,
-            theme: "dark2",
-            title: {
-                text: "Top Store"
-            },
-            // subtitles: [{
-            //     text: "Median hours/week"
-            // }],
-            data: [{
-                type: "doughnut",
-                startAngle: 90,
-                indexLabel: "{name} ({y})",
-                yValueFormatString: "#,##0.0#"%"",
-                dataPoints: data
-            }]
-        };
- 
-        return (
-            <div>
-                <CanvasJSChart options={options}
-                /* onRef={ref => this.chart = ref} */
-                />
-                {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-            </div >
-        );
-    
-}
-export default PaiChart;                              
+import React from "react";
+import { Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Register necessary Chart.js components
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+const PieChart = ({ data }) => {
+  const chartData = {
+    labels: data.map((item) => item.name), // Extract labels from data
+    datasets: [
+      {
+        data: data.map((item) => item.y), // Extract values from data
+        backgroundColor: ["#FF4500", "#4CAF50", "#2196F3", "#FFC107", "#9C27B0"], // Example colors
+        hoverBackgroundColor: ["#FF5722", "#66BB6A", "#42A5F5", "#FFD54F", "#BA68C8"],
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: "top", labels: { color: "#FFFFFF" } },
+    },
+  };
+
+  return (
+    <div style={{ backgroundColor: "#000", padding: "20px", borderRadius: "8px", textAlign: "center" }}>
+      <h2 style={{ color: "#FFF" }}>Top Store</h2>
+      <div style={{ height: "400px" }}>
+        <Doughnut data={chartData} options={options} />
+      </div>
+    </div>
+  );
+};
+
+export default PieChart;

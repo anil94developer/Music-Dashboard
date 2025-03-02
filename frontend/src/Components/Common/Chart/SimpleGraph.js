@@ -1,48 +1,61 @@
-/* SimpleGraph.js */
-import React, { Component } from 'react';
-import CanvasJSReact from '@canvasjs/react-charts';
+import React from "react";
+import { Line, Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+// Register necessary Chart.js components
+ChartJS.register(LineElement, BarElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
-const  SimpleGraph =(props)=> {
-  const {data,title,type='spline'}= props;
- 
-    const options = {
-      animationEnabled: true,
-      backgroundColor: "#000000", // Set background to black
-      title: {
-        text: title + " Data",
-        fontColor: "#FFFFFF", // Set title text color to white
+const SimpleGraph = ({ data, title, type = "line" }) => {
+  const chartData = {
+    labels: data.map((point) => point.label), // X-axis values
+    datasets: [
+      {
+        label: `${title} Data`,
+        data: data.map((point) => point.y), // Y-axis values
+        borderColor: "#FF4500",
+        backgroundColor: "rgba(255, 69, 0, 0.5)", // Adjusted color
+        pointBackgroundColor: "#FF4500",
+        pointBorderColor: "#FFF",
+        fill: true,
       },
-      axisX: {
-        // title: title,
-        titleFontColor: "#FFFFFF",
-        labelFontColor: "#FFFFFF", // Set X-axis label color to white
-        lineColor: "#FFFFFF", // Set X-axis line color to white
-        tickColor: "#FFFFFF", // Set tick marks to white
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: "#FFFFFF" },
+        grid: { color: "#444444" },
       },
-      axisY: {
-        title: "Quantity",
-        titleFontColor: "#FFFFFF", // Set Y-axis title color to white
-        labelFontColor: "#FFFFFF", // Set Y-axis label color to white
-        lineColor: "#FFFFFF", // Set Y-axis line color to white
-        tickColor: "#FFFFFF", // Set tick marks to white
-        gridColor: "#000", // Set grid lines to dark gray
+      y: {
+        ticks: { color: "#FFFFFF" },
+        grid: { color: "#444444" },
       },
-      data: [
-        {
-          type: type, // Use a column chart
-          // color: "#FF4500", // Column color
-          dataPoints: data,
-        },
-      ],
-    }
-    return (
-      <div>
-        <CanvasJSChart options={options} />
+    },
+    plugins: {
+      legend: { labels: { color: "#FFFFFF" } },
+    },
+  };
+
+  return (
+    <div style={{ backgroundColor: "#000", padding: "20px", borderRadius: "8px" }}>
+      <h2 style={{ color: "#FFF", textAlign: "center" }}>{title} Data</h2>
+      <div style={{ height: "400px" }}>
+        {type === "bar" ? <Bar data={chartData} options={options} /> : <Line data={chartData} options={options} />}
       </div>
-    );
- 
-}
-export default SimpleGraph;  
+    </div>
+  );
+};
+
+export default SimpleGraph;

@@ -1,43 +1,45 @@
-import React, { Component } from 'react';
-import CanvasJSReact from '@canvasjs/react-charts';
-//var CanvasJSReact = require('@canvasjs/react-charts');
- 
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
- 
-class CircleGraph extends Component {	
-	render() {
-		const options = {
-			animationEnabled: true,
-			exportEnabled: true,
-			theme: "dark2", // "light1", "dark1", "dark2"
-			title:{
-				text: "Trip Expenses"
-			},
-			data: [{
-				type: "pie",
-				indexLabel: "{label}: {y}%",		
-				startAngle: -90,
-				dataPoints: [
-					{ y: 20, label: "Airfare" },
-					{ y: 24, label: "Food & Drinks" },
-					{ y: 20, label: "Accomodation" },
-					{ y: 14, label: "Transportation" },
-					{ y: 12, label: "Activities" },
-					{ y: 10, label: "Misc" }	
-				]
-			}]
-		}
-		
-		return (
-		<div>
-			<CanvasJSChart options = {options} 
-				/* onRef={ref => this.chart = ref} */
-			/>
-			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-		</div>
-		);
-	}
-}
- 
+import React from 'react';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+
+// Register required Chart.js components
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+const data = {
+    labels: ["Airfare", "Food & Drinks", "Accomodation", "Transportation", "Activities", "Misc"],
+    datasets: [
+        {
+            label: "Trip Expenses",
+            data: [20, 24, 20, 14, 12, 10], // Percentage values
+            backgroundColor: [
+                "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40"
+            ],
+            hoverBackgroundColor: [
+                "#FF4F78", "#2F8DD1", "#FFB940", "#3AAFA9", "#865DFD", "#FF7F24"
+            ],
+        }
+    ]
+};
+
+const options = {
+    responsive: true,
+    plugins: {
+        legend: {
+            position: "top",
+        },
+        tooltip: {
+            enabled: true,
+        }
+    }
+};
+
+const CircleGraph = () => {
+    return (
+        <div style={{ width: '400px', margin: 'auto' }}>
+            <h2 style={{ textAlign: 'center', color: 'white' }}>Trip Expenses</h2>
+            <Pie data={data} options={options} />
+        </div>
+    );
+};
+
 export default CircleGraph;

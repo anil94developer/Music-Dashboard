@@ -221,7 +221,6 @@ export default function STEP3(props) {
         setContentType(releaseData.type);
         setPrimaryArtist(releaseData.step1.primaryArtist)
         setFeaturing(releaseData.step1.featuring);
-        setPLine(releaseData.step1.line);
       }
 
     }
@@ -249,7 +248,7 @@ export default function STEP3(props) {
     setComposer(item.Composer || [{ value: '' }]);
     setArranger(item.Arranger || [{ value: '' }]);
     setProducer(item.Producer || [{ value: '' }]);
-    setPLine(item.pLine || "");
+    setPLine(item.Pline || "");
     setProductionYear(item.ProductionYear || "");
     setPublisher(item.Publisher || [{ value: '' }]);
     setIsrc(item.ISRC || "");
@@ -272,10 +271,6 @@ export default function STEP3(props) {
     setCLine(item?.cLine)
     setCYear(item?.cYear)
     setPYear(item?.pYear)
-
-
-
-
   }
   const [incrementalValue, setIncrementalValue] = useState(1);
 
