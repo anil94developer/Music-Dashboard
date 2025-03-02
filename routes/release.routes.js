@@ -70,7 +70,9 @@ router.post('/step-one-release', verifyToken, upload.single('coverImage'), async
 });
 // router.post('/step-two-release', verifyToken, releaseService.addTwoStepRelease)
 router.post('/step-two-release', verifyToken, upload.single('files'), releaseService.addTwoStepRelease);
+router.post('/deletefile', verifyToken, releaseService.deleteFile)
 router.post('/step-three-release', verifyToken, releaseService.addThreeStepRelease)
+router.post('/deleteTrack', verifyToken, releaseService.deleteTrack)
 router.post('/step-four-release', verifyToken, releaseService.addFourStepRelease)
 router.post('/step-five-release', verifyToken, releaseService.addFiveStepRelease)
 router.post('/SubmitFinalRelease', verifyToken, releaseService.SubmitFinalRelease)

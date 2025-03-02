@@ -327,6 +327,38 @@ releaseModel.addTwoStepRelease = async (id, filesData) => {
 //   }
 // };
 
+releaseModel.deleteFileFromRelease = async (releaseId, fileId) => {
+  try {
+    let releaseResult = await db.connectDb("release", releaseSchema);
+
+    const result = await releaseResult.updateOne(
+      { _id: releaseId },
+      { $pull: { step2: { _id: fileId } } } // Corrected path
+    );
+
+    return result.modifiedCount > 0; // Returns true if a file was removed
+  } catch (error) {
+    console.error("Error deleting file from release:", error);
+    return false;
+  }
+};
+releaseModel.deleteTrackFromRelease = async (releaseId, trackId) => {
+  try {
+    let releaseResult = await db.connectDb("release", releaseSchema);
+
+    const result = await releaseResult.updateOne(
+      { _id: releaseId },
+      { $pull: { step3: { _id: trackId } } } // Corrected path
+    );
+
+    return result.modifiedCount > 0; // Returns true if a file was removed
+  } catch (error) {
+    console.error("Error deleting file from release:", error);
+    return false;
+  }
+};
+
+
 releaseModel.addThreeStepRelease = async (body) => {
   console.log("one release body", body)
   let releaseResult = await db.connectDb("release", releaseSchema);
@@ -441,20 +473,13 @@ releaseModel.allDraftList = async (uId, page, limit, search) => {
     ],
   };
 
+   
   // Apply search filter if search term exists
   if (search) {
-    filter.$and.push({
-      $or: [
-        { "step1.UPCEAN": { $regex: search, $options: "i" } },
-        { "step1.labelName": { $regex: search, $options: "i" } },
-        { "step1.primaryArtist.name": { $regex: search, $options: "i" } },
-        { title: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } }
-      ]
-    });
+    filter.$text = { $search: search };
   }
- // **Fix: Count total documents before fetching paginated data**
- const totalCount = await result.countDocuments(filter);
+  // **Fix: Count total documents before fetching paginated data**
+  const totalCount = await result.countDocuments(filter);
 
   // Paginate data
   const fetData = await result
@@ -464,7 +489,7 @@ releaseModel.allDraftList = async (uId, page, limit, search) => {
     .limit(limit) // Limit results per page
     .exec();
 
-  
+
 
   return {
     totalCount,
@@ -481,27 +506,19 @@ releaseModel.allReleaseList = async (uId, page = 1, limit = 10, search) => {
   // Base filter with status and userId
   let filter = {
     $and: [
-      { status: { $in: ["Submit" , "Approve"] } },
+      { status: { $in: ["Submit", "Approve"] } },
       { userId: uId } // No need for `$in` if it's a single userId
     ],
   };
 
-  
+
   // Apply search filter if search term exists
   if (search) {
-    filter.$and.push({
-      $or: [
-        { "step1.UPCEAN": { $regex: search, $options: "i" } },
-        { "step1.labelName": { $regex: search, $options: "i" } },
-        { "step1.primaryArtist.name": { $regex: search, $options: "i" } },
-        { title: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } }
-      ]
-    });
+    filter.$text = { $search: search };
   }
 
-// **Fix: Count total documents before fetching paginated data**
-const totalCount = await result.countDocuments(filter);
+  // **Fix: Count total documents before fetching paginated data**
+  const totalCount = await result.countDocuments(filter);
 
   // Fetch paginated results
   const fetData = await result
@@ -510,7 +527,7 @@ const totalCount = await result.countDocuments(filter);
     .skip((page - 1) * limit) // Skip previous pages
     .limit(limit) // Limit results per page
     .exec();
- 
+
   return {
     totalCount,
     totalPages: Math.ceil(totalCount / limit),
@@ -529,15 +546,7 @@ releaseModel.adminAllReleaseList = async (uId, page, limit, search) => {
 
   // Apply search filter if search term exists
   if (search) {
-    filter.$and.push({
-      $or: [
-        { "step1.UPCEAN": { $regex: search, $options: "i" } },
-        { "step1.labelName": { $regex: search, $options: "i" } },
-        { "step1.primaryArtist.name": { $regex: search, $options: "i" } },
-        { title: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } }
-      ]
-    });
+    filter.$text = { $search: search };
   }
   // Count total documents for pagination
   const totalCount = await result.countDocuments();

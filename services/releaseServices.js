@@ -100,6 +100,65 @@ release.addTwoStepRelease = async (req, res) => {
     }
 };
 
+release.deleteFile = async (req, res) => {
+    try {
+        
+        const releaseId = req.body.releaseId;
+        const fileId = req.body.fileId;
+
+        const result = await releaseModel.deleteFileFromRelease( releaseId, fileId);
+        
+        if (result) {
+            return res.status(200).json({
+                status: true,
+                message: "File deleted successfully!",
+            });
+        } else {
+            return res.status(400).json({
+                status: false,
+                message: "Failed to delete file from release.",
+            });
+        }
+    } catch (error) {
+        console.error("File deletion error:", error);
+        res.status(500).json({
+            status: false,
+            message: "File deletion failed.",
+            error: error.message || error,
+        });
+    }
+
+}
+release.deleteTrack = async (req, res) => {
+    try {
+        
+        const releaseId = req.body.releaseId;
+        const trackId = req.body.trackId;
+
+        const result = await releaseModel.deleteTrackFromRelease( releaseId, trackId);
+        
+        if (result) {
+            return res.status(200).json({
+                status: true,
+                message: "File deleted successfully!",
+            });
+        } else {
+            return res.status(400).json({
+                status: false,
+                message: "Failed to delete file from release.",
+            });
+        }
+    } catch (error) {
+        console.error("File deletion error:", error);
+        res.status(500).json({
+            status: false,
+            message: "File deletion failed.",
+            error: error.message || error,
+        });
+    }
+
+}
+
 
 // release.addTwoStepRelease = async (req, res, next) => {
 //     try {
@@ -145,14 +204,14 @@ const transporter = nodemailer.createTransport({
 
 release.addThreeStepRelease = async (req, res, next) => {
     const body = req.body
-    
-   
+
+
     for (let i = 0; i < body.step3.length; i++) {
         if (!body.step3[i].ISRC || body.step3[i].ISRC.trim() === "") {
             body.step3[i].ISRC = await generateGlobalISRCCode();
         }
     }
-    
+
     try {
         const result = await releaseModel.addThreeStepRelease(body)
         return R(res, true, "Update Successfully!!", result, 200)
@@ -182,16 +241,16 @@ release.addFiveStepRelease = async (req, res, next) => {
 release.SubmitFinalRelease = async (req, res, next) => {
     const body = req.body;
     const userid = req.doc.userId
-    let status="Submit";
+    let status = "Submit";
     const parentId = await permission.findparentId(userid);
-    if(parentId != false){
-        status="Pending";
-    }else{
-        status="Submit";
+    if (parentId != false) {
+        status = "Pending";
+    } else {
+        status = "Submit";
     }
-   
+
     try {
-        const result = await releaseModel.SubmitFinalRelease(body, parentId,status)
+        const result = await releaseModel.SubmitFinalRelease(body, parentId, status)
         return R(res, true, "Final Update Successfully!!", result, 200)
     } catch (err) {
         next(err)
@@ -231,10 +290,10 @@ release.releaseDelete = async (req, res, next) => {
 
 release.allDraftList = async (req, res, next) => {
     try {
-        let { page, limit,search } = req.query;
+        let { page, limit, search } = req.query;
         page = parseInt(page) || 1;  // Default to page 1
         limit = parseInt(limit) || 10; // Default to 10 results per page 
-        const result = await releaseModel.allDraftList(req.doc.userId, page, limit,search);
+        const result = await releaseModel.allDraftList(req.doc.userId, page, limit, search);
         return R(res, true, "Fetch Successfully!!", result, 200);
     } catch (err) {
         next(err);
@@ -243,10 +302,10 @@ release.allDraftList = async (req, res, next) => {
 
 release.allReleaseList = async (req, res, next) => {
     try {
-        let { page, limit,search } = req.query;
+        let { page, limit, search } = req.query;
         page = parseInt(page) || 1;  // Default to page 1
         limit = parseInt(limit) || 10; // Default to 10 results per page 
-        const result = await releaseModel.allReleaseList(req.doc.userId, page, limit,search);
+        const result = await releaseModel.allReleaseList(req.doc.userId, page, limit, search);
         return R(res, true, "Fetch Successfully!!", result, 200);
     } catch (err) {
         next(err);
@@ -256,10 +315,10 @@ release.allReleaseList = async (req, res, next) => {
 
 release.adminAllReleaseList = async (req, res, next) => {
     try {
-        let { page, limit,search } = req.query;
+        let { page, limit, search } = req.query;
         page = parseInt(page) || 1;  // Default to page 1
         limit = parseInt(limit) || 10; // Default to 10 results per page 
-        const result = await releaseModel.adminAllReleaseList(req.doc.userId, page, limit,search);
+        const result = await releaseModel.adminAllReleaseList(req.doc.userId, page, limit, search);
         return R(res, true, "Fetch Successfully!!", result, 200);
     } catch (err) {
         next(err);
@@ -520,14 +579,14 @@ release.updateStatus = async (req, res, next) => {
         const result = await releaseModel.updateStatus(body);
         if (!result) {
             return R(res, true, "Failed to update status", result, 400);
-        } 
+        }
         console.log("result====", result);
 
         // Get user email
         const email = await releaseModel.getEmail(body);
         if (!email) {
             return R(res, true, "Email not found", result, 404);
-        } 
+        }
         console.log(`Sending email to: ${email}`);
 
         // Define email options
@@ -713,7 +772,7 @@ release.updateStatus = async (req, res, next) => {
             </body>
             </html>
             `
-        }; 
+        };
 
         // Determine which email to send
         let mailOptions;
